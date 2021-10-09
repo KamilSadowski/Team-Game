@@ -15,7 +15,7 @@ public class PlayerController : Controller
     void Update()
     {
         input.x += Input.GetAxis("Horizontal");
-        input.y += Input.GetAxis("Vertical");
+        input.z += Input.GetAxis("Vertical");
         if (controlledEntity != null)
         {
             controlledEntity.GetMovementComponent().Move(input);

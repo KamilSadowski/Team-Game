@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class MobileComponent : MovementComponent
 {
-    [SerializeField] float movementSpeed = 1.0f;
+    // Properties
+    [SerializeField] protected float movementSpeed = 1.0f;
+    [SerializeField] protected float drag = 0.5f;
+
+    // Movement variables
+    protected Vector3 velocity;
+    protected float minVelocity = 0.0001f;
     protected Vector3 currentInput;
 
     // Start is called before the first frame update
@@ -16,7 +22,22 @@ public class MobileComponent : MovementComponent
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.transform.Translate(currentInput * movementSpeed * Time.fixedDeltaTime);
+        // Add velocity based on input
+        velocity.x += Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
+        velocity.z += Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+
+        // Apply drag
+        velocity = velocity * drag;
+
+        // Stop the movement if below a threshold
+        if (Mathf.Abs(velocity.magnitude) <= minVelocity)
+        {
+            velocity = Vector3.zero;
+        }
+
+        // Update the movmement
+        rb.transform.Translate(velocity, Space.World);
+        rb.velocity = Vector3.zero;
     }
 
     public override void Move(Vector3 input)
