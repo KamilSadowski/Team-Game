@@ -8,18 +8,24 @@ public class Entity : MonoBehaviour
     protected Vector3 AccelerationEvent;
     protected bool isMobile = true;
 
+    [SerializeField] protected MovementComponent movementComponent;
+
     //HealthComponent healthComponent;
     //InteractComponent interactComponent;
 
-    public void Create(int id, bool mobile)
+    private void Start()
     {
-        entityID = id;
-        isMobile = mobile;
+
     }
 
-    public void Move(Vector3 input)
+    public void Create(int id)
     {
+        entityID = id;
+    }
 
+    public MovementComponent GetMovementComponent()
+    {
+        return movementComponent;
     }
 
 

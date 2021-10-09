@@ -33,7 +33,7 @@ public class EntityManager : MonoBehaviour
 
         if (tempEntity != null)
         {
-            tempEntity.Create(entitySlots.Peek(), true);
+            tempEntity.Create(entitySlots.Peek());
             entities.Add(tempEntity);
             entitySlots.Pop();
         }
