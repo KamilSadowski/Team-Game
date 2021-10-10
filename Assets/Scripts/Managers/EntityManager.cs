@@ -26,7 +26,7 @@ public class EntityManager : MonoBehaviour
 
     public bool TryCreateListedWeapon(int index, Vector3 Position)
     {
-        if(index < WeaponList.Length)
+        if(index >= 0 && index < WeaponList.Length)
         return TryCreateEntity(WeaponList[index], Position);
 
         return false;
@@ -34,7 +34,7 @@ public class EntityManager : MonoBehaviour
 
     public bool TryCreateListedNPC(int index, Vector3 Position)
     {
-        if (index < NPCList.Length)
+        if (index >= 0 && index < NPCList.Length)
             return TryCreateEntity(NPCList[index], Position);
 
         return false;
@@ -42,7 +42,7 @@ public class EntityManager : MonoBehaviour
 
     public bool TryCreateListedProp(int index, Vector3 Position)
     {
-        if (index < PropList.Length)
+        if (index >= 0 && index < PropList.Length)
             return TryCreateEntity(PropList[index], Position);
 
         return false;
