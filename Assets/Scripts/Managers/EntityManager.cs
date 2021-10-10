@@ -8,6 +8,9 @@ public class EntityManager : MonoBehaviour
     const int ENTITY_LIMIT = 2;
 
     [SerializeField] GameObject playerPrefab;
+    [SerializeField] GameObject[] NPCList;
+    [SerializeField] GameObject[] WeaponList;
+    [SerializeField] GameObject[] PropList;
 
     List<Entity> entities = new List<Entity>();
     Stack<int> entitySlots = new Stack<int>();
@@ -15,10 +18,36 @@ public class EntityManager : MonoBehaviour
     GameObject tempEntityGameObject;
 
 
-    public bool TryCreatePlayer()
+    public bool TryCreatePlayer(Vector3 Position)
     {
-        return TryCreateEntity(playerPrefab, Vector3.zero);
+        return TryCreateEntity(playerPrefab, Position);
     }
+
+
+    public bool TryCreateListedWeapon(int index, Vector3 Position)
+    {
+        if(index < WeaponList.Length)
+        return TryCreateEntity(WeaponList[index], Position);
+
+        return false;
+    }
+
+    public bool TryCreateListedNPC(int index, Vector3 Position)
+    {
+        if (index < NPCList.Length)
+            return TryCreateEntity(NPCList[index], Position);
+
+        return false;
+    }
+
+    public bool TryCreateListedProp(int index, Vector3 Position)
+    {
+        if (index < PropList.Length)
+            return TryCreateEntity(PropList[index], Position);
+
+        return false;
+    }
+
 
     // Returns false if failed
     public bool TryCreateEntity(GameObject entity, Vector3 position)
@@ -30,6 +59,7 @@ public class EntityManager : MonoBehaviour
 
         tempEntityGameObject = Instantiate<GameObject>(entity);
         tempEntityGameObject.TryGetComponent<Entity>(out tempEntity);
+        tempEntityGameObject.transform.position = position;
 
         if (tempEntity != null)
         {
@@ -68,7 +98,14 @@ public class EntityManager : MonoBehaviour
             entitySlots.Push(i);
         }
 
-        TryCreatePlayer();
+        bool loadupCheck = true;
+
+        //If any of the following are false then this IF statement is TRUE;
+        if (!(
+            TryCreateListedWeapon(0, Vector3.forward) &&
+            TryCreatePlayer(Vector3.zero)
+            ))
+        { }
     }
 
     // Update is called once per frame
