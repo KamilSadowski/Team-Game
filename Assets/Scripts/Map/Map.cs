@@ -4,48 +4,69 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-	enum DoorDirection { north, east, south, west };
-	DoorDirection openingDirection;
-
-	// A list of rooms going in one of the 4 directions
-	[SerializeField] List<Room>[] roomPrefabs = new List<Room>[4];
+	// A list of room prefabs that can be used
+	[SerializeField] List<Room> startingRoomPrefabs;
+	[SerializeField] List<Room> normalRoomPrefabs = new List<Room>();
+	[SerializeField] List<Room> endingRoomPrefabs;
 
 	// List of rooms created
-	List<Room> roomsCreated;
+	List<Room> roomsCreated = new List<Room>();
+	List<int> roomExitsLeft;
+
+	// Room creation variables
+	Room tempRoom;
+	Vector3 roomPosition = Vector3.zero;
+	Globals.Direction currentOpening;
 
 	int randomRoom;
+	bool reloadMap = true;
 
-	void Start()
+	void Update()
 	{
-
+		if (reloadMap)
+		{
+			reloadMap = !CreateMap();
+		}
 	}
 
 
-	void SpawnRoom()
+	// Returns true if finished creating a map
+	bool CreateMap()
 	{
-		if (openingDirection == DoorDirection.north)
+		// Create the first room
+		if (roomsCreated.Count == 0)
 		{
-			randomRoom = Random.Range(0, roomPrefabs[(int)DoorDirection.north].Count);
-			Instantiate(roomPrefabs[(int)DoorDirection.north][randomRoom], transform.position, 
-				roomPrefabs[(int)DoorDirection.north][randomRoom].transform.rotation);
+			CreateRoom(startingRoomPrefabs[0], 0, 0); // Starting room should always be at 0,0
+			return false;
 		}
-		else if (openingDirection == DoorDirection.east)
-			{
-			randomRoom = Random.Range(0, roomPrefabs[(int)DoorDirection.east].Count); 
-			Instantiate(roomPrefabs[(int)DoorDirection.east][randomRoom], transform.position, 
-				roomPrefabs[(int)DoorDirection.east][randomRoom].transform.rotation);
-		}
-		else if (openingDirection == DoorDirection.south)
+
+		/////////////////////////////////////RANDOMISE THE ROOMS///////////////////////////////////////////////////////////////////
+
+		// Create the final room
+		else if (roomsCreated.Count == Globals.MAX_ROOM_NO - 1)
 		{
-			randomRoom = Random.Range(0, roomPrefabs[(int)DoorDirection.south].Count);
-			Instantiate(roomPrefabs[(int)DoorDirection.south][randomRoom], transform.position, 
-				roomPrefabs[(int)DoorDirection.south][randomRoom].transform.rotation);
+			return false;
 		}
-		else if (openingDirection == DoorDirection.west)
+
+		// Create a random room
+		else if (roomsCreated.Count < Globals.MAX_ROOM_NO - 1)
 		{
-			randomRoom = Random.Range(0, roomPrefabs[(int)DoorDirection.west].Count);
-			Instantiate(roomPrefabs[(int)DoorDirection.west][randomRoom], transform.position, 
-				roomPrefabs[(int)DoorDirection.west][randomRoom].transform.rotation);
+			return false;
 		}
+
+		return true;
+	}
+
+	// Creates a room based on a position in a 2D room grid
+	Room CreateRoom(Room roomPrefab, int x, int z)
+	{
+		roomPosition.x = Globals.ROOM_SIZE * x;
+		roomPosition.z = Globals.ROOM_SIZE * z;	
+
+		roomsCreated.Add(Instantiate<Room>(roomPrefab));
+		roomsCreated[roomsCreated.Count - 1].transform.position = roomPosition;
+		roomsCreated[roomsCreated.Count - 1].transform.parent = transform;
+
+		return roomsCreated[roomsCreated.Count - 1];
 	}
 }
