@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] protected MovementComponent entityMoveComp;
+    protected MovementComponent entityMoveComp;
     protected Vector3 input;
 
     // Start is called before the first frame update
