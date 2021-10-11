@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
-    const int ENTITY_LIMIT = 64;
+    const int ENTITY_LIMIT = 5;
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject[] NPCList;
@@ -64,7 +64,7 @@ public class EntityManager : MonoBehaviour
         if (tempEntity != null)
         {
             tempEntity.Create(entitySlots.Peek());
-            entities.Add(tempEntity);
+            entities[entitySlots.Peek()] = tempEntity;
             entitySlots.Pop();
         }
         else
@@ -84,7 +84,9 @@ public class EntityManager : MonoBehaviour
         // Destroy the entity if not destroyed
         if (entities[id] != null && destroy)
         {
-            Destroy(entities[id]);
+            //GameObject temp = entities[id].gameObject;
+            Destroy(entities[id].gameObject);
+            //Destroy(temp);
         }
 
         entitySlots.Push(id);
@@ -95,6 +97,7 @@ public class EntityManager : MonoBehaviour
     {
         for (int i = 0; i < ENTITY_LIMIT; i++)
         {
+            entities.Add(null);
             entitySlots.Push(i);
         }
 

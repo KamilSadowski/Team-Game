@@ -39,14 +39,14 @@ public class ProjectileController : Controller
 
             //DELETE THIS COMMENT LATER - THE DELETE FUNCTION IS BROKEN
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
-            if (false && distance > .15f)
+            if (distance > .5f)
             {
-                int entityID = this.GetComponent<Entity>().entityID;
+                int entityID = GetComponent<Entity>().entityID;
 
                 EntityManager entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
 
                 if(entityMan != null)
-                entityMan.DeleteEntity(entityID,true);
+                entityMan.DeleteEntity(entityID);
             }
             else
             entityMoveComp.Move(direction);
@@ -55,7 +55,7 @@ public class ProjectileController : Controller
         else
         {
             //This will repeatedly try to find the movement component if it is missing. 
-            entityMoveComp = this.GetComponent<MovementComponent>();
+            entityMoveComp = GetComponent<MovementComponent>();
         }
     }
 }
