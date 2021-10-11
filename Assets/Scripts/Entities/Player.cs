@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Character
 {
     protected EntityManager entitySpawner;
-
+    [SerializeField] Weapon[] NPCList;
 
     protected const float MAX_FORCE_MOD = 3; //Discuss this in detail later- What factor limits the throwing power? 
 
