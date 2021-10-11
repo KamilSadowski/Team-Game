@@ -8,17 +8,25 @@ public class ProjectileController : Controller
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
 
+    float distance;
+    Vector3 direction;
+
+    int entityID;
+    EntityManager entityMan;
+    Ray mouseRay;
+    Plane crosshairPlane;
+
+    float distanceToPlane;
 
     // Start is called before the first frame update
     void Start()
     {
-        Plane mayonnaiseOnAnEscalator = new Plane(Vector3.up, 0);
-        float dist;
+        crosshairPlane = new Plane(Vector3.up, 0);
 
-        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (mayonnaiseOnAnEscalator.Raycast(mouseRay, out dist))
+        mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (crosshairPlane.Raycast(mouseRay, out distanceToPlane))
         {
-            targetPosition = mouseRay.GetPoint(dist);
+            targetPosition = mouseRay.GetPoint(distanceToPlane);
         }
 
     }
@@ -28,22 +36,18 @@ public class ProjectileController : Controller
     {
         if (entityMoveComp != null)
         {
-            //Calculate any required information about the mouse the projectile might need. 
-            Vector3 positionCalc = targetPosition - transform.position;
-            positionCalc.y = transform.position.y;
-
-            float distance = positionCalc.magnitude;
+            distance = Vector3.Distance(targetPosition, transform.position);
 
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
-            Vector3 direction = positionCalc / distance; 
+            direction = (targetPosition - transform.position).normalized;
 
             //DELETE THIS COMMENT LATER - THE DELETE FUNCTION IS BROKEN
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
-            if (distance > .5f)
+            if (Input.GetKey(KeyCode.P))
             {
-                int entityID = GetComponent<Entity>().entityID;
+                entityID = GetComponent<Entity>().entityID;
 
-                EntityManager entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
+                entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
 
                 if(entityMan != null)
                 entityMan.DeleteEntity(entityID);

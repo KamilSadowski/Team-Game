@@ -116,6 +116,6 @@ public class EntityManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        int test = 1;
     }
 }
