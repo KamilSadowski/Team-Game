@@ -8,6 +8,8 @@ public class MobileComponent : MovementComponent
     [SerializeField] protected float movementSpeed = 1.0f;
     [SerializeField] protected float drag = 0.5f;
 
+
+
     // Movement variables
     protected Vector3 velocity;
     protected float minVelocity = 0.0001f;
@@ -19,12 +21,13 @@ public class MobileComponent : MovementComponent
         Create();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public override void Move(Vector3 input)
     {
+        // currentInput = input;
+
         // Add velocity based on input
-        velocity.x += Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-        velocity.z += Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+        velocity.x += input.x * movementSpeed * Time.deltaTime;
+        velocity.z += input.z * movementSpeed * Time.deltaTime;
 
         // Apply drag
         velocity = velocity * drag;
@@ -38,10 +41,5 @@ public class MobileComponent : MovementComponent
         // Update the movmement
         rb.transform.Translate(velocity, Space.World);
         rb.velocity = Vector3.zero;
-    }
-
-    public override void Move(Vector3 input)
-    {
-        currentInput = input;
     }
 }

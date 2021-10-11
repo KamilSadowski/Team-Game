@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
-    const int ENTITY_LIMIT = 2;
+    const int ENTITY_LIMIT = 64;
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject[] NPCList;
@@ -103,7 +103,8 @@ public class EntityManager : MonoBehaviour
         //If any of the following are false then this IF statement is TRUE;
         if (!(
             TryCreateListedWeapon(0, Vector3.forward) &&
-            TryCreatePlayer(Vector3.zero)
+            TryCreatePlayer(Vector3.zero) &&
+            TryCreateListedNPC(0, Vector3.left)
             ))
         { }
     }

@@ -93,7 +93,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 25
   m_Sprite: {fileID: 4644767316936810265, guid: cc711e82e17fc424db3a8bc02ffc200f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7169812, g: 0.16571736, b: 0.16571736, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -196,7 +196,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: 4644767316936810265, guid: cc711e82e17fc424db3a8bc02ffc200f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4433962, g: 0.05228728, b: 0.05228728, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -217,13 +217,12 @@ GameObject:
   - component: {fileID: 5733697913478852487}
   - component: {fileID: 5733697913478852488}
   - component: {fileID: 5733697913478852486}
-  - component: {fileID: 5733697913478852485}
-  - component: {fileID: 1589646956122958797}
+  - component: {fileID: 6028003878455260307}
+  - component: {fileID: 3526573979138714714}
   - component: {fileID: 5921488606401024215}
   - component: {fileID: 6355302909037733879}
-  - component: {fileID: 3981519956807123103}
   m_Layer: 0
-  m_Name: Player
+  m_Name: BaseEnemy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -287,7 +286,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 15
   m_Sprite: {fileID: 1987868525226314629, guid: cc711e82e17fc424db3a8bc02ffc200f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6698113, g: 0.20536669, b: 0.20536669, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -316,7 +315,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5733697913478852485
+--- !u!114 &6028003878455260307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,11 +324,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5733697913478852489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6078d44ff51bb64ca7f5d8dab6f20fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a7702cfb40e9ed449f6c50264e2299c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementComponent: {fileID: 1589646956122958797}
---- !u!114 &1589646956122958797
+  movementComponent: {fileID: 3526573979138714714}
+--- !u!114 &3526573979138714714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,11 +337,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5733697913478852489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d6ff6d079b7a0d469b697e2b24ad3fc, type: 3}
+  m_Script: {fileID: 11500000, guid: f82439faf7324894fbb7d7b0bf609ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
-  drag: 0.5
 --- !u!54 &5921488606401024215
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -373,16 +370,3 @@ CapsuleCollider:
   m_Height: 0.38000008
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3981519956807123103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5733697913478852489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31bd049e226a28948a7edd5ebb281874, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityMoveComp: {fileID: 0}

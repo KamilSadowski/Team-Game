@@ -14,15 +14,18 @@ public class PlayerController : Controller
     // Update is called once per frame
     void Update()
     {
-        input.x += Input.GetAxis("Horizontal");
-        input.z += Input.GetAxis("Vertical");
-        if (controlledEntity != null)
+        if (entityMoveComp != null)
         {
-            controlledEntity.GetMovementComponent().Move(input);
+            Vector3 temp = Vector3.zero;
+
+            temp.x += Input.GetAxis("Horizontal");
+            temp.z += Input.GetAxis("Vertical");
+
+            entityMoveComp.Move(temp);
         }
         else
         {
-            controlledEntity = FindObjectOfType<Player>();
+            entityMoveComp = this.GetComponent<MovementComponent>();
         }
     }
 }
