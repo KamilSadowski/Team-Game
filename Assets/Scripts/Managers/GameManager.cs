@@ -38,4 +38,12 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    public void TeleportPlayer(Vector3 teleportTo)
+    {
+        if (player != null)
+        {
+            player.transform.position = teleportTo;
+        }
+    }
 }

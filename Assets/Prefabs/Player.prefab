@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementComponent: {fileID: 1589646956122958797}
+  NPCList: []
 --- !u!114 &1589646956122958797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6ff6d079b7a0d469b697e2b24ad3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  movementSpeed: 2
   drag: 0.5
 --- !u!54 &5921488606401024215
 Rigidbody:
