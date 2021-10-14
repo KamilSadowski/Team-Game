@@ -24,7 +24,7 @@ public class Map : MonoBehaviour
 
 	// Room creation variables
 	Vector3 roomPosition = Vector3.zero;
-	Vector3 roomRotation = new Vector3(0.0f, -90.0f, 0.0f);
+	Vector3 roomRotation = new Vector3(0.0f, 0.0f, 90.0f);
 
 	bool reloadMap = true;
 
@@ -96,7 +96,7 @@ public class Map : MonoBehaviour
 	Room CreateRoom(Room roomPrefab, Globals.Grid2D roomPos)
 	{
 		roomPosition.x = Globals.ROOM_SIZE * roomPos.x;
-		roomPosition.z = Globals.ROOM_SIZE * roomPos.y;
+		roomPosition.y = Globals.ROOM_SIZE * roomPos.y;
 		Debug.Log("Creating room at: ");
 		Debug.Log(roomPos.x);
 		Debug.Log(roomPos.y);
@@ -106,7 +106,7 @@ public class Map : MonoBehaviour
 		roomGridPositions.Add(roomPos);
 		roomsCreated[roomsCreated.Count - 1].transform.position = roomPosition;
 		roomsCreated[roomsCreated.Count - 1].transform.parent = transform;
-		roomsCreated[roomsCreated.Count - 1].transform.Rotate(roomRotation);
+		roomsCreated[roomsCreated.Count - 1].transform.rotation = Quaternion.Euler(roomRotation);
 
 		return roomsCreated[roomsCreated.Count - 1];
 	}

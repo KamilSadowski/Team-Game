@@ -15,7 +15,7 @@ public class PlayerController : Controller
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
      
@@ -24,7 +24,7 @@ public class PlayerController : Controller
             Vector3 temp = Vector3.zero;
 
             temp.x += Input.GetAxis("Horizontal");
-            temp.z += Input.GetAxis("Vertical");
+            temp.y += Input.GetAxis("Vertical");
 
             entityMoveComp.Move(temp);
 

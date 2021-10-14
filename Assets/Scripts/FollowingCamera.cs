@@ -83,7 +83,7 @@ public class FollowingCamera : MonoBehaviour
                 moveTo += targetToFollow.transform.forward * cameraForwardOffset;
             }
 
-            moveTo.y = cameraHeight;
+            moveTo.z = cameraHeight;
            
         }
 

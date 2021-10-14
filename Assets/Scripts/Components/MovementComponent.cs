@@ -6,12 +6,12 @@ using UnityEngine;
 // Use Mobile component instead if you need the object to move
 public class MovementComponent : MonoBehaviour
 {
-    protected Rigidbody rb;
+    protected Rigidbody2D rb;
 
     // Start is called before the first frame update
     public virtual void Create()
     {
-        rb = this.GetComponent<Rigidbody>();
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
     private void Start()
