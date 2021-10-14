@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8514985764260257263}
   - component: {fileID: 8258077669864745408}
   - component: {fileID: 7126638304656815046}
+  - component: {fileID: 7183137209490659154}
   m_Layer: 0
   m_Name: ProjectileBase
   m_TagString: Untagged
@@ -29,13 +30,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5733697913478852489}
-  m_LocalRotation: {x: 0.27550662, y: 0.6512267, z: -0.6512266, w: 0.2755066}
+  m_LocalRotation: {x: 0, y: 0, z: -0.92097473, w: 0.38962227}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -134.138}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -134.138}
 --- !u!212 &5733697913478852488
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2031725961
-  m_SortingLayer: 1
+  m_SortingLayerID: -1694296011
+  m_SortingLayer: 2
   m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: 7645f557fdf83464b89e4c6be3699c0d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -167,3 +168,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &7183137209490659154
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733697913478852489}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.14, y: 0.38}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16}
+  m_EdgeRadius: 0

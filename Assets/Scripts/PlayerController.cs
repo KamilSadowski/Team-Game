@@ -28,23 +28,25 @@ public class PlayerController : Controller
 
             entityMoveComp.Move(temp);
 
-
-            for (int i = 0; i < 2; ++i)
-            {
-                if (Input.GetMouseButtonDown(i))
-                {
-                    player.chargeWeapon(i);
-                }
-                else if (Input.GetMouseButtonUp(i))
-                {
-                    player.ReleaseWeapon(i);
-                }
-            }
-
         }
         else
         {
             entityMoveComp = this.GetComponent<MovementComponent>();
+        }
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (Input.GetMouseButtonDown(i))
+            {
+                player.chargeWeapon(i);
+            }
+            else if (Input.GetMouseButtonUp(i))
+            {
+                player.ReleaseWeapon(i);
+            }
         }
     }
 }
