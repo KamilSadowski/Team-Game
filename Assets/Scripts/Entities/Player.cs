@@ -9,7 +9,7 @@ public class Player : Character
 
     protected const float MAX_FORCE_MOD = 3; //Discuss this in detail later- What factor limits the throwing power? 
 
-    protected float Strength;
+    protected float strength;
     protected float[] WeaponCharge = {0,0};
     // Start is called before the first frame update
     void Start()
@@ -25,13 +25,13 @@ public class Player : Character
 
     public void ReleaseWeapon(int index)
     {
-        entitySpawner.TryCreateListedWeapon(1, this.transform.position);
+        entitySpawner.TryCreateListedProjectile(1, this.transform.position, Vector3.up, strength);
         WeaponCharge[index] = 0.01f;
     }
 
     public void chargeWeapon(int index)
     {
-        if(WeaponCharge[index] < Strength * MAX_FORCE_MOD)
-        WeaponCharge[index] += Strength;
+        if(WeaponCharge[index] < strength * MAX_FORCE_MOD)
+        WeaponCharge[index] += strength;
     }
 }

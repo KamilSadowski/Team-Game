@@ -16,7 +16,7 @@ public class EntityManager : MonoBehaviour
     Stack<int> entitySlots = new Stack<int>();
     Entity tempEntity;
     GameObject tempEntityGameObject;
-
+    MovementComponent canThrow;
 
     public bool TryCreatePlayer(Vector3 Position)
     {
@@ -28,6 +28,14 @@ public class EntityManager : MonoBehaviour
     {
         if(index >= 0 && index < WeaponList.Length)
         return TryCreateEntity(WeaponList[index], Position);
+
+        return false;
+    }
+
+    public bool TryCreateListedProjectile(int index, Vector3 Position, Vector3 NormalDirection, float force)
+    {
+        if (index >= 0 && index < WeaponList.Length)
+            return TryCreateMovingEntity(WeaponList[index], Position, NormalDirection, force);
 
         return false;
     }
@@ -77,6 +85,43 @@ public class EntityManager : MonoBehaviour
         tempEntityGameObject = null;
         return true;
     }
+
+
+    public bool TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)
+    {
+        if (entitySlots.Count == 0)
+        {
+            return false;
+        }
+
+        tempEntityGameObject = Instantiate<GameObject>(entity);
+        tempEntityGameObject.TryGetComponent<Entity>(out tempEntity);
+        tempEntityGameObject.transform.position = position;
+
+        canThrow = tempEntityGameObject.GetComponent<MobileComponent>();
+
+        if (tempEntity != null)
+        {
+            if (canThrow != null)
+            {
+                canThrow.Move(Direction * force);
+            }
+            tempEntity.Create(entitySlots.Peek());
+            entities[entitySlots.Peek()] = tempEntity;
+            entitySlots.Pop();
+        }
+        else
+        {
+            Destroy(tempEntityGameObject);
+            return false;
+        }
+
+        tempEntity = null;
+        tempEntityGameObject = null;
+        return true;
+    }
+
+
 
     // Setting the bull will skip destroying if its to be done manually
     public void DeleteEntity(int id, bool destroy = true)
