@@ -11,7 +11,7 @@ public class MovementComponent : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Create()
     {
-        rb = this.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()

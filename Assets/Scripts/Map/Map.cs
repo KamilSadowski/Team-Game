@@ -35,7 +35,7 @@ public class Map : MonoBehaviour
 
 	void Update()
 	{
-		if (reloadMap)
+		while (reloadMap)
 		{
 			reloadMap = !CreateMap();
 			if (!reloadMap)

@@ -10,7 +10,7 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] Vector3 cameraEntityOffset;
     [SerializeField] float cameraForwardOffset = 1.0f;
     [SerializeField] float cameraForwardAimingOffset = 3.0f;
-    //[SerializeField] CCrosshair crosshair;
+    Crosshair crosshair;
     //[SerializeField] Material effectMaterial;
     //PostProcessVolume postProcessing;
     //ColorGrading colorGrading;
@@ -43,6 +43,7 @@ public class FollowingCamera : MonoBehaviour
     {
         originPoint = gameObject.GetComponentInParent<Transform>();
         camera = GetComponent<Camera>();
+        crosshair = FindObjectOfType<Crosshair>();
         //postProcessing = GetComponent<PostProcessVolume>();
 
         // Get colour grading
@@ -76,11 +77,11 @@ public class FollowingCamera : MonoBehaviour
                   
             if (aiming)
             {
-                moveTo += targetToFollow.transform.forward * cameraForwardAimingOffset;
+                moveTo += (crosshair.transform.position - targetToFollow.transform.position).normalized * cameraForwardAimingOffset;
             }
             else
             {
-                moveTo += targetToFollow.transform.forward * cameraForwardOffset;
+                moveTo += (crosshair.transform.position - targetToFollow.transform.position).normalized * cameraForwardOffset;
             }
 
             moveTo.z = cameraHeight;
@@ -89,7 +90,7 @@ public class FollowingCamera : MonoBehaviour
 
 
         // Convert the position from screen space to world space
-        //crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
+        crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
 
         if (targetToFollow != null)
         {
@@ -148,10 +149,10 @@ public class FollowingCamera : MonoBehaviour
         shaking = true;
     }
 
-    //public Vector3 GetCrosshairPosition()
-    //{
-    //    return crosshair.transform.position;
-    //}
+    public Vector3 GetCrosshairPosition()
+    {
+        return crosshair.transform.position;
+    }
 
     //public void OnRenderImage(RenderTexture source, RenderTexture destination)
     //{

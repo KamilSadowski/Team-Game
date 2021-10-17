@@ -13,26 +13,15 @@ public class ProjectileController : Controller
 
     int entityID;
     EntityManager entityMan;
-    Ray mouseRay;
-    Plane crosshairPlane;
-
-    float distanceToPlane;
 
     // Start is called before the first frame update
     void Start()
     {
-        crosshairPlane = new Plane(Vector3.up, 0);
-
-        mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (crosshairPlane.Raycast(mouseRay, out distanceToPlane))
-        {
-            targetPosition = mouseRay.GetPoint(distanceToPlane);
-        }
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (entityMoveComp != null)
         {

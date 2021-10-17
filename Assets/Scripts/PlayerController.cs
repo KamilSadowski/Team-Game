@@ -17,8 +17,6 @@ public class PlayerController : Controller
     // Update is called once per frame
     void FixedUpdate()
     {
-
-     
         if (entityMoveComp != null)
         {
             Vector3 temp = Vector3.zero;

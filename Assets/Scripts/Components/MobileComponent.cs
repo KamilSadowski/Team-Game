@@ -23,6 +23,10 @@ public class MobileComponent : MovementComponent
     public override void Move(Vector3 input)
     {
         // currentInput = input;
+        if (rb == null)
+        {
+            return;
+        }
 
         // Add velocity based on input
         velocity.x += input.x * movementSpeed * Time.deltaTime;
