@@ -15,11 +15,26 @@ public class Player : Character
 
     Crosshair crosshair;
 
+    //Direct reference to the progress bars held within the UI
+    UI_ChargingBar[] weaponCharge_UI = new UI_ChargingBar[2];
+
     // Start is called before the first frame update
     void Start()
     {
         crosshair = FindObjectOfType<Crosshair>();
         entitySpawner = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
+
+
+        int i = 0;
+        foreach (Transform child in GameObject.FindWithTag("Finish").GetComponent<Transform>())
+        {
+            if (i < 2)
+            {
+                weaponCharge_UI[i] = child.GetComponent<UI_ChargingBar>();
+                ++i;
+            }
+          
+        }
     }
 
     // Update is called once per frame
@@ -42,10 +57,16 @@ public class Player : Character
         //In the future the '1' will instead inherit a projectile from the equipped weapon (First variable in function)
         //Vector3.up will, in the future, get the mouse position and create a normalized direction.
         WeaponCharge[index] = 0.01f;
+
+        if (weaponCharge_UI[index] != null)
+            weaponCharge_UI[index].updateProgBar(0);
     }
 
     public void chargeWeapon(int index)
     {
         if(WeaponCharge[index] < strength * MAX_FORCE_MOD) WeaponCharge[index] += strength * Time.deltaTime;
+
+        if(weaponCharge_UI[index] != null)
+        weaponCharge_UI[index].updateProgBar(WeaponCharge[index] / (MAX_FORCE_MOD * strength));
     }
 }
