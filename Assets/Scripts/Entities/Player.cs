@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
+    const int WEAPON_COUNT = 2;
     protected EntityManager entitySpawner;
     [SerializeField] Weapon[] NPCList;
 
@@ -16,7 +17,7 @@ public class Player : Character
     Crosshair crosshair;
 
     //Direct reference to the progress bars held within the UI
-    UI_ChargingBar[] weaponCharge_UI = new UI_ChargingBar[2];
+    UI_ChargingBar[] weaponCharge_UI = new UI_ChargingBar[WEAPON_COUNT];
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,7 @@ public class Player : Character
         int i = 0;
         foreach (Transform child in GameObject.FindWithTag("Finish").GetComponent<Transform>())
         {
-            if (i < 2)
+            if (i < WEAPON_COUNT)
             {
                 weaponCharge_UI[i] = child.GetComponent<UI_ChargingBar>();
                 ++i;
@@ -46,27 +47,32 @@ public class Player : Character
     public void ReleaseWeapon(int index)
     {
 
-        //Stops the projectile spawning directly under the entity (Currently 10% crosshair pos effect) 
+        //Stops the projectile spawning directly under the entity (Currently 10% crosshair pos effect) //NOTE: LOOK INTO ALTERNATIVES
         SpawnPosition = ((transform.position *9) + crosshair.GetPosition()) * .1f;
 
-        //Set the force and direction within the projectile class for its own use. 
+
+        //In the future the listed projectile (the 1) will instead inherit a projectile from the equipped weapon (First variable in function)
+        //Set the force and direction within the projectile class for its own use.
         entitySpawner.GetEntity(
             entitySpawner.TryCreateListedProjectile(1, SpawnPosition, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
             .GetComponent<ProjectileController>().SetThrowing(WeaponCharge[index], crosshair.GetPosition());
 
-        //In the future the '1' will instead inherit a projectile from the equipped weapon (First variable in function)
-        //Vector3.up will, in the future, get the mouse position and create a normalized direction.
+
         WeaponCharge[index] = 0.01f;
 
+        //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
         if (weaponCharge_UI[index] != null)
             weaponCharge_UI[index].updateProgBar(0);
     }
 
     public void chargeWeapon(int index)
     {
+        //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
+        //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
         if(WeaponCharge[index] < strength * MAX_FORCE_MOD) WeaponCharge[index] += strength * Time.deltaTime;
 
-        if(weaponCharge_UI[index] != null)
+        //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
+        if (weaponCharge_UI[index] != null)
         weaponCharge_UI[index].updateProgBar(WeaponCharge[index] / (MAX_FORCE_MOD * strength));
     }
 }
