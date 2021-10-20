@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class EntityManager : MonoBehaviour
 {
-    const int ENTITY_LIMIT = 5;
+    const int ENTITY_LIMIT = 500;
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject[] NPCList;
@@ -17,52 +18,58 @@ public class EntityManager : MonoBehaviour
     Entity tempEntity;
     GameObject tempEntityGameObject;
     MovementComponent canThrow;
+    private int ID;
 
-    public bool TryCreatePlayer(Vector3 Position)
+    public int TryCreatePlayer(Vector3 Position)
     {
         return TryCreateEntity(playerPrefab, Position);
     }
 
 
-    public bool TryCreateListedWeapon(int index, Vector3 Position)
+    public int TryCreateListedWeapon(int index, Vector3 Position)
     {
         if(index >= 0 && index < WeaponList.Length)
         return TryCreateEntity(WeaponList[index], Position);
 
-        return false;
+        //-1 is commonly used as "Invalid"
+        return -1;
     }
 
-    public bool TryCreateListedProjectile(int index, Vector3 Position, Vector3 NormalDirection, float force)
+    public int TryCreateListedProjectile(int index, Vector3 Position, Vector3 NormalDirection, float force)
     {
         if (index >= 0 && index < WeaponList.Length)
             return TryCreateMovingEntity(WeaponList[index], Position, NormalDirection, force);
 
-        return false;
+        //-1 is commonly used as "Invalid"
+        return -1;
     }
 
-    public bool TryCreateListedNPC(int index, Vector3 Position)
+    public int TryCreateListedNPC(int index, Vector3 Position)
     {
         if (index >= 0 && index < NPCList.Length)
             return TryCreateEntity(NPCList[index], Position);
 
-        return false;
+        //-1 is commonly used as "Invalid"
+        return -1;
     }
 
-    public bool TryCreateListedProp(int index, Vector3 Position)
+    public int TryCreateListedProp(int index, Vector3 Position)
     {
         if (index >= 0 && index < PropList.Length)
             return TryCreateEntity(PropList[index], Position);
 
-        return false;
+        //-1 is commonly used as "Invalid"
+        return -1;
     }
 
 
     // Returns false if failed
-    public bool TryCreateEntity(GameObject entity, Vector3 position)
+    public int TryCreateEntity(GameObject entity, Vector3 position)
     {
+        //-1 is commonly used as "Invalid"
         if (entitySlots.Count == 0)
         {
-            return false;
+            return -1;
         }
 
         tempEntityGameObject = Instantiate<GameObject>(entity);
@@ -71,27 +78,30 @@ public class EntityManager : MonoBehaviour
 
         if (tempEntity != null)
         {
+            ID = entitySlots.Peek();
             tempEntity.Create(entitySlots.Peek());
-            entities[entitySlots.Peek()] = tempEntity;
+            entities[ID] = tempEntity;
             entitySlots.Pop();
-        }
-        else
-        {
-            Destroy(tempEntityGameObject);
-            return false;
+
+            tempEntity = null;
+            tempEntityGameObject = null;
+            return ID;
         }
 
+        Destroy(tempEntityGameObject);
         tempEntity = null;
         tempEntityGameObject = null;
-        return true;
+        return -1;
+
     }
 
 
-    public bool TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)
+    public int TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)
     {
+        //-1 is commonly used as "Invalid"
         if (entitySlots.Count == 0)
         {
-            return false;
+            return -1;
         }
 
         tempEntityGameObject = Instantiate<GameObject>(entity);
@@ -102,23 +112,24 @@ public class EntityManager : MonoBehaviour
 
         if (tempEntity != null)
         {
+
+            ID = entitySlots.Peek();
             if (canThrow != null)
             {
                 canThrow.Move(Direction * force);
             }
+
             tempEntity.Create(entitySlots.Peek());
-            entities[entitySlots.Peek()] = tempEntity;
+            entities[ID] = tempEntity;
             entitySlots.Pop();
-        }
-        else
-        {
-            Destroy(tempEntityGameObject);
-            return false;
+
+            return ID;
         }
 
+        Destroy(tempEntityGameObject);
         tempEntity = null;
         tempEntityGameObject = null;
-        return true;
+        return -1;
     }
 
 
@@ -137,6 +148,14 @@ public class EntityManager : MonoBehaviour
         entitySlots.Push(id);
     }
 
+    public Entity GetEntity(int id)
+    {
+        if (id >= 0 && id < entities.Count)
+            return entities[id];
+
+        return null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -146,21 +165,13 @@ public class EntityManager : MonoBehaviour
             entitySlots.Push(i);
         }
 
-        bool loadupCheck = true;
-
-        //If any of the following are false then this IF statement is TRUE;
-        if (!(
-            TryCreateListedWeapon(0, Vector3.forward) 
-            &&
-            TryCreatePlayer(Vector3.zero) 
-            && TryCreateListedNPC(0, Vector3.left)
-            ))
+        //If any of the following are invalid then this IF statement is TRUE;
+        if (-1 != TryCreateListedWeapon(0, Vector3.forward) 
+            && 
+            -1 != TryCreatePlayer(Vector3.zero)
+            && 
+            -1 != TryCreateListedNPC(0, Vector3.left))
         { }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        int test = 1;
-    }
 }

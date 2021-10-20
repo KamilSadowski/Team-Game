@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8258077669864745408}
   - component: {fileID: 7126638304656815046}
   - component: {fileID: 7183137209490659154}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ProjectileBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071a1bb4ebf243e4292f2a8861842e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drag: 0.01
 --- !u!50 &7126638304656815046
 Rigidbody2D:
   serializedVersion: 4

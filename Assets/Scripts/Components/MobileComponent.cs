@@ -25,7 +25,11 @@ public class MobileComponent : MovementComponent
         // currentInput = input;
         if (rb == null)
         {
-            return;
+            Create();
+            if (rb == null)
+            {
+                return;
+            }
         }
 
         // Add velocity based on input

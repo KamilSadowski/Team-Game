@@ -9,7 +9,7 @@ public class Player : Character
 
     protected const float MAX_FORCE_MOD = 3; //Discuss this in detail later- What factor limits the throwing power? 
 
-    protected float strength;
+    protected float strength = 2.5f;
     protected float[] WeaponCharge = {0,0};
 
     Crosshair crosshair;
@@ -29,7 +29,11 @@ public class Player : Character
 
     public void ReleaseWeapon(int index)
     {
-        entitySpawner.TryCreateListedProjectile(1, transform.position, (transform.position - crosshair.transform.position).normalized, strength);
+        //Set the force within the projectile class for its own use. 
+        entitySpawner.GetEntity(entitySpawner.TryCreateListedProjectile
+            (1, transform.position, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
+            .GetComponent<ProjectileController>().SetThrowing(WeaponCharge[index], crosshair.GetPosition());
+
         //In the future the '1' will instead inherit a projectile from the equipped weapon (First variable in function)
         //Vector3.up will, in the future, get the mouse position and create a normalized direction.
         WeaponCharge[index] = 0.01f;
@@ -37,7 +41,6 @@ public class Player : Character
 
     public void chargeWeapon(int index)
     {
-        if(WeaponCharge[index] < strength * MAX_FORCE_MOD)
-        WeaponCharge[index] += strength;
+        if(WeaponCharge[index] < strength * MAX_FORCE_MOD) WeaponCharge[index] += strength * Time.deltaTime;
     }
 }

@@ -11,11 +11,15 @@ public class Crosshair : MonoBehaviour
         transform.position = newPosition;
     }
 
-
     public void SetPosition(Vector3 WorldPosition)
     {
         WorldPosition.z = 0.0f;
         newPosition = WorldPosition;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }
 
