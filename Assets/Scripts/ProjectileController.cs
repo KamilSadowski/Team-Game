@@ -19,7 +19,10 @@ public class ProjectileController : Controller
 
     // Start is called before the first frame update
     void Start() 
-    {    }
+    {
+        entityID = GetComponent<Entity>().entityID;
+        entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
+    }
 
     public void SetThrowing(float inputForce, Vector3 direction)
     {
@@ -38,14 +41,10 @@ public class ProjectileController : Controller
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
             if (Input.GetKey(KeyCode.P))
             {
-                entityID = GetComponent<Entity>().entityID;
-
-                entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
-
                 if (entityMan != null)
                     entityMan.DeleteEntity(entityID);
             }
-            else if (force >= 0.1f)
+            else if (force >= 0.025f)
             {
                 //As the mobileComponent does not use Velocity, and the projectiles themselves rely on a single input of force, it should be simulated here without
                 //Creating multiple Movement components, which may overcomplicate the process for any future changes.
@@ -54,6 +53,11 @@ public class ProjectileController : Controller
 
                 //Drag is designed to work as "0 is no drag. 1 is immobile"
                 force *= 1.0f - drag;
+            }
+            else
+            {
+                //if there's no force then why have a projectile?
+                entityMan.DeleteEntity(entityID);
             }
 
         }

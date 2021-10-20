@@ -11,6 +11,7 @@ public class Player : Character
 
     protected float strength = 2.5f;
     protected float[] WeaponCharge = {0,0};
+    protected Vector3 SpawnPosition;
 
     Crosshair crosshair;
 
@@ -29,9 +30,13 @@ public class Player : Character
 
     public void ReleaseWeapon(int index)
     {
-        //Set the force within the projectile class for its own use. 
-        entitySpawner.GetEntity(entitySpawner.TryCreateListedProjectile
-            (1, transform.position, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
+
+        //Stops the projectile spawning directly under the entity (Currently 10% crosshair pos effect) 
+        SpawnPosition = ((transform.position *9) + crosshair.GetPosition()) * .1f;
+
+        //Set the force and direction within the projectile class for its own use. 
+        entitySpawner.GetEntity(
+            entitySpawner.TryCreateListedProjectile(1, SpawnPosition, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
             .GetComponent<ProjectileController>().SetThrowing(WeaponCharge[index], crosshair.GetPosition());
 
         //In the future the '1' will instead inherit a projectile from the equipped weapon (First variable in function)
