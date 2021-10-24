@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class Map : MonoBehaviour
 
 			return false;
 		}
-		// Go through each room and give them doors
+		// Go through each room and give them corridors
 		else
 		{
 			for (int room = 0; room < roomsCreated.Count; room++)
@@ -80,7 +81,7 @@ public class Map : MonoBehaviour
 				UpdateDirectionsAvailable(roomGridPositions[room], false, true);
 				for (int door = 0; door < directionsAvailable.Count; door++)
 				{
-					roomsCreated[room].CreateDoor(directionsAvailable[door], 
+					roomsCreated[room].CreateCorridor(directionsAvailable[door], 
 												  PositionInDirection(roomGridPositions[room], 
 												  directionsAvailable[door]));
 				}

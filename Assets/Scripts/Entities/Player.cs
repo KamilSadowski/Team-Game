@@ -27,7 +27,7 @@ public class Player : Character
 
 
         int i = 0;
-        foreach (Transform child in GameObject.FindWithTag("Finish").GetComponent<Transform>())
+        foreach (Transform child in GameObject.FindWithTag("ChargeBar").GetComponent<Transform>())
         {
             if (i < WEAPON_COUNT)
             {

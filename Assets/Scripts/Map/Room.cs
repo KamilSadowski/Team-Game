@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    Door[] doors;
+    Corridor[] corridors;
 
     // Start is called before the first frame update
     void Awake()
     {
-        doors = GetComponentsInChildren<Door>();
-
-        // Disable all doors, the doors will be re-enabled by the map script once all rooms are generated
-        for (int i = 0; i < doors.Length; i++)
-        {
-            doors[i].gameObject.SetActive(false);
-        }
+        corridors = GetComponentsInChildren<Corridor>();
     }
 
     // Update is called once per frame
@@ -24,14 +18,14 @@ public class Room : MonoBehaviour
         
     }
 
-    public void CreateDoor(Globals.Direction direction, Globals.Grid2D linkedRoom)
+    public void CreateCorridor(Globals.Direction direction, Globals.Grid2D linkedRoom)
     {
-        for (int i = 0; i < doors.Length; i++)
+        for (int i = 0; i < corridors.Length; i++)
         {
-            if (doors[i].GetDirection() == direction)
+            if (corridors[i].GetDirection() == direction)
             {
-                doors[i].roomLinked = linkedRoom;
-                doors[i].gameObject.SetActive(true);
+                corridors[i].roomLinked = linkedRoom;
+                corridors[i].CreateCorridor();
                 return;
             }
         }
