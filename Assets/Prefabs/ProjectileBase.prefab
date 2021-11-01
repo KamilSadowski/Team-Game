@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5733697913478852486}
   - component: {fileID: 3650767725004706615}
   - component: {fileID: 8514985764260257263}
-  - component: {fileID: 8258077669864745408}
   - component: {fileID: 7126638304656815046}
   - component: {fileID: 7183137209490659154}
+  - component: {fileID: 2566258519793261882}
   m_Layer: 3
   m_Name: ProjectileBase
   m_TagString: Untagged
@@ -135,19 +135,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1
   drag: 0.5
---- !u!114 &8258077669864745408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5733697913478852489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 071a1bb4ebf243e4292f2a8861842e9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drag: 0.01
 --- !u!50 &7126638304656815046
 Rigidbody2D:
   serializedVersion: 4
@@ -167,7 +154,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &7183137209490659154
 BoxCollider2D:
@@ -195,3 +182,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &2566258519793261882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733697913478852489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce8b9405aa54954197a490f2d82f460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drag: 0.01

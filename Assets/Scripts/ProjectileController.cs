@@ -24,6 +24,16 @@ public class ProjectileController : Controller
         entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
     }
 
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        ProjFixedUpdate();
+    }
+
+    //The above two functions will be the same within every level of inheritance. 
+
+
+
     public void SetThrowing(float inputForce, Vector3 direction)
     {
         force = inputForce;
@@ -31,8 +41,7 @@ public class ProjectileController : Controller
 
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    protected bool ProjFixedUpdate()
     {
         if (entityMoveComp != null)
         {
@@ -48,18 +57,19 @@ public class ProjectileController : Controller
             {
                 //As the mobileComponent does not use Velocity, and the projectiles themselves rely on a single input of force, it should be simulated here without
                 //Creating multiple Movement components, which may overcomplicate the process for any future changes.
-  
+
                 entityMoveComp.Move(force * nDirection);
 
                 //Drag is designed to work as "0 is no drag. 1 is immobile"
                 force *= 1.0f - drag;
+
             }
             else
             {
                 //if there's no force then why have a projectile?
-                entityMan.DeleteEntity(entityID);
+                return false;
             }
-
+          
         }
         else
         {
@@ -69,7 +79,8 @@ public class ProjectileController : Controller
             if (entityMoveComp == null)
             {
                 entityMan.DeleteEntity(entityID);
-            }    
+            }
         }
+        return true;
     }
 }
