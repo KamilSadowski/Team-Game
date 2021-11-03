@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class WeaponController : ProjectileController
 {
-    public bool isDropped = true;
+
     //entityMan.DeleteEntity(entityID);
     protected string WeaponName;
-    protected bool isThrown = true;
-    protected bool isPickup = true;
 
-    //This will always be false until a player picks up the main reference.
+    protected bool isPickup = true;
     protected bool isHeld = false;
+    [SerializeField] bool isDropped = false;
 
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
@@ -29,33 +28,32 @@ public class WeaponController : ProjectileController
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+
         if (playerCollision == null || weaponCollision == null)
         {
             collisionSetup();
         }
-        else 
-        if(!isHeld)
-        //This is for when it has just spawned or is placed. 
-        if (isDropped)
-        {
-            playerPickup();
-        }
         else
-        if (isThrown)
-        {
-            //Once "IsPickup" is false, this function will have "Used up" its force and so it's disabled and the player can pick up the weapon.
-            if (isPickup)
+        if (!isHeld)
+            //This is for when it has just spawned or is placed. 
+            if (isDropped)
             {
-                isPickup = ProjFixedUpdate();
+                playerPickup();
             }
             else
             {
-                 isHeld = false;
-                //This could set "IsDropped" to true but it would effectively do the same thing. 
-                playerPickup();
+                //Once "IsPickup" is false, this function will have "Used up" its force and so it's disabled and the player can pick up the weapon.
+                if (isPickup)
+                {
+                    isPickup = ProjFixedUpdate();
+                }
+                else
+                {
+                    isHeld = false;
+                    //This could set "IsDropped" to true but it would effectively do the same thing. 
+                    playerPickup();
+                }
             }
-        }
     }
 
     protected void collisionSetup()
@@ -67,31 +65,33 @@ public class WeaponController : ProjectileController
     }
     protected void playerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
-        if(!isHeld)
-        if (playerCollision.bounds.Intersects(weaponCollision.bounds))
-        {
-            isDropped = false;
-            isThrown = false;
-            isHeld = true;
-
-
-            transform.position = Vector3.zero;
-            FindObjectOfType<Player>().PickupWeapon(gameObject);
-        }
+       if (!isHeld) 
+       if (playerCollision.bounds.Intersects(weaponCollision.bounds))
+       {
+           isDropped = false;
+           transform.position = Vector3.zero;
+           if (!FindObjectOfType<Player>().PickupWeapon(gameObject))
+           {
+               //No where to put entity. Delete it, for now. 
+               entityMan.DeleteEntity(entityID);
+           }
+           else
+           {
+               //Weapon has been picked up.
+               isHeld = true;
+           }
+       }
     }
 
     public void ThrowWeapon()
     {
-        isThrown = true;
+        isHeld = false;
     }
 
-    public bool GetIsThrown()
-    {
-        return isThrown;
-    }
+
     public bool GetIsEquipped()
     {
-        return (!isThrown && isHeld) ;
+        return (isHeld);
     }
 
     public string getName()

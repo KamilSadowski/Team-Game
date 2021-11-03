@@ -49,8 +49,6 @@ public class Player : Character
     {
         if (IsWeaponAvailable(index))
         {
-
-
             //Stops the projectile spawning directly under the entity (Currently 5% crosshair pos effect) //NOTE: LOOK INTO ALTERNATIVES
             SpawnPosition = (transform.position * .95f) + (crosshair.GetPosition() * .05f);
 
@@ -84,7 +82,7 @@ public class Player : Character
         }
     }
 
-    public void PickupWeapon(GameObject weapon)
+    public bool PickupWeapon(GameObject weapon)
     {
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
@@ -92,29 +90,30 @@ public class Player : Character
             {
                 //This cannot use "IsWeaponAvailable" as it checks if the weapon is out of hand, rather than in hand. 
                 //If "IsHeldWeapon" then it should not interact with the null class.
-                if (equipment[i].weaponController == null || equipment[i].weaponController.GetIsEquipped())
+                if (equipment[i].weaponController == null || !equipment[i].weaponController.GetIsEquipped())
                 {
                     WeaponController inputWeapon = weapon.GetComponent<WeaponController>();
 
                     //Make sure there isn't an accidental duplicate. "This shouldn't be possible." (Programmer, 2021)
                     if (inputWeapon == equipment[0].weaponController || inputWeapon == equipment[1].weaponController)
                     {
-                        break;
+                        return false;
                     }
                     if (inputWeapon != null)
                     {
                         equipment[i].gameObject = weapon;
                         equipment[i].weaponController = inputWeapon;
-                        break;
+                        return true;
                     }
                 }
             }
+        return false;
     }
 
 
     //If the equipment slot is empty, or the weapon has been "Thrown" it will be unavailable.
     private bool IsWeaponAvailable(int index)
     {
-        return (equipment[index].gameObject != null && equipment[index].weaponController != null && equipment[index].weaponController.GetIsEquipped());
+        return (equipment[index].gameObject != null && equipment[index].weaponController.GetIsEquipped());
     }
 }
