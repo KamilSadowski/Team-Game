@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class PlayerController : Controller
-{
+{   
     protected Player player;
 
-    protected bool[] isCharging;
+    public bool[] isCharging;
 
     // protected bool[] isCharging = { false, false }; //Potentially use this if "Update" is not fast enough and stutters.
 
     // Start is called before the first frame update
     void Start()
     {
-        isCharging = new bool[] { false, false };
+        isCharging = new bool[2];
+        isCharging[0] = false;
+        isCharging[1] = false;
+
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
@@ -43,7 +49,7 @@ public class PlayerController : Controller
         {
             if (isCharging[i])
             {
-                player.chargeWeapon(i);
+                player.ChargeWeapon(i);
             }
         }
     }
