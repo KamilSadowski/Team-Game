@@ -21,7 +21,7 @@ public class Player : Character
     protected float strength = 2.5f;
     protected float[] WeaponCharge = {0,0};
     protected Vector3 SpawnPosition;
-
+    WeaponController spawnedWeaponReference;
     Crosshair crosshair;
 
     //Direct reference to the progress bars held within the UI
@@ -52,19 +52,27 @@ public class Player : Character
             //Stops the projectile spawning directly under the entity (Currently 5% crosshair pos effect) //NOTE: LOOK INTO ALTERNATIVES
             SpawnPosition = (transform.position * .95f) + (crosshair.GetPosition() * .05f);
 
-
             //In the future the listed projectile (the 1) will instead inherit a projectile from the equipped weapon (First variable in function)
             //Set the force and direction within the projectile class for its own use.
-            entitySpawner.GetEntity(
-                entitySpawner.TryCreateListedProjectile(1, SpawnPosition, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
-                .GetComponent<ProjectileController>().SetThrowing(WeaponCharge[index], crosshair.GetPosition());
+            spawnedWeaponReference = 
+                entitySpawner.GetEntity(entitySpawner.TryCreateListedProjectile(1, SpawnPosition, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
+                .GetComponent<WeaponController>();
 
+            if (spawnedWeaponReference != null)
+            {
+                spawnedWeaponReference.SetThrowing(WeaponCharge[index], crosshair.GetPosition());
+                spawnedWeaponReference.SetParent(equipment[index].gameObject.GetComponent<Entity>().entityID);
+                //SetParent
 
-            WeaponCharge[index] = 0.01f;
+                //This will tell the "Source" weapon that it has spawned a clone, to throw. 
+                equipment[index].weaponController.ThrowWeapon();
 
-            //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
-            if (weaponCharge_UI[index] != null)
-                weaponCharge_UI[index].updateProgBar(0);
+                WeaponCharge[index] = 0.01f;
+
+                //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
+                if (weaponCharge_UI[index] != null)
+                    weaponCharge_UI[index].updateProgBar(0);
+            }
         }
     }
 
@@ -90,9 +98,13 @@ public class Player : Character
             {
                 //This cannot use "IsWeaponAvailable" as it checks if the weapon is out of hand, rather than in hand. 
                 //If "IsHeldWeapon" then it should not interact with the null class.
-                if (equipment[i].weaponController == null || !equipment[i].weaponController.GetIsEquipped())
+                if (equipment[i].weaponController == null || equipment[i].weaponController.GetIsEquipped()) //
                 {
                     WeaponController inputWeapon = weapon.GetComponent<WeaponController>();
+                    if (!inputWeapon.isParent()) //If it is not a "Source" weapon.
+                    {
+                        break;
+                    }
 
                     //Make sure there isn't an accidental duplicate. "This shouldn't be possible." (Programmer, 2021)
                     if (inputWeapon == equipment[0].weaponController || inputWeapon == equipment[1].weaponController)
@@ -115,5 +127,10 @@ public class Player : Character
     private bool IsWeaponAvailable(int index)
     {
         return (equipment[index].gameObject != null && equipment[index].weaponController.GetIsEquipped());
+    }
+
+    public void spawnWeaponPickup()
+    {
+        entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
     }
 }

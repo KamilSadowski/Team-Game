@@ -6,8 +6,11 @@ public class WeaponController : ProjectileController
 {
 
     //entityMan.DeleteEntity(entityID);
-    protected string WeaponName;
+    protected int parentID = -1;
+    private Entity parentRef;
+    private WeaponController parentWeapCont;
 
+    protected bool isProjectile = true; //This will be set to false when picked up and to true when it moves.
     protected bool isPickup = true;
     protected bool isHeld = false;
     [SerializeField] bool isDropped = false;
@@ -35,6 +38,8 @@ public class WeaponController : ProjectileController
         }
         else
         if (!isHeld)
+        {
+            isProjectile = true;
             //This is for when it has just spawned or is placed. 
             if (isDropped)
             {
@@ -54,6 +59,7 @@ public class WeaponController : ProjectileController
                     playerPickup();
                 }
             }
+        }
     }
 
     protected void collisionSetup()
@@ -63,6 +69,7 @@ public class WeaponController : ProjectileController
         weaponCollision = GetComponent<BoxCollider2D>();
         Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
+
     protected void playerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
        if (!isHeld) 
@@ -70,14 +77,22 @@ public class WeaponController : ProjectileController
        {
            isDropped = false;
            transform.position = Vector3.zero;
-           if (!FindObjectOfType<Player>().PickupWeapon(gameObject))
+
+           if (getParentRef())
+           {
+               parentWeapCont.isHeld = true;
+               parentWeapCont.isProjectile = false;
+           }
+
+           if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
            {
                //No where to put entity. Delete it, for now. 
                entityMan.DeleteEntity(entityID);
            }
            else
            {
-               //Weapon has been picked up.
+               //Weapon has been picked up and is now a reference for cloning.
+               isProjectile = false;
                isHeld = true;
            }
        }
@@ -88,17 +103,60 @@ public class WeaponController : ProjectileController
         isHeld = false;
     }
 
+    public void SetParent(int ID)
+    {
+        parentID = ID;
+    }
+    public bool isParent()
+    {
+        return (parentID == -1);
+    }
 
+
+    //Consider putting this in a global utility class. 
+    private static bool isNull<T>(ref T input)
+    {
+        return (input == null);
+    }
+
+    //Sets up parent references, returning false if it is the parent. 
+    private bool getParentRef()
+    {
+        if (parentID != -1)
+        {
+            if (!isNull(ref parentRef) && !isNull(ref parentWeapCont))
+            {
+                return true;
+            }
+                //Generic safety checks
+            parentRef = entityMan.GetEntity(parentID);
+            if (!isNull(ref parentRef))
+            {
+
+                parentWeapCont = parentRef.GetComponent<WeaponController>();
+                if (!isNull(ref parentWeapCont))
+                {
+                    //Will recursively repeat this function until the parentID is equal to -1.
+                    return true;
+                }
+
+            }
+            //Weapon is invalid. (Error has occured)
+            entityMan.DeleteEntity(entityID);
+            return true;
+        }
+        return false;
+    }
+
+    //Bit of recursion but it should be fine as it will only be a single level, unless something has gone wrong.
     public bool GetIsEquipped()
     {
-        return (isHeld);
+        if (getParentRef())
+        {
+            //Will recursively repeat this function until the parentID is equal to -1.
+            return parentWeapCont.GetIsEquipped();
+        }
+        return (isHeld && !isProjectile);
     }
 
-    public string getName()
-    {
-        if (WeaponName == null || WeaponName.Length == 0)
-            return "";
-
-        return WeaponName;
-    }
 }

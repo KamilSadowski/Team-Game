@@ -57,6 +57,10 @@ public class PlayerController : Controller
     private void Update()
     {
 
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            player.spawnWeaponPickup();
+        }
 
         //This will work as a "Toggle" disguised as a "While holding" which will activate when the mouse button is down, as there may potentially be complications with update speed
         //This should also (Very slightly) reduce the required processing time as it simply ignores the IF statement if the bool is not in the correct section.
