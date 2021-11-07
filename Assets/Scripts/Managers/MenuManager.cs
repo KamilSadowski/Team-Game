@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HubWorld : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     GameManager gameManager;
 
@@ -15,6 +15,11 @@ public class HubWorld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    public void StartGame()
+    {
+        gameManager.EnterScene(Globals.Scenes.HubWorld);
     }
 }

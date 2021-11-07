@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
+    protected GameObject playerObject;
     protected Player player;
 
     protected bool[] isCharging;
@@ -14,12 +15,24 @@ public class PlayerController : Controller
     void Start()
     {
         isCharging = new bool[] { false, false };
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!player)
+        {
+            playerObject = GameObject.FindWithTag("Player");
+            if (playerObject)
+            {
+                player = playerObject.GetComponent<Player>();
+            }
+            else
+            {
+                return;
+            }
+        }
+
         //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
         if (entityMoveComp != null)
         {
@@ -50,7 +63,10 @@ public class PlayerController : Controller
 
     private void Update()
     {
-
+        if (!player)
+        {
+            return;
+        }
 
         //This will work as a "Toggle" disguised as a "While holding" which will activate when the mouse button is down, as there may potentially be complications with update speed
         //This should also (Very slightly) reduce the required processing time as it simply ignores the IF statement if the bool is not in the correct section.

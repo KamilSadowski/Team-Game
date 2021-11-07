@@ -46,6 +46,7 @@ public class Door : MonoBehaviour
     // Makes the door visible and the wall invisible
     public void CreateDoor()
     {
+        CheckDoorComponents();
         door.enabled = true;
         wall.enabled = false;
         hasDoor = true;
@@ -68,6 +69,26 @@ public class Door : MonoBehaviour
             animator.SetBool("Open", false);
             open = false;
             collider.enabled = true;
+        }
+    }
+
+    public void CheckDoorComponents()
+    {
+        if (!door)
+        {
+            door = GetComponent<SpriteRenderer>();
+        }
+        if (!wall)
+        {
+            wall = GetComponentInChildren<TilemapRenderer>();
+        }
+        if (!collider)
+        {
+            collider = GetComponentInChildren<Collider2D>();
+        }
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
         }
     }
 }
