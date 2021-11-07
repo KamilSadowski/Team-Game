@@ -45,6 +45,11 @@ public class Player : Character
         }
     }
 
+    void Update()
+    {
+        UpdateEntity();
+    }
+
     public void ReleaseWeapon(int index)
     {
         if (IsWeaponAvailable(index))

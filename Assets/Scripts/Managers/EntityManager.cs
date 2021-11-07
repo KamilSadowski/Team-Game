@@ -95,6 +95,28 @@ public class EntityManager : MonoBehaviour
 
     }
 
+    // Adds an already existing entity to the manager, returns -1 if it cannot be added and destroys the object
+    public int TryCreateEntity(Entity entity)
+    {
+        //-1 is commonly used as "Invalid"
+        if (entitySlots.Count == 0)
+        {
+            return -1;
+        }
+
+        if (entity != null)
+        {
+            ID = entitySlots.Peek();
+            entity.Create(entitySlots.Peek());
+            entities[ID] = entity;
+            entitySlots.Pop();
+
+            return ID;
+        }
+
+        Destroy(entity);
+        return -1;
+    }
 
     public int TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)
     {

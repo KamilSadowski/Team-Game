@@ -21,8 +21,6 @@ public class PlayerController : Controller
         isCharging[0] = false;
         isCharging[1] = false;
 
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
-
         isCharging = new bool[] { false, false };
     }
 

@@ -14,6 +14,6 @@ public class Entity2D : Entity
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateEntity();
     }
 }

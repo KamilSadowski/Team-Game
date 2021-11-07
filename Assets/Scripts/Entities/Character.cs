@@ -13,6 +13,6 @@ public class Character : Entity2D
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateEntity();
     }
 }

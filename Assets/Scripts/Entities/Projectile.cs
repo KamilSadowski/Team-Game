@@ -18,6 +18,6 @@ public class Projectile : Entity
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateEntity();
     }
 }
