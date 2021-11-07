@@ -548,7 +548,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -586,6 +586,7 @@ Transform:
   - {fileID: 2075294815397474562}
   - {fileID: 4806782574502224579}
   - {fileID: 702159839499588070}
+  - {fileID: 6503594400918563052}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1733,8 +1734,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2031725961
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1809,6 +1810,72 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8328760738856097214, guid: cb4c8d3059cf1484385171457b9b9ab1, type: 3}
   m_PrefabInstance: {fileID: 3540019020432603005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6630579379527331666
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 903545350527303028}
+    m_Modifications:
+    - target: {fileID: 452018536671987585, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987644, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: destination
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.24038887
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0408163
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.962142
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+--- !u!4 &6503594400918563052 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 452018536671987646, guid: 24acb05487cd6994ca1af5a536ac8b47, type: 3}
+  m_PrefabInstance: {fileID: 6630579379527331666}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8023547977702646972
 PrefabInstance:

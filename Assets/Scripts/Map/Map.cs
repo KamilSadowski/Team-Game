@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Map : MonoBehaviour
+public class Dungeon : MonoBehaviour
 {
 	GameManager gameManager;
 
@@ -38,7 +38,7 @@ public class Map : MonoBehaviour
 	{
 		while (reloadMap)
 		{
-			reloadMap = !CreateMap();
+			reloadMap = !CreateDungeon();
 			if (!reloadMap)
 			{
 				Debug.Log(hasRoom);
@@ -47,8 +47,8 @@ public class Map : MonoBehaviour
 	}
 
 
-	// Returns true if finished creating a map
-	bool CreateMap()
+	// Returns true if finished creating a dungeon
+	bool CreateDungeon()
 	{
 		// Create the first room
 		if (roomsCreated.Count == 0)
