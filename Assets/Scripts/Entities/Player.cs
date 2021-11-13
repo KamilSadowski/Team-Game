@@ -19,7 +19,7 @@ public class Player : Character
     protected const float MAX_FORCE_MOD = 3; //Discuss this in detail later- What factor limits the throwing power? 
 
     protected float strength = 2.5f;
-    protected float[] WeaponCharge = {0,0};
+    protected float[] WeaponCharge = { 0, 0 };
     protected Vector3 SpawnPosition;
     WeaponController spawnedWeaponReference;
     Crosshair crosshair;
@@ -45,11 +45,6 @@ public class Player : Character
         }
     }
 
-    void Update()
-    {
-        UpdateEntity();
-    }
-
     public void ReleaseWeapon(int index)
     {
         if (IsWeaponAvailable(index))
@@ -59,7 +54,7 @@ public class Player : Character
 
             //In the future the listed projectile (the 1) will instead inherit a projectile from the equipped weapon (First variable in function)
             //Set the force and direction within the projectile class for its own use.
-            spawnedWeaponReference = 
+            spawnedWeaponReference =
                 entitySpawner.GetEntity(entitySpawner.TryCreateListedProjectile(1, SpawnPosition, (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
                 .GetComponent<WeaponController>();
 
@@ -103,7 +98,7 @@ public class Player : Character
             {
                 //This cannot use "IsWeaponAvailable" as it checks if the weapon is out of hand, rather than in hand. 
                 //If "IsHeldWeapon" then it should not interact with the null class.
-                if (equipment[i].weaponController == null || equipment[i].weaponController.GetIsEquipped()) //
+                if (equipment[i].weaponController == null || !equipment[i].weaponController.GetIsEquipped()) //
                 {
                     WeaponController inputWeapon = weapon.GetComponent<WeaponController>();
                     if (!inputWeapon.isParent()) //If it is not a "Source" weapon.

@@ -72,30 +72,30 @@ public class WeaponController : ProjectileController
 
     protected void playerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
-       if (!isHeld) 
-       if (playerCollision.bounds.Intersects(weaponCollision.bounds))
-       {
-           isDropped = false;
-           transform.position = Vector3.zero;
+        if (!isHeld)
+            if (playerCollision.bounds.Intersects(weaponCollision.bounds))
+            {
+                isDropped = false;
+                transform.position = Vector3.zero;
 
-           if (getParentRef())
-           {
-               parentWeapCont.isHeld = true;
-               parentWeapCont.isProjectile = false;
-           }
+                if (getParentRef())
+                {
+                    parentWeapCont.isHeld = true;
+                    parentWeapCont.isProjectile = false;
+                }
 
-           if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
-           {
-               //No where to put entity. Delete it, for now. 
-               entityMan.DeleteEntity(entityID);
-           }
-           else
-           {
-               //Weapon has been picked up and is now a reference for cloning.
-               isProjectile = false;
-               isHeld = true;
-           }
-       }
+                if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
+                {
+                    //No where to put entity. Delete it, for now. 
+                    entityMan.DeleteEntity(entityID);
+                }
+                else
+                {
+                    //Weapon has been picked up and is now a reference for cloning.
+                    isProjectile = false;
+                    isHeld = true;
+                }
+            }
     }
 
     public void ThrowWeapon()
@@ -128,7 +128,7 @@ public class WeaponController : ProjectileController
             {
                 return true;
             }
-                //Generic safety checks
+            //Generic safety checks
             parentRef = entityMan.GetEntity(parentID);
             if (!isNull(ref parentRef))
             {
