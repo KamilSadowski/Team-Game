@@ -190,9 +190,9 @@ public class EntityManager : MonoBehaviour
         //If any of the following are invalid then this IF statement is TRUE;
         if (-1 != TryCreateListedWeapon(0, Vector3.forward) 
             && 
-            -1 != TryCreatePlayer(Vector3.zero)
-            && 
-            -1 != TryCreateListedNPC(0, Vector3.left))
+            -1 != TryCreatePlayer(Vector3.zero))
+            //&& 
+            //-1 != TryCreateListedNPC(0, Vector3.left))
         { }
     }
 

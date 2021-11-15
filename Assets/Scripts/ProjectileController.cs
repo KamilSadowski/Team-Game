@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileController : Controller
 {
 
-    const float MIN_DISTANCE_TRAVELLED = 1.0f;
+    const float MIN_DISTANCE_TRAVELLED = 7.5f;
 
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
