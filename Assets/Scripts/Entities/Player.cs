@@ -71,7 +71,7 @@ public class Player : Character
 
                 //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
                 if (weaponCharge_UI[index] != null)
-                    weaponCharge_UI[index].updateProgBar(0);
+                    weaponCharge_UI[index].UpdateProgBar(0);
             }
         }
     }
@@ -86,7 +86,7 @@ public class Player : Character
 
             //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
             if (weaponCharge_UI[index] != null)
-                weaponCharge_UI[index].updateProgBar(WeaponCharge[index] / (MAX_FORCE_MOD * strength));
+                weaponCharge_UI[index].UpdateProgBar(WeaponCharge[index] / (MAX_FORCE_MOD * strength));
         }
     }
 

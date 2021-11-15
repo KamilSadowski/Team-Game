@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerController : Controller
 {
     protected Player player;
+    protected GameObject playerObject;
 
     public bool[] isCharging;
 
@@ -20,37 +21,45 @@ public class PlayerController : Controller
         isCharging[0] = false;
         isCharging[1] = false;
 
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        playerObject = GameObject.FindWithTag("Player");
+        if (playerObject) player.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
-        if (entityMoveComp != null)
+        if (player != null)
         {
+            //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
+            if (entityMoveComp != null)
+            {
 
-            Vector3 temp = Vector3.zero;
+                Vector3 temp = Vector3.zero;
 
-            temp.x += Input.GetAxis("Horizontal");
-            temp.y += Input.GetAxis("Vertical");
+                temp.x += Input.GetAxis("Horizontal");
+                temp.y += Input.GetAxis("Vertical");
 
-            entityMoveComp.Move(temp);
+                entityMoveComp.Move(temp);
 
+            }
+            else
+            {
+                //The player should always have a movement component. If it doesn't then it should loop until it does, because it is a problem which can't be removed. 
+                entityMoveComp = GameObject.FindWithTag("Player").GetComponent<MovementComponent>();
+            }
+
+            //See. "Update"
+            for (int i = 0; i < 2; ++i)
+            {
+                if (isCharging[i])
+                {
+                    player.ChargeWeapon(i);
+                }
+            }
         }
         else
         {
-            //The player should always have a movement component. If it doesn't then it should loop until it does, because it is a problem which can't be removed. 
-            entityMoveComp = GameObject.FindWithTag("Player").GetComponent<MovementComponent>();
-        }
-
-        //See. "Update"
-        for (int i = 0; i < 2; ++i)
-        {
-            if (isCharging[i])
-            {
-                player.ChargeWeapon(i);
-            }
+            player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
     }
 

@@ -9,8 +9,8 @@ public class Entity : MonoBehaviour
     protected bool isMobile = true;
     EntityManager entityManager;
 
-    [SerializeField] protected MovementComponent movementComponent;
-
+    protected MovementComponent movementComponent;
+    protected BaseHealthComponent healthComponent;
     //HealthComponent healthComponent;
     //InteractComponent interactComponent;
 
@@ -32,6 +32,8 @@ public class Entity : MonoBehaviour
     public void Create(int id)
     {
         entityID = id;
+        movementComponent = GetComponent<MovementComponent>();
+        healthComponent = GetComponent<BaseHealthComponent>();
     }
 
     public MovementComponent GetMovementComponent()

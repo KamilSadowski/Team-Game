@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 1589646956122958797}
   - component: {fileID: 216694388319099011}
   - component: {fileID: 7518747426464483335}
+  - component: {fileID: 280624763064764028}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -327,7 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6078d44ff51bb64ca7f5d8dab6f20fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementComponent: {fileID: 1589646956122958797}
   NPCList: []
 --- !u!114 &1589646956122958797
 MonoBehaviour:
@@ -380,3 +380,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.14, y: 0.38}
   m_Direction: 0
+--- !u!114 &280624763064764028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733697913478852489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823b8a7afd24f744e8e34b173023fc1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
