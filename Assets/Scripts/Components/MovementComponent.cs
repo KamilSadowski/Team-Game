@@ -29,4 +29,12 @@ public class MovementComponent : MonoBehaviour
     {
 
     }
+
+    //Unity will occasionally pass functions without any return. This will be called if the current movement change is important.
+    public virtual bool ConfirmedMove(Vector3 input)
+    {
+        Move(input);
+        return true;
+    }
+
 }
