@@ -5,11 +5,14 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     GameManager gameManager;
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject optionsMenu;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        MainMenu();
     }
 
     // Update is called once per frame
@@ -21,5 +24,18 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         gameManager.EnterScene(Globals.Scenes.HubWorld);
+    }
+
+    public void Settings()
+    {
+        mainMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+        gameManager.UpdateSettingsSliders();
+    }
+
+    public void MainMenu()
+    {
+        mainMenu.SetActive(true);
+        optionsMenu.SetActive(false);
     }
 }
