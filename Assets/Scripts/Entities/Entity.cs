@@ -33,13 +33,10 @@ public class Entity : MonoBehaviour
     {
         entityID = id;
         movementComponent = GetComponent<MovementComponent>();
-        healthComponent = GetComponent<BaseHealthComponent>();
     }
 
     public MovementComponent GetMovementComponent()
     {
         return movementComponent;
     }
-
-
 }

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
+    [SerializeField] bool IS_ADMIN = true;
     protected Player player;
     protected GameObject playerObject;
 
@@ -66,15 +67,32 @@ public class PlayerController : Controller
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (IS_ADMIN)
         {
-            if (player == null)
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                if (player == null)
+                {
+                   
+                }
+
+                player.spawnWeaponPickup();
             }
 
-            player.spawnWeaponPickup();
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                if (player == null)
+                {
+                    player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                }
+
+                player.spawnEnemyTarget();
+            }
+
+
         }
+
 
         //This will work as a "Toggle" disguised as a "While holding" which will activate when the mouse button is down, as there may potentially be complications with update speed
         //This should also (Very slightly) reduce the required processing time as it simply ignores the IF statement if the bool is not in the correct section.

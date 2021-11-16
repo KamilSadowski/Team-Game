@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7126638304656815046}
   - component: {fileID: 7183137209490659154}
   - component: {fileID: 2566258519793261882}
+  - component: {fileID: -2866657720055413519}
   m_Layer: 3
   m_Name: ProjectileBase
   m_TagString: Untagged
@@ -120,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2da73ffb6f5aa246aea3c2dac6ed802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementComponent: {fileID: 0}
 --- !u!114 &8514985764260257263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0009204075, y: -0.0010369774}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -180,7 +180,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.10056807, y: 0.1000687}
   m_EdgeRadius: 0
 --- !u!114 &2566258519793261882
 MonoBehaviour:
@@ -194,5 +194,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce8b9405aa54954197a490f2d82f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drag: 0.01
+  weapon_sharpness: 0.5
+  weapon_damage: 25
   isDropped: 0
+--- !u!61 &-2866657720055413519
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733697913478852489}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.00051579997}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.14, y: 0.38}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.1610316}
+  m_EdgeRadius: 0

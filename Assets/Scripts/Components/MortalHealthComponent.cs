@@ -18,12 +18,12 @@ public class MortalHealthComponent : BaseHealthComponent
     }
 
     // Update is called once per frame
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         //Remove chance of healing via damage
-        currentHealth -= -Mathf.Abs(damage);
-
-        if(healthBar != null)
+        currentHealth -= Mathf.Abs(damage);
+        Debug.Log(this.gameObject.name + "; Damage recieved: " + currentHealth + "/" + maxHealth);
+        if (healthBar != null)
         {
             healthBar.UpdateProgBar(currentHealth / maxHealth);
         }
@@ -31,6 +31,7 @@ public class MortalHealthComponent : BaseHealthComponent
         if (currentHealth <= 0)
         {
             GameObject.FindWithTag("GameController").GetComponent<EntityManager>().DeleteEntity(GetComponent<Entity>().entityID);
+            
         }
     }
 }

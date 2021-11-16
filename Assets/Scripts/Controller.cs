@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    protected BaseHealthComponent entityHealthComp;
     protected MovementComponent entityMoveComp;
     protected Vector3 input;
 

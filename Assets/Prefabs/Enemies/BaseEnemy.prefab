@@ -221,7 +221,8 @@ GameObject:
   - component: {fileID: 2869926639513952962}
   - component: {fileID: 1036962749160554512}
   - component: {fileID: 7908991018452792281}
-  - component: {fileID: 5872054145168391083}
+  - component: {fileID: 1193985852427896178}
+  - component: {fileID: 5956601299712589328}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Player
@@ -328,7 +329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7702cfb40e9ed449f6c50264e2299c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementComponent: {fileID: 0}
 --- !u!114 &2869926639513952962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &5872054145168391083
+--- !u!70 &1193985852427896178
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -392,3 +392,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.14, y: 0.38}
   m_Direction: 0
+--- !u!114 &5956601299712589328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733697913478852489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823b8a7afd24f744e8e34b173023fc1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100

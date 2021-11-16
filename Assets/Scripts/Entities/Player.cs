@@ -133,4 +133,9 @@ public class Player : Character
     {
         entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
     }
+
+    public void spawnEnemyTarget()
+    {
+        entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
+    }
 }

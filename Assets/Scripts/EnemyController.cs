@@ -19,7 +19,13 @@ public class EnemyController : Controller
     // Update is called once per frame
     void Update()
     {
-        if (entityMoveComp != null)
+
+        if(entityHealthComp == null)
+        {
+            entityHealthComp = GetComponent<BaseHealthComponent>();
+        }
+
+            if (entityMoveComp != null)
         {
             //Calculate any required information about the player the AI might need. 
             Vector3 positionCalc = playerTransform.position - transform.position;
@@ -43,5 +49,10 @@ public class EnemyController : Controller
             //This will repeatedly try to find the movement component if it is missing. 
             entityMoveComp = this.GetComponent<MovementComponent>();
         }
+    }
+
+    public void damageEntity(float input)
+    {
+        entityHealthComp.TakeDamage(input);
     }
 }

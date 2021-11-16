@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ProjectileController : Controller
 {
-
+    [SerializeField] float weapon_sharpness = 0.25f;
+    [SerializeField] float weapon_damage = 10;
     const float MIN_DISTANCE_TRAVELLED = 7.5f;
-
+    const float DRAG = 0.95f;
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
 
 
-
+    protected float damageMod = -1;
     protected Vector3 nDirection;
     protected Vector3 oldPos;
 
@@ -26,6 +27,7 @@ public class ProjectileController : Controller
         entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
         oldPos = transform.position;
         nDirection = Vector3.zero;
+        //Doesn't need to be accurate. Only an approximation.
     }
 
     // Update is called once per frame
@@ -59,7 +61,7 @@ public class ProjectileController : Controller
                 nDirection[i] = 0;
 
 
-        nDirection -= transform.position - oldPos;
+        nDirection -= (transform.position - oldPos) * DRAG;
         oldPos = transform.position;
     }
     protected bool ProjFixedUpdate()
@@ -106,4 +108,23 @@ public class ProjectileController : Controller
         }
         return true;
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+       
+        if (damageMod < 0)
+        {
+            damageMod = weapon_sharpness * ((transform.localScale.x + transform.localScale.y + transform.localScale.z) * .0333f);
+        }
+        float output = weapon_damage * Vector3.Dot(nDirection, nDirection);
+
+        output *= damageMod;
+
+        Debug.Log(collision.gameObject.name + " : " + gameObject.name + " : " + Time.time + " , Damage: " + output);
+        EnemyController tempRef = collision.gameObject.GetComponent<EnemyController>();
+
+        if (tempRef != null)
+            tempRef.damageEntity(output);
+    }
 }
+   
