@@ -114,7 +114,7 @@ public class ProjectileController : Controller
        
         if (damageMod < 0)
         {
-            damageMod = weapon_sharpness * ((transform.localScale.x + transform.localScale.y + transform.localScale.z) * .0333f);
+            damageMod = weapon_sharpness * transform.localScale.magnitude;
         }
         float output = weapon_damage * Vector3.Dot(nDirection, nDirection);
 
@@ -124,7 +124,7 @@ public class ProjectileController : Controller
         EnemyController tempRef = collision.gameObject.GetComponent<EnemyController>();
 
         if (tempRef != null)
-            tempRef.damageEntity(output);
+            tempRef.DamageEntity(output);
     }
 }
    

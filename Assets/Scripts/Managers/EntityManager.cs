@@ -163,6 +163,7 @@ public class EntityManager : MonoBehaviour
         if (entities[id] != null && destroy)
         {
             //GameObject temp = entities[id].gameObject;
+            entities[id].OnRemove();
             Destroy(entities[id].gameObject);
             //Destroy(temp);
         }

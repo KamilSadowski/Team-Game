@@ -39,4 +39,10 @@ public class Entity : MonoBehaviour
     {
         return movementComponent;
     }
+
+    // Called when the entity is to be removed
+    public virtual void OnRemove()
+    {
+       
+    }
 }

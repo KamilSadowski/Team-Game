@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NotPlayer : Character
 {
+    // Store the room the AI was created in, on death, the room will be notified that one of the entities has been defeated
+    Room room;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,4 +20,16 @@ public class NotPlayer : Character
 
 
     }
+
+    public override void OnRemove()
+    {
+        if (room != null) room.EntityRemoved();
+    }
+
+    // Adds the room that owns this entity
+    public void AddRoom(Room roomToAdd)
+    {
+        room = roomToAdd;
+    }
+
 }

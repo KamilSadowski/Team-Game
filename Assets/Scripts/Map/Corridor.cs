@@ -44,4 +44,26 @@ public class Corridor : MonoBehaviour
         }
 
     }
+
+    public void OpenDoors()
+    {
+        if (doors != null)
+        {
+            foreach (Door door in doors)
+            {
+                if (door != null) door.OpenDoor();
+            }
+        }
+    }
+
+    public void CloseDoors()
+    {
+        if (doors != null)
+        {
+            foreach (Door door in doors)
+            {
+                if (door != null) door.CloseDoor();
+            }
+        }
+    }
 }

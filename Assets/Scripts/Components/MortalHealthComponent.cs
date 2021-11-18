@@ -31,7 +31,6 @@ public class MortalHealthComponent : BaseHealthComponent
         if (currentHealth <= 0)
         {
             GameObject.FindWithTag("GameController").GetComponent<EntityManager>().DeleteEntity(GetComponent<Entity>().entityID);
-            
         }
     }
 }

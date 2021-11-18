@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class EnemyController : Controller
 {
-    protected Transform playerTransform; 
+    protected Transform playerTransform;
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
-
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +24,7 @@ public class EnemyController : Controller
             entityHealthComp = GetComponent<BaseHealthComponent>();
         }
 
-            if (entityMoveComp != null)
+        if (entityMoveComp != null)
         {
             //Calculate any required information about the player the AI might need. 
             Vector3 positionCalc = playerTransform.position - transform.position;
@@ -51,8 +50,9 @@ public class EnemyController : Controller
         }
     }
 
-    public void damageEntity(float input)
+    public void DamageEntity(float input)
     {
         entityHealthComp.TakeDamage(input);
     }
+
 }

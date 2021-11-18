@@ -7,6 +7,7 @@ public static class Globals
     // Room globals
     public enum Direction { north, east, south, west };
 
+
     public struct Grid2D { public int x; public int y; };
 
     public const int MAX_ROOM_NO = 15; // Max amount of rooms allowed, at least 3 required

@@ -76,7 +76,7 @@ public class PlayerController : Controller
                    
                 }
 
-                player.spawnWeaponPickup();
+                player.SpawnWeaponPickup();
             }
 
 
@@ -87,7 +87,7 @@ public class PlayerController : Controller
                     player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 }
 
-                player.spawnEnemyTarget();
+                player.SpawnEnemyTarget();
             }
 
 

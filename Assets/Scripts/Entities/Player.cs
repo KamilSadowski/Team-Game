@@ -101,7 +101,7 @@ public class Player : Character
                 if (equipment[i].weaponController == null || !equipment[i].weaponController.GetIsEquipped()) //
                 {
                     WeaponController inputWeapon = weapon.GetComponent<WeaponController>();
-                    if (!inputWeapon.isParent()) //If it is not a "Source" weapon.
+                    if (!inputWeapon.IsParent()) //If it is not a "Source" weapon.
                     {
                         break;
                     }
@@ -129,12 +129,12 @@ public class Player : Character
         return (equipment[index].gameObject != null && equipment[index].weaponController.GetIsEquipped());
     }
 
-    public void spawnWeaponPickup()
+    public void SpawnWeaponPickup()
     {
         entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
     }
 
-    public void spawnEnemyTarget()
+    public void SpawnEnemyTarget()
     {
         entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
     }

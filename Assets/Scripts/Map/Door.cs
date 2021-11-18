@@ -50,6 +50,7 @@ public class Door : MonoBehaviour
         door.enabled = true;
         wall.enabled = false;
         hasDoor = true;
+        OpenDoor();
     }
 
     public void OpenDoor()

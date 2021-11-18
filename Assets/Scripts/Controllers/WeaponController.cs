@@ -24,7 +24,7 @@ public class WeaponController : ProjectileController
         entityID = GetComponent<Entity>().entityID;
         entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
 
-        collisionSetup();
+        CollisionSetup();
     }
 
 
@@ -34,7 +34,7 @@ public class WeaponController : ProjectileController
 
         if (playerCollision == null || weaponCollision == null)
         {
-            collisionSetup();
+            CollisionSetup();
         }
         else
         if (!isHeld)
@@ -43,7 +43,7 @@ public class WeaponController : ProjectileController
             //This is for when it has just spawned or is placed. 
             if (isDropped)
             {
-                playerPickup();
+                PlayerPickup();
             }
             else
             {
@@ -56,13 +56,13 @@ public class WeaponController : ProjectileController
                 {
                     isHeld = false;
                     //This could set "IsDropped" to true but it would effectively do the same thing. 
-                    playerPickup();
+                    PlayerPickup();
                 }
             }
         }
     }
 
-    protected void collisionSetup()
+    protected void CollisionSetup()
     {
         //This function is called whenever an asset is not found. Nothing should run while this is "False"
         playerCollision = FindObjectOfType<Player>().GetComponent<CapsuleCollider2D>();
@@ -70,7 +70,7 @@ public class WeaponController : ProjectileController
         Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
 
-    protected void playerPickup()
+    protected void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
         if (!isHeld)
             if (playerCollision.bounds.Intersects(weaponCollision.bounds))
@@ -78,7 +78,7 @@ public class WeaponController : ProjectileController
                 isDropped = false;
                 transform.position = Vector3.zero;
 
-                if (getParentRef())
+                if (GetParentRef())
                 {
                     parentWeapCont.isHeld = true;
                     parentWeapCont.isProjectile = false;
@@ -107,34 +107,34 @@ public class WeaponController : ProjectileController
     {
         parentID = ID;
     }
-    public bool isParent()
+    public bool IsParent()
     {
         return (parentID == -1);
     }
 
 
     //Consider putting this in a global utility class. 
-    private static bool isNull<T>(ref T input)
+    private static bool IsNull<T>(ref T input)
     {
         return (input == null);
     }
 
     //Sets up parent references, returning false if it is the parent. 
-    private bool getParentRef()
+    private bool GetParentRef()
     {
         if (parentID != -1)
         {
-            if (!isNull(ref parentRef) && !isNull(ref parentWeapCont))
+            if (!IsNull(ref parentRef) && !IsNull(ref parentWeapCont))
             {
                 return true;
             }
             //Generic safety checks
             parentRef = entityMan.GetEntity(parentID);
-            if (!isNull(ref parentRef))
+            if (!IsNull(ref parentRef))
             {
 
                 parentWeapCont = parentRef.GetComponent<WeaponController>();
-                if (!isNull(ref parentWeapCont))
+                if (!IsNull(ref parentWeapCont))
                 {
                     //Will recursively repeat this function until the parentID is equal to -1.
                     return true;
@@ -151,7 +151,7 @@ public class WeaponController : ProjectileController
     //Bit of recursion but it should be fine as it will only be a single level, unless something has gone wrong.
     public bool GetIsEquipped()
     {
-        if (getParentRef())
+        if (GetParentRef())
         {
             //Will recursively repeat this function until the parentID is equal to -1.
             return parentWeapCont.GetIsEquipped();
