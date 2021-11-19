@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponController : ProjectileController
 {
     const bool IS_WEAPON_LOG_OUTPUT = true;
-    protected float counterGetIsEquipped = 0.0f;
+    protected float counterGetIsEquipped = COUNTER_GET_IS_EQUIPPED_MAX;
     const float COUNTER_GET_IS_EQUIPPED_MAX = 1.0f;
 
     //entityMan.DeleteEntity(entityID);
@@ -85,7 +85,7 @@ public class WeaponController : ProjectileController
                     if (parentWeapCont == null) return;
                     if (IS_WEAPON_LOG_OUTPUT)
                     {
-                       Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Parent ID:" + parentWeapCont.parentID);
+                       Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Parent ID:" + parentWeapCont.parentID + " OR " + parentWeapCont.controlledObject.entityID);
                     }
                     parentWeapCont.isHeld = true;
                     parentWeapCont.isProjectile = false;
