@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileController : Controller
 {
+
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
     const float MIN_DISTANCE_TRAVELLED = 7.5f;
@@ -11,29 +12,29 @@ public class ProjectileController : Controller
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
 
-
+    protected EntityManager entityManager;
     protected float damageMod = -1;
     protected Vector3 nDirection;
     protected Vector3 oldPos;
 
 
-    protected int entityID;
-    protected EntityManager entityMan;
 
     // Start is called before the first frame update
     void Start()
     {
-        entityID = GetComponent<Entity>().entityID;
-        entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
+        entityManager = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
+        BindVariables();
         oldPos = transform.position;
         nDirection = Vector3.zero;
-        //Doesn't need to be accurate. Only an approximation.
     }
+
+
 
     // Update is called once per frame
     void FixedUpdate()
     {
         ProjFixedUpdate();
+        BindVariables();
     }
 
     //The above two functions will be the same within every level of inheritance. 
@@ -73,8 +74,8 @@ public class ProjectileController : Controller
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
             if (Input.GetKey(KeyCode.P))
             {
-                if (entityMan != null)
-                    entityMan.DeleteEntity(entityID);
+                if (isValidReferences())
+                    controlledObject.DestroyEntity();
             }
             else if (MoveWithMin(minDistanceTravelled)) 
             {
@@ -103,7 +104,7 @@ public class ProjectileController : Controller
 
             if (entityMoveComp == null)
             {
-                entityMan.DeleteEntity(entityID);
+                controlledObject.DestroyEntity();
             }
         }
         return true;
@@ -120,7 +121,8 @@ public class ProjectileController : Controller
 
         output *= damageMod;
 
-        Debug.Log(collision.gameObject.name + " : " + gameObject.name + " : " + Time.time + " , Damage: " + output);
+
+
         EnemyController tempRef = collision.gameObject.GetComponent<EnemyController>();
 
         if (tempRef != null)

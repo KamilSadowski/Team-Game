@@ -7,6 +7,8 @@ public class MortalHealthComponent : BaseHealthComponent
     [SerializeField] float maxHealth = 100;
     protected float currentHealth;
     protected UI_ChargingBar healthBar;
+    public const bool IS_HEALTH_LOG_OUTPUT = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,12 @@ public class MortalHealthComponent : BaseHealthComponent
     {
         //Remove chance of healing via damage
         currentHealth -= Mathf.Abs(damage);
-        Debug.Log(this.gameObject.name + "; Damage recieved: " + currentHealth + "/" + maxHealth);
+
+
+        if (IS_HEALTH_LOG_OUTPUT)
+            Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Damage taken:" + damage);
+
+
         if (healthBar != null)
         {
             healthBar.UpdateProgBar(currentHealth / maxHealth);

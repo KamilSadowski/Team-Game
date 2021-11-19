@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WeaponController : ProjectileController
 {
+    const bool IS_WEAPON_LOG_OUTPUT = true;
+    protected float counterGetIsEquipped = 0.0f;
+    const float COUNTER_GET_IS_EQUIPPED_MAX = 1.0f;
 
     //entityMan.DeleteEntity(entityID);
     protected int parentID = -1;
@@ -21,9 +24,8 @@ public class WeaponController : ProjectileController
     // Start is called before the first frame update
     void Start()
     {
-        entityID = GetComponent<Entity>().entityID;
-        entityMan = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
-
+        entityManager = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
+        BindVariables();
         CollisionSetup();
     }
 
@@ -31,7 +33,7 @@ public class WeaponController : ProjectileController
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        BindVariables();
         if (playerCollision == null || weaponCollision == null)
         {
             CollisionSetup();
@@ -80,14 +82,23 @@ public class WeaponController : ProjectileController
 
                 if (GetParentRef())
                 {
+                    if (parentWeapCont == null) return;
+                    if (IS_WEAPON_LOG_OUTPUT)
+                    {
+                       Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Parent ID:" + parentWeapCont.parentID);
+                    }
                     parentWeapCont.isHeld = true;
                     parentWeapCont.isProjectile = false;
                 }
 
                 if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
                 {
+                    if (IS_WEAPON_LOG_OUTPUT)
+                    {
+                        Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + ", ID:" + controlledObject.entityID + " , Destroyed. Parent ID:" + parentID);
+                    }
                     //No where to put entity. Delete it, for now. 
-                    entityMan.DeleteEntity(entityID);
+                    controlledObject.DestroyEntity();
                 }
                 else
                 {
@@ -112,41 +123,42 @@ public class WeaponController : ProjectileController
         return (parentID == -1);
     }
 
-
-    //Consider putting this in a global utility class. 
-    private static bool IsNull<T>(ref T input)
-    {
-        return (input == null);
-    }
-
     //Sets up parent references, returning false if it is the parent. 
     private bool GetParentRef()
     {
         if (parentID != -1)
         {
-            if (!IsNull(ref parentRef) && !IsNull(ref parentWeapCont))
+            if (parentRef != null && parentWeapCont != null)
             {
                 return true;
             }
             //Generic safety checks
-            parentRef = entityMan.GetEntity(parentID);
-            if (!IsNull(ref parentRef))
+            parentRef = entityManager.GetEntity(parentID);
+            if (parentRef != null)
             {
+                if(!entityManager)
+                    entityManager = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
 
                 parentWeapCont = parentRef.GetComponent<WeaponController>();
-                if (!IsNull(ref parentWeapCont))
+                if (parentWeapCont != null)
                 {
+                    if (IS_WEAPON_LOG_OUTPUT)
+                    {
+                        Debug.Log(Time.realtimeSinceStartup + ": Multiple weapon layers detected.");
+                    }
                     //Will recursively repeat this function until the parentID is equal to -1.
                     return true;
                 }
 
             }
             //Weapon is invalid. (Error has occured)
-            entityMan.DeleteEntity(entityID);
+            controlledObject.DestroyEntity();
             return true;
         }
         return false;
     }
+
+
 
     //Bit of recursion but it should be fine as it will only be a single level, unless something has gone wrong.
     public bool GetIsEquipped()
@@ -156,6 +168,18 @@ public class WeaponController : ProjectileController
             //Will recursively repeat this function until the parentID is equal to -1.
             return parentWeapCont.GetIsEquipped();
         }
+
+        if (IS_WEAPON_LOG_OUTPUT && counterGetIsEquipped > COUNTER_GET_IS_EQUIPPED_MAX)
+        {
+            counterGetIsEquipped = 0.0f;
+            Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Weapon is equipped:" + (isHeld && !isProjectile));
+        }
+        else
+        {
+            counterGetIsEquipped += Time.deltaTime;
+        }
+
+
         return (isHeld && !isProjectile);
     }
 

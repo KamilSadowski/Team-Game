@@ -6,6 +6,10 @@ public class EnemyController : Controller
 {
     protected GameObject playerObject;
     protected BaseHealthComponent playerHealth;
+    protected Character cControlledObject;
+
+
+
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
 
@@ -15,6 +19,7 @@ public class EnemyController : Controller
         //Grab whatever is tagged as "Player" - This should be connected to the base component and thus update automatically. 
         playerObject = GameObject.FindWithTag("Player");
         playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
+
         BindVariables();
     }
 
@@ -22,7 +27,10 @@ public class EnemyController : Controller
     void Update()
     {
 
-     
+        if (!cControlledObject)
+        {
+            cControlledObject = (Character)controlledObject;
+        }
 
         if (isValidReferences() && playerObject != null && entityMoveComp != null && playerHealth != null)
         {
@@ -32,20 +40,20 @@ public class EnemyController : Controller
             float distance = positionCalc.magnitude;
 
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
-            Vector3 direction = positionCalc / distance; 
+            Vector3 direction = positionCalc / distance;
 
             //DELETE THIS COMMENT LATER
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
             if (playerHealth != null && distance < .3f)
             {
-                if(playerHealth.TakeDamage(controlledObject.GetStrength() * Time.deltaTime))
+                if (playerHealth.TakeDamage(cControlledObject.GetStrength() * Time.deltaTime))
                 {
                     playerObject.GetComponent<Entity>().DestroyEntity();
                 }
             }
             else
-            entityMoveComp.Move(direction);
-      
+                entityMoveComp.Move(direction);
+
         }
         else
         {
@@ -59,7 +67,9 @@ public class EnemyController : Controller
 
     public void DamageEntity(float input)
     {
-        if(controlledObject.GetPlayerHealth().TakeDamage(input))
+
+
+        if (cControlledObject.GetPlayerHealth().TakeDamage(input))
         {
             controlledObject.GetComponent<Entity>().DestroyEntity();
         }

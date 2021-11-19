@@ -5,7 +5,7 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     protected MovementComponent entityMoveComp;
-    protected Character controlledObject;
+    protected Entity controlledObject;
     protected Vector3 input;
 
     // Start is called before the first frame update
@@ -22,12 +22,12 @@ public class Controller : MonoBehaviour
     protected void BindVariables()
     {
         if (entityMoveComp == null)
-        {
-            entityMoveComp = GetComponent<MovementComponent>();
+        {        
+            entityMoveComp = gameObject.GetComponent<MovementComponent>();
         }
         if (controlledObject == null)
         {
-            controlledObject = GetComponent<Character>();
+            controlledObject = gameObject.GetComponent<Entity>();
         }
 
     }

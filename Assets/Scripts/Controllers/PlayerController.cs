@@ -22,8 +22,6 @@ public class PlayerController : Controller
         isCharging[0] = false;
         isCharging[1] = false;
 
-        playerObject = GameObject.FindWithTag("Player");
-        if (playerObject) player.GetComponent<Player>();
     }
 
     // Update is called once per frame

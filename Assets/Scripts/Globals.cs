@@ -17,4 +17,8 @@ public static class Globals
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
     public static string[] SceneNames = new string[3] { "MainMenu", "HubWorld", "Dungeon" };
+
+
+
+    const bool IS_WEAPON_LOG_OUTPUT = true;
 }

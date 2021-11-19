@@ -126,7 +126,11 @@ public class Player : Character
     //If the equipment slot is empty, or the weapon has been "Thrown" it will be unavailable.
     private bool IsWeaponAvailable(int index)
     {
-        return (equipment[index].gameObject != null && equipment[index].weaponController.GetIsEquipped());
+        if (equipment[index].gameObject != null)
+            if (equipment[index].weaponController.GetIsEquipped())
+                return true;
+
+        return false;
     }
 
     public void SpawnWeaponPickup()
