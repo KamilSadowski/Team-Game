@@ -18,7 +18,7 @@ public class Player : Character
 
     protected const float MAX_FORCE_MOD = 3; //Discuss this in detail later- What factor limits the throwing power? 
 
-    protected float strength = 2.5f;
+
     protected float[] WeaponCharge = { 0, 0 };
     protected Vector3 SpawnPosition;
     WeaponController spawnedWeaponReference;

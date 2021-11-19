@@ -6,7 +6,7 @@ public class MortalHealthComponent : BaseHealthComponent
 {
     [SerializeField] float maxHealth = 100;
     protected float currentHealth;
-    UI_ChargingBar healthBar;
+    protected UI_ChargingBar healthBar;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +16,12 @@ public class MortalHealthComponent : BaseHealthComponent
         healthBar = GetComponentInChildren<UI_ChargingBar>();
 
     }
-
+    public override float getHealthPercentage()
+    {
+        return currentHealth / maxHealth;
+    }
     // Update is called once per frame
-    public override void TakeDamage(float damage)
+    public override bool TakeDamage(float damage)
     {
         //Remove chance of healing via damage
         currentHealth -= Mathf.Abs(damage);
@@ -30,7 +33,8 @@ public class MortalHealthComponent : BaseHealthComponent
 
         if (currentHealth <= 0)
         {
-            GameObject.FindWithTag("GameController").GetComponent<EntityManager>().DeleteEntity(GetComponent<Entity>().entityID);
+            return true;
         }
+        return false;
     }
 }

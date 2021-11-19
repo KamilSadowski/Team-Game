@@ -40,6 +40,19 @@ public class Entity : MonoBehaviour
         return movementComponent;
     }
 
+
+    public bool DestroyEntity()
+    {
+        if (entityManager)
+        {
+            entityManager.DeleteEntity(entityID);
+            return true;
+        }
+
+
+        entityManager = FindObjectOfType<EntityManager>();
+        return false;
+    }
     // Called when the entity is to be removed
     public virtual void OnRemove()
     {

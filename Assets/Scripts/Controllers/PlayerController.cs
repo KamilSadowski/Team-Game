@@ -10,7 +10,7 @@ public class PlayerController : Controller
     [SerializeField] bool IS_ADMIN = true;
     protected Player player;
     protected GameObject playerObject;
-
+    protected UI_ChargingBar healthBarRef;
     public bool[] isCharging;
 
     // protected bool[] isCharging = { false, false }; //Potentially use this if "Update" is not fast enough and stutters.
@@ -31,6 +31,16 @@ public class PlayerController : Controller
     {
         if (player != null)
         {
+            if (healthBarRef == null)
+            {
+                healthBarRef = GameObject.FindWithTag("HealthBar").GetComponent<UI_ChargingBar>(); 
+            }
+            else
+            {
+                healthBarRef.UpdateProgBar(player.GetHealthPercentage());
+            }
+
+
             //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
             if (entityMoveComp != null)
             {
@@ -62,6 +72,9 @@ public class PlayerController : Controller
         {
             player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
+
+
+       
     }
 
     private void Update()
@@ -73,7 +86,7 @@ public class PlayerController : Controller
             {
                 if (player == null)
                 {
-                   
+                     
                 }
 
                 player.SpawnWeaponPickup();
@@ -109,4 +122,5 @@ public class PlayerController : Controller
             }
         }
     }
+
 }

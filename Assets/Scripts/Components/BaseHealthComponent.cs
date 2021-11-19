@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class BaseHealthComponent : MonoBehaviour
 {
-    public virtual void TakeDamage(float damage) { return; }
+    public virtual bool TakeDamage(float damage) {return false;}
+    public virtual float getHealthPercentage()   {return 1.0f;}
 }
