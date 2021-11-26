@@ -7,7 +7,9 @@ public class EnemyController : Controller
     protected GameObject playerObject;
     protected BaseHealthComponent playerHealth;
     protected Character cControlledObject;
-
+    protected Animator animator;
+    protected bool IsWalking = false;
+    protected bool IsFacingFront = true;
 
 
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
@@ -19,6 +21,7 @@ public class EnemyController : Controller
         //Grab whatever is tagged as "Player" - This should be connected to the base component and thus update automatically. 
         playerObject = GameObject.FindWithTag("Player");
         playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
+      
 
         BindVariables();
     }
@@ -26,6 +29,9 @@ public class EnemyController : Controller
     // Update is called once per frame
     void Update()
     {
+
+        var prevIsWalking = IsWalking;
+        var prevIsFacingFront = IsFacingFront;
 
         if (!cControlledObject)
         {
@@ -42,6 +48,9 @@ public class EnemyController : Controller
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
             Vector3 direction = positionCalc / distance;
 
+            if (direction.x > 0f) IsFacingFront = true;
+            else IsFacingFront = false;
+
             //DELETE THIS COMMENT LATER
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
             if (playerHealth != null && distance < .3f)
@@ -49,10 +58,14 @@ public class EnemyController : Controller
                 if (playerHealth.TakeDamage(cControlledObject.GetStrength() * Time.deltaTime))
                 {
                     playerObject.GetComponent<Entity>().DestroyEntity();
+                    IsWalking = false;
                 }
             }
             else
+            {
+                IsWalking = true;
                 entityMoveComp.Move(direction);
+            }
 
         }
         else
@@ -63,6 +76,13 @@ public class EnemyController : Controller
             playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
             BindVariables();
         }
+
+        if (prevIsWalking != IsWalking)
+            GetComponent<Animator>().SetBool("IsWalking", IsWalking);
+       
+        if (prevIsFacingFront != IsFacingFront)
+            GetComponent<Animator>().SetBool("Front", IsFacingFront);
+
     }
 
     public void DamageEntity(float input)

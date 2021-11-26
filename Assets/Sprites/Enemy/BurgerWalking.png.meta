@@ -1,34 +1,7 @@
 fileFormatVersion: 2
-guid: 4b682682d42a36c40805944b360f9a1b
+guid: d5739646ef2071f40bf48c3ff4d5f230
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 7298666083569356503
-    second: AngryCarrotBack_0
-  - first:
-      213: 7703389455583220112
-    second: AngryCarrotBack_1
-  - first:
-      213: -7351264923028838796
-    second: AngryCarrotBack_2
-  - first:
-      213: 6254280957621248094
-    second: AngryCarrotBack_3
-  - first:
-      213: 4688074820328427559
-    second: AngryCarrotBack_4
-  - first:
-      213: 8479103925711061998
-    second: AngryCarrotBack_5
-  - first:
-      213: 5861360889886164413
-    second: AngryCarrotBack_6
-  - first:
-      213: 3209471788474124891
-    second: AngryCarrotBack_7
-  - first:
-      213: -8562420115267190227
-    second: AngryCarrotBack_8
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -107,7 +80,19 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -119,112 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AngryCarrotBack_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7dec75d02221a4560800000000000000
-      internalID: 7298666083569356503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryCarrotBack_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 224
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 091178245efe7ea60800000000000000
-      internalID: 7703389455583220112
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryCarrotBack_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 192
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 476a31d408f0bf990800000000000000
-      internalID: -7351264923028838796
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryCarrotBack_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e502184f46babc650800000000000000
-      internalID: 6254280957621248094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryCarrotBack_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 720112ae5336f0140800000000000000
-      internalID: 4688074820328427559
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryCarrotBack_5
+      name: BurgerWalking_0
       rect:
         serializedVersion: 2
         x: 0
@@ -238,14 +118,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee3c0a1a814dba570800000000000000
-      internalID: 8479103925711061998
+      spriteID: c95d99d81d146de46be02243cce14c52
+      internalID: -1236645585
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AngryCarrotBack_6
+      name: BurgerWalking_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a69a560de487c5499bd6026132a503a
+      internalID: 1455569002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74faafc4c9ba6694ab913dab08459caa
+      internalID: -196937107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce30affcaa22a94b87676fcd9041653
+      internalID: -1788537237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_4
       rect:
         serializedVersion: 2
         x: 0
@@ -259,14 +202,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db5480eacacb75150800000000000000
-      internalID: 5861360889886164413
+      spriteID: 7ddcd2c4e0e9f294083639ca887793f6
+      internalID: 1541159333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AngryCarrotBack_7
+      name: BurgerWalking_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af67325ce7d96ed4ea22fadee5a27f57
+      internalID: -1234545900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b928f9056d58ba4e9926d36f6571a88
+      internalID: 2027841460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6866e13e5a84cbe4ab68124701d2365e
+      internalID: -1072677183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_8
       rect:
         serializedVersion: 2
         x: 0
@@ -280,14 +286,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5a43ac46955a8c20800000000000000
-      internalID: 3209471788474124891
+      spriteID: 2141247370a53ab4e8d0d680a3f54bb7
+      internalID: -1047741215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AngryCarrotBack_8
+      name: BurgerWalking_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d6e04ea13def384686158bca4c4c956
+      internalID: 1660493390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c829fb55d434307428564cadb0ab170f
+      internalID: 2055721496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9582dad8a8968f40b0b3c8d1430c53b
+      internalID: -1435524389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BurgerWalking_12
       rect:
         serializedVersion: 2
         x: 0
@@ -301,8 +370,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2207d3554c2c2980800000000000000
-      internalID: -8562420115267190227
+      spriteID: ba5fa246c732dfb42891918126852bb5
+      internalID: -506796461
       vertices: []
       indices: 
       edges: []
@@ -310,7 +379,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 9544e8d366e7d384e848d8ed80cd9426
+    spriteID: df2def1f53692154ab77ba66674c3bf1
     internalID: 0
     vertices: []
     indices: 
@@ -318,15 +387,19 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AngryCarrotBack_0: 7298666083569356503
-      AngryCarrotBack_1: 7703389455583220112
-      AngryCarrotBack_7: 3209471788474124891
-      AngryCarrotBack_3: 6254280957621248094
-      AngryCarrotBack_5: 8479103925711061998
-      AngryCarrotBack_6: 5861360889886164413
-      AngryCarrotBack_2: -7351264923028838796
-      AngryCarrotBack_4: 4688074820328427559
-      AngryCarrotBack_8: -8562420115267190227
+      BurgerWalking_5: -1234545900
+      BurgerWalking_0: -1236645585
+      BurgerWalking_3: -1788537237
+      BurgerWalking_12: -506796461
+      BurgerWalking_4: 1541159333
+      BurgerWalking_7: -1072677183
+      BurgerWalking_11: -1435524389
+      BurgerWalking_10: 2055721496
+      BurgerWalking_8: -1047741215
+      BurgerWalking_9: 1660493390
+      BurgerWalking_6: 2027841460
+      BurgerWalking_2: -196937107
+      BurgerWalking_1: 1455569002
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
