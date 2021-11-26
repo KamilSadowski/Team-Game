@@ -1,25 +1,34 @@
 fileFormatVersion: 2
-guid: b26d4dddc34d3a049a52b34ca7bfec04
+guid: 4b682682d42a36c40805944b360f9a1b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5213229242370633579
-    second: Door_0
+      213: 7298666083569356503
+    second: AngryCarrotBack_0
   - first:
-      213: 436563815456543028
-    second: Door_1
+      213: 7703389455583220112
+    second: AngryCarrotBack_1
   - first:
-      213: -8689009931745917929
-    second: Door_2
+      213: -7351264923028838796
+    second: AngryCarrotBack_2
   - first:
-      213: 289144848352645085
-    second: Door_3
+      213: 6254280957621248094
+    second: AngryCarrotBack_3
   - first:
-      213: 6936692723106717497
-    second: Door_4
+      213: 4688074820328427559
+    second: AngryCarrotBack_4
   - first:
-      213: 8808929173557640368
-    second: Door_5
+      213: 8479103925711061998
+    second: AngryCarrotBack_5
+  - first:
+      213: 5861360889886164413
+    second: AngryCarrotBack_6
+  - first:
+      213: 3209471788474124891
+    second: AngryCarrotBack_7
+  - first:
+      213: -8562420115267190227
+    second: AngryCarrotBack_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -65,7 +74,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -86,8 +95,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,44 +107,8 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -146,127 +119,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Door_0
+      name: AngryCarrotBack_0
       rect:
         serializedVersion: 2
-        x: 33
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6f2e24006c195840800000000000000
-      internalID: 5213229242370633579
+      spriteID: 7dec75d02221a4560800000000000000
+      internalID: 7298666083569356503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_1
+      name: AngryCarrotBack_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43193162a7cfe0600800000000000000
-      internalID: 436563815456543028
+      spriteID: 091178245efe7ea60800000000000000
+      internalID: 7703389455583220112
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_2
+      name: AngryCarrotBack_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7148170e08f6a6780800000000000000
-      internalID: -8689009931745917929
+      spriteID: 476a31d408f0bf990800000000000000
+      internalID: -7351264923028838796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_3
+      name: AngryCarrotBack_3
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddf81b625bf330400800000000000000
-      internalID: 289144848352645085
+      spriteID: e502184f46babc650800000000000000
+      internalID: 6254280957621248094
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_4
+      name: AngryCarrotBack_4
       rect:
         serializedVersion: 2
-        x: 79
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93f10dc8745144060800000000000000
-      internalID: 6936692723106717497
+      spriteID: 720112ae5336f0140800000000000000
+      internalID: 4688074820328427559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_5
+      name: AngryCarrotBack_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bc7a71696a9f3a70800000000000000
-      internalID: 8808929173557640368
+      spriteID: ee3c0a1a814dba570800000000000000
+      internalID: 8479103925711061998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryCarrotBack_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db5480eacacb75150800000000000000
+      internalID: 5861360889886164413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryCarrotBack_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a43ac46955a8c20800000000000000
+      internalID: 3209471788474124891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryCarrotBack_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2207d3554c2c2980800000000000000
+      internalID: -8562420115267190227
       vertices: []
       indices: 
       edges: []
@@ -274,7 +310,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 9544e8d366e7d384e848d8ed80cd9426
     internalID: 0
     vertices: []
     indices: 
@@ -282,15 +318,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Door_1: 436563815456543028
-      Door_3: 289144848352645085
-      Door_4: 6936692723106717497
-      Door_5: 8808929173557640368
-      Door_0: 5213229242370633579
-      Door_2: -8689009931745917929
+      AngryCarrotBack_0: 7298666083569356503
+      AngryCarrotBack_1: 7703389455583220112
+      AngryCarrotBack_7: 3209471788474124891
+      AngryCarrotBack_3: 6254280957621248094
+      AngryCarrotBack_5: 8479103925711061998
+      AngryCarrotBack_6: 5861360889886164413
+      AngryCarrotBack_2: -7351264923028838796
+      AngryCarrotBack_4: 4688074820328427559
+      AngryCarrotBack_8: -8562420115267190227
   spritePackingTag: 
-  pSDRemoveMatte: 1
-  pSDShowRemoveMatteOption: 1
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

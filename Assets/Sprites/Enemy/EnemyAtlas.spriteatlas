@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EnemyAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 44bac38b754162c4885c914df887f712, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 6911282132760052089, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: -6473927608890920564, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: 7404334406682204202, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: -351117811637700021, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: 1796282230169216384, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: 8621778361497049816, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: 5247661147258309193, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  - {fileID: -7459962130193558754, guid: 44bac38b754162c4885c914df887f712, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - AngryBurgerIdle_2
+  - AngryBurgerIdle_3
+  - AngryBurgerIdle_0
+  - AngryBurgerIdle_1
+  - AngryBurgerIdle_6
+  - AngryBurgerIdle_7
+  - AngryBurgerIdle_4
+  - AngryBurgerIdle_5
+  m_RenderDataMap: {}
+  m_Tag: EnemyAtlas
+  m_IsVariant: 0

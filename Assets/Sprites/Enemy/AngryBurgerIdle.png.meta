@@ -1,25 +1,31 @@
 fileFormatVersion: 2
-guid: b26d4dddc34d3a049a52b34ca7bfec04
+guid: 44bac38b754162c4885c914df887f712
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5213229242370633579
-    second: Door_0
+      213: 7404334406682204202
+    second: AngryBurgerIdle_0
   - first:
-      213: 436563815456543028
-    second: Door_1
+      213: -351117811637700021
+    second: AngryBurgerIdle_1
   - first:
-      213: -8689009931745917929
-    second: Door_2
+      213: 6911282132760052089
+    second: AngryBurgerIdle_2
   - first:
-      213: 289144848352645085
-    second: Door_3
+      213: -6473927608890920564
+    second: AngryBurgerIdle_3
   - first:
-      213: 6936692723106717497
-    second: Door_4
+      213: 5247661147258309193
+    second: AngryBurgerIdle_4
   - first:
-      213: 8808929173557640368
-    second: Door_5
+      213: -7459962130193558754
+    second: AngryBurgerIdle_5
+  - first:
+      213: 1796282230169216384
+    second: AngryBurgerIdle_6
+  - first:
+      213: 8621778361497049816
+    second: AngryBurgerIdle_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -65,7 +71,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -86,8 +92,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,44 +104,8 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -146,127 +116,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Door_0
+      name: AngryBurgerIdle_0
       rect:
         serializedVersion: 2
-        x: 33
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6f2e24006c195840800000000000000
-      internalID: 5213229242370633579
+      spriteID: a28de7cb9ea71c660800000000000000
+      internalID: 7404334406682204202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_1
+      name: AngryBurgerIdle_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43193162a7cfe0600800000000000000
-      internalID: 436563815456543028
+      spriteID: b4ab50be534902bf0800000000000000
+      internalID: -351117811637700021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_2
+      name: AngryBurgerIdle_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7148170e08f6a6780800000000000000
-      internalID: -8689009931745917929
+      spriteID: 971caa17b7ec9ef50800000000000000
+      internalID: 6911282132760052089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_3
+      name: AngryBurgerIdle_3
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddf81b625bf330400800000000000000
-      internalID: 289144848352645085
+      spriteID: c81767ad32df726a0800000000000000
+      internalID: -6473927608890920564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_4
+      name: AngryBurgerIdle_4
       rect:
         serializedVersion: 2
-        x: 79
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93f10dc8745144060800000000000000
-      internalID: 6936692723106717497
+      spriteID: 94a43f7920073d840800000000000000
+      internalID: 5247661147258309193
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_5
+      name: AngryBurgerIdle_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bc7a71696a9f3a70800000000000000
-      internalID: 8808929173557640368
+      spriteID: e1352f797f3e87890800000000000000
+      internalID: -7459962130193558754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryBurgerIdle_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0852595db2dade810800000000000000
+      internalID: 1796282230169216384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryBurgerIdle_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da5e295db5b6a770800000000000000
+      internalID: 8621778361497049816
       vertices: []
       indices: 
       edges: []
@@ -274,7 +286,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 14cda5b7a7b3206408517419cd105953
     internalID: 0
     vertices: []
     indices: 
@@ -282,15 +294,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Door_1: 436563815456543028
-      Door_3: 289144848352645085
-      Door_4: 6936692723106717497
-      Door_5: 8808929173557640368
-      Door_0: 5213229242370633579
-      Door_2: -8689009931745917929
+      AngryBurgerIdle_0: 7404334406682204202
+      AngryBurgerIdle_1: -351117811637700021
+      AngryBurgerIdle_5: -7459962130193558754
+      AngryBurgerIdle_3: -6473927608890920564
+      AngryBurgerIdle_7: 8621778361497049816
+      AngryBurgerIdle_2: 6911282132760052089
+      AngryBurgerIdle_4: 5247661147258309193
+      AngryBurgerIdle_6: 1796282230169216384
   spritePackingTag: 
-  pSDRemoveMatte: 1
-  pSDShowRemoveMatteOption: 1
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

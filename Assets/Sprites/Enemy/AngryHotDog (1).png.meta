@@ -1,25 +1,31 @@
 fileFormatVersion: 2
-guid: b26d4dddc34d3a049a52b34ca7bfec04
+guid: 3c7718321ef7fc54e84785411a497522
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5213229242370633579
-    second: Door_0
+      213: 6776230744781081485
+    second: AngryHotDog (1)_0
   - first:
-      213: 436563815456543028
-    second: Door_1
+      213: -368090017816974239
+    second: AngryHotDog (1)_1
   - first:
-      213: -8689009931745917929
-    second: Door_2
+      213: -1945327317511155952
+    second: AngryHotDog (1)_2
   - first:
-      213: 289144848352645085
-    second: Door_3
+      213: 5039166226541518907
+    second: AngryHotDog (1)_3
   - first:
-      213: 6936692723106717497
-    second: Door_4
+      213: -316076152132355401
+    second: AngryHotDog (1)_4
   - first:
-      213: 8808929173557640368
-    second: Door_5
+      213: -3930298190188466865
+    second: AngryHotDog (1)_5
+  - first:
+      213: -7382404304002110574
+    second: AngryHotDog (1)_6
+  - first:
+      213: -6504826012469296734
+    second: AngryHotDog (1)_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -65,7 +71,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -86,8 +92,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,44 +104,8 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -146,127 +116,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Door_0
+      name: AngryHotDog (1)_0
       rect:
         serializedVersion: 2
-        x: 33
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6f2e24006c195840800000000000000
-      internalID: 5213229242370633579
+      spriteID: d8bc1cad5f10a0e50800000000000000
+      internalID: 6776230744781081485
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_1
+      name: AngryHotDog (1)_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43193162a7cfe0600800000000000000
-      internalID: 436563815456543028
+      spriteID: 16ce6aa341844eaf0800000000000000
+      internalID: -368090017816974239
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_2
+      name: AngryHotDog (1)_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7148170e08f6a6780800000000000000
-      internalID: -8689009931745917929
+      spriteID: 01f42eb8c1fc005e0800000000000000
+      internalID: -1945327317511155952
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_3
+      name: AngryHotDog (1)_3
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddf81b625bf330400800000000000000
-      internalID: 289144848352645085
+      spriteID: b3027210cf6bee540800000000000000
+      internalID: 5039166226541518907
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_4
+      name: AngryHotDog (1)_4
       rect:
         serializedVersion: 2
-        x: 79
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93f10dc8745144060800000000000000
-      internalID: 6936692723106717497
+      spriteID: 7babd2e0a621d9bf0800000000000000
+      internalID: -316076152132355401
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Door_5
+      name: AngryHotDog (1)_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 0
-        width: 15
-        height: 28
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bc7a71696a9f3a70800000000000000
-      internalID: 8808929173557640368
+      spriteID: f4da470ae96c479c0800000000000000
+      internalID: -3930298190188466865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryHotDog (1)_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29ba3af266e6c8990800000000000000
+      internalID: -7382404304002110574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryHotDog (1)_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a10c09a4373ab5a0800000000000000
+      internalID: -6504826012469296734
       vertices: []
       indices: 
       edges: []
@@ -274,7 +286,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 37d5b5091a5fe0641a19ead568b0c90b
     internalID: 0
     vertices: []
     indices: 
@@ -282,15 +294,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Door_1: 436563815456543028
-      Door_3: 289144848352645085
-      Door_4: 6936692723106717497
-      Door_5: 8808929173557640368
-      Door_0: 5213229242370633579
-      Door_2: -8689009931745917929
+      AngryHotDog (1)_1: -368090017816974239
+      AngryHotDog (1)_7: -6504826012469296734
+      AngryHotDog (1)_2: -1945327317511155952
+      AngryHotDog (1)_0: 6776230744781081485
+      AngryHotDog (1)_3: 5039166226541518907
+      AngryHotDog (1)_6: -7382404304002110574
+      AngryHotDog (1)_5: -3930298190188466865
+      AngryHotDog (1)_4: -316076152132355401
   spritePackingTag: 
-  pSDRemoveMatte: 1
-  pSDShowRemoveMatteOption: 1
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
