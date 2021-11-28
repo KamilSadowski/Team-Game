@@ -89,6 +89,7 @@ public class Dungeon : MonoBehaviour
 		}
 
 		gameManager.TeleportPlayer(roomsCreated[0].transform.position);
+		gameManager.GivePlayerEquipment();
 
 		return true;
 	}

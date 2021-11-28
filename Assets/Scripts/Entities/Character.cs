@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : Entity2D
 {
-    protected float strength = 2.5f;
+    protected float strength = 5.0f;
     protected BaseHealthComponent playerHealth;
     // Start is called before the first frame update
     public float GetStrength()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class Player : Character
     protected EntityManager entitySpawner;
     [SerializeField] Weapon[] NPCList;
 
-    protected const float MAX_FORCE_MOD = 3; //Discuss this in detail later- What factor limits the throwing power? 
+    protected const float MAX_FORCE_MOD = 0.5f; //Discuss this in detail later- What factor limits the throwing power? 
 
 
     protected float[] WeaponCharge = { 0, 0 };
@@ -32,7 +33,10 @@ public class Player : Character
     {
         crosshair = FindObjectOfType<Crosshair>();
         entitySpawner = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
-        equipment = new PWeapon[WEAPON_COUNT];
+        if (equipment == null)
+        {
+            equipment = new PWeapon[WEAPON_COUNT];
+        }
 
         int i = 0;
         foreach (Transform child in GameObject.FindWithTag("ChargeBar").GetComponent<Transform>())
@@ -92,6 +96,11 @@ public class Player : Character
 
     public bool PickupWeapon(GameObject weapon)
     {
+        if (equipment == null)
+        {
+            equipment = new PWeapon[WEAPON_COUNT];
+        }
+
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
             for (int i = 0; i < WEAPON_COUNT; ++i)
@@ -126,6 +135,11 @@ public class Player : Character
     //If the equipment slot is empty, or the weapon has been "Thrown" it will be unavailable.
     private bool IsWeaponAvailable(int index)
     {
+        if (equipment == null)
+        {
+            equipment = new PWeapon[WEAPON_COUNT];
+        }
+
         if (equipment[index].gameObject != null)
             if (equipment[index].weaponController.GetIsEquipped())
                 return true;
@@ -136,6 +150,11 @@ public class Player : Character
     public void SpawnWeaponPickup()
     {
         entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
+    }
+
+    public void SpawnWeaponPickupAt(Vector3 position)
+    {
+        entitySpawner.TryCreateListedWeapon(1, position);
     }
 
     public void SpawnEnemyTarget()

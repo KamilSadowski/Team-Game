@@ -20,8 +20,10 @@ public class EnemyController : Controller
     {
         //Grab whatever is tagged as "Player" - This should be connected to the base component and thus update automatically. 
         playerObject = GameObject.FindWithTag("Player");
-        playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
-      
+        if (playerObject)
+        {
+            playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
+        }   
 
         BindVariables();
     }
@@ -72,8 +74,11 @@ public class EnemyController : Controller
         {
             //This will repeatedly try to find the movement component if it is missing. 
             playerObject = GameObject.FindWithTag("Player");
-            entityMoveComp = GetComponent<MovementComponent>();
-            playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
+            if (playerObject)
+            {
+                entityMoveComp = GetComponent<MovementComponent>();
+                playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
+            }
             BindVariables();
         }
 

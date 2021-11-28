@@ -7,8 +7,15 @@ public class ProjectileController : Controller
 
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
-    const float MIN_DISTANCE_TRAVELLED = 7.5f;
-    const float DRAG = 0.95f;
+    const float MIN_DISTANCE_TRAVELLED = 2.0f;
+
+    // Decide if projectile is in the air based on speed
+    const float MIN_AIR_SPEED = 2.5f; // Speed for the projectile to hit the ground, should be higher than on ground
+    const float MIN_GROUND_SPEED = 0.5f; // Speed for the projectile to fully stop, should be less than in air
+
+    // Drag of the projectile based on the state/speed
+    const float IN_AIR_DRAG = 0.1f;
+    const float ON_GROUND_DRAG = 0.9999f;
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
 
@@ -16,6 +23,8 @@ public class ProjectileController : Controller
     protected float damageMod = -1;
     protected Vector3 nDirection;
     protected Vector3 oldPos;
+    MovementComponent entityMoveComp;
+    MobileComponent entityMoblieComp;
 
 
 
@@ -26,6 +35,7 @@ public class ProjectileController : Controller
         BindVariables();
         oldPos = transform.position;
         nDirection = Vector3.zero;
+        entityMoveComp = GetComponent<MovementComponent>();
     }
 
 
@@ -55,14 +65,31 @@ public class ProjectileController : Controller
     }
 
     //So this is stupid, basically, floats aren't precise. 
-    protected void updateDirection()
+    protected void UpdateDirection()
     {
         for (int i = 0; i < 3; ++i)
-            if (Mathf.Abs(transform.position[i]) <= Mathf.Abs(oldPos[i]) + .0005f && Mathf.Abs(transform.position[i]) >= Mathf.Abs(oldPos[i]) - .0005f)
+            if (Mathf.Abs(transform.position[i]) <= 
+                Mathf.Abs(oldPos[i]) + .0005f && Mathf.Abs(transform.position[i]) >= 
+                Mathf.Abs(oldPos[i]) - .0005f)
+            {
                 nDirection[i] = 0;
+            }
 
+        // Drag depends on whether the projectile is still in the air (depends on current speed of the projecitle)
+        if (nDirection.magnitude > MIN_AIR_SPEED)
+        {
+            nDirection -= (transform.position - oldPos) * IN_AIR_DRAG;
+        }
+        else if (nDirection.magnitude > MIN_GROUND_SPEED)
+        {
+            nDirection -= (transform.position - oldPos) * ON_GROUND_DRAG;
+        }
+        // Manual stop of projectiles to prevent slow sliding and issues with picking them up
+        else
+        {
+            nDirection = Vector3.zero;
+        }
 
-        nDirection -= (transform.position - oldPos) * DRAG;
         oldPos = transform.position;
     }
     protected bool ProjFixedUpdate()
@@ -81,7 +108,7 @@ public class ProjectileController : Controller
             {
                 if (entityMoveComp.ConfirmedMove(nDirection))
                 {
-                    updateDirection();
+                    UpdateDirection();
                 }
             }
             else
@@ -90,7 +117,7 @@ public class ProjectileController : Controller
                 if (MoveWithMin(minDistanceTravelled))
                     if (entityMoveComp.ConfirmedMove(nDirection))
                     {
-                        updateDirection();
+                        UpdateDirection();
                     }
                 //if there's no force then why have a projectile?
                 return false;
@@ -121,12 +148,11 @@ public class ProjectileController : Controller
 
         output *= damageMod;
 
-
-
         EnemyController tempRef = collision.gameObject.GetComponent<EnemyController>();
 
         if (tempRef != null)
             tempRef.DamageEntity(output);
+
     }
 }
    

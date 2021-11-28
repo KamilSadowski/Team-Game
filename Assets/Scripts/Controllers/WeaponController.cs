@@ -45,7 +45,11 @@ public class WeaponController : ProjectileController
             //This is for when it has just spawned or is placed. 
             if (isDropped)
             {
-                PlayerPickup();
+                if (playerCollision.bounds.Intersects(weaponCollision.bounds))
+                {
+                    PlayerPickup();
+
+                }
             }
             else
             {
@@ -58,7 +62,10 @@ public class WeaponController : ProjectileController
                 {
                     isHeld = false;
                     //This could set "IsDropped" to true but it would effectively do the same thing. 
-                    PlayerPickup();
+                    if (playerCollision.bounds.Intersects(weaponCollision.bounds))
+                    {
+                        PlayerPickup();
+                    }
                 }
             }
         }
@@ -72,41 +79,40 @@ public class WeaponController : ProjectileController
         Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
 
-    protected void PlayerPickup()
+    public void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
         if (!isHeld)
-            if (playerCollision.bounds.Intersects(weaponCollision.bounds))
+        {
+            isDropped = false;
+            transform.position = Vector3.zero;
+
+            if (GetParentRef())
             {
-                isDropped = false;
-                transform.position = Vector3.zero;
-
-                if (GetParentRef())
+                if (parentWeapCont == null) return;
+                if (IS_WEAPON_LOG_OUTPUT)
                 {
-                    if (parentWeapCont == null) return;
-                    if (IS_WEAPON_LOG_OUTPUT)
-                    {
-                       Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Parent ID:" + parentWeapCont.parentID + " OR " + parentWeapCont.controlledObject.entityID);
-                    }
-                    parentWeapCont.isHeld = true;
-                    parentWeapCont.isProjectile = false;
+                    Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Parent ID:" + parentWeapCont.parentID + " OR " + parentWeapCont.controlledObject.entityID);
                 }
-
-                if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
-                {
-                    if (IS_WEAPON_LOG_OUTPUT)
-                    {
-                        Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + ", ID:" + controlledObject.entityID + " , Destroyed. Parent ID:" + parentID);
-                    }
-                    //No where to put entity. Delete it, for now. 
-                    controlledObject.DestroyEntity();
-                }
-                else
-                {
-                    //Weapon has been picked up and is now a reference for cloning.
-                    isProjectile = false;
-                    isHeld = true;
-                }
+                parentWeapCont.isHeld = true;
+                parentWeapCont.isProjectile = false;
             }
+
+            if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
+            {
+                if (IS_WEAPON_LOG_OUTPUT)
+                {
+                    Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + ", ID:" + controlledObject.entityID + " , Destroyed. Parent ID:" + parentID);
+                }
+                //No where to put entity. Delete it, for now. 
+                controlledObject.DestroyEntity();
+            }
+            else
+            {
+                //Weapon has been picked up and is now a reference for cloning.
+                isProjectile = false;
+                isHeld = true;
+            }
+        }       
     }
 
     public void ThrowWeapon()

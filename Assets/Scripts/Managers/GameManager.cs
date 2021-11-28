@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     Player player;
     FollowingCamera camera;
+    EntityManager entityManager;
 
     // Volume variables
     Slider effectsSlider;
@@ -16,9 +17,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioMixer effectsMixer;
     [SerializeField] AudioMixer musicMixer;
 
+    // Weapon data
+    Globals.WeaponData[] weaponsToGive;
+    WeaponController[] weaponControllers;
+    int[] weaponsToGiveIDs;
+    bool weaponsGiven = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        weaponsToGive = new Globals.WeaponData[2];
+        weaponsToGiveIDs = new int[2];
+        weaponsToGive[0].prefabID = 1;
+        weaponsToGive[1].prefabID = 1;
+
         // Game manager cannot be destroyed
         DontDestroyOnLoad(gameObject);
 
@@ -58,7 +70,52 @@ public class GameManager : MonoBehaviour
         {
             camera = FindObjectOfType<FollowingCamera>();
         }
+    }
 
+    public void GivePlayerEquipment()
+    {
+        // Give the player weapons 
+        if (!weaponsGiven)
+        {
+            if (player == null)
+            {
+                player = FindObjectOfType<Player>();
+            }
+
+            if (entityManager == null)
+            {
+                entityManager = FindObjectOfType<EntityManager>();
+            }
+
+            if (weaponControllers == null)
+            {
+                weaponControllers = new WeaponController[2];
+            }
+
+            if (player && entityManager)
+            {
+                for (int i = 0; i < weaponsToGive.Length; i++)
+                {
+                    if(weaponsToGive[i].prefabID > -1)
+                    {
+                        weaponsToGiveIDs[i] = entityManager.TryCreateListedWeapon(weaponsToGive[i].prefabID, Vector3.zero);
+                    }
+
+                }
+
+                for (int i = 0; i < weaponsToGiveIDs.Length; i++)
+                {
+                    if (weaponsToGiveIDs[i] != -1)
+                    {
+                        weaponControllers[i] = entityManager.GetEntity(weaponsToGiveIDs[i]).GetComponent<WeaponController>();
+                        weaponControllers[i].PlayerPickup();
+                        player.PickupWeapon(weaponControllers[i].gameObject);
+                    }
+                }
+
+                weaponsGiven = true;
+            }
+        }
     }
 
     public void TeleportPlayer(Vector3 teleportTo)
@@ -79,6 +136,21 @@ public class GameManager : MonoBehaviour
 
     public void EnterScene(Globals.Scenes scene)
     {
+        // Update weapons to give
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+
+        if (player)
+        {
+            weaponsToGive[0].prefabID = 1;
+            weaponsToGive[1].prefabID = 1;
+            weaponsGiven = false;
+            player = null;
+        }
+        
+        // Load the new scene
         SceneManager.LoadScene(Globals.SceneNames[(int)scene]);
     }
 

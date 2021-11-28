@@ -9,7 +9,7 @@ public class MobileComponent : MovementComponent
     [SerializeField] protected float drag = 0.5f;
 
     // Movement variables
-    protected Vector3 velocity;
+    public Vector3 velocity;
     protected Vector3 position;
     protected float minVelocity = 0.0001f;
     protected Vector3 currentInput;

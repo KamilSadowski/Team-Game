@@ -7,6 +7,7 @@ public static class Globals
     // Room globals
     public enum Direction { north, east, south, west };
 
+    public struct WeaponData { public int prefabID; }; // Stores all of the data needed for weapons to persist between levels and save files
 
     public struct Grid2D { public int x; public int y; };
 

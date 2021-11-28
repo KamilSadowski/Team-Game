@@ -20,9 +20,23 @@ public class EntityManager : MonoBehaviour
     MovementComponent canThrow;
     private int ID;
 
-    public int TryCreatePlayer(Vector3 Position)
+    int playerID;
+    Player player;
+
+    // Creates a player with his weapons
+    public int TryCreatePlayer(Vector3 position)
     {
-        return TryCreateEntity(playerPrefab, Position);
+        playerID = TryCreateEntity(playerPrefab, position);
+        if (playerID != -1)
+        {
+            player = entities[playerID] as Player;
+            if (player)
+            {
+                TryCreateListedWeapon(1, position);
+                TryCreateListedWeapon(1, position);
+            }
+        }
+        return playerID;
     }
 
 
