@@ -53,7 +53,7 @@ public class PlayerController : Controller
             else
             {
                 //The player should always have a movement component. If it doesn't then it should loop until it does, because it is a problem which can't be removed. 
-                entityMoveComp = GameObject.FindWithTag("Player").GetComponent<MovementComponent>();
+                entityMoveComp = PriorityChar_Manager.instance.getPlayer().GetComponent<MovementComponent>();
             }
 
             //See. "Update"
@@ -81,7 +81,7 @@ public class PlayerController : Controller
 
             if (player == null)
             {
-                playerObject = GameObject.FindWithTag("Player");
+                playerObject = PriorityChar_Manager.instance.getPlayer();
                 if (playerObject)
                 {
                     player = playerObject.GetComponent<Player>();

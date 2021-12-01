@@ -15,7 +15,7 @@ public class Pickup : Entity2D
         UpdateEntity();
     }
     protected bool BindVariables()
-    {
+    { 
         UpdateEntity();
 
         bool output = false;

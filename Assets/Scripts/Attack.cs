@@ -29,6 +29,7 @@ public class Attack : MonoBehaviour
     // Need to check if is attacking before calling this
     public void StartAttack(float attackDamage)
     {
+        
         attackParticleSystem.Play();
         damage = attackDamage;
     }

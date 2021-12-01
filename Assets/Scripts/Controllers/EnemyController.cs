@@ -21,7 +21,7 @@ public class EnemyController : Controller
     void Start()
     {
         //Grab whatever is tagged as "Player" - This should be connected to the base component and thus update automatically. 
-        playerObject = GameObject.FindWithTag("Player");
+        playerObject = PriorityChar_Manager.instance.getPlayer();
         if (playerObject)
         {
             playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
@@ -87,7 +87,7 @@ public class EnemyController : Controller
         else
         {
             //This will repeatedly try to find the movement component if it is missing. 
-            playerObject = GameObject.FindWithTag("Player");
+            playerObject = PriorityChar_Manager.instance.getPlayer();
             if (playerObject)
             {
                 entityMoveComp = GetComponent<MovementComponent>();
