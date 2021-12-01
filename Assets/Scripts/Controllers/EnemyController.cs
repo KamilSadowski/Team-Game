@@ -6,10 +6,12 @@ public class EnemyController : Controller
 {
     protected GameObject playerObject;
     protected BaseHealthComponent playerHealth;
+    protected AttackComponent attackComponent;
     protected Character cControlledObject;
     protected Animator animator;
-    protected bool IsWalking = false;
-    protected bool IsFacingFront = true;
+    protected bool isWalking = false;
+    protected bool isFacingFront = true;
+    protected float kitingDistance = 1.0f; // Space to maintain between the enemy and the player
 
 
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
@@ -32,8 +34,8 @@ public class EnemyController : Controller
     void Update()
     {
 
-        var prevIsWalking = IsWalking;
-        var prevIsFacingFront = IsFacingFront;
+        var prevIsWalking = isWalking;
+        var prevIsFacingFront = isFacingFront;
 
         if (!cControlledObject)
         {
@@ -50,22 +52,34 @@ public class EnemyController : Controller
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
             Vector3 direction = positionCalc / distance;
 
-            if (direction.x > 0f) IsFacingFront = true;
-            else IsFacingFront = false;
+            if (direction.x > 0f) isFacingFront = true;
+            else isFacingFront = false;
 
             //DELETE THIS COMMENT LATER
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
-            if (playerHealth != null && distance < .3f)
+            if (playerHealth != null && distance < kitingDistance)
             {
-                if (playerHealth.TakeDamage(cControlledObject.GetStrength() * Time.deltaTime))
+                isWalking = false;
+                //if (playerHealth.TakeDamage(cControlledObject.GetStrength() * Time.deltaTime))
+                //{
+                //    playerObject.GetComponent<Entity>().DestroyEntity();              
+                //}
+                if (attackComponent)
                 {
-                    playerObject.GetComponent<Entity>().DestroyEntity();
-                    IsWalking = false;
+                    attackComponent.Attack();
+                }
+                else
+                {
+                    attackComponent = FindObjectOfType<AttackComponent>();
+                    if (attackComponent)
+                    {
+                        attackComponent.Attack();
+                    }
                 }
             }
             else
             {
-                IsWalking = true;
+                isWalking = true;
                 entityMoveComp.Move(direction);
             }
 
@@ -82,11 +96,11 @@ public class EnemyController : Controller
             BindVariables();
         }
 
-        if (prevIsWalking != IsWalking)
-            GetComponent<Animator>().SetBool("IsWalking", IsWalking);
+        if (prevIsWalking != isWalking)
+            GetComponent<Animator>().SetBool("IsWalking", isWalking);
        
-        if (prevIsFacingFront != IsFacingFront)
-            GetComponent<Animator>().SetBool("Front", IsFacingFront);
+        if (prevIsFacingFront != isFacingFront)
+            GetComponent<Animator>().SetBool("Front", isFacingFront);
 
     }
 

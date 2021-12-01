@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
-    [SerializeField] bool IS_ADMIN = true;
     protected Player player;
     protected GameObject playerObject;
     protected UI_ChargingBar healthBarRef;
@@ -77,30 +76,38 @@ public class PlayerController : Controller
 
     private void Update()
     {
-
-        if (IS_ADMIN)
+        if (Debug.isDebugBuild)
         {
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                if (player == null)
-                {
-                     
-                }
 
-                player.SpawnWeaponPickup();
+            if (player == null)
+            {
+                playerObject = GameObject.FindWithTag("Player");
+                if (playerObject)
+                {
+                    player = playerObject.GetComponent<Player>();
+                }
             }
 
-
-            if (Input.GetKeyDown(KeyCode.K))
+            if (player)
             {
-                if (player == null)
+
+                if (Input.GetKeyDown(KeyCode.L))
                 {
-                    player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                    player.SpawnWeaponPickup();
                 }
 
-                player.SpawnEnemyTarget();
-            }
 
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    player.SpawnEnemyTarget();
+                }
+
+
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    //player.SpawnRandomPickup();
+                }
+            }
 
         }
 

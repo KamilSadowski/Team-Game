@@ -24,6 +24,7 @@ public class Player : Character
     protected Vector3 SpawnPosition;
     WeaponController spawnedWeaponReference;
     Crosshair crosshair;
+    GameManager gameManager;
 
     //Direct reference to the progress bars held within the UI
     UI_ChargingBar[] weaponCharge_UI = new UI_ChargingBar[WEAPON_COUNT];
@@ -160,5 +161,35 @@ public class Player : Character
     public void SpawnEnemyTarget()
     {
         entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
+    }
+
+    public void SpawnRandomPickup()
+    {
+
+        entitySpawner.TryCreateRandomListedPickup(crosshair.GetPosition());
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        if (!healthComponent)
+        {
+            healthComponent = GetComponent<BaseHealthComponent>();
+        }
+        if (healthComponent)
+        {
+            if (healthComponent.TakeDamage(damage))
+            {
+                // If player is killed, he is taken to the hubworld
+                if (!gameManager)
+                {
+                    gameManager = FindObjectOfType<GameManager>();
+                }
+                if (gameManager)
+                {
+                    gameManager.EnterScene(Globals.Scenes.HubWorld);
+                }
+
+            }
+        }
     }
 }

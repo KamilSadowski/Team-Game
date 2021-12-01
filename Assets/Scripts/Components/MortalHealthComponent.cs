@@ -18,7 +18,7 @@ public class MortalHealthComponent : BaseHealthComponent
         healthBar = GetComponentInChildren<UI_ChargingBar>();
 
     }
-    public override float getHealthPercentage()
+    public override float GetHealthPercentage()
     {
         return currentHealth / maxHealth;
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1656889451753388923}
   - component: {fileID: 6990711239656831186}
   - component: {fileID: 1330783080425496172}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 406110111504884135}
   - component: {fileID: 3229106983249430211}
   - component: {fileID: 2618936590879068998}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1282,7 +1282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8328760738856097214}
   - component: {fileID: 3340617027263581513}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Corridor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1333,6 +1333,14 @@ PrefabInstance:
     - target: {fileID: 310591640931400511, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
       propertyPath: m_Name
       value: Door Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 310591640931400511, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 872251774242089204, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1246641269280704348, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1403,6 +1411,14 @@ PrefabInstance:
     - target: {fileID: 310591640931400511, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
       propertyPath: m_Name
       value: Door Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 310591640931400511, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 872251774242089204, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1246641269280704348, guid: d1602a31a7c735f48945e59b89a4ca67, type: 3}
       propertyPath: m_LocalPosition.y

@@ -14,7 +14,7 @@ public class Character : Entity2D
 
     public float GetHealthPercentage()
     {
-        return playerHealth.getHealthPercentage();
+        return playerHealth.GetHealthPercentage();
     }
 
     public BaseHealthComponent GetPlayerHealth()

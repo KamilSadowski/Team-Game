@@ -12,6 +12,7 @@ public class EntityManager : MonoBehaviour
     [SerializeField] GameObject[] NPCList;
     [SerializeField] GameObject[] WeaponList;
     [SerializeField] GameObject[] PropList;
+    [SerializeField] GameObject[] PickupList;
 
     List<Entity> entities = new List<Entity>();
     Stack<int> entitySlots = new Stack<int>();
@@ -129,6 +130,15 @@ public class EntityManager : MonoBehaviour
         }
 
         Destroy(entity);
+        return -1;
+    }
+    public int TryCreateRandomListedPickup(Vector3 Position)
+    {
+
+        if (PickupList.Length > 0)
+            TryCreateEntity(PickupList[Random.Range(0, PickupList.Length)], Position);
+
+        //-1 is commonly used as "Invalid"
         return -1;
     }
 

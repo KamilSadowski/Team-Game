@@ -58,4 +58,19 @@ public class Entity : MonoBehaviour
     {
        
     }
+
+    public virtual void TakeDamage(float damage)
+    {
+        if (!healthComponent)
+        {
+            healthComponent = GetComponent<BaseHealthComponent>();
+        }
+        if (healthComponent)
+        {
+            if (healthComponent.TakeDamage(damage))
+            {
+                DestroyEntity();
+            }
+        }
+    }
 }
