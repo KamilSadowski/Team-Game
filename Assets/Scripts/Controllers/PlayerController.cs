@@ -105,7 +105,7 @@ public class PlayerController : Controller
 
                 if (Input.GetKeyDown(KeyCode.I))
                 {
-                    //player.SpawnRandomPickup();
+                    player.SpawnRandomPickup();
                 }
             }
 

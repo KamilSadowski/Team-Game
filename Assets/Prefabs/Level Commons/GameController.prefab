@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -51,6 +52,8 @@ MonoBehaviour:
   - {fileID: 5733697913478852489, guid: a25a8e9b0c9984245834f076f49c1897, type: 3}
   - {fileID: 5733697913478852489, guid: 5d1da965001f4824bb9bf790038a39c3, type: 3}
   PropList: []
+  PickupList:
+  - {fileID: 5733697913478852489, guid: 6b86cf40834a9de4a8fe89e23dec5261, type: 3}
 --- !u!114 &8521521568420228400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,3 +66,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bd049e226a28948a7edd5ebb281874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCharging: 

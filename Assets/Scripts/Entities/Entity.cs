@@ -7,7 +7,7 @@ public class Entity : MonoBehaviour
     public int entityID { get; protected set; } = -1;
     protected Vector3 AccelerationEvent;
     protected bool isMobile = true;
-    EntityManager entityManager;
+    protected EntityManager entityManager;
 
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
