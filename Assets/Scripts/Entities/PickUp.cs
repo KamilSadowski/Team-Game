@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Pickup : Entity2D
 {
-    protected EntityManager entitySpawner;
-
-    Collider2D thisCollider;
-    Collider2D playerCollider;
+    protected Collider2D thisCollider;
+    protected Collider2D playerCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +18,7 @@ public class Pickup : Entity2D
 
         bool output = false;
 
-        if (playerCollider == null) playerCollider = GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>();
+        if (playerCollider == null) playerCollider = PriorityChar_Manager.instance.getPlayer().GetComponent<CapsuleCollider2D>();
         if (thisCollider == null) thisCollider = GetComponent<Collider2D>();
         else output = true;
 
@@ -44,6 +42,6 @@ public class Pickup : Entity2D
 
     protected virtual void activatePickup()
     {
-        entitySpawner.DeleteEntity(entityID);
+        entityManager.DeleteEntity(entityID);
     }
 }

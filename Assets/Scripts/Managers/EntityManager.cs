@@ -134,12 +134,8 @@ public class EntityManager : MonoBehaviour
     }
     public int TryCreateRandomListedPickup(Vector3 Position)
     {
-
-        if (PickupList.Length > 0)
-            TryCreateEntity(PickupList[Random.Range(0, PickupList.Length)], Position);
-
-        //-1 is commonly used as "Invalid"
-        return -1;
+        int number = Random.Range(0, PickupList.Length);
+        return TryCreateEntity(PickupList[number], Position);
     }
 
     public int TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)

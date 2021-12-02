@@ -22,6 +22,11 @@ public class MortalHealthComponent : BaseHealthComponent
     {
         return currentHealth / maxHealth;
     }
+
+    public void heal(int input)
+    {
+        currentHealth += Mathf.Abs(input);
+    }
     // Update is called once per frame
     public override bool TakeDamage(float damage)
     {
