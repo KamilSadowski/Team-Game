@@ -9,6 +9,8 @@ public class Door : MonoBehaviour
     bool open; // Is the door open
     bool hasDoor; // Used when a corridor is rendered but invisible, makes the wall behind the door the only thing that is rendered
 
+    public Globals.Direction direction { set; get; }
+
     // Door components
     SpriteRenderer door;
     Collider2D collider;
@@ -19,6 +21,7 @@ public class Door : MonoBehaviour
     void Awake()
     {
         hasDoor = false;
+        direction = Globals.Direction.north;
 
         // Get door components
         collider = GetComponent<Collider2D>();
@@ -28,6 +31,14 @@ public class Door : MonoBehaviour
         // Door will be invisible by default
         door = GetComponent<SpriteRenderer>();
         door.enabled = false;
+    }
+
+    void Start()
+    {
+        if (direction is Globals.Direction.east or Globals.Direction.west)
+        {
+            OpenDoor();
+        }
     }
 
     // Update is called once per frame
@@ -43,6 +54,8 @@ public class Door : MonoBehaviour
         }
     }
 
+    
+
     // Makes the door visible and the wall invisible
     public void CreateDoor()
     {
@@ -57,6 +70,8 @@ public class Door : MonoBehaviour
     {
         if (hasDoor)
         {
+           
+
             animator.SetBool("Open", true);
             open = true;
             collider.enabled = false;
@@ -67,6 +82,7 @@ public class Door : MonoBehaviour
     {
         if (hasDoor)
         {
+            
             animator.SetBool("Open", false);
             open = false;
             collider.enabled = true;

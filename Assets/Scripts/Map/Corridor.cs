@@ -24,7 +24,7 @@ public class Corridor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public Globals.Direction GetDirection()
@@ -41,6 +41,9 @@ public class Corridor : MonoBehaviour
         foreach (Door door in doors)
         {
             door.CreateDoor();
+
+            // Set its direction for the animation
+            door.direction = direction;
         }
 
     }
@@ -51,7 +54,10 @@ public class Corridor : MonoBehaviour
         {
             foreach (Door door in doors)
             {
-                if (door != null) door.OpenDoor();
+                if (door != null)
+                {
+                    door.OpenDoor();
+                }
             }
         }
     }
@@ -62,7 +68,10 @@ public class Corridor : MonoBehaviour
         {
             foreach (Door door in doors)
             {
-                if (door != null) door.CloseDoor();
+                if (door != null)
+                {
+                    door.CloseDoor();
+                }
             }
         }
     }
