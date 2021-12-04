@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponController : ProjectileController
 {
-    const bool IS_WEAPON_LOG_OUTPUT = true;
+    const bool IS_WEAPON_LOG_OUTPUT = false;
     protected float counterGetIsEquipped = COUNTER_GET_IS_EQUIPPED_MAX;
     const float COUNTER_GET_IS_EQUIPPED_MAX = 1.0f;
 

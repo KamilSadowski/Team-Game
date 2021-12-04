@@ -160,7 +160,7 @@ public class Player : Character
 
     public void SpawnEnemyTarget()
     {
-        entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
+        entitySpawner.TryCreateListedNPC(1, crosshair.GetPosition());
     }
 
     public void SpawnRandomPickup()
