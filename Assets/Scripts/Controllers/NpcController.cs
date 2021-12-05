@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NpcController : Controller
 {
-    private EntityManager entityManager;
+    public KeyCode ActivationKey = KeyCode.E;
+    protected EntityManager entityManager;
 
     public const float interactionRadius = .25f;
     GameObject playerRef;
@@ -16,7 +17,13 @@ public class NpcController : Controller
     protected Vector3 newScale;
     protected GameObject objectRef;
     // Start is called before the first frame update
-    void Start()
+
+
+    protected virtual void ActivateInteraction()
+    {
+
+    }
+    protected virtual void EndInteraction()
     {
 
     }
@@ -33,22 +40,40 @@ public class NpcController : Controller
         {
            if (entityManager && !interactionSpawned)
             {
-                if(newScale == Vector3.zero)
-                newScale.Set(interactionBaseScale, interactionBaseScale, interactionBaseScale);
+                if (objectRef != null)
+                {
+                    objectRef.SetActive(true);
+                }
+                else
+                {
+                    //Set NewScale as custom scale so it can be used in Vector multiplication
+                    newScale.Set(interactionBaseScale, interactionBaseScale, interactionBaseScale);
 
-                interactionID = entityManager.TryCreateInteractionUI(transform.position +  (Vector3.up * interactionBaseScale * 1.5f));
 
-                objectRef = entityManager.GetEntity(interactionID).gameObject;//
-                objectRef.transform.localScale = newScale * transform.localScale.x;
+                    interactionID = entityManager.TryCreateInteractionUI(transform.position + (Vector3.up * interactionBaseScale * 1.5f));
+                    objectRef = entityManager.GetEntity(interactionID).gameObject;//
+                    objectRef.transform.localScale = newScale * transform.localScale.x;
+                    objectRef.transform.SetParent(gameObject.transform);
+                }
                 interactionSpawned = true;
+
+                if (Input.GetKeyDown(ActivationKey))
+                {
+                    ActivateInteraction();
+                }
             }
            
         }
-        else if (interactionID != -1)
+        else if(interactionSpawned)
         {
-            entityManager.DeleteEntity(interactionID);
-            interactionID = -1;
+            objectRef.SetActive(false);// = ;
+            //entityManager.DeleteEntity(interactionID);
             interactionSpawned = false;
+
+            if (Input.GetKeyDown(ActivationKey))
+            {
+                EndInteraction();
+            }
         }
         return true;
 
@@ -80,9 +105,5 @@ public class NpcController : Controller
         {
             IsPlayerWithinRadius();
         }
-
-
-
-
     }
 }
