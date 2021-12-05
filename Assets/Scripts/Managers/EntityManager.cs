@@ -77,6 +77,15 @@ public class EntityManager : MonoBehaviour
         return -1;
     }
 
+    public int TryCreateInteractionUI(Vector3 Position)
+    {
+
+        if(PropList.Length>0)
+        return TryCreateEntity(PropList[0], Position);
+
+        //-1 is commonly used as "Invalid"
+        return -1;
+    }
 
     // Returns false if failed
     public int TryCreateEntity(GameObject entity, Vector3 position)
