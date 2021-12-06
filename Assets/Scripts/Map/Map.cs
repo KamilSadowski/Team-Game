@@ -7,6 +7,26 @@ public class Dungeon : MonoBehaviour
 {
 	GameManager gameManager;
 
+	// Tilemap loader variables
+	[SerializeField] Tilemap wallTileMap;
+	[SerializeField] Tilemap groundTileMap;
+	[SerializeField] TileBase editorGroundTile;
+	[SerializeField] TileBase editorWallTile;
+	[SerializeField] TileBase editorPropTile;
+	[SerializeField] List<TileBase> groundTiles;
+
+	[SerializeField] List<TileBase> topWallTiles;
+	[SerializeField] List<TileBase> topLeftWallTiles;
+	[SerializeField] List<TileBase> topRightWallTiles;
+	[SerializeField] List<TileBase> leftWallTiles;
+	[SerializeField] List<TileBase> rightWallTiles;
+	[SerializeField] List<TileBase> bottomWallTiles;
+	[SerializeField] List<TileBase> bottomLeftWallTiles;
+	[SerializeField] List<TileBase> bottomRightWallTiles;
+
+	[SerializeField] List<TileBase> mapPropTiles;
+	List<Vector3Int> wallLocations = new List<Vector3Int>();
+
 	// A list of room prefabs that can be used
 	[SerializeField] List<Room> roomPrefabs = new List<Room>();
 
@@ -45,52 +65,165 @@ public class Dungeon : MonoBehaviour
 			}
 		}
 	}
+	
+	// Reads the prefab and returns a 2D vector of tiles
+	TileBase[,] ReadMap(Tilemap tileMap, int maxHeight, int maxWidth)
+    {
+		Vector3Int position = new Vector3Int();
+		TileBase[,] map = new TileBase[maxHeight, maxWidth];
+		for (int height = 0; height < maxHeight; height++)
+		{
+			for (int width = 0; width < maxWidth; width++)
+			{
+				// Starts at center so the position needs to be offset by 50% in each direction
+				position.x =  maxHeight / 2 - height;
+				position.y = maxWidth / 2 - width;
+				map[height, width] = tileMap.GetTile(position);
+			}
+		}
+
+		return map;
+
+	}
 
 
 	// Returns true if finished creating a dungeon
 	bool CreateDungeon()
 	{
-		// Create the first room
-		if (roomsCreated.Count == 0)
-		{
-			// Starting room should be in the middle of the map rather than in a corner
-			currentRoomPosition.x = Globals.MAP_GRID_SIZE / 2;
-			currentRoomPosition.y = Globals.MAP_GRID_SIZE / 2;
-			CreateRoom(roomPrefabs[0], currentRoomPosition);
-			return false;
-		}		
-		// Create a random room near one of the rooms that were already placed
-		else if (roomsCreated.Count < Globals.MAX_ROOM_NO - 1)
-		{
-			currentRoomPosition = roomGridPositions[Random.Range(0, roomsCreated.Count)];
+		// Create a room
+		Tilemap editorTileMap = roomPrefabs[0].gameObject.GetComponentInChildren<Tilemap>();
 
-			UpdateDirectionsAvailable(currentRoomPosition);
-			if (RandomiseAndUpdatePosition(ref currentRoomPosition) && CheckRoomSpace(currentRoomPosition))
-			{
-				CreateRoom(roomPrefabs[0], currentRoomPosition);
-			}
+		TileBase[,] readMap = ReadMap(editorTileMap, 50, 50);
 
-			return false;
-		}
-		// Go through each room and give them corridors
-		else
+
+		// Go through all of the stored tiles and place corresponding tiles onto the map
+		for (int height = 0; height < readMap.GetLength(0); height++)
 		{
-			for (int room = 0; room < roomsCreated.Count; room++)
+			for (int width = 0; width < readMap.GetLength(1); width++)
 			{
-				// Check which doors lead to a room and enable them
-				UpdateDirectionsAvailable(roomGridPositions[room], false, true);
-				for (int door = 0; door < directionsAvailable.Count; door++)
-				{
-					roomsCreated[room].CreateCorridor(directionsAvailable[door], 
-												  PositionInDirection(roomGridPositions[room], 
-												  directionsAvailable[door]));
+				Vector3Int index = new Vector3Int(width, height, 0);
+
+				// Ground tile
+				if (readMap[height, width] == editorGroundTile)
+                {
+					groundTileMap.SetTile(index, groundTiles[0]);
 				}
+				// Wall tile
+				else if (readMap[height, width] == editorWallTile)
+				{
+					// Store the wall tile locations to add once the entire ground is added
+					wallLocations.Add(index);
+				}
+
 			}
 		}
 
-		gameManager.TeleportPlayer(roomsCreated[0].transform.position);
-		gameManager.GivePlayerEquipment();
+		// Fill in the wall tiles based on ground tiles
+		for (int i = 0; i < wallLocations.Count; i++)
+		{
+			// Top
+			if (readMap[wallLocations[i].y - 1, wallLocations[i].x] == editorGroundTile && 
+				readMap[wallLocations[i].y + 1, wallLocations[i].x] != editorWallTile)
+			{
+				wallTileMap.SetTile(wallLocations[i], topWallTiles[0]);
+			}
 
+			// Bottom
+			else if (readMap[wallLocations[i].y + 1, wallLocations[i].x] == editorGroundTile &&
+					 readMap[wallLocations[i].y - 1, wallLocations[i].x] != editorWallTile)
+			{
+				wallTileMap.SetTile(wallLocations[i], bottomWallTiles[0]);
+			}
+
+			// Left
+			else if (readMap[wallLocations[i].y, wallLocations[i].x + 1] == editorGroundTile &&
+					 readMap[wallLocations[i].y, wallLocations[i].x - 1] != editorWallTile)
+			{
+				wallTileMap.SetTile(wallLocations[i], leftWallTiles[0]);
+			}
+
+			// Right
+			else if (readMap[wallLocations[i].y, wallLocations[i].x - 1] == editorGroundTile &&
+					 readMap[wallLocations[i].y, wallLocations[i].x + 1] != editorWallTile)
+			{
+				wallTileMap.SetTile(wallLocations[i], rightWallTiles[0]);
+			}
+
+			//// Top left
+			//else if (readMap[wallLocations[i].y + 1, wallLocations[i].x] == editorWallTile &&
+			//	     readMap[wallLocations[i].y - 1, wallLocations[i].x] != editorWallTile &&
+			//		 readMap[wallLocations[i].y, wallLocations[i].x + 1] == editorWallTile &&
+			//		 readMap[wallLocations[i].y, wallLocations[i].x - 1] != editorWallTile)
+            //{
+			//	wallTileMap.SetTile(wallLocations[i], topLeftWallTiles[0]);
+			//}
+			//
+			//// Top right
+			//else if (readMap[wallLocations[i].y + 1, wallLocations[i].x] == editorWallTile &&
+			//		 readMap[wallLocations[i].y - 1, wallLocations[i].x] != editorWallTile &&
+			//		 readMap[wallLocations[i].y, wallLocations[i].x - 1] == editorWallTile &&
+			//		 readMap[wallLocations[i].y, wallLocations[i].x + 1] != editorWallTile)
+			//{
+			//	wallTileMap.SetTile(wallLocations[i], topRightWallTiles[0]);
+			//}
+			//
+			//// Bottom left
+			//else if (readMap[wallLocations[i].y - 1, wallLocations[i].x] == editorWallTile &&
+			//		 readMap[wallLocations[i].y, wallLocations[i].x + 1] == editorWallTile)
+			//{
+			//	wallTileMap.SetTile(wallLocations[i], bottomLeftWallTiles[0]);
+			//}
+			//
+			//// Bottom right
+			//else if (readMap[wallLocations[i].y - 1, wallLocations[i].x] == editorWallTile &&
+			//		 readMap[wallLocations[i].y, wallLocations[i].x - 1] == editorWallTile)
+			//{
+			//	wallTileMap.SetTile(wallLocations[i], bottomRightWallTiles[0]);
+			//}
+		}
+
+
+		//// Create the first room
+		//if (roomsCreated.Count == 0)
+		//{
+		//	// Starting room should be in the middle of the map rather than in a corner
+		//	currentRoomPosition.x = Globals.MAP_GRID_SIZE / 2;
+		//	currentRoomPosition.y = Globals.MAP_GRID_SIZE / 2;
+		//	CreateRoom(roomPrefabs[0], currentRoomPosition);
+		//	return false;
+		//}		
+		//// Create a random room near one of the rooms that were already placed
+		//else if (roomsCreated.Count < Globals.MAX_ROOM_NO - 1)
+		//{
+		//	currentRoomPosition = roomGridPositions[Random.Range(0, roomsCreated.Count)];
+		//
+		//	UpdateDirectionsAvailable(currentRoomPosition);
+		//	if (RandomiseAndUpdatePosition(ref currentRoomPosition) && CheckRoomSpace(currentRoomPosition))
+		//	{
+		//		CreateRoom(roomPrefabs[0], currentRoomPosition);
+		//	}
+		//
+		//	return false;
+		//}
+		//// Go through each room and give them corridors
+		//else
+		//{
+		//	for (int room = 0; room < roomsCreated.Count; room++)
+		//	{
+		//		// Check which doors lead to a room and enable them
+		//		UpdateDirectionsAvailable(roomGridPositions[room], false, true);
+		//		for (int door = 0; door < directionsAvailable.Count; door++)
+		//		{
+		//			roomsCreated[room].CreateCorridor(directionsAvailable[door], 
+		//										  PositionInDirection(roomGridPositions[room], 
+		//										  directionsAvailable[door]));
+		//		}
+		//	}
+		//}
+		//
+		//gameManager.TeleportPlayer(roomsCreated[0].transform.position);
+		//gameManager.GivePlayerEquipment();
+		//
 		return true;
 	}
 
