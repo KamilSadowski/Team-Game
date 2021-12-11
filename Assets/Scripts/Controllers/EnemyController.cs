@@ -52,7 +52,7 @@ public class EnemyController : Controller
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
             Vector3 direction = positionCalc / distance;
 
-            if (direction.x > 0f) isFacingFront = true;
+            if (direction.y < 0f) isFacingFront = true;
             else isFacingFront = false;
 
             //DELETE THIS COMMENT LATER

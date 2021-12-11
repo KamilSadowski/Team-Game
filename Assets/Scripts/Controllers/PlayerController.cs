@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -49,12 +50,26 @@ public class PlayerController : Controller
 
                 entityMoveComp.Move(temp);
 
+                player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
+                
             }
             else
             {
                 //The player should always have a movement component. If it doesn't then it should loop until it does, because it is a problem which can't be removed. 
                 entityMoveComp = PriorityChar_Manager.instance.getPlayer().GetComponent<MovementComponent>();
             }
+            
+
+            //// TODO: Rotate the player according to mouse position 
+            //var mousePos = Input.mousePosition;
+            //var mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x,mousePos.y, player.transform.position.z));
+
+            //var mouseDotPlayer = Vector2.Dot(mouseWorldPos, player.transform.position);
+            
+            //if (mouseDotPlayer < 0f)
+            //{
+            //    player.transform.Rotate(Vector3.up,180f);
+            //}
 
             //See. "Update"
             for (int i = 0; i < 2; ++i)
