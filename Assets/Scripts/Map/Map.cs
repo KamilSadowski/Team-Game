@@ -3,6 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// Which tile is currently held in the given position
+enum TileState { empty, ground, wall }
+
+// Holds the data of surrounding tiles to use in map generation
+struct TileGenData
+{
+	public TileState topLeft;
+	public TileState top;
+	public TileState topRight;
+	public TileState left;
+	public TileState currentTile;
+	public TileState right;
+	public TileState bottomLeft;
+	public TileState bottom;
+	public TileState bottomRight;
+}
+
 public class Dungeon : MonoBehaviour
 {
 	GameManager gameManager;
@@ -13,19 +30,26 @@ public class Dungeon : MonoBehaviour
 	[SerializeField] TileBase editorGroundTile;
 	[SerializeField] TileBase editorWallTile;
 	[SerializeField] TileBase editorPropTile;
-	[SerializeField] List<TileBase> groundTiles;
+	[SerializeField] List<Tile> groundTiles;
 
-	[SerializeField] List<TileBase> topWallTiles;
-	[SerializeField] List<TileBase> topLeftWallTiles;
-	[SerializeField] List<TileBase> topRightWallTiles;
-	[SerializeField] List<TileBase> leftWallTiles;
-	[SerializeField] List<TileBase> rightWallTiles;
-	[SerializeField] List<TileBase> bottomWallTiles;
-	[SerializeField] List<TileBase> bottomLeftWallTiles;
-	[SerializeField] List<TileBase> bottomRightWallTiles;
+	[SerializeField] List<Tile> centerWallTiles;
+	[SerializeField] List<Tile> topLeftWallTiles;
+	[SerializeField] List<Tile> topRightWallTiles;
+	[SerializeField] List<Tile> topTopWallTiles;
+	[SerializeField] List<Tile> leftWallTiles;
+	[SerializeField] List<Tile> rightWallTiles;
+	[SerializeField] List<Tile> bottomWallTiles;
+	[SerializeField] List<Tile> bottomLeftWallTiles;
+	[SerializeField] List<Tile> bottomRightWallTiles;
+	[SerializeField] List<Tile> bottomRightCornerWallTiles;
+	[SerializeField] List<Tile> topRightCornerWallTiles;
+	[SerializeField] List<Tile> bottomLeftCornerWallTiles;
+	[SerializeField] List<Tile> topLeftCornerWallTiles;
 
 	[SerializeField] List<TileBase> mapPropTiles;
 	List<Vector3Int> wallLocations = new List<Vector3Int>();
+
+	TileGenData currentWall;
 
 	// A list of room prefabs that can be used
 	[SerializeField] List<Room> roomPrefabs = new List<Room>();
@@ -47,43 +71,38 @@ public class Dungeon : MonoBehaviour
 	Vector3 roomPosition = Vector3.zero;
 	Vector3 roomRotation = new Vector3(0.0f, 0.0f, 90.0f);
 
-	bool reloadMap = true;
-
 	private void Start()
 	{
 		gameManager = FindObjectOfType<GameManager>();
+		CreateDungeon();
 	}
 
-	void Update()
-	{
-		while (reloadMap)
-		{
-			reloadMap = !CreateDungeon();
-			if (!reloadMap)
-			{
-				Debug.Log(hasRoom);
-			}
-		}
-	}
-	
-	// Reads the prefab and returns a 2D vector of tiles
-	TileBase[,] ReadMap(Tilemap tileMap, int maxHeight, int maxWidth)
+    // Reads the prefab and returns a 2D vector of tiles
+    TileBase[,] ReadMap(Tilemap tileMap, int maxHeight, int maxWidth)
     {
 		Vector3Int position = new Vector3Int();
-		TileBase[,] map = new TileBase[maxHeight, maxWidth];
-		for (int height = 0; height < maxHeight; height++)
+		TileBase[,] map = new TileBase[maxWidth, maxHeight];
+		for (int y = 0; y < maxHeight; y++)
 		{
-			for (int width = 0; width < maxWidth; width++)
+			for (int x = 0; x < maxWidth; x++)
 			{
 				// Starts at center so the position needs to be offset by 50% in each direction
-				position.x =  maxHeight / 2 - height;
-				position.y = maxWidth / 2 - width;
-				map[height, width] = tileMap.GetTile(position);
+				position.y = maxWidth / 2 - x;
+				position.x = -maxHeight / 2 + y;
+				map[x, y] = tileMap.GetTile(position);
 			}
 		}
 
 		return map;
 
+	}
+
+	// Returns the tile type for the given tile
+	TileState GetTileState(TileBase tile)
+    {
+		if (tile == editorWallTile) return TileState.wall;
+		else if (tile == editorGroundTile) return TileState.ground;
+		else return TileState.empty;
 	}
 
 
@@ -92,95 +111,20 @@ public class Dungeon : MonoBehaviour
 	{
 		// Create a room
 		Tilemap editorTileMap = roomPrefabs[0].gameObject.GetComponentInChildren<Tilemap>();
+		Vector3Int roomOffset = new Vector3Int(10, 10, 0);
 
-		TileBase[,] readMap = ReadMap(editorTileMap, 50, 50);
+		CreateRoom(roomPrefabs[0].gameObject.GetComponentInChildren<Tilemap>(), roomOffset);
 
+		roomOffset.x = -10;
+		CreateRoom(roomPrefabs[1].gameObject.GetComponentInChildren<Tilemap>(), roomOffset);
 
-		// Go through all of the stored tiles and place corresponding tiles onto the map
-		for (int height = 0; height < readMap.GetLength(0); height++)
-		{
-			for (int width = 0; width < readMap.GetLength(1); width++)
-			{
-				Vector3Int index = new Vector3Int(width, height, 0);
-
-				// Ground tile
-				if (readMap[height, width] == editorGroundTile)
-                {
-					groundTileMap.SetTile(index, groundTiles[0]);
-				}
-				// Wall tile
-				else if (readMap[height, width] == editorWallTile)
-				{
-					// Store the wall tile locations to add once the entire ground is added
-					wallLocations.Add(index);
-				}
-
-			}
-		}
-
-		// Fill in the wall tiles based on ground tiles
-		for (int i = 0; i < wallLocations.Count; i++)
-		{
-			// Top
-			if (readMap[wallLocations[i].y - 1, wallLocations[i].x] == editorGroundTile && 
-				readMap[wallLocations[i].y + 1, wallLocations[i].x] != editorWallTile)
-			{
-				wallTileMap.SetTile(wallLocations[i], topWallTiles[0]);
-			}
-
-			// Bottom
-			else if (readMap[wallLocations[i].y + 1, wallLocations[i].x] == editorGroundTile &&
-					 readMap[wallLocations[i].y - 1, wallLocations[i].x] != editorWallTile)
-			{
-				wallTileMap.SetTile(wallLocations[i], bottomWallTiles[0]);
-			}
-
-			// Left
-			else if (readMap[wallLocations[i].y, wallLocations[i].x + 1] == editorGroundTile &&
-					 readMap[wallLocations[i].y, wallLocations[i].x - 1] != editorWallTile)
-			{
-				wallTileMap.SetTile(wallLocations[i], leftWallTiles[0]);
-			}
-
-			// Right
-			else if (readMap[wallLocations[i].y, wallLocations[i].x - 1] == editorGroundTile &&
-					 readMap[wallLocations[i].y, wallLocations[i].x + 1] != editorWallTile)
-			{
-				wallTileMap.SetTile(wallLocations[i], rightWallTiles[0]);
-			}
-
-			//// Top left
-			//else if (readMap[wallLocations[i].y + 1, wallLocations[i].x] == editorWallTile &&
-			//	     readMap[wallLocations[i].y - 1, wallLocations[i].x] != editorWallTile &&
-			//		 readMap[wallLocations[i].y, wallLocations[i].x + 1] == editorWallTile &&
-			//		 readMap[wallLocations[i].y, wallLocations[i].x - 1] != editorWallTile)
-            //{
-			//	wallTileMap.SetTile(wallLocations[i], topLeftWallTiles[0]);
-			//}
-			//
-			//// Top right
-			//else if (readMap[wallLocations[i].y + 1, wallLocations[i].x] == editorWallTile &&
-			//		 readMap[wallLocations[i].y - 1, wallLocations[i].x] != editorWallTile &&
-			//		 readMap[wallLocations[i].y, wallLocations[i].x - 1] == editorWallTile &&
-			//		 readMap[wallLocations[i].y, wallLocations[i].x + 1] != editorWallTile)
-			//{
-			//	wallTileMap.SetTile(wallLocations[i], topRightWallTiles[0]);
-			//}
-			//
-			//// Bottom left
-			//else if (readMap[wallLocations[i].y - 1, wallLocations[i].x] == editorWallTile &&
-			//		 readMap[wallLocations[i].y, wallLocations[i].x + 1] == editorWallTile)
-			//{
-			//	wallTileMap.SetTile(wallLocations[i], bottomLeftWallTiles[0]);
-			//}
-			//
-			//// Bottom right
-			//else if (readMap[wallLocations[i].y - 1, wallLocations[i].x] == editorWallTile &&
-			//		 readMap[wallLocations[i].y, wallLocations[i].x - 1] == editorWallTile)
-			//{
-			//	wallTileMap.SetTile(wallLocations[i], bottomRightWallTiles[0]);
-			//}
-		}
+		TilemapCollider2D collider = wallTileMap.gameObject.GetComponent<TilemapCollider2D>();
+		collider.ProcessTilemapChanges();
+		
+		CompositeCollider2D compositeCollider = wallTileMap.gameObject.GetComponent<CompositeCollider2D>();
+		compositeCollider.GenerateGeometry();
+		
+		wallTileMap.RefreshAllTiles();
 
 
 		//// Create the first room
@@ -227,23 +171,167 @@ public class Dungeon : MonoBehaviour
 		return true;
 	}
 
-	// Creates a room based on a position in a 2D room grid
-	Room CreateRoom(Room roomPrefab, Globals.Grid2D roomPos)
+	// Creates a room based on a position in a 2D room grid and a prefab
+	void CreateRoom(Tilemap roomPrefab, Vector3Int roomOffset)
 	{
-		roomPosition.x = Globals.ROOM_SIZE * roomPos.x;
-		roomPosition.y = Globals.ROOM_SIZE * roomPos.y;
-		Debug.Log("Creating room at: ");
-		Debug.Log(roomPos.x);
-		Debug.Log(roomPos.y);
-		hasRoom[roomPos.x, roomPos.y] = true;
+		wallLocations.Clear();
+		TileBase[,] readMap = ReadMap(roomPrefab, 50, 50);
 
-		roomsCreated.Add(Instantiate<Room>(roomPrefab));
-		roomGridPositions.Add(roomPos);
-		roomsCreated[roomsCreated.Count - 1].transform.position = roomPosition;
-		roomsCreated[roomsCreated.Count - 1].transform.parent = transform;
-		roomsCreated[roomsCreated.Count - 1].transform.rotation = Quaternion.Euler(roomRotation);
+		// Go through all of the stored tiles and place corresponding tiles onto the map
+		Vector3Int index = new Vector3Int(0, 0, 0);
+		for (int y = 0; y < readMap.GetLength(1); y++)
+		{
+			for (int x = 0; x < readMap.GetLength(0); x++)
+			{
+				index.x = x;
+				index.y = y;
+				index += roomOffset;
 
-		return roomsCreated[roomsCreated.Count - 1];
+				// Ground tile
+				if (readMap[x, y] == editorGroundTile)
+				{
+					groundTileMap.SetTile(index, groundTiles[Random.Range(0, groundTiles.Count)]);
+				}
+				// Wall tile
+				else if (readMap[x, y] == editorWallTile)
+				{
+					// Store the wall tile locations to add once the entire ground is added
+					// Keep the locations relative to the room
+					wallLocations.Add(index - roomOffset);
+				}
+
+			}
+		}
+
+		// Fill in the wall tiles based on ground tiles
+		for (int i = 0; i < wallLocations.Count; i++)
+		{
+			// Update the tile
+			currentWall.topLeft = GetTileState(readMap[wallLocations[i].x - 1, wallLocations[i].y + 1]);
+			currentWall.top = GetTileState(readMap[wallLocations[i].x, wallLocations[i].y + 1]);
+			currentWall.topRight = GetTileState(readMap[wallLocations[i].x + 1, wallLocations[i].y + 1]);
+			currentWall.left = GetTileState(readMap[wallLocations[i].x - 1, wallLocations[i].y]);
+			currentWall.currentTile = GetTileState(readMap[wallLocations[i].x, wallLocations[i].y]);
+			currentWall.right = GetTileState(readMap[wallLocations[i].x + 1, wallLocations[i].y]);
+			currentWall.bottomLeft = GetTileState(readMap[wallLocations[i].x - 1, wallLocations[i].y - 1]);
+			currentWall.bottom = GetTileState(readMap[wallLocations[i].x, wallLocations[i].y - 1]);
+			currentWall.bottomRight = GetTileState(readMap[wallLocations[i].x + 1, wallLocations[i].y - 1]);
+
+			// Normal wall
+			if (currentWall.bottom == TileState.ground &&
+				currentWall.left != TileState.empty &&
+				currentWall.right != TileState.empty)
+			{
+				wallTileMap.SetTile(wallLocations[i] + roomOffset, centerWallTiles[Random.Range(0, centerWallTiles.Count)]);
+
+				// Check if to add a top wall
+				if (currentWall.top != TileState.wall)
+				{
+					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
+					wallTileMap.SetTile(topWallPosition + roomOffset, topTopWallTiles[Random.Range(0, topTopWallTiles.Count)]);
+				}
+			}
+
+			// Bottom
+			else if (currentWall.top == TileState.ground &&
+					 currentWall.left == TileState.wall &&
+					 currentWall.right == TileState.wall)
+			{
+				wallTileMap.SetTile(wallLocations[i] + roomOffset, bottomWallTiles[Random.Range(0, bottomWallTiles.Count)]);
+			}
+
+			// Bottom left
+			else if (currentWall.top != TileState.empty &&
+					 currentWall.left == TileState.wall &&
+					 currentWall.right != TileState.wall)
+			{
+				// Check whether to use a corner wall tile
+				if (currentWall.bottom != TileState.wall)
+				{
+					wallTileMap.SetTile(wallLocations[i] + roomOffset, bottomLeftWallTiles[Random.Range(0, bottomLeftWallTiles.Count)]);
+				}
+				else
+				{
+					wallTileMap.SetTile(wallLocations[i] + roomOffset, bottomLeftCornerWallTiles[Random.Range(0, bottomLeftCornerWallTiles.Count)]);
+				}
+			}
+
+			// Bottom right
+			else if (currentWall.top != TileState.empty &&
+					 currentWall.right == TileState.wall &&
+					 currentWall.left != TileState.wall)
+			{
+				// Check whether to use a corner wall tile
+				if (currentWall.bottom != TileState.wall)
+				{
+					wallTileMap.SetTile(wallLocations[i] + roomOffset, bottomRightWallTiles[Random.Range(0, bottomRightWallTiles.Count)]);
+				}
+				else
+				{
+					wallTileMap.SetTile(wallLocations[i] + roomOffset, bottomRightCornerWallTiles[Random.Range(0, bottomRightCornerWallTiles.Count)]);
+				}
+			}
+
+			// Left
+			else if (currentWall.right != TileState.empty &&
+					 currentWall.left != TileState.wall &&
+					 currentWall.bottom == TileState.wall &&
+					 currentWall.bottomLeft != TileState.wall)
+			{
+				wallTileMap.SetTile(wallLocations[i] + roomOffset, leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
+
+				// Check if to add a top wall
+				if (currentWall.top != TileState.wall)
+				{
+					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
+					wallTileMap.SetTile(topWallPosition + roomOffset, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
+				}
+			}
+
+			// Right
+			else if (currentWall.left != TileState.empty &&
+					 currentWall.right != TileState.wall &&
+					 currentWall.bottom == TileState.wall &&
+					 currentWall.bottomRight != TileState.wall)
+			{
+				wallTileMap.SetTile(wallLocations[i] + roomOffset, rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
+
+				// Check if to add a top wall
+				if (currentWall.top != TileState.wall)
+				{
+					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
+					wallTileMap.SetTile(topWallPosition + roomOffset, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
+				}
+			}
+
+			// Top right corner
+			else if (currentWall.bottom == TileState.wall &&
+					 currentWall.bottomLeft == TileState.wall)
+			{
+				wallTileMap.SetTile(wallLocations[i] + roomOffset, topRightCornerWallTiles[Random.Range(0, topRightCornerWallTiles.Count)]);
+
+				// Check if to add a top wall
+				if (currentWall.top != TileState.wall)
+				{
+					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
+					wallTileMap.SetTile(topWallPosition + roomOffset, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
+				}
+			}
+
+			// Top left corner
+			else if (currentWall.bottom == TileState.wall &&
+					 currentWall.bottomRight == TileState.wall)
+			{
+				wallTileMap.SetTile(wallLocations[i] + roomOffset, topLeftCornerWallTiles[Random.Range(0, topLeftCornerWallTiles.Count)]);
+
+				// Check if to add a top wall
+				if (currentWall.top != TileState.wall)
+				{
+					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
+					wallTileMap.SetTile(topWallPosition + roomOffset, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
+				}
+			}
+		}
 	}
 
 	// Chooses a direction at random and updates the current position

@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 187844433912507297}
   - component: {fileID: 187844433912507296}
   - component: {fileID: 187844433912507311}
-  - component: {fileID: 187844433912507309}
-  - component: {fileID: 187844433912507310}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -27,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187844433912507298}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -36,7 +34,7 @@ Transform:
   - {fileID: 2660819772149857493}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &187844433912507296
 Grid:
   m_ObjectHideFlags: 0
@@ -48,7 +46,7 @@ Grid:
   m_CellSize: {x: 0.5, y: 0.5, z: 0.5}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
-  m_CellSwizzle: 1
+  m_CellSwizzle: 0
 --- !u!114 &187844433912507311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,12 +66,14 @@ MonoBehaviour:
   editorPropTile: {fileID: 11400000, guid: e81fe3f73ae8d104ca69f858d3bad51a, type: 2}
   groundTiles:
   - {fileID: 11400000, guid: e0154d334100c7047848599e4e05b0e7, type: 2}
-  topWallTiles:
-  - {fileID: 11400000, guid: 871fe52bc85dc42498afd6e4151d7bc6, type: 2}
+  centerWallTiles:
+  - {fileID: 11400000, guid: 150793b610b17a74e85d73540f2bfdc6, type: 2}
   topLeftWallTiles:
-  - {fileID: 11400000, guid: 88ffb79c409da47489ffe10d5574a23e, type: 2}
+  - {fileID: 11400000, guid: 38d819f98f686334c9a7825868861b37, type: 2}
   topRightWallTiles:
-  - {fileID: 11400000, guid: cb53f7ad06a054f4fa1996f913cc6756, type: 2}
+  - {fileID: 11400000, guid: 744c9d488e93bec48869677889a4dba5, type: 2}
+  topTopWallTiles:
+  - {fileID: 11400000, guid: 871fe52bc85dc42498afd6e4151d7bc6, type: 2}
   leftWallTiles:
   - {fileID: 11400000, guid: 130eee02c3b297340a3ff588a9f79f14, type: 2}
   rightWallTiles:
@@ -81,56 +81,22 @@ MonoBehaviour:
   bottomWallTiles:
   - {fileID: 11400000, guid: 44ad4b38667633d4d92572a05662306f, type: 2}
   bottomLeftWallTiles:
-  - {fileID: 11400000, guid: 38d819f98f686334c9a7825868861b37, type: 2}
+  - {fileID: 11400000, guid: cb53f7ad06a054f4fa1996f913cc6756, type: 2}
   bottomRightWallTiles:
-  - {fileID: 11400000, guid: 744c9d488e93bec48869677889a4dba5, type: 2}
+  - {fileID: 11400000, guid: 88ffb79c409da47489ffe10d5574a23e, type: 2}
+  bottomRightCornerWallTiles:
+  - {fileID: 11400000, guid: 832d55da01af02346be5b6753c4a9fc0, type: 2}
+  topRightCornerWallTiles:
+  - {fileID: 11400000, guid: 862b65d89e50f3e4c91761b296f550cb, type: 2}
+  bottomLeftCornerWallTiles:
+  - {fileID: 11400000, guid: e8195fb3ba9928a4fb20f6446c44db2a, type: 2}
+  topLeftCornerWallTiles:
+  - {fileID: 11400000, guid: b959bbdab48150c409d2142c3a3a98a5, type: 2}
   mapPropTiles:
   - {fileID: 0}
   roomPrefabs:
   - {fileID: 5526013910865045145, guid: 2195e022f9a617f4d9427b4af4fb4a69, type: 3}
---- !u!50 &187844433912507309
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187844433912507298}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &187844433912507310
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187844433912507298}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  - {fileID: 5298732044342816157, guid: 9540ed0fe0178ca4782c08eeaa95e339, type: 3}
 --- !u!1 &404998560908169432
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,17 +140,41 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 0
+      e01: 0
+      e02: -1.983649e-38
+      e03: -1.983649e-38
+      e10: 0
+      e11: 0
+      e12: 5.54e-43
+      e13: 5.54e-43
+      e20: 0.000000006193254
+      e21: 1e-45
+      e22: 2.1539008e-19
+      e23: 8.649769e+9
+      e30: 4.5905e-41
+      e31: 0
+      e32: 5.55e-43
+      e33: 5.58e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 3.468e-41, g: 3.468e-41, b: 3.468e-41, a: 3.468e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Origin: {x: -2, y: 0, z: 0}
+  m_Size: {x: 2, y: 2, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
-  m_TileOrientation: 1
+  m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
     e01: 0
@@ -247,7 +237,7 @@ TilemapRenderer:
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
-  m_SortOrder: 0
+  m_SortOrder: 2
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
@@ -262,10 +252,10 @@ GameObject:
   - component: {fileID: 4859594006936163033}
   - component: {fileID: 764311966772856316}
   - component: {fileID: 396415777176304128}
-  - component: {fileID: 4310575604796126112}
-  - component: {fileID: 3736143992141364406}
-  - component: {fileID: 6268270040749079167}
-  m_Layer: 0
+  - component: {fileID: 5863183831847564175}
+  - component: {fileID: 6655765541793500863}
+  - component: {fileID: 4506956389338341759}
+  m_Layer: 7
   m_Name: Walls
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -297,17 +287,45 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 0
+      e01: 0
+      e02: -1.983649e-38
+      e03: -1.983649e-38
+      e10: 0
+      e11: 0
+      e12: 5.54e-43
+      e13: 5.54e-43
+      e20: 0.000000006193254
+      e21: 1e-45
+      e22: 2.1137536e-19
+      e23: 8.648573e+9
+      e30: 4.5905e-41
+      e31: 0
+      e32: 5.55e-43
+      e33: 5.58e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 7.0956e-41, g: 7.0956e-41, b: 7.0956e-41, a: 7.0956e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Origin: {x: -9, y: -4, z: 0}
+  m_Size: {x: 13, y: 5, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
-  m_TileOrientation: 1
+  m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
     e01: 0
@@ -370,11 +388,11 @@ TilemapRenderer:
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
-  m_SortOrder: 0
+  m_SortOrder: 2
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &4310575604796126112
+--- !u!19719996 &5863183831847564175
 TilemapCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,7 +408,7 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!50 &3736143992141364406
+--- !u!50 &6655765541793500863
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -411,7 +429,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &6268270040749079167
+--- !u!66 &4506956389338341759
 CompositeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -425,11 +443,11 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 1
+  m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
-  - m_Collider: {fileID: 4310575604796126112}
+  - m_Collider: {fileID: 5863183831847564175}
     m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
