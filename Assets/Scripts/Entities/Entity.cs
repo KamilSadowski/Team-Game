@@ -59,6 +59,11 @@ public class Entity : MonoBehaviour
        
     }
 
+    public virtual void Teleport(Vector3 teleportTo)
+    {
+        movementComponent.Teleport(teleportTo);
+    }
+
     public virtual void TakeDamage(float damage)
     {
         if (!healthComponent)

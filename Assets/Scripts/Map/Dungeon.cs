@@ -81,9 +81,9 @@ public class Map : MonoBehaviour
 				UpdateDirectionsAvailable(roomGridPositions[room], false, true);
 				for (int door = 0; door < directionsAvailable.Count; door++)
 				{
-					roomsCreated[room].CreateCorridor(directionsAvailable[door], 
-												  PositionInDirection(roomGridPositions[room], 
-												  directionsAvailable[door]));
+					//roomsCreated[room].CreateCorridor(directionsAvailable[door], 
+					//							  PositionInDirection(roomGridPositions[room], 
+					//							  directionsAvailable[door]));
 				}
 			}
 		}

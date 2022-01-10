@@ -118,20 +118,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void TeleportPlayer(Vector3 teleportTo)
+    // Returns false if no player
+    public bool TeleportPlayer(Vector3 teleportTo)
     {
         if (player != null)
         {
-            player.transform.position = teleportTo;
+            player.Teleport(teleportTo);
+            return true;
         }
         else
         {
             player = FindObjectOfType<Player>();
             if (player != null)
             {
-                player.transform.position = teleportTo;
+                player.Teleport(teleportTo);
+                return true;
             }
         }
+        return false;
     }
 
     public void EnterScene(Globals.Scenes scene)

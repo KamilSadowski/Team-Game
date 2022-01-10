@@ -27,6 +27,7 @@ public class FollowingCamera : MonoBehaviour
     // Camera data
     public Entity targetToFollow { get; protected set; }
     Vector3 moveTo;
+    Vector3 teleportTo;
     Transform originPoint; // Point you attach the camera through (separate to the camera object to allow shaking)
     Vector3 mousePos;
     Vector3 shakeOffset;
@@ -152,6 +153,15 @@ public class FollowingCamera : MonoBehaviour
     public Vector3 GetCrosshairPosition()
     {
         return crosshair.transform.position;
+    }
+
+    public void Teleport(Vector2 position)
+    {
+        teleportTo = position;
+        teleportTo.z = transform.position.z;
+        originPoint.position = teleportTo;
+        transform.position = teleportTo;
+        moveTo = teleportTo;
     }
 
     //public void OnRenderImage(RenderTexture source, RenderTexture destination)
