@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
-    const int ENTITY_LIMIT = 20;
+    const int ENTITY_LIMIT = 250;
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject[] NPCList;
