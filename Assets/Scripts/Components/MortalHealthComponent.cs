@@ -25,8 +25,9 @@ public class MortalHealthComponent : BaseHealthComponent
 
     public void heal(int input)
     {
-        if(currentHealth <= maxHealth)
         currentHealth += Mathf.Abs(input);
+
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
     }
     // Update is called once per frame
     public override bool TakeDamage(float damage)
