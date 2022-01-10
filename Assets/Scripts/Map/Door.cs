@@ -5,40 +5,16 @@ using UnityEngine.Tilemaps;
 
 public class Door : MonoBehaviour
 {
-    // Door states
-    bool open; // Is the door open
-    bool hasDoor; // Used when a corridor is rendered but invisible, makes the wall behind the door the only thing that is rendered
-
-    public Globals.Direction direction { set; get; }
-
     // Door components
     SpriteRenderer door;
     Collider2D collider;
     Animator animator;
-    TilemapRenderer wall; // Blank used as background for when the doors are invisible
+    public Room room { get; private set; }
 
     // Start is called before the first frame update
     void Awake()
     {
-        hasDoor = false;
-        direction = Globals.Direction.north;
-
-        // Get door components
-        collider = GetComponent<Collider2D>();
-        animator = GetComponent<Animator>();
-        wall = GetComponentInChildren<TilemapRenderer>();
-
-        // Door will be invisible by default
-        door = GetComponent<SpriteRenderer>();
-        door.enabled = false;
-    }
-
-    void Start()
-    {
-        if (direction is Globals.Direction.east or Globals.Direction.west)
-        {
-            OpenDoor();
-        }
+        CheckDoorComponents();
     }
 
     // Update is called once per frame
@@ -54,6 +30,11 @@ public class Door : MonoBehaviour
         }
     }
 
+    public void SetRoom(Room owner)
+    {
+        room = owner;
+    }
+
     
 
     // Makes the door visible and the wall invisible
@@ -61,32 +42,18 @@ public class Door : MonoBehaviour
     {
         CheckDoorComponents();
         door.enabled = true;
-        wall.enabled = false;
-        hasDoor = true;
-        OpenDoor();
     }
 
     public void OpenDoor()
     {
-        if (hasDoor)
-        {
-           
-
-            animator.SetBool("Open", true);
-            open = true;
-            collider.enabled = false;
-        }
+        animator.SetBool("Open", true);
+        collider.enabled = false;
     }
 
     public void CloseDoor()
     {
-        if (hasDoor)
-        {
-            
-            animator.SetBool("Open", false);
-            open = false;
-            collider.enabled = true;
-        }
+        animator.SetBool("Open", false);
+        collider.enabled = true;
     }
 
     public void CheckDoorComponents()
@@ -94,10 +61,6 @@ public class Door : MonoBehaviour
         if (!door)
         {
             door = GetComponent<SpriteRenderer>();
-        }
-        if (!wall)
-        {
-            wall = GetComponentInChildren<TilemapRenderer>();
         }
         if (!collider)
         {

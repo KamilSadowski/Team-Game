@@ -148,7 +148,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -169,7 +169,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -190,7 +190,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,6 +198,27 @@ TextureImporter:
       bones: []
       spriteID: 1ff0daee0f1f40b42966fc743f682c9f
       internalID: 1899053516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileEditor_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1016
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ab70d9f00285c44f8d1c2a827412e61
+      internalID: 946871432
       vertices: []
       indices: 
       edges: []
@@ -215,6 +236,7 @@ TextureImporter:
     nameFileIdTable:
       TileEditor_2: 1899053516
       TileEditor_0: -271947073
+      TileEditor_3: 946871432
       TileEditor_1: 123454403
   spritePackingTag: 
   pSDRemoveMatte: 1

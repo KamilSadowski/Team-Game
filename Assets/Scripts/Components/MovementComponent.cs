@@ -30,6 +30,11 @@ public class MovementComponent : MonoBehaviour
 
     }
 
+    public virtual void Teleport(Vector3 teleportTo)
+    {
+
+    }
+
     //Unity will occasionally pass functions without any return. This will be called if the current movement change is important.
     public virtual bool ConfirmedMove(Vector3 input)
     {

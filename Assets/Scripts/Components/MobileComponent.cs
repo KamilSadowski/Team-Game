@@ -20,6 +20,20 @@ public class MobileComponent : MovementComponent
         Create();
     }
 
+    public override void Teleport(Vector3 teleportTo)
+    {
+        if (rb == null)
+        {
+            Create();
+            if (rb == null)
+            {
+                return;
+            }
+        }
+
+        rb.position = teleportTo;
+    }
+
     public override void Move(Vector3 input)
     {
         // currentInput = input;

@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Room : MonoBehaviour
 {
     // Global objects
     EntityManager entityManager;
 
-    // Room components
-    Corridor[] corridors;
+    // Room Data
+    public Vector3Int size { get; private set; } // Room size
+    List<Vector3Int> groundTiles; // Positions of any tile that entites can stand on
+    Dungeon map;
+    Tilemap groundTileMap;
+    public List<Door> doors { get; private set; }
 
     // Room properties
     int enemiesAlive;
@@ -22,46 +27,68 @@ public class Room : MonoBehaviour
     NotPlayer currentNPC;
     int currentEntityID;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        corridors = GetComponentsInChildren<Corridor>();
-        entityManager = FindObjectOfType<EntityManager>();
-    }
-
     // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void CreateCorridor(Globals.Direction direction, Globals.Grid2D linkedRoom)
+
+    // Room constructor
+    public void Initialise(Vector3Int roomSize, Dungeon thisMap, int enemyNumber)
     {
-        for (int i = 0; i < corridors.Length; i++)
-        {
-            if (corridors[i].GetDirection() == direction)
-            {
-                corridors[i].roomLinked = linkedRoom;
-                corridors[i].CreateCorridor();
-                return;
-            }
-        }
+        size = roomSize;
+        doors = new List<Door>();
+        groundTiles = new List<Vector3Int>();
+        entityManager = FindObjectOfType<EntityManager>();
+        map = thisMap;
+        groundTileMap = map.GetGroundTileMap();
+        enemyNo = enemyNumber;
+    }
+
+    public int GetEnemyNo()
+    {
+        return enemyNo;
+    }
+
+    public void AddDoor(Door door)
+    {
+        doors.Add(door);
+    }
+
+    public void AddGroundTile(Vector3Int tile)
+    {
+        groundTiles.Add(tile);
+    }
+
+    // Returns a random position in the room
+    public Vector3 GetRandomGroundPosition()
+    {
+        return groundTileMap.GetCellCenterWorld(groundTiles[Random.Range(0, groundTiles.Count)]);
     }
     
     // Close all the doors and spawn enemies
     public void EnterRoom()
     {
-        CloseDoors();
-        for (int i = 0; i < enemyNo; i++)
+        if (!wasEntered)
         {
-            CreateEntity();
+            CloseDoors();
+            for (int i = 0; i < enemyNo; ++i)
+            {
+                CreateEntity();
+            }
+            wasEntered = true;
         }
-        wasEntered = true;
+    }
+
+    public void ExitRoom()
+    {
+
     }
 
     public void CreateEntity()
     {
-        currentEntityID = entityManager.TryCreateListedNPC(0, transform.position);
+        currentEntityID = entityManager.TryCreateListedNPC(0, GetRandomGroundPosition());
         if (currentEntityID != -1)
         {
             currentNPC = entityManager.GetEntity(currentEntityID) as NotPlayer;
@@ -72,25 +99,17 @@ public class Room : MonoBehaviour
 
     public void OpenDoors()
     {
-        for (int corridor = 0; corridor < corridors.Length; corridor++)
+        foreach (Door door in doors)
         {
-            if (corridors[corridor] != null) corridors[corridor].OpenDoors();
+            door.OpenDoor();
         }
     }
 
     public void CloseDoors()
     {
-        for (int corridor = 0; corridor < corridors.Length; corridor++)
+        foreach (Door door in doors)
         {
-            if (corridors[corridor] != null) corridors[corridor].CloseDoors();
-        }
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && !wasEntered)
-        {
-            EnterRoom();
+            door.CloseDoor();
         }
     }
 
