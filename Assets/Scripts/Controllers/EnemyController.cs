@@ -101,7 +101,6 @@ public class EnemyController : Controller
        
         if (prevIsFacingFront != isFacingFront)
             GetComponent<Animator>().SetBool("Front", isFacingFront);
-
     }
 
     public void DamageEntity(float input)

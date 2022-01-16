@@ -14,6 +14,8 @@ public class MobileComponent : MovementComponent
     protected float minVelocity = 0.0001f;
     protected Vector3 currentInput;
 
+    protected bool isFacingRight = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,5 +67,25 @@ public class MobileComponent : MovementComponent
         position.z = 0.0f;
         rb.transform.position = position;
         rb.velocity = Vector3.zero;
+
+
+        if (isFacingRight)
+        {
+            if (input.x < 0f)
+            {
+                transform.Rotate(Vector3.up, 180f);
+                isFacingRight = false;
+            }
+        }
+        else
+        {
+            if (input.x > 0f)
+            {
+                transform.Rotate(Vector3.up, 180f);
+                isFacingRight = true;
+            }
+
+        }
+
     }
 }
