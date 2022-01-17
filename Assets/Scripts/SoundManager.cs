@@ -22,7 +22,7 @@ public class SoundManager : MonoBehaviour
         if (index <= 0)
             activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(movementClip[Random.Range(0, movementClip.Length)], movementClipVolume);
         else if (index <= 1)
-            activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(onDamageClip[Random.Range(0, onDamageClip.Length)], 0.875f);
+            activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(onDamageClip[Random.Range(0, onDamageClip.Length)], 0.875f*0.33f);
     }
     // Start is called before the first frame update
     private void Awake()

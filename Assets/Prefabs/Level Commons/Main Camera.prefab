@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 4286888117465516768}
   - component: {fileID: 4286888117465516769}
   - component: {fileID: 4286888117465516774}
+  - component: {fileID: 4450982011945118682}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -142,6 +143,25 @@ MonoBehaviour:
   cameraEntityOffset: {x: 0, y: 0, z: 0}
   cameraForwardOffset: 0.1125
   cameraForwardAimingOffset: 0
+--- !u!114 &4450982011945118682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286888117465516770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebb32608173fe2499aeac239fc361b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storedSoundtracks:
+  - {fileID: 8300000, guid: f22c7df422ca6854aa49616e6124bc94, type: 3}
+  - {fileID: 8300000, guid: e9cff82d19b340844bc50e2c3066bd31, type: 3}
+  - {fileID: 8300000, guid: 18b9b236c56c77a499f95a130e8d4871, type: 3}
+  - {fileID: 8300000, guid: df66f964bb884394888353044e859c8c, type: 3}
+  - {fileID: 8300000, guid: 690ce7070f5c2c94c81a7a5101a6b0e7, type: 3}
+  soundtrackVolume: 0.15
 --- !u!1 &4286888118306489667
 GameObject:
   m_ObjectHideFlags: 0
