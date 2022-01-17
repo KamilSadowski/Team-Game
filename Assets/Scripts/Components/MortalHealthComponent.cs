@@ -8,7 +8,7 @@ public class MortalHealthComponent : BaseHealthComponent
     protected float currentHealth;
     protected UI_ChargingBar healthBar;
     public const bool IS_HEALTH_LOG_OUTPUT = false;
-
+    protected SoundManager soundOutputComponent;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +17,10 @@ public class MortalHealthComponent : BaseHealthComponent
 
         healthBar = GetComponentInChildren<UI_ChargingBar>();
 
+        if (!soundOutputComponent)
+        {
+            soundOutputComponent = gameObject.GetComponent<SoundManager>();
+        }
     }
     public override float GetHealthPercentage()
     {
@@ -32,6 +36,16 @@ public class MortalHealthComponent : BaseHealthComponent
     // Update is called once per frame
     public override bool TakeDamage(float damage)
     {
+        if (soundOutputComponent)
+            soundOutputComponent.PlaySound(1);
+        else
+        {
+            soundOutputComponent = gameObject.GetComponent<SoundManager>();
+
+            if (soundOutputComponent)
+                soundOutputComponent.PlaySound(1);
+        }
+
         //Remove chance of healing via damage
         currentHealth -= Mathf.Abs(damage);
 

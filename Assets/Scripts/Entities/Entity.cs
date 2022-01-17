@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
 
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
+
     //HealthComponent healthComponent;
     //InteractComponent interactComponent;
 
@@ -27,6 +28,8 @@ public class Entity : MonoBehaviour
         {
             entityManager = FindObjectOfType<EntityManager>();
         }
+
+
     }
 
     public void Create(int id)
@@ -66,6 +69,8 @@ public class Entity : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+
+
         if (!healthComponent)
         {
             healthComponent = GetComponent<BaseHealthComponent>();

@@ -40,7 +40,12 @@ public class FollowingCamera : MonoBehaviour
     float explosionStrength = 0.25f;
 
     // Start is called before the first frame update
-    void Start()
+
+    private void Start()
+    {
+        Setup();
+    }
+    void Setup()
     {
         originPoint = gameObject.GetComponentInParent<Transform>();
         camera = GetComponent<Camera>();
@@ -60,6 +65,11 @@ public class FollowingCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (crosshair == null)
+        {
+            Setup();
+                return;
+        }
         // Update the crosshair
         // Get the mouse position
         mousePos = Input.mousePosition;
@@ -90,14 +100,18 @@ public class FollowingCamera : MonoBehaviour
         }
 
 
-        // Convert the position from screen space to world space
-        crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
 
         if (targetToFollow != null)
         {
             originPoint.position = Vector3.MoveTowards(originPoint.position, moveTo, cameraSpeed * Time.deltaTime);
         }
 
+    }
+
+    public void CameraUpdata()
+    {
+        // Convert the position from screen space to world space
+        crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
     }
 
 

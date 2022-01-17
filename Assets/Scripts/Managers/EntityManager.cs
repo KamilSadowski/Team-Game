@@ -24,6 +24,14 @@ public class EntityManager : MonoBehaviour
     int playerID;
     Player player;
 
+    #region Singleton_EntityManager
+    public static EntityManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+
     // Creates a player with his weapons
     public int TryCreatePlayer(Vector3 position)
     {

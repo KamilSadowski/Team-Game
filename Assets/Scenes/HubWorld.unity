@@ -318,6 +318,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+--- !u!1 &562333781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4286888117465516770, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+  m_PrefabInstance: {fileID: 562333780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &562333782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562333781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfe4b2fdb88cab4490e396ce09320ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accessibleScenes:
+  - Dungeon
+  - HubWorld
 --- !u!1001 &978306097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -386,6 +406,10 @@ PrefabInstance:
       propertyPath: menu
       value: 
       objectReference: {fileID: 1787430847}
+    - target: {fileID: 1775015418503381576, guid: 44595e0cc0d887b49af2c6cb6a7f314c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3658810200656891555, guid: 44595e0cc0d887b49af2c6cb6a7f314c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

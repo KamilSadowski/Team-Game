@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1551512228375171005}
   - component: {fileID: 1280444534853037937}
   - component: {fileID: 5307539292665847357}
+  - component: {fileID: 3658232903247980384}
   m_Layer: 8
   m_Name: AngryCarrot
   m_TagString: Untagged
@@ -216,6 +217,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackList:
   - {fileID: 986937126523358177}
+--- !u!114 &3658232903247980384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262865065329714056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbffcb4d1954d984f88cb02464ae067e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementClip:
+  - {fileID: 8300000, guid: 94dbd4febab734210a43c84263f5e116, type: 3}
+  - {fileID: 8300000, guid: 3ff9fcf8763db443d8c48710cdf9ab60, type: 3}
+  - {fileID: 8300000, guid: a1382e4f297374edea614c369f31dcb2, type: 3}
+  onDamageClip:
+  - {fileID: 8300000, guid: 0cd0367ce705e426e944079a1e47eb84, type: 3}
+  - {fileID: 8300000, guid: b1e15b00e5c084b14b2fee5b2f708e7d, type: 3}
+  - {fileID: 8300000, guid: c118d1cdc5f634c28bfb87ef52703522, type: 3}
+  movementClipVolume: 0.075
 --- !u!1001 &4500826808284142464
 PrefabInstance:
   m_ObjectHideFlags: 0

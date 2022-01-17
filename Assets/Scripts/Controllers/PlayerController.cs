@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 
 
 public class PlayerController : Controller
 {
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip InventoryNoise;
+    [SerializeField] float InventoryVolume;
+
+
     protected Player player;
+    FollowingCamera CameraControl; 
     protected GameObject playerObject;
     protected UI_ChargingBar healthBarRef;
     protected UI inventoryRef;
@@ -26,6 +34,7 @@ public class PlayerController : Controller
         isCharging = new bool[2];
         isCharging[0] = false;
         isCharging[1] = false;
+        CameraControl = FindObjectOfType<FollowingCamera>();
     }
 
     // Update is called once per frame
@@ -51,7 +60,7 @@ public class PlayerController : Controller
 
             if (!isUsingInterface)
             {
-
+                CameraControl.CameraUpdata();
 
                 //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
                 if (entityMoveComp != null)
@@ -106,6 +115,13 @@ public class PlayerController : Controller
 
         if (inventoryRef != null && Input.GetKeyDown(KeyCode.E))
         {
+            if (InventoryNoise)
+            {
+                if(isUsingInterface)
+                audioSource.PlayOneShot(InventoryNoise, InventoryVolume);
+                else
+                    audioSource.PlayOneShot(InventoryNoise, InventoryVolume*0.75f);
+            }
             isUsingInterface = inventoryRef.ToggleMenu();        
         }
 

@@ -8,6 +8,11 @@ public class MobileComponent : MovementComponent
     [SerializeField] protected float movementSpeed = 1.0f;
     [SerializeField] protected float drag = 0.5f;
 
+    //Movement noises
+    [SerializeField] protected readonly float FOOTSTEP_INTERVAL = 1.0f;
+    protected SoundManager footStepRandomizer;
+    protected float timeSinceLastInterval = 0f;
+
     // Movement variables
     public Vector3 velocity;
     protected Vector3 position;
@@ -19,7 +24,8 @@ public class MobileComponent : MovementComponent
     // Start is called before the first frame update
     void Start()
     {
-        Create();
+        base.Start();
+        footStepRandomizer = gameObject.GetComponent<SoundManager>();
     }
 
     public override void Teleport(Vector3 teleportTo)
@@ -38,6 +44,26 @@ public class MobileComponent : MovementComponent
 
     public override void Move(Vector3 input)
     {
+        if (footStepRandomizer != null)
+        {
+            if (Mathf.Abs(velocity.x) > 0.01 ||
+                Mathf.Abs(velocity.y) > 0.01 ||
+                Mathf.Abs(velocity.z) > 0.01)
+            {
+                timeSinceLastInterval += Time.deltaTime;
+
+                if (timeSinceLastInterval > FOOTSTEP_INTERVAL / movementSpeed)
+                {
+                    timeSinceLastInterval = 0;
+                    footStepRandomizer.PlaySound(0);
+                }
+            }
+            else
+                timeSinceLastInterval = 0;
+        }
+
+
+
         // currentInput = input;
         if (rb == null)
         {
