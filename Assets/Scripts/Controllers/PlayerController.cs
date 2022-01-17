@@ -12,8 +12,10 @@ public class PlayerController : Controller
     protected Player player;
     protected GameObject playerObject;
     protected UI_ChargingBar healthBarRef;
+    protected UI inventoryRef;
     public bool[] isCharging;
 
+    protected bool isUsingInterface = false;
     private bool isFacingRight = true;
 
     // protected bool[] isCharging = { false, false }; //Potentially use this if "Update" is not fast enough and stutters.
@@ -24,7 +26,6 @@ public class PlayerController : Controller
         isCharging = new bool[2];
         isCharging[0] = false;
         isCharging[1] = false;
-
     }
 
     // Update is called once per frame
@@ -41,42 +42,53 @@ public class PlayerController : Controller
                 healthBarRef.UpdateProgBar(player.GetHealthPercentage());
             }
 
-
-            //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
-            if (entityMoveComp != null)
+            //This should give access to the UI manager.
+            if (inventoryRef == null)
             {
-
-                Vector3 temp = Vector3.zero;
-
-                temp.x += Input.GetAxis("Horizontal");
-                temp.y += Input.GetAxis("Vertical");
-
-                entityMoveComp.Move(temp);
-
-                player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
-
-            }
-            else
-            {
-                //The player should always have a movement component. If it doesn't then it should loop until it does, because it is a problem which can't be removed. 
-                entityMoveComp = PriorityChar_Manager.instance.getPlayer().GetComponent<MovementComponent>();
+                inventoryRef = GameObject.FindWithTag("UI").GetComponent<UI>();
             }
 
 
-            // TODO: Rotate the player according to mouse position 
-            var mousePos = Input.mousePosition;
-            var mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, player.transform.position.z));
-            var mousePlayerV = mouseWorldPos - player.transform.position;
-            var mousePlayerVNomalized = Vector3.Normalize(mousePlayerV);
-
-            
-
-            //See. "Update"
-            for (int i = 0; i < 2; ++i)
+            if (!isUsingInterface)
             {
-                if (isCharging[i])
+
+
+                //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
+                if (entityMoveComp != null)
                 {
-                    player.ChargeWeapon(i);
+
+                    Vector3 temp = Vector3.zero;
+
+                    temp.x += Input.GetAxis("Horizontal");
+                    temp.y += Input.GetAxis("Vertical");
+
+                    entityMoveComp.Move(temp);
+
+                    player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
+
+                }
+                else
+                {
+                    //The player should always have a movement component. If it doesn't then it should loop until it does, because it is a problem which can't be removed. 
+                    entityMoveComp = PriorityChar_Manager.instance.getPlayer().GetComponent<MovementComponent>();
+                }
+
+
+                // TODO: Rotate the player according to mouse position 
+                var mousePos = Input.mousePosition;
+                var mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, player.transform.position.z));
+                var mousePlayerV = mouseWorldPos - player.transform.position;
+                var mousePlayerVNomalized = Vector3.Normalize(mousePlayerV);
+
+
+
+                //See. "Update"
+                for (int i = 0; i < 2; ++i)
+                {
+                    if (isCharging[i])
+                    {
+                        player.ChargeWeapon(i);
+                    }
                 }
             }
         }
@@ -91,6 +103,13 @@ public class PlayerController : Controller
 
     private void Update()
     {
+
+        if (inventoryRef != null && Input.GetKeyDown(KeyCode.E))
+        {
+            isUsingInterface = inventoryRef.ToggleMenu();        
+        }
+
+
         if (Debug.isDebugBuild)
         {
 
@@ -105,6 +124,7 @@ public class PlayerController : Controller
 
             if (player)
             {
+
 
                 if (Input.GetKeyDown(KeyCode.L))
                 {
