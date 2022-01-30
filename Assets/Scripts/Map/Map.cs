@@ -110,7 +110,7 @@ public class Dungeon : MonoBehaviour
 	[SerializeField] List<Tile> bottomLeftCornerWallTiles;
 	[SerializeField] List<Tile> topLeftCornerWallTiles;
 
-	[SerializeField] List<TileBase> mapPropTiles;
+	[SerializeField] List<Prop> nearTopWallProps;
 
 
 	[SerializeField] Room emptyRoomPrefab;
@@ -159,13 +159,22 @@ public class Dungeon : MonoBehaviour
 		return groundTileMap;
 	}
 
+	// Checks if the editor tile is meant to be ground
+	// This includes prop tiles which would otherwise be ignored
+	bool IsGround(TileBase tile)
+    {
+		return (tile == editorGroundTile || tile == editorPropTile);
+    }
+
 	public Tilemap GetWallTileMap()
     {
 		return wallTileMap;
     }
 
 	// Reads the prefab and writes it to the map array, adds a room instance with no doors, door data for the room is added to the doors list
-	void WriteRoom(ref TileBase[,] map, GameObject roomPrefab, Vector3Int roomOffset, ref List<Room> rooms, ref List<List<DoorData>> doors, int roomNo)
+	void WriteRoom(ref TileBase[,] map, GameObject roomPrefab, Vector3Int roomOffset, 
+				   ref List<Room> rooms, ref List<List<DoorData>> doors, int roomNo, 
+				   ref List<Vector3Int> prefabs)
     {
 		Vector3Int prefabPosition = new Vector3Int(); // Position within the prefab
 		Vector3Int globalPosition = new Vector3Int(); // Position on the map
@@ -194,7 +203,7 @@ public class Dungeon : MonoBehaviour
 					// Check if the tile can be spawned on
 					if (tile == editorGroundTile)
 					{
-						rooms[rooms.Count -1].AddGroundTile(globalPosition);
+						rooms[rooms.Count - 1].AddGroundTile(globalPosition);
 					}
 
 					// Is the tile a door
@@ -202,26 +211,33 @@ public class Dungeon : MonoBehaviour
 					{
 						// Find the door direction
 						// North
-						if (roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x - 1, prefabPosition.y, prefabPosition.z)) == editorGroundTile)
+						if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x - 1, prefabPosition.y, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.north));
 						}
 						// South
-						else if (roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x + 1, prefabPosition.y, prefabPosition.z)) == editorGroundTile)
+						else if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x + 1, prefabPosition.y, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.south));
 						}
 						// East
-						else if (roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x, prefabPosition.y + 1, prefabPosition.z)) == editorGroundTile)
+						else if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x, prefabPosition.y + 1, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.east));
 						}
 						// West
-						else if (roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x, prefabPosition.y - 1, prefabPosition.z)) == editorGroundTile)
+						else if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x, prefabPosition.y - 1, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.west));
 						}
 
+					}
+
+					// Is the tile a prop
+					else if (tile == editorPropTile)
+					{
+						rooms[rooms.Count - 1].AddGroundTile(globalPosition);
+						prefabs.Add(globalPosition);
 					}
 				}
 
@@ -440,7 +456,7 @@ public class Dungeon : MonoBehaviour
         }
 
 		if (tileMap[x, y] == editorWallTile) return TileState.wall;
-		else if (tileMap[x, y] == editorGroundTile) return TileState.ground;
+		else if (IsGround(tileMap[x, y])) return TileState.ground;
 		else return TileState.empty;
 	}
 
@@ -451,6 +467,8 @@ public class Dungeon : MonoBehaviour
 		// Create a room
 		Vector3Int roomPosition = new Vector3Int(500, 500, 0);
 		TileBase[,] readMap = new TileBase[1000, 1000];
+
+		List<Vector3Int> props = new List<Vector3Int>();
 
 		// Used for checking the biggest room on each row and column
 		int[] biggestX = new int[Globals.MAP_GRID_SIZE];
@@ -561,7 +579,7 @@ public class Dungeon : MonoBehaviour
 
 			roomPosition.y = posY[roomGridPositions[i].x];
 
-			WriteRoom(ref readMap, currentRoomGameObject, roomPosition, ref roomsCreated, ref doorsCreationData, i);
+			WriteRoom(ref readMap, currentRoomGameObject, roomPosition, ref roomsCreated, ref doorsCreationData, i, ref props);
 
 			// Update the map grid with the index of the created room
 			mapGrid[roomGridPositions[i].x, roomGridPositions[i].y].roomIndex = i;
@@ -602,6 +620,8 @@ public class Dungeon : MonoBehaviour
 		FindWalls(readMap);
 
 		FillInWalls(readMap);
+
+		PlaceProps(readMap, props);
 
 		// Teleport the player to the starting location
 		Vector3 startPosition = roomsCreated[0].GetRandomGroundPosition();
@@ -882,6 +902,20 @@ public class Dungeon : MonoBehaviour
 		}
 	}
 
+	// Places random props in the specified positions
+	void PlaceProps(TileBase[,] readMap, List<Vector3Int> propPositons)
+    {
+		foreach (Vector3Int propPos in propPositons)
+		{
+			if (readMap[propPos.x, propPos.y])
+            {
+				int propIndex = Random.Range(0, nearTopWallProps.Count);
+				entityManager.TryCreateEntity(nearTopWallProps[propIndex].gameObject,
+											  groundTileMap.GetCellCenterWorld(propPos) + nearTopWallProps[propIndex].GetOffset());
+			}
+		}
+    }
+
 	// Places ground tiles
 	void PlaceGround(ref TileBase[,] readMap)
 	{
@@ -895,7 +929,7 @@ public class Dungeon : MonoBehaviour
 				index.y = y;
 
 				// Ground tile
-				if (readMap[x, y] == editorGroundTile)
+				if (IsGround(readMap[x, y]))
 				{
 					groundTileMap.SetTile(index, groundTiles[Random.Range(0, groundTiles.Count)]);
 				}
