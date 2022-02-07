@@ -93,6 +93,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e8195fb3ba9928a4fb20f6446c44db2a, type: 2}
   topLeftCornerWallTiles:
   - {fileID: 11400000, guid: b959bbdab48150c409d2142c3a3a98a5, type: 2}
+  topUWallTiles:
+  - {fileID: 11400000, guid: 8a6e1f064fcfeef4c86c598bd717a6a5, type: 2}
+  botUWallTiles:
+  - {fileID: 11400000, guid: a6d0dcd03c7f213498c9c5df3dfcee32, type: 2}
+  leftUWallTiles:
+  - {fileID: 11400000, guid: 55c5c11f1b8ed9841bfd1422b4590d8b, type: 2}
+  rightUWallTiles:
+  - {fileID: 11400000, guid: 4573b2489b9afd148a7b4f172f5cb74e, type: 2}
   nearTopWallProps:
   - {fileID: 5834226697503283585, guid: 5107a54071bdaa547847b4de50adbb79, type: 3}
   - {fileID: 3672667769868969295, guid: cc5d10d664312fe47a87de04f500c6e7, type: 3}
@@ -106,9 +114,7 @@ MonoBehaviour:
   westDoors:
   - {fileID: 7690393920200656736, guid: 9b1642affdec4bb42995578cffaa6373, type: 3}
   roomPrefabs:
-  - {fileID: 5526013910865045145, guid: 2195e022f9a617f4d9427b4af4fb4a69, type: 3}
-  - {fileID: 5298732044342816157, guid: 9540ed0fe0178ca4782c08eeaa95e339, type: 3}
-  - {fileID: 7736270532334654153, guid: 8e57eadc00fe0c341b24fcaf12d1d4b4, type: 3}
+  - {fileID: 3803924984938410212, guid: feb75b5a33702c847b10d40a7c833beb, type: 3}
   bossRoomPrefabs:
   - {fileID: 1879307424236399065, guid: 4e99528d72df4d143adc3673bd14bd1e, type: 3}
 --- !u!1 &404998560908169432

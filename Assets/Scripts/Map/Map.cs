@@ -86,6 +86,28 @@ public class Dungeon : MonoBehaviour
 	GameManager gameManager;
 	EntityManager entityManager;
 
+	enum WallType 
+	{
+		center, 
+		topLeft,
+		topRight,
+		topTop,
+		left,
+		right,
+		bottom,
+		bottomLeft,
+		bottomRight,
+		bottomRightCorner,
+		topRightCorner,
+		bottomLeftCorner,
+		topLeftCorner,
+		topU,
+		botU,
+		leftU,
+		rightU,
+		none
+	}
+
 	// Tilemap loader variables
 	[SerializeField] Tilemap wallTileMap;
 	[SerializeField] Tilemap groundTileMap;
@@ -109,6 +131,10 @@ public class Dungeon : MonoBehaviour
 	[SerializeField] List<Tile> topRightCornerWallTiles;
 	[SerializeField] List<Tile> bottomLeftCornerWallTiles;
 	[SerializeField] List<Tile> topLeftCornerWallTiles;
+	[SerializeField] List<Tile> topUWallTiles;
+	[SerializeField] List<Tile> botUWallTiles;
+	[SerializeField] List<Tile> leftUWallTiles;
+	[SerializeField] List<Tile> rightUWallTiles;
 
 	[SerializeField] List<Prop> nearTopWallProps;
 
@@ -754,151 +780,314 @@ public class Dungeon : MonoBehaviour
 		}
 	}
 
+	WallType CheckWall(TileBase[,] readMap, Vector3Int position)
+    {
+		// Update the tile
+		FillInSurroundingWalls(readMap, ref currentWall, position);
+
+		// Normal wall
+		if (currentWall.bottom == TileState.ground &&
+			currentWall.left != TileState.noTile &&
+			currentWall.left != TileState.empty &&
+			currentWall.right != TileState.noTile &&
+			currentWall.right != TileState.empty)
+		{
+			//wallTileMap.SetTile(position, centerWallTiles[Random.Range(0, centerWallTiles.Count)]);
+			return WallType.center;
+
+			// Check if to add a top wall
+			if (currentWall.top != TileState.wall)
+			{
+				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
+				//wallTileMap.SetTile(topWallPosition, topTopWallTiles[Random.Range(0, topTopWallTiles.Count)]);
+				//return WallType.topTop;
+			}
+		}
+
+		// Top U
+		else if (currentWall.left != TileState.empty &&
+				 currentWall.right != TileState.empty &&
+				 currentWall.bottom != TileState.empty)
+		{
+			//wallTileMap.SetTile(position, topUWallTiles[Random.Range(0, topUWallTiles.Count)]);
+			return WallType.topU;
+		}
+
+		// Bot U
+		else if (currentWall.top != TileState.empty &&
+				 currentWall.left != TileState.empty &&
+				 currentWall.right != TileState.empty)
+		{
+			//wallTileMap.SetTile(position, botUWallTiles[Random.Range(0, botUWallTiles.Count)]);
+			return WallType.botU;
+		}
+
+		// Left U
+		else if (currentWall.top != TileState.empty &&
+				 currentWall.right != TileState.empty &&
+				 currentWall.bottom != TileState.empty)
+		{
+			//wallTileMap.SetTile(position, leftUWallTiles[Random.Range(0, leftUWallTiles.Count)]);
+			return WallType.leftU;
+		}
+
+		// Right U
+		else if (currentWall.top != TileState.empty &&
+				 currentWall.left != TileState.empty &&
+				 currentWall.bottom != TileState.empty)
+		{
+			//wallTileMap.SetTile(position, rightUWallTiles[Random.Range(0, rightUWallTiles.Count)]);
+			return WallType.rightU;
+		}
+
+		// Bottom
+		else if (currentWall.top == TileState.ground &&
+				 currentWall.left == TileState.wall &&
+				 currentWall.right == TileState.wall)
+		{
+			//wallTileMap.SetTile(position, bottomWallTiles[Random.Range(0, bottomWallTiles.Count)]);
+			return WallType.bottom;
+		}
+
+		// Bottom left
+		else if (currentWall.top != TileState.empty &&
+				 currentWall.top != TileState.noTile &&
+				 currentWall.left == TileState.wall &&
+				 currentWall.right != TileState.wall)
+		{
+			// Check whether to use a corner wall tile
+			if (currentWall.bottom != TileState.wall)
+			{
+				//wallTileMap.SetTile(position, bottomLeftWallTiles[Random.Range(0, bottomLeftWallTiles.Count)]);
+				return WallType.bottomLeft;
+			}
+			else if (currentWall.right != TileState.empty && currentWall.right != TileState.noTile)
+			{
+				//wallTileMap.SetTile(position, bottomLeftCornerWallTiles[Random.Range(0, bottomLeftCornerWallTiles.Count)]);
+				return WallType.bottomLeftCorner;
+			}
+			else
+			{
+				//wallTileMap.SetTile(position, rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
+				return WallType.right;
+			}
+		}
+
+		// Bottom right
+		else if (currentWall.top != TileState.empty &&
+				 currentWall.top != TileState.noTile &&
+				 currentWall.right == TileState.wall &&
+				 currentWall.left != TileState.wall)
+		{
+			// Check whether to use a corner wall tile
+			if (currentWall.bottom != TileState.wall)
+			{
+				//wallTileMap.SetTile(position, bottomRightWallTiles[Random.Range(0, bottomRightWallTiles.Count)]);
+				return WallType.bottomRight;
+			}
+			else if (currentWall.left != TileState.empty && currentWall.left != TileState.noTile)
+			{
+				//wallTileMap.SetTile(position, bottomRightCornerWallTiles[Random.Range(0, bottomRightCornerWallTiles.Count)]);
+				return WallType.bottomRightCorner;
+			}
+			else
+			{
+				//wallTileMap.SetTile(position, leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
+				return WallType.left;
+			}
+		}
+
+		// Left
+		else if (currentWall.right != TileState.empty &&
+				 currentWall.right != TileState.noTile &&
+				 currentWall.left != TileState.wall &&
+				 currentWall.bottom == TileState.wall &&
+				 currentWall.bottomLeft != TileState.wall)
+		{
+			//wallTileMap.SetTile(position, leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
+			return WallType.left;
+
+			// Check if to add a top wall
+			if (currentWall.top != TileState.wall)
+			{
+				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
+				//wallTileMap.SetTile(topWallPosition, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
+				//return WallType.topLeft;
+			}
+		}
+
+		// Right
+		else if (currentWall.left != TileState.empty &&
+				 currentWall.left != TileState.noTile &&
+				 currentWall.right != TileState.wall &&
+				 currentWall.bottom == TileState.wall &&
+				 currentWall.bottomRight != TileState.wall)
+		{
+			//wallTileMap.SetTile(position, rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
+			return WallType.right;
+
+			// Check if to add a top wall
+			if (currentWall.top != TileState.wall)
+			{
+				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
+				//wallTileMap.SetTile(topWallPosition, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
+				//return WallType.topRight;
+			}
+		}
+
+		// Top right corner
+		else if (currentWall.bottom == TileState.wall &&
+				 currentWall.bottomLeft == TileState.wall)
+		{
+			//wallTileMap.SetTile(position, topRightCornerWallTiles[Random.Range(0, topRightCornerWallTiles.Count)]);
+			return WallType.topRightCorner;
+
+			// Check if to add a top wall
+			if (currentWall.top != TileState.wall)
+			{
+				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
+				//wallTileMap.SetTile(topWallPosition, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
+				//return WallType.topLeft;
+			}
+		}
+
+		// Top left corner
+		else if (currentWall.bottom == TileState.wall &&
+				 currentWall.bottomRight == TileState.wall)
+		{
+			//wallTileMap.SetTile(position, topLeftCornerWallTiles[Random.Range(0, topLeftCornerWallTiles.Count)]);
+			return WallType.topLeftCorner;
+
+			// Check if to add a top wall
+			if (currentWall.top != TileState.wall)
+			{
+				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
+				//wallTileMap.SetTile(topWallPosition, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
+				//return WallType.topRight;
+			}
+		}
+		else
+        {
+			return WallType.none;
+        }
+	}
+	void FillInSurroundingWalls(TileBase[,] readMap, ref TileGenData wall, Vector3Int position)
+	{
+		wall.topLeft = GetTileState(readMap, position.x - 1, position.y + 1);
+		wall.top = GetTileState(readMap, position.x, position.y + 1);
+		wall.topRight = GetTileState(readMap, position.x + 1, position.y + 1);
+		wall.left = GetTileState(readMap, position.x - 1, position.y);
+		wall.currentTile = GetTileState(readMap, position.x, position.y);
+		wall.right = GetTileState(readMap, position.x + 1, position.y);
+		wall.bottomLeft = GetTileState(readMap, position.x - 1, position.y - 1);
+		wall.bottom = GetTileState(readMap, position.x, position.y - 1);
+		wall.bottomRight = GetTileState(readMap, position.x + 1, position.y - 1);
+	}
+
+	void SetTile(Vector3Int position, List<Tile> list)
+    {
+		wallTileMap.SetTile(position, list[Random.Range(0, list.Count)]);
+	}
+
+	void FillInWall(WallType type, Vector3Int position)
+    {
+		switch (type)
+		{
+			case WallType.center:
+				{
+					SetTile(position, centerWallTiles);
+					break;
+				}
+			case WallType.topLeft:
+				{
+					SetTile(position, topLeftWallTiles);
+					break;
+				}
+			case WallType.topRight:
+				{
+					SetTile(position, topRightWallTiles);
+					break;
+				}
+			case WallType.topTop:
+				{
+					SetTile(position, topTopWallTiles);
+					break;
+				}
+			case WallType.left:
+				{
+					SetTile(position, leftWallTiles);
+					break;
+				}
+			case WallType.right:
+				{
+					SetTile(position, rightWallTiles);
+					break;
+				}
+			case WallType.bottom:
+				{
+					SetTile(position, bottomWallTiles);
+					break;
+				}
+			case WallType.bottomLeft:
+				{
+					SetTile(position, bottomLeftWallTiles);
+					break;
+				}
+			case WallType.bottomRight:
+				{
+					SetTile(position, bottomRightWallTiles);
+					break;
+				}
+			case WallType.bottomRightCorner:
+				{
+					SetTile(position, bottomRightCornerWallTiles);
+					break;
+				}
+			case WallType.topRightCorner:
+				{
+					SetTile(position, topRightCornerWallTiles);
+					break;
+				}
+			case WallType.bottomLeftCorner:
+				{
+					SetTile(position, bottomLeftCornerWallTiles);
+					break;
+				}
+			case WallType.topLeftCorner:
+				{
+					SetTile(position, topLeftWallTiles);
+					break;
+				}
+			case WallType.topU:
+				{
+					SetTile(position, topUWallTiles);
+					break;
+				}
+			case WallType.botU:
+				{
+					SetTile(position, botUWallTiles);
+					break;
+				}
+			case WallType.leftU:
+				{
+					SetTile(position, leftUWallTiles);
+					break;
+				}
+			case WallType.rightU:
+				{
+					SetTile(position, rightUWallTiles);
+					break;
+				}
+		}
+	}
+
 	// Goes through found walls and fills them in with the corresponding tiles based on their surrounding tiles
 	void FillInWalls(TileBase[,] readMap)
     {
 		// Fill in the wall tiles based on ground tiles
 		for (int i = 0; i < wallLocations.Count; i++)
 		{
-			// Update the tile
-			currentWall.topLeft = GetTileState(readMap, wallLocations[i].x - 1, wallLocations[i].y + 1);
-			currentWall.top = GetTileState(readMap, wallLocations[i].x, wallLocations[i].y + 1);
-			currentWall.topRight = GetTileState(readMap, wallLocations[i].x + 1, wallLocations[i].y + 1);
-			currentWall.left = GetTileState(readMap, wallLocations[i].x - 1, wallLocations[i].y);
-			currentWall.currentTile = GetTileState(readMap, wallLocations[i].x, wallLocations[i].y);
-			currentWall.right = GetTileState(readMap, wallLocations[i].x + 1, wallLocations[i].y);
-			currentWall.bottomLeft = GetTileState(readMap, wallLocations[i].x - 1, wallLocations[i].y - 1);
-			currentWall.bottom = GetTileState(readMap, wallLocations[i].x, wallLocations[i].y - 1);
-			currentWall.bottomRight = GetTileState(readMap, wallLocations[i].x + 1, wallLocations[i].y - 1);
-
-			// Normal wall
-			if (currentWall.bottom == TileState.ground &&
-				currentWall.left != TileState.noTile &&
-				currentWall.left != TileState.empty &&
-				currentWall.right != TileState.noTile &&
-				currentWall.right != TileState.empty)
-			{
-				wallTileMap.SetTile(wallLocations[i], centerWallTiles[Random.Range(0, centerWallTiles.Count)]);
-
-				// Check if to add a top wall
-				if (currentWall.top != TileState.wall)
-				{
-					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
-					wallTileMap.SetTile(topWallPosition, topTopWallTiles[Random.Range(0, topTopWallTiles.Count)]);
-				}
-			}
-
-			// Bottom
-			else if (currentWall.top == TileState.ground &&
-					 currentWall.left == TileState.wall &&
-					 currentWall.right == TileState.wall)
-			{
-				wallTileMap.SetTile(wallLocations[i], bottomWallTiles[Random.Range(0, bottomWallTiles.Count)]);
-			}
-
-			// Bottom left
-			else if (currentWall.top != TileState.empty &&
-					 currentWall.top != TileState.noTile &&
-					 currentWall.left == TileState.wall &&
-					 currentWall.right != TileState.wall)
-			{
-				// Check whether to use a corner wall tile
-				if (currentWall.bottom != TileState.wall)
-				{
-					wallTileMap.SetTile(wallLocations[i], bottomLeftWallTiles[Random.Range(0, bottomLeftWallTiles.Count)]);
-				}
-				else if (currentWall.right != TileState.empty && currentWall.right != TileState.noTile)
-				{
-					wallTileMap.SetTile(wallLocations[i], bottomLeftCornerWallTiles[Random.Range(0, bottomLeftCornerWallTiles.Count)]);
-				}
-				else
-				{
-					wallTileMap.SetTile(wallLocations[i], rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
-				}
-			}
-
-			// Bottom right
-			else if (currentWall.top != TileState.empty &&
-					 currentWall.top != TileState.noTile &&
-					 currentWall.right == TileState.wall &&
-					 currentWall.left != TileState.wall)
-			{
-				// Check whether to use a corner wall tile
-				if (currentWall.bottom != TileState.wall)
-				{
-					wallTileMap.SetTile(wallLocations[i], bottomRightWallTiles[Random.Range(0, bottomRightWallTiles.Count)]);
-				}
-				else if (currentWall.left != TileState.empty && currentWall.left != TileState.noTile)
-					{
-					wallTileMap.SetTile(wallLocations[i], bottomRightCornerWallTiles[Random.Range(0, bottomRightCornerWallTiles.Count)]);
-				}
-				else
-				{
-					wallTileMap.SetTile(wallLocations[i], leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
-				}
-			}
-
-			// Left
-			else if (currentWall.right != TileState.empty &&
-					 currentWall.right != TileState.noTile &&
-					 currentWall.left != TileState.wall &&
-					 currentWall.bottom == TileState.wall &&
-					 currentWall.bottomLeft != TileState.wall)
-			{
-				wallTileMap.SetTile(wallLocations[i], leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
-
-				// Check if to add a top wall
-				if (currentWall.top != TileState.wall)
-				{
-					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
-					wallTileMap.SetTile(topWallPosition, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
-				}
-			}
-
-			// Right
-			else if (currentWall.left != TileState.empty &&
-					 currentWall.left != TileState.noTile &&
-					 currentWall.right != TileState.wall &&
-					 currentWall.bottom == TileState.wall &&
-					 currentWall.bottomRight != TileState.wall)
-			{
-				wallTileMap.SetTile(wallLocations[i], rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
-
-				// Check if to add a top wall
-				if (currentWall.top != TileState.wall)
-				{
-					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
-					wallTileMap.SetTile(topWallPosition, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
-				}
-			}
-
-			// Top right corner
-			else if (currentWall.bottom == TileState.wall &&
-					 currentWall.bottomLeft == TileState.wall)
-			{
-				wallTileMap.SetTile(wallLocations[i], topRightCornerWallTiles[Random.Range(0, topRightCornerWallTiles.Count)]);
-
-				// Check if to add a top wall
-				if (currentWall.top != TileState.wall)
-				{
-					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
-					wallTileMap.SetTile(topWallPosition, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
-				}
-			}
-
-			// Top left corner
-			else if (currentWall.bottom == TileState.wall &&
-					 currentWall.bottomRight == TileState.wall)
-			{
-				wallTileMap.SetTile(wallLocations[i], topLeftCornerWallTiles[Random.Range(0, topLeftCornerWallTiles.Count)]);
-
-				// Check if to add a top wall
-				if (currentWall.top != TileState.wall)
-				{
-					Vector3Int topWallPosition = new Vector3Int(wallLocations[i].x, wallLocations[i].y + 1);
-					wallTileMap.SetTile(topWallPosition, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
-				}
-			}
+			FillInWall(CheckWall(readMap, wallLocations[i]), wallLocations[i]);		
 		}
 	}
 
