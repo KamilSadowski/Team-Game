@@ -7,6 +7,7 @@ public class BaseParticleComponent : MonoBehaviour
 
     const float RGB_MAX_VAL = 1.0f / 255.0f;
     [SerializeField] int _numberOfColumns = 180;
+    
     [SerializeField] float _speed = .75f;
     [SerializeField] Sprite _texture;
 

@@ -40,27 +40,21 @@ public class BulletHellAttackComponent : AttackComponent
 
 
 
-                time = 0.0f;
+                
                 if (targetPosition == null)
                 {
 
                     targetPosition = PriorityChar_Manager.instance.getPlayerPosition;
                 }
-                else
-                {
-
-                    attackParticle[0].StartParticleEffect(attackParent[0].transform, transform);
-                }
-
-
-                if (false)
+                else   
                     //If everything is valid; spawn a particle system.
                     if (attackParent.Count == attackParticle.Count && attackParticle.Count != 0)
                     {
                         int index = Random.Range(0, attackParticle.Count);
                         if (attackParticle[index] != null && attackParent[index] != null)
                         {
-                            if (isTargettingPlayer[index])
+                    time = 0.0f;
+                    if (isTargettingPlayer[index])
                                 attackParticle[index].StartParticleEffect(attackParent[index].transform, transform, targetPosition);
                             else
                                 attackParticle[index].StartParticleEffect(attackParent[index].transform, transform);

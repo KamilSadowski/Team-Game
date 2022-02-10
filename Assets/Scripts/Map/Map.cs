@@ -466,7 +466,7 @@ public class Dungeon : MonoBehaviour
 	{
 		// Create a room
 		Vector3Int roomPosition = new Vector3Int(500, 500, 0);
-		TileBase[,] readMap = new TileBase[1000, 1000];
+		TileBase[,] readMap = new TileBase[10000, 10000];
 
 		List<Vector3Int> props = new List<Vector3Int>();
 
@@ -619,7 +619,7 @@ public class Dungeon : MonoBehaviour
 
 		FindWalls(readMap);
 
-		FillInWalls(readMap);
+		//FillInWalls(readMap);
 
 		PlaceProps(readMap, props);
 
@@ -632,7 +632,7 @@ public class Dungeon : MonoBehaviour
 		}
 
 		// First room is closed and the rest will only close when entered
-		StartCoroutine(roomsCreated[0].EnterRoom());
+		roomsCreated[0].EnterRoom();
 		
 		for (int i = 1; i < roomsCreated.Count; ++i)
 		{

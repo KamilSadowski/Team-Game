@@ -26,7 +26,7 @@ public class DoorEnter : MonoBehaviour
             {
                 door = GetComponentInParent<Door>();
             }
-            StartCoroutine( door.room.EnterRoom());
+           door.room.EnterRoom();
         }
 
     }

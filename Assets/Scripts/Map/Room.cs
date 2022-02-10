@@ -68,9 +68,8 @@ public class Room : MonoBehaviour
     }
     
     // Close all the doors and spawn enemies
-    public IEnumerator EnterRoom()
+    public void EnterRoom()
     {
-        yield return new WaitForFixedUpdate();
         if (!wasEntered)
         {
             CloseDoors();
@@ -80,7 +79,6 @@ public class Room : MonoBehaviour
             }
             wasEntered = true;
         }
-        yield return null;
     }
 
     public void ExitRoom()
