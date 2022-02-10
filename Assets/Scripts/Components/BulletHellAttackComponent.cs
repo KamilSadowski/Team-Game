@@ -24,7 +24,7 @@ public class BulletHellAttackComponent : AttackComponent
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void LateUpdate()
@@ -32,33 +32,42 @@ public class BulletHellAttackComponent : AttackComponent
         time += Time.deltaTime;
     }
 
+
     public override void Attack()
     {
         if (time >= attackCooldown)
         {
 
-            time = 0.0f;
-            if (targetPosition == null)
-                targetPosition = PriorityChar_Manager.instance.getPlayerPosition;
-            else
-                attackParticle[0].StartParticleEffect(attackParent[0].transform, transform);
-            
 
 
-            if (false)
-                //If everything is valid; spawn a particle system.
-                if (attackParent.Count == attackParticle.Count && attackParticle.Count != 0)
+                time = 0.0f;
+                if (targetPosition == null)
                 {
-                    int index = Random.Range(0, attackParticle.Count);
-                    if (attackParticle[index] != null && attackParent[index] != null)
-                    {
-                        if (isTargettingPlayer[index])
-                            attackParticle[index].StartParticleEffect(attackParent[index].transform, transform, targetPosition);
-                        else
-                            attackParticle[index].StartParticleEffect(attackParent[index].transform, transform);
-                    }
-                }
-        }
-    }
 
+                    targetPosition = PriorityChar_Manager.instance.getPlayerPosition;
+                }
+                else
+                {
+
+                    attackParticle[0].StartParticleEffect(attackParent[0].transform, transform);
+                }
+
+
+                if (false)
+                    //If everything is valid; spawn a particle system.
+                    if (attackParent.Count == attackParticle.Count && attackParticle.Count != 0)
+                    {
+                        int index = Random.Range(0, attackParticle.Count);
+                        if (attackParticle[index] != null && attackParent[index] != null)
+                        {
+                            if (isTargettingPlayer[index])
+                                attackParticle[index].StartParticleEffect(attackParent[index].transform, transform, targetPosition);
+                            else
+                                attackParticle[index].StartParticleEffect(attackParent[index].transform, transform);
+                        }
+                    }
+            
+        }
+
+    }
 }

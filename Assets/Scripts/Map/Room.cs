@@ -68,8 +68,9 @@ public class Room : MonoBehaviour
     }
     
     // Close all the doors and spawn enemies
-    public void EnterRoom()
+    public IEnumerator EnterRoom()
     {
+        yield return new WaitForFixedUpdate();
         if (!wasEntered)
         {
             CloseDoors();
@@ -79,6 +80,7 @@ public class Room : MonoBehaviour
             }
             wasEntered = true;
         }
+        yield return null;
     }
 
     public void ExitRoom()
@@ -86,7 +88,7 @@ public class Room : MonoBehaviour
 
     }
 
-    public void CreateEntity()
+    void CreateEntity()
     {
         currentEntityID = entityManager.TryCreateListedNPC(0, GetRandomGroundPosition());
         if (currentEntityID != -1)
@@ -94,7 +96,7 @@ public class Room : MonoBehaviour
             currentNPC = entityManager.GetEntity(currentEntityID) as NotPlayer;
             currentNPC.AddRoom(this);
             ++enemiesAlive;
-        }
+        }   
     }
 
     public void OpenDoors()

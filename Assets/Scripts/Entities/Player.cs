@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Player : Character
 {
+
     public struct PWeapon
     {
         public GameObject gameObject;
         public WeaponController weaponController;
     }
+
 
     const int WEAPON_COUNT = 2;
     public PWeapon[] equipment;

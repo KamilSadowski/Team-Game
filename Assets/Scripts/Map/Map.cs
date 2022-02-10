@@ -632,7 +632,8 @@ public class Dungeon : MonoBehaviour
 		}
 
 		// First room is closed and the rest will only close when entered
-		roomsCreated[0].EnterRoom();
+		StartCoroutine(roomsCreated[0].EnterRoom());
+		
 		for (int i = 1; i < roomsCreated.Count; ++i)
 		{
 			roomsCreated[i].OpenDoors();

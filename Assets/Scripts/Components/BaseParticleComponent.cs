@@ -47,7 +47,7 @@ public class BaseParticleComponent : MonoBehaviour
 
     private ParticleCollisionsComponent ParticleCollisionsClass;
 
-    const int MAX_PARTICLE_COUNT = 10;
+    const int MAX_PARTICLE_COUNT = 1;
     List<Transform>[] organizedChildren;
     List<Transform> childrenInput;
 
@@ -132,14 +132,14 @@ public class BaseParticleComponent : MonoBehaviour
     }
     protected IEnumerator CreateParticles(Transform inputPos, Transform startPos) // If the attack is a ray then it needs to know where to target
     {
-        childrenInput = new List<Transform>();
-
-
-
+      
         int temporaryID = GetID();
 
-        if (temporaryID > 0)
+        //If ID is invalid then there's too many particles.
+        if (temporaryID >= 0)
         {
+            childrenInput = new List<Transform>();
+
             if (organizedChildren[temporaryID] == null || organizedChildren[temporaryID].Count != _numberOfColumns)
             {
                 if (organizedChildren[temporaryID] != null)
@@ -176,14 +176,14 @@ public class BaseParticleComponent : MonoBehaviour
 
                     go.transform.parent = inputPos;
                     go.transform.position = inputPos.position;
-                    go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, -.5f);
+                    go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, -0.1f);
 
 
                     //IsRay is asking if the attack 
                     if (liveTargetPos != null)
                     {
 
-                        go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, -.5f);
+                        go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, -0.1f);
                         go.transform.LookAt(liveTargetPos());
                     }
 
@@ -226,7 +226,6 @@ public class BaseParticleComponent : MonoBehaviour
                     {
 
                         ParticleCollisionsClass = go.AddComponent<ParticleCollisionsComponent>();
-                        ParticleCollisionsClass.AddParticleSystem(system);
 
                         var collision = system.collision;
 
@@ -258,8 +257,8 @@ public class BaseParticleComponent : MonoBehaviour
                 InvokeRepeating("ParticleEmittion", 0, _fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization));
             else
             {
-                for (int i = 0; _fireRate * i < _emissionDuration; ++i)
-                    StartCoroutine(ParticleEmittion(((_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i), temporaryID));
+                //for (int i = 0; _fireRate * i < _emissionDuration; ++i)
+                    StartCoroutine(ParticleEmittion(((_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * 0), temporaryID));
                 //Invoke("ParticleEmittion", organizedChildren.Count-1, (_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i);
 
                 //In theory, assuming a particle spawns at the last instant with the max possible time, the time between its death and startup time is the duration plus its lifespan, with max potential modifiers.
@@ -275,6 +274,7 @@ public class BaseParticleComponent : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         AddID(index);
+
         // ParticleParent = null;
     }
 
@@ -308,7 +308,7 @@ public class BaseParticleComponent : MonoBehaviour
                 if (gradiantMult >= _color.Length) gradiantMult = 0;
 
 
-                system.Emit(emitParams, 10);
+                system.Emit(emitParams, 1);
 
             }
 

@@ -70,7 +70,8 @@ public class EnemyController : Controller
                 }
                 else
                 {
-                    attackComponent = FindObjectOfType<AttackComponent>();
+                    
+                    attackComponent = gameObject.GetComponent<AttackComponent>();
                     if (attackComponent)
                     {
                         attackComponent.Attack();
@@ -90,7 +91,7 @@ public class EnemyController : Controller
             playerObject = PriorityChar_Manager.instance.getPlayer();
             if (playerObject)
             {
-                entityMoveComp = GetComponent<MovementComponent>();
+                entityMoveComp = gameObject.GetComponent<MovementComponent>();
                 playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
             }
             BindVariables();

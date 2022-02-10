@@ -5,39 +5,35 @@ using UnityEngine;
 public class ParticleCollisionsComponent : MonoBehaviour
 {
     Entity entity;
-    List<ParticleSystem> CollidableSystems;
+    ParticleSystem CollidableSystems;
     List<ParticleCollisionEvent> CollisionEvents;
     ParticleSystem.Particle[] allParticles;
     // Start is called before the first frame update
     void Awake()
     {
-        CollidableSystems = new List<ParticleSystem>();
         CollisionEvents = new List<ParticleCollisionEvent>();
-    }
-
-    public void AddParticleSystem(ParticleSystem input)
-    {
-        CollidableSystems.Add(input);
     }
 
     private void OnParticleCollision(GameObject other)
     {
-        foreach (ParticleSystem system in CollidableSystems)
-        {
-            // On entity collision
+   
+            CollidableSystems = gameObject.GetComponent<ParticleSystem>();
+        // On entity collision
+        if (CollidableSystems)
             if (other.TryGetComponent<Entity>(out entity))
             {
-                StartCoroutine(EntityCollision(system, other));
+         
+            EntityCollision(CollidableSystems, other);
+             //   StartCoroutine(EntityCollision(CollidableSystems, other));
             }
             else
             {//Map collision
-                StartCoroutine(WallCollisions(system, other));
-            }
-        }
 
+                StartCoroutine(WallCollisions(CollidableSystems, other));
+            }
     }
 
-    IEnumerator EntityCollision(ParticleSystem system, GameObject other)
+    void EntityCollision(ParticleSystem system, GameObject other)
     {
             allParticles = new ParticleSystem.Particle[system.particleCount];
             system.GetParticles(allParticles);
@@ -54,15 +50,19 @@ public class ParticleCollisionsComponent : MonoBehaviour
                         if (Vector3.Magnitude(allParticles[i].position - colEvent.intersection) < 0.05f)
                         {
                             allParticles[i].remainingLifetime = -1; // Kills the particle
-                            entity.TakeDamage(10); // Damages the entity
-                            system.SetParticles(allParticles); // Updates particle system
-                            break;
+
+                        // Damages the entity
+                        entity.TakeDamage(10);
+                        system.SetParticles(allParticles);
+                        break;
                         }
                     }
+               
+                // Updates particle system
                 }
             }
         
-        yield return null;
+     //   yield return null;
     }
 
     IEnumerator WallCollisions(ParticleSystem system,GameObject other)

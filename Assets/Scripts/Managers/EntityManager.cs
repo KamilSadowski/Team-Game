@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
+    const bool IS_DEBUGGING = true;
     const int ENTITY_LIMIT = 250;
 
     [SerializeField] GameObject playerPrefab;
@@ -107,6 +108,9 @@ public class EntityManager : MonoBehaviour
         tempEntityGameObject = Instantiate<GameObject>(entity);
         tempEntityGameObject.TryGetComponent<Entity>(out tempEntity);
         tempEntityGameObject.transform.position = position;
+
+        if(IS_DEBUGGING)
+        tempEntityGameObject.name += ID;
 
         if (tempEntity != null)
         {

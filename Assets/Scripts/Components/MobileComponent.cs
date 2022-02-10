@@ -7,6 +7,7 @@ public class MobileComponent : MovementComponent
     // Properties
     [SerializeField] protected float movementSpeed = 1.0f;
     [SerializeField] protected float drag = 0.5f;
+    protected SpriteRenderer spriteRenderer;
 
     //Movement noises
     [SerializeField] protected readonly float FOOTSTEP_INTERVAL = 1.0f;
@@ -26,6 +27,7 @@ public class MobileComponent : MovementComponent
     {
         base.Start();
         footStepRandomizer = gameObject.GetComponent<SoundManager>();
+
     }
 
     public override void Teleport(Vector3 teleportTo)
@@ -95,23 +97,27 @@ public class MobileComponent : MovementComponent
         rb.velocity = Vector3.zero;
 
 
-        if (isFacingRight)
-        {
-            if (input.x < 0f)
-            {
-                transform.Rotate(Vector3.up, 180f);
-                isFacingRight = false;
-            }
-        }
-        else
-        {
-            if (input.x > 0f)
-            {
-                transform.Rotate(Vector3.up, 180f);
-                isFacingRight = true;
-            }
+        if (spriteRenderer == null)
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        }
+        if (spriteRenderer != null)
+            if (isFacingRight)
+            {
+                if (input.x < 0f)
+                {
+                    spriteRenderer.flipX = true;
+                    isFacingRight = false;
+                }
+            }
+            else
+            {
+                if (input.x > 0f)
+                {
+                    spriteRenderer.flipX = false;
+                    isFacingRight = true;
+                }
+
+            }
 
     }
 }
