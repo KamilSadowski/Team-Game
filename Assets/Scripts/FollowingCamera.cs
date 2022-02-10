@@ -41,6 +41,18 @@ public class FollowingCamera : MonoBehaviour
 
     // Start is called before the first frame update
 
+    #region FollowingCamera_Singleton
+
+    //There is only ever one instance of this class and it can be used to reference information so making it a singleton should be justified.
+    public static FollowingCamera instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+
     private void Start()
     {
         Setup();
@@ -167,6 +179,11 @@ public class FollowingCamera : MonoBehaviour
     public Vector3 GetCrosshairPosition()
     {
         return crosshair.transform.position;
+    }
+
+    public Transform GetCrosshairTransform()
+    {
+        return crosshair.transform;
     }
 
     public void Teleport(Vector2 position)

@@ -7,7 +7,6 @@ public class Attack : MonoBehaviour
 {
     Entity entity;
     ParticleSystem attackParticleSystem;
-    List<ParticleCollisionEvent> collisionEvents;
     ParticleSystem.Particle[] allParticles;
     float damage;
     List<ParticleCollisionEvent> events;
@@ -16,7 +15,6 @@ public class Attack : MonoBehaviour
     void Start()
     {
         attackParticleSystem = GetComponent<ParticleSystem>();
-        collisionEvents = new List<ParticleCollisionEvent>();
         events = new List<ParticleCollisionEvent>();
     }
 

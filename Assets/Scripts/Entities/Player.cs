@@ -15,7 +15,7 @@ public class Player : Character
     public PWeapon[] equipment;
 
     protected EntityManager entitySpawner;
-    [SerializeField] Weapon[] NPCList;
+
 
     protected const float MAX_FORCE_MOD = 0.5f; //Discuss this in detail later- What factor limits the throwing power? 
 
@@ -160,7 +160,7 @@ public class Player : Character
 
     public void SpawnEnemyTarget()
     {
-        entitySpawner.TryCreateListedNPC(1, crosshair.GetPosition());
+        entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
     }
 
     public void SpawnRandomPickup()

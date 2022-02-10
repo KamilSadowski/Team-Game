@@ -24,9 +24,8 @@ public class ProjectileController : Controller
     protected Vector3 nDirection;
     protected Vector3 oldPos;
     MovementComponent entityMoveComp;
-    MobileComponent entityMoblieComp;
 
-
+    BaseParticleComponent AttackOutput;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +35,11 @@ public class ProjectileController : Controller
         oldPos = transform.position;
         nDirection = Vector3.zero;
         entityMoveComp = GetComponent<MovementComponent>();
+
+        if (AttackOutput == null)
+        {
+            AttackOutput = gameObject.GetComponent<BaseParticleComponent>();
+        }
     }
 
 
@@ -94,6 +98,18 @@ public class ProjectileController : Controller
     }
     protected bool ProjFixedUpdate()
     {
+        if (AttackOutput)
+        {
+
+            System.Func<Vector3> _Action = FollowingCamera.instance.GetCrosshairPosition;
+            //AttackOutput.setParticleParameters();
+            AttackOutput.StartParticleEffect(transform, transform);
+        }
+        else
+        {
+            AttackOutput = gameObject.GetComponent<BaseParticleComponent>();
+        }
+        if (false)
         if (entityMoveComp != null)
         {
 

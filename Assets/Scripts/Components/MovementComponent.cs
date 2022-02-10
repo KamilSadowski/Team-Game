@@ -42,4 +42,9 @@ public class MovementComponent : MonoBehaviour
         return true;
     }
 
+    public Vector3 GetVelocity()
+    {
+        return rb.velocity;
+    }
+
 }

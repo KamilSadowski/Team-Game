@@ -17,7 +17,6 @@ public class PlayerController : Controller
 
 
     protected Player player;
-    FollowingCamera CameraControl; 
     protected GameObject playerObject;
     protected UI_ChargingBar healthBarRef;
     protected UI inventoryRef;
@@ -34,7 +33,6 @@ public class PlayerController : Controller
         isCharging = new bool[2];
         isCharging[0] = false;
         isCharging[1] = false;
-        CameraControl = FindObjectOfType<FollowingCamera>();
     }
 
     // Update is called once per frame
@@ -60,7 +58,7 @@ public class PlayerController : Controller
 
             if (!isUsingInterface)
             {
-                CameraControl.CameraUpdata();
+                FollowingCamera.instance.CameraUpdata();
 
                 //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
                 if (entityMoveComp != null)

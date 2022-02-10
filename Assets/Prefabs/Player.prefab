@@ -175,8 +175,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02637212, y: -0.012465283}
-  m_Size: {x: 0.2869303, y: 0.44637248}
+  m_Offset: {x: 0.016160421, y: -0.03591887}
+  m_Size: {x: 0.19949068, y: 0.19949068}
   m_Direction: 0
 --- !u!114 &280624763064764028
 MonoBehaviour:
@@ -344,6 +344,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 119.215
       objectReference: {fileID: 0}
+    - target: {fileID: 3396249245045481201, guid: a01496694ba38a34a928f9b8b6bd2e42, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3396249245045481201, guid: a01496694ba38a34a928f9b8b6bd2e42, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3396249246002004555, guid: a01496694ba38a34a928f9b8b6bd2e42, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

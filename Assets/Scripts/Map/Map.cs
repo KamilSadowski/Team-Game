@@ -639,8 +639,8 @@ public class Dungeon : MonoBehaviour
         }
 
 		// Teleport the camera to avoid a delay of it having to move towards the player
-		FollowingCamera camera = FindObjectOfType<FollowingCamera>();
-		camera.Teleport(startPosition);
+
+		FollowingCamera.instance.Teleport(startPosition);
 
 		gameManager.GivePlayerEquipment();
 		

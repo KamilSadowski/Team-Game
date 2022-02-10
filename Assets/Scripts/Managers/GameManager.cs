@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     Player player;
-    FollowingCamera camera;
+
     EntityManager entityManager;
 
     // Volume variables
@@ -50,26 +50,19 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        if (camera != null)
-        {
-            if (camera.targetToFollow == null)
+            if (FollowingCamera.instance && FollowingCamera.instance.targetToFollow == null)
             {
                 if (player != null)
                 {
-                    camera.SetTarget(player);
+                    FollowingCamera.instance.SetTarget(player);
                 }
                 else
                 {
                     player = FindObjectOfType<Player>();
                 }
             }
-        }
-        else
-        {
-            camera = FindObjectOfType<FollowingCamera>();
-        }
     }
 
     public void GivePlayerEquipment()

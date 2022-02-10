@@ -26,7 +26,14 @@ public class PriorityChar_Manager : MonoBehaviour
     
         return null;
     }
-    
+    public Vector3 getPlayerPosition()
+    {
+        if (player)
+            return player.transform.position;
+
+        return Vector3.zero;
+    }
+
     // Update is called once per frame
     public void FixedUpdate()
     {

@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &159796740112239111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563952782752604218}
+  - component: {fileID: 2556188827064181044}
+  - component: {fileID: 6408601391070692132}
+  m_Layer: 0
+  m_Name: PlayerTargettingChilli
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563952782752604218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159796740112239111}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2556188827064181044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159796740112239111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987beabebaf7ea34da0ce049db2f0918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numberOfColumns: 360
+  _speed: 1.05
+  _texture: {fileID: 21300000, guid: f05d415db508fe54f986561965822fd1, type: 3}
+  _color:
+  - {r: 1, g: 0, b: 0, a: 0.3}
+  - {r: 0.9, g: 0.5686275, b: 0, a: 0.3}
+  - {r: 1, g: 0.627451, b: 0, a: 0.3}
+  - {r: 1, g: 0.5882353, b: 0, a: 0.3}
+  - {r: 1, g: 0, b: 0, a: 0.3}
+  - {r: 0.9, g: 0, b: 0, a: 0.3}
+  - {r: 0.75, g: 0, b: 0.3, a: 1}
+  - {r: 1, g: 0.50980395, b: 0, a: 0.3}
+  - {r: 1, g: 0, b: 0, a: 0.3}
+  - {r: 0.9, g: 0.039215688, b: 0, a: 0.3}
+  - {r: 1, g: 0.627451, b: 0, a: 0.3}
+  - {r: 1, g: 0.5882353, b: 0, a: 0.3}
+  _fireRate: 0.01
+  _fireRateRandomization: 0
+  _emissionDuration: 0.01
+  _size: 0.15
+  _sizeRandomizationPercentage: 0
+  _angle: 0
+  _material: {fileID: 2100000, guid: 4e8fedfd8ce66fc4b9c6090c5c48182d, type: 2}
+  rotationSpeed: 0
+  _lifetime: 2.5
+  _lifetimeRandomization: 0.5
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  sortingLayerName: 
+--- !u!114 &6408601391070692132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159796740112239111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e9cd82c3f3cb24f901e2929b1a593b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
