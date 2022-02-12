@@ -88,11 +88,11 @@ MonoBehaviour:
   bottomRightCornerWallTiles:
   - {fileID: 11400000, guid: 832d55da01af02346be5b6753c4a9fc0, type: 2}
   topRightCornerWallTiles:
-  - {fileID: 11400000, guid: 862b65d89e50f3e4c91761b296f550cb, type: 2}
+  - {fileID: 11400000, guid: b959bbdab48150c409d2142c3a3a98a5, type: 2}
   bottomLeftCornerWallTiles:
   - {fileID: 11400000, guid: e8195fb3ba9928a4fb20f6446c44db2a, type: 2}
   topLeftCornerWallTiles:
-  - {fileID: 11400000, guid: b959bbdab48150c409d2142c3a3a98a5, type: 2}
+  - {fileID: 11400000, guid: 862b65d89e50f3e4c91761b296f550cb, type: 2}
   topUWallTiles:
   - {fileID: 11400000, guid: 8a6e1f064fcfeef4c86c598bd717a6a5, type: 2}
   botUWallTiles:
@@ -104,7 +104,9 @@ MonoBehaviour:
   nearTopWallProps:
   - {fileID: 5834226697503283585, guid: 5107a54071bdaa547847b4de50adbb79, type: 3}
   - {fileID: 3672667769868969295, guid: cc5d10d664312fe47a87de04f500c6e7, type: 3}
+  emptyBossRoomPrefab: {fileID: -7725025818627621477, guid: 13670c77d00b7444c9b8f0ff708c4fe9, type: 3}
   emptyRoomPrefab: {fileID: 5677266474391530819, guid: 5cf295cf24b17ca47851646e3936fc02, type: 3}
+  lightPrefab: {fileID: 4706677968071202491, guid: f2dffe87a5bf28a4bb05ef5942276cb3, type: 3}
   northDoors:
   - {fileID: -7478836296794279649, guid: 9b1dd425183ee594484109aa163833cc, type: 3}
   southDoors:
@@ -114,6 +116,9 @@ MonoBehaviour:
   westDoors:
   - {fileID: 7690393920200656736, guid: 9b1642affdec4bb42995578cffaa6373, type: 3}
   roomPrefabs:
+  - {fileID: 5526013910865045145, guid: 2195e022f9a617f4d9427b4af4fb4a69, type: 3}
+  - {fileID: 5298732044342816157, guid: 9540ed0fe0178ca4782c08eeaa95e339, type: 3}
+  - {fileID: 7736270532334654153, guid: 8e57eadc00fe0c341b24fcaf12d1d4b4, type: 3}
   - {fileID: 3803924984938410212, guid: feb75b5a33702c847b10d40a7c833beb, type: 3}
   bossRoomPrefabs:
   - {fileID: 1879307424236399065, guid: 4e99528d72df4d143adc3673bd14bd1e, type: 3}
@@ -221,7 +226,7 @@ TilemapRenderer:
   m_GameObject: {fileID: 404998560908169432}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -232,7 +237,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0a46da59da1d25343927265a062566e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -383,7 +388,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0a46da59da1d25343927265a062566e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

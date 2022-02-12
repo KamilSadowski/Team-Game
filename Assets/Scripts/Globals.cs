@@ -27,6 +27,8 @@ public static class Globals
     public const int MIN_CORRIDOR_DIST = 3; // How long a corridor has to be away from the room to avoid wall clipping
     public const int ROOM_PLACEMENT_OFFSET = 7; // Distance between room grid fields, needs to exist to avoid wall clipping and allow corridors
 
+    public const float SPRITE_Z = -0.05f; // How much to offset sprites to cast shadows
+
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
     public static string[] SceneNames = new string[3] { "MainMenu", "HubWorld", "Dungeon" };

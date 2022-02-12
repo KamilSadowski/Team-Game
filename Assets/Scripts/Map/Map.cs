@@ -6,18 +6,76 @@ using UnityEngine.Tilemaps;
 // Which tile is currently held in the given position
 enum TileState { empty, ground, wall, noTile } // No tile means null
 
-// Holds the data of surrounding tiles to use in map generation
-struct TileGenData
+enum WallType
 {
-	public TileState topLeft;
-	public TileState top;
-	public TileState topRight;
-	public TileState left;
-	public TileState currentTile;
-	public TileState right;
-	public TileState bottomLeft;
-	public TileState bottom;
-	public TileState bottomRight;
+	center,
+	topLeft,
+	topRight,
+	topTop,
+	left,
+	right,
+	bottom,
+	bottomLeft,
+	bottomRight,
+	bottomRightCorner,
+	topRightCorner,
+	bottomLeftCorner,
+	topLeftCorner,
+	topU,
+	botU,
+	leftU,
+	rightU,
+	none
+}
+
+class WallData
+{
+	public WallType type;
+	public Vector3Int position;
+
+    public WallData()
+    {
+    }
+
+    public WallData(WallType newType, Vector3Int pos)
+	{
+		type = newType;
+		position = pos;
+	}
+}
+
+// Holds the data of surrounding tiles to use in map generation
+class WallGenData
+{
+	public WallData topLeft = new WallData();
+	public WallData top = new WallData();
+	public WallData topRight = new WallData();
+	public WallData left = new WallData();
+	public WallData currentTile = new WallData();
+	public WallData right = new WallData();
+	public WallData bottomLeft = new WallData();
+	public WallData bottom = new WallData(); // y - 1
+	public WallData bottomRight = new WallData();
+	public WallData bottomBottom = new WallData(); // y - 2
+}
+
+class TileStateData
+{
+	public TileState state = new TileState();
+	public Vector3Int position = new Vector3Int();
+}
+class TileGenData
+{
+	public TileStateData topLeft = new TileStateData();
+	public TileStateData top = new TileStateData();
+	public TileStateData topRight = new TileStateData();
+	public TileStateData left = new TileStateData();
+	public TileStateData currentTile = new TileStateData();
+	public TileStateData right = new TileStateData();
+	public TileStateData bottomLeft = new TileStateData();
+	public TileStateData bottom = new TileStateData(); // y - 1
+	public TileStateData bottomRight = new TileStateData();
+	public TileStateData bottomBottom = new TileStateData(); // y - 2
 }
 
 // Holds the door position and the room it belongs to
@@ -86,27 +144,6 @@ public class Dungeon : MonoBehaviour
 	GameManager gameManager;
 	EntityManager entityManager;
 
-	enum WallType 
-	{
-		center, 
-		topLeft,
-		topRight,
-		topTop,
-		left,
-		right,
-		bottom,
-		bottomLeft,
-		bottomRight,
-		bottomRightCorner,
-		topRightCorner,
-		bottomLeftCorner,
-		topLeftCorner,
-		topU,
-		botU,
-		leftU,
-		rightU,
-		none
-	}
 
 	// Tilemap loader variables
 	[SerializeField] Tilemap wallTileMap;
@@ -139,7 +176,9 @@ public class Dungeon : MonoBehaviour
 	[SerializeField] List<Prop> nearTopWallProps;
 
 
+	[SerializeField] BossRoom emptyBossRoomPrefab;
 	[SerializeField] Room emptyRoomPrefab;
+	[SerializeField] Light lightPrefab;
 
 	// Door prefabs
 	[SerializeField] List<Door> northDoors;
@@ -148,8 +187,6 @@ public class Dungeon : MonoBehaviour
 	[SerializeField] List<Door> westDoors;
 
 	List<Vector3Int> wallLocations = new List<Vector3Int>();
-
-	TileGenData currentWall;
 
 	// A list of room prefabs that can be used
 	[SerializeField] List<Room> roomPrefabs = new List<Room>();
@@ -168,6 +205,7 @@ public class Dungeon : MonoBehaviour
 	List<List<DoorData>> doorsCreationData = new List<List<DoorData>>(); // Index 1 is room number, index 2 is door number
 	List<Room> roomsCreated = new List<Room>();
 	List<Globals.Grid2D> roomGridPositions = new List<Globals.Grid2D>();
+	Light mapLight;
 
 	// Room creation variables
 	Vector3 roomPosition = Vector3.zero;
@@ -177,6 +215,7 @@ public class Dungeon : MonoBehaviour
 	{
 		gameManager = FindObjectOfType<GameManager>();
 		entityManager = FindObjectOfType<EntityManager>();
+		mapLight = Instantiate(lightPrefab);
 		CreateDungeon();
 	}
 
@@ -197,19 +236,42 @@ public class Dungeon : MonoBehaviour
 		return wallTileMap;
     }
 
+	public void LightSwitch(bool on)
+    {
+		mapLight.enabled = on;
+    }
+
+	// Does not update the z position
+	public void SetLightPosition(Vector3 position)
+	{
+		position.z = mapLight.transform.position.z;
+		mapLight.transform.position = position;
+	}
+
 	// Reads the prefab and writes it to the map array, adds a room instance with no doors, door data for the room is added to the doors list
 	void WriteRoom(ref TileBase[,] map, GameObject roomPrefab, Vector3Int roomOffset, 
 				   ref List<Room> rooms, ref List<List<DoorData>> doors, int roomNo, 
-				   ref List<Vector3Int> prefabs)
+				   ref List<Vector3Int> prefabs, bool bossRoom)
     {
 		Vector3Int prefabPosition = new Vector3Int(); // Position within the prefab
 		Vector3Int globalPosition = new Vector3Int(); // Position on the map
 
-		rooms.Add(Instantiate<Room>(emptyRoomPrefab));
+		if (bossRoom)
+        {
+			rooms.Add(Instantiate<BossRoom>(emptyBossRoomPrefab));
+		}
+		else
+        {
+			rooms.Add(Instantiate<Room>(emptyRoomPrefab));
+		}
 		Room roomPrefabScript = roomPrefab.GetComponent<Room>();
 		Tilemap roomPrefabTilemap = roomPrefab.GetComponent<Tilemap>();
 		roomPrefabTilemap.CompressBounds();
+		Vector3 roomCenter = new Vector3();
+		int doorsFound = 0;
+		//roomCenter += roomPrefabTilemap.cellBounds.size / 2;
 		rooms[rooms.Count - 1].Initialise(roomPrefabTilemap.cellBounds.size, this, roomPrefabScript.GetEnemyNo());
+
 		doors.Add(new List<DoorData>());
 
 		globalPosition.y = roomOffset.x;
@@ -240,21 +302,29 @@ public class Dungeon : MonoBehaviour
 						if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x - 1, prefabPosition.y, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.north));
+							roomCenter += globalPosition;
+							++doorsFound;
 						}
 						// South
 						else if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x + 1, prefabPosition.y, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.south));
+							roomCenter += globalPosition;
+							++doorsFound;
 						}
 						// East
 						else if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x, prefabPosition.y + 1, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.east));
+							roomCenter += globalPosition;
+							++doorsFound;
 						}
 						// West
 						else if (IsGround(roomPrefabTilemap.GetTile(new Vector3Int(prefabPosition.x, prefabPosition.y - 1, prefabPosition.z))))
 						{
 							doors[roomNo].Add(new DoorData(globalPosition, roomNo, Globals.Direction.west));
+							roomCenter += globalPosition;
+							++doorsFound;
 						}
 
 					}
@@ -271,6 +341,10 @@ public class Dungeon : MonoBehaviour
 			}
 			globalPosition.y++;
 		}
+
+		roomCenter /= doorsFound;
+		roomCenter = groundTileMap.CellToWorld(new Vector3Int((int)roomCenter.x, (int)roomCenter.y, (int)roomCenter.z));
+		rooms[rooms.Count - 1].SetRoomCenter(roomCenter);
 	}
 
 	// Writes a corridor of the specified length in a specified direction to the specified map
@@ -605,7 +679,9 @@ public class Dungeon : MonoBehaviour
 
 			roomPosition.y = posY[roomGridPositions[i].x];
 
-			WriteRoom(ref readMap, currentRoomGameObject, roomPosition, ref roomsCreated, ref doorsCreationData, i, ref props);
+			WriteRoom(ref readMap, currentRoomGameObject, roomPosition, 
+				      ref roomsCreated, ref doorsCreationData, i, ref props, 
+					  mapGrid[roomGridPositions[i].x, roomGridPositions[i].y].isBossRoom);
 
 			// Update the map grid with the index of the created room
 			mapGrid[roomGridPositions[i].x, roomGridPositions[i].y].roomIndex = i;
@@ -676,6 +752,8 @@ public class Dungeon : MonoBehaviour
 	// Finds places where walls should be (call fill in walls to actually give them tiles)
 	void FindWalls(TileBase[,] readMap)
 	{
+		TileGenData currentWall = new TileGenData();
+
 		// Check all of the ground edges and see if a wall needs to be inserted
 		Vector3Int index = new Vector3Int(0, 0, 0);
 		Vector3Int newWallIndex = new Vector3Int(0, 0, 0);
@@ -687,21 +765,35 @@ public class Dungeon : MonoBehaviour
 				index.y = y;
 
 				// Check the ground tile's surrounding tiles for future wall locations
-				currentWall.currentTile = GetTileState(readMap, index.x, index.y);
-				if (currentWall.currentTile == TileState.ground)
+				currentWall.currentTile.state = GetTileState(readMap, index.x, index.y);
+				if (currentWall.currentTile.state == TileState.ground)
 				{
-					currentWall.topLeft = GetTileState(readMap, index.x - 1, index.y + 1);
-					currentWall.top = GetTileState(readMap, index.x, index.y + 1);
-					currentWall.topRight = GetTileState(readMap, index.x + 1, index.y + 1);
-					currentWall.left = GetTileState(readMap, index.x - 1, index.y);
+					currentWall.topLeft.position = new Vector3Int(index.x - 1, index.y + 1);
+					currentWall.topLeft.state = GetTileState(readMap, index.x - 1, index.y + 1);
 
-					currentWall.right = GetTileState(readMap, index.x + 1, index.y);
-					currentWall.bottomLeft = GetTileState(readMap, index.x - 1, index.y - 1);
-					currentWall.bottom = GetTileState(readMap, index.x, index.y - 1);
-					currentWall.bottomRight = GetTileState(readMap, index.x + 1, index.y - 1);
+					currentWall.top.position = new Vector3Int(index.x, index.y + 1, index.z);
+					currentWall.top.state = GetTileState(readMap, index.x, index.y + 1);
+
+					currentWall.topRight.position = new Vector3Int(index.x + 1, index.y + 1, index.z);
+					currentWall.topRight.state = GetTileState(readMap, index.x + 1, index.y + 1);
+
+					currentWall.left.position = new Vector3Int(index.x - 1, index.y, index.z);
+					currentWall.left.state = GetTileState(readMap, index.x - 1, index.y);
+
+					currentWall.right.position = new Vector3Int(index.x + 1, index.y, index.z);
+					currentWall.right.state = GetTileState(readMap, index.x + 1, index.y);
+
+					currentWall.bottomLeft.position = new Vector3Int(index.x - 1, index.y - 1, index.z);
+					currentWall.bottomLeft.state = GetTileState(readMap, index.x - 1, index.y - 1);
+
+					currentWall.bottom.position = new Vector3Int(index.x, index.y - 1, index.z);
+					currentWall.bottom.state = GetTileState(readMap, index.x, index.y - 1);
+
+					currentWall.bottomRight.position = new Vector3Int(index.x + 1, index.y - 1, index.z);
+					currentWall.bottomRight.state = GetTileState(readMap, index.x + 1, index.y - 1);
 
 					// Top left
-					if (currentWall.topLeft == TileState.empty)
+					if (currentWall.topLeft.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.x -= 1;
@@ -711,7 +803,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Top
-					if (currentWall.top == TileState.empty)
+					if (currentWall.top.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.y += 1;
@@ -720,7 +812,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Top right
-					if (currentWall.topRight == TileState.empty)
+					if (currentWall.topRight.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.x += 1;
@@ -730,7 +822,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Left
-					if (currentWall.left == TileState.empty)
+					if (currentWall.left.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.x -= 1;
@@ -739,7 +831,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Right
-					if (currentWall.right == TileState.empty)
+					if (currentWall.right.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.x += 1;
@@ -748,7 +840,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Bottom left
-					if (currentWall.bottomLeft == TileState.empty)
+					if (currentWall.bottomLeft.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.x -= 1;
@@ -758,7 +850,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Bottom
-					if (currentWall.bottom == TileState.empty)
+					if (currentWall.bottom.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.y -= 1;
@@ -767,7 +859,7 @@ public class Dungeon : MonoBehaviour
 					}
 
 					// Bottom right
-					if (currentWall.bottomRight == TileState.empty)
+					if (currentWall.bottomRight.state == TileState.empty)
 					{
 						newWallIndex = index;
 						newWallIndex.x += 1;
@@ -780,302 +872,279 @@ public class Dungeon : MonoBehaviour
 		}
 	}
 
-	WallType CheckWall(TileBase[,] readMap, Vector3Int position)
+	WallData CheckWall(TileBase[,] readMap, Vector3Int position)
     {
 		// Update the tile
-		FillInSurroundingWalls(readMap, ref currentWall, position);
+		TileGenData tile = FillInSurroundingTiles(readMap, position);
 
-		// Normal wall
-		if (currentWall.bottom == TileState.ground &&
-			currentWall.left != TileState.noTile &&
-			currentWall.left != TileState.empty &&
-			currentWall.right != TileState.noTile &&
-			currentWall.right != TileState.empty)
-		{
-			//wallTileMap.SetTile(position, centerWallTiles[Random.Range(0, centerWallTiles.Count)]);
-			return WallType.center;
-
-			// Check if to add a top wall
-			if (currentWall.top != TileState.wall)
-			{
-				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
-				//wallTileMap.SetTile(topWallPosition, topTopWallTiles[Random.Range(0, topTopWallTiles.Count)]);
-				//return WallType.topTop;
-			}
-		}
-
-		// Top U
-		else if (currentWall.left != TileState.empty &&
-				 currentWall.right != TileState.empty &&
-				 currentWall.bottom != TileState.empty)
-		{
-			//wallTileMap.SetTile(position, topUWallTiles[Random.Range(0, topUWallTiles.Count)]);
-			return WallType.topU;
-		}
-
-		// Bot U
-		else if (currentWall.top != TileState.empty &&
-				 currentWall.left != TileState.empty &&
-				 currentWall.right != TileState.empty)
-		{
-			//wallTileMap.SetTile(position, botUWallTiles[Random.Range(0, botUWallTiles.Count)]);
-			return WallType.botU;
-		}
-
-		// Left U
-		else if (currentWall.top != TileState.empty &&
-				 currentWall.right != TileState.empty &&
-				 currentWall.bottom != TileState.empty)
-		{
-			//wallTileMap.SetTile(position, leftUWallTiles[Random.Range(0, leftUWallTiles.Count)]);
-			return WallType.leftU;
-		}
-
-		// Right U
-		else if (currentWall.top != TileState.empty &&
-				 currentWall.left != TileState.empty &&
-				 currentWall.bottom != TileState.empty)
-		{
-			//wallTileMap.SetTile(position, rightUWallTiles[Random.Range(0, rightUWallTiles.Count)]);
-			return WallType.rightU;
-		}
-
-		// Bottom
-		else if (currentWall.top == TileState.ground &&
-				 currentWall.left == TileState.wall &&
-				 currentWall.right == TileState.wall)
-		{
-			//wallTileMap.SetTile(position, bottomWallTiles[Random.Range(0, bottomWallTiles.Count)]);
-			return WallType.bottom;
-		}
-
-		// Bottom left
-		else if (currentWall.top != TileState.empty &&
-				 currentWall.top != TileState.noTile &&
-				 currentWall.left == TileState.wall &&
-				 currentWall.right != TileState.wall)
-		{
-			// Check whether to use a corner wall tile
-			if (currentWall.bottom != TileState.wall)
-			{
-				//wallTileMap.SetTile(position, bottomLeftWallTiles[Random.Range(0, bottomLeftWallTiles.Count)]);
-				return WallType.bottomLeft;
-			}
-			else if (currentWall.right != TileState.empty && currentWall.right != TileState.noTile)
-			{
-				//wallTileMap.SetTile(position, bottomLeftCornerWallTiles[Random.Range(0, bottomLeftCornerWallTiles.Count)]);
-				return WallType.bottomLeftCorner;
-			}
-			else
-			{
-				//wallTileMap.SetTile(position, rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
-				return WallType.right;
-			}
-		}
-
-		// Bottom right
-		else if (currentWall.top != TileState.empty &&
-				 currentWall.top != TileState.noTile &&
-				 currentWall.right == TileState.wall &&
-				 currentWall.left != TileState.wall)
-		{
-			// Check whether to use a corner wall tile
-			if (currentWall.bottom != TileState.wall)
-			{
-				//wallTileMap.SetTile(position, bottomRightWallTiles[Random.Range(0, bottomRightWallTiles.Count)]);
-				return WallType.bottomRight;
-			}
-			else if (currentWall.left != TileState.empty && currentWall.left != TileState.noTile)
-			{
-				//wallTileMap.SetTile(position, bottomRightCornerWallTiles[Random.Range(0, bottomRightCornerWallTiles.Count)]);
-				return WallType.bottomRightCorner;
-			}
-			else
-			{
-				//wallTileMap.SetTile(position, leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
-				return WallType.left;
-			}
-		}
-
-		// Left
-		else if (currentWall.right != TileState.empty &&
-				 currentWall.right != TileState.noTile &&
-				 currentWall.left != TileState.wall &&
-				 currentWall.bottom == TileState.wall &&
-				 currentWall.bottomLeft != TileState.wall)
-		{
-			//wallTileMap.SetTile(position, leftWallTiles[Random.Range(0, leftWallTiles.Count)]);
-			return WallType.left;
-
-			// Check if to add a top wall
-			if (currentWall.top != TileState.wall)
-			{
-				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
-				//wallTileMap.SetTile(topWallPosition, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
-				//return WallType.topLeft;
-			}
-		}
-
-		// Right
-		else if (currentWall.left != TileState.empty &&
-				 currentWall.left != TileState.noTile &&
-				 currentWall.right != TileState.wall &&
-				 currentWall.bottom == TileState.wall &&
-				 currentWall.bottomRight != TileState.wall)
-		{
-			//wallTileMap.SetTile(position, rightWallTiles[Random.Range(0, rightWallTiles.Count)]);
-			return WallType.right;
-
-			// Check if to add a top wall
-			if (currentWall.top != TileState.wall)
-			{
-				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
-				//wallTileMap.SetTile(topWallPosition, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
-				//return WallType.topRight;
-			}
-		}
-
-		// Top right corner
-		else if (currentWall.bottom == TileState.wall &&
-				 currentWall.bottomLeft == TileState.wall)
-		{
-			//wallTileMap.SetTile(position, topRightCornerWallTiles[Random.Range(0, topRightCornerWallTiles.Count)]);
-			return WallType.topRightCorner;
-
-			// Check if to add a top wall
-			if (currentWall.top != TileState.wall)
-			{
-				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
-				//wallTileMap.SetTile(topWallPosition, topLeftWallTiles[Random.Range(0, topLeftWallTiles.Count)]);
-				//return WallType.topLeft;
-			}
-		}
-
-		// Top left corner
-		else if (currentWall.bottom == TileState.wall &&
-				 currentWall.bottomRight == TileState.wall)
-		{
-			//wallTileMap.SetTile(position, topLeftCornerWallTiles[Random.Range(0, topLeftCornerWallTiles.Count)]);
-			return WallType.topLeftCorner;
-
-			// Check if to add a top wall
-			if (currentWall.top != TileState.wall)
-			{
-				//Vector3Int topWallPosition = new Vector3Int(position.x, position.y + 1);
-				//wallTileMap.SetTile(topWallPosition, topRightWallTiles[Random.Range(0, topRightWallTiles.Count)]);
-				//return WallType.topRight;
-			}
-		}
-		else
+		if (tile.top.state == TileState.ground)
         {
-			return WallType.none;
-        }
+			if (tile.left.state == TileState.ground)
+			{
+				if (tile.bottom.state == TileState.ground)
+				{
+					// Right U
+					return new WallData(WallType.rightU, position);
+				}
+				else if (tile.right.state == TileState.ground)
+				{
+					// Bottom U
+					return new WallData(WallType.botU, position);
+				}
+				else
+			    {
+					// Bottom right corner
+					return new WallData(WallType.bottomRightCorner, position);
+				}
+
+
+			}
+
+			if (tile.right.state == TileState.ground)
+			{
+				if (tile.bottom.state == TileState.ground)
+				{
+					// Left U
+					return new WallData(WallType.leftU, position);
+				}
+				else if (tile.left.state == TileState.ground)
+				{
+					// Bottom U
+					return new WallData(WallType.botU, position);
+				}
+				else
+				{
+					// Bottom left corner
+					return new WallData(WallType.bottomLeftCorner, position);
+				}
+			}
+
+			// Bottom
+			return new WallData(WallType.bottom, position);
+
+		}
+
+		if (tile.right.state != TileState.empty)
+		{
+			if (tile.left.state == TileState.empty)
+            {
+				// Top left corner
+				if (tile.bottom.state == TileState.ground ||
+					tile.bottomBottom.state == TileState.ground)
+				{
+					return new WallData(WallType.topLeftCorner, position);
+				}
+				// Left
+				else
+				{
+					if (tile.right.state == TileState.ground ||
+						IsCenterWall(readMap, tile.right.position))
+					{
+						return new WallData(WallType.left, position);
+					}
+				}
+			}
+		}
+		if (tile.left.state != TileState.empty)
+		{
+			if (tile.right.state == TileState.empty)
+			{
+				// Top right corner
+				if (tile.bottom.state == TileState.ground ||
+					tile.bottomBottom.state == TileState.ground)
+				{
+					return new WallData(WallType.topRightCorner, position);
+				}
+				// Right
+				else
+				{
+					if (tile.left.state == TileState.ground ||
+						IsCenterWall(readMap, tile.left.position))
+					{
+						return new WallData(WallType.right, position);
+					}
+				}
+			}
+		}
+
+		if (tile.bottom.state == TileState.ground)
+		{
+			// Center
+			return new WallData(WallType.center, position);
+		}
+
+		if (tile.top.state == TileState.empty)
+		{
+			// Top U
+			return new WallData(WallType.topU, position);
+		}
+
+		return new WallData(WallType.none, position);
 	}
-	void FillInSurroundingWalls(TileBase[,] readMap, ref TileGenData wall, Vector3Int position)
+
+	bool IsCenterWall(TileBase[,] readMap, Vector3Int position)
 	{
-		wall.topLeft = GetTileState(readMap, position.x - 1, position.y + 1);
-		wall.top = GetTileState(readMap, position.x, position.y + 1);
-		wall.topRight = GetTileState(readMap, position.x + 1, position.y + 1);
-		wall.left = GetTileState(readMap, position.x - 1, position.y);
-		wall.currentTile = GetTileState(readMap, position.x, position.y);
-		wall.right = GetTileState(readMap, position.x + 1, position.y);
-		wall.bottomLeft = GetTileState(readMap, position.x - 1, position.y - 1);
-		wall.bottom = GetTileState(readMap, position.x, position.y - 1);
-		wall.bottomRight = GetTileState(readMap, position.x + 1, position.y - 1);
+		TileGenData tile = FillInSurroundingTiles(readMap, position);
+		return tile.bottom.state == TileState.ground && tile.top.state != TileState.ground;
+    }
+
+	TileGenData FillInSurroundingTiles(TileBase[,] readMap, Vector3Int position)
+	{
+
+		TileGenData tile = new TileGenData();
+
+		tile.topLeft.state = GetTileState(readMap, position.x - 1, position.y + 1);
+		tile.topLeft.position = new Vector3Int(position.x - 1, position.y + 1, position.z);
+
+		tile.top.state = GetTileState(readMap, position.x, position.y + 1);
+		tile.top.position = new Vector3Int(position.x, position.y + 1, position.z);
+
+		tile.topRight.state = GetTileState(readMap, position.x + 1, position.y + 1);
+		tile.topRight.position = new Vector3Int(position.x + 1, position.y + 1, position.z);
+
+		tile.left.state = GetTileState(readMap, position.x - 1, position.y);
+		tile.left.position = new Vector3Int(position.x - 1, position.y, position.z);
+
+		tile.currentTile.state = GetTileState(readMap, position.x, position.y);
+		tile.currentTile.position = new Vector3Int(position.x, position.y, position.z);
+
+		tile.right.state = GetTileState(readMap, position.x + 1, position.y);
+		tile.right.position = new Vector3Int(position.x + 1, position.y, position.z);
+
+		tile.bottomLeft.state = GetTileState(readMap, position.x - 1, position.y - 1);
+		tile.bottomLeft.position = new Vector3Int(position.x - 1, position.y - 1, position.z);
+
+		tile.bottom.state = GetTileState(readMap, position.x, position.y - 1);
+		tile.bottom.position = new Vector3Int(position.x, position.y - 1, position.z);
+
+		tile.bottomRight.state = GetTileState(readMap, position.x + 1, position.y - 1);
+		tile.bottomRight.position = new Vector3Int(position.x + 1, position.y - 1, position.z);
+
+		tile.bottomBottom.state = GetTileState(readMap, position.x, position.y - 2);
+		tile.bottomBottom.position = new Vector3Int(position.x, position.y - 2, position.z);
+
+		return tile;
 	}
 
-	void SetTile(Vector3Int position, List<Tile> list)
+	void FillInSurroundingWalls(TileBase[,] readMap, ref WallGenData wall, Vector3Int position)
+	{
+
+		wall.topLeft = CheckWall(readMap, new Vector3Int(position.x - 1, position.y + 1, position.z));
+
+		wall.top = CheckWall(readMap, new Vector3Int(position.x, position.y + 1, position.z));
+
+		wall.topRight = CheckWall(readMap, new Vector3Int(position.x + 1, position.y + 1, position.z));
+
+		wall.left = CheckWall(readMap, new Vector3Int(position.x - 1, position.y, position.z));
+
+		wall.currentTile = CheckWall(readMap, new Vector3Int(position.x, position.y, position.z));
+
+		wall.right = CheckWall(readMap, new Vector3Int(position.x + 1, position.y, position.z));
+
+		wall.bottomLeft = CheckWall(readMap, new Vector3Int(position.x - 1, position.y - 1, position.z));
+
+		wall.bottom = CheckWall(readMap, new Vector3Int(position.x, position.y - 1, position.z));
+
+		wall.bottomRight = CheckWall(readMap, new Vector3Int(position.x + 1, position.y - 1, position.z));
+
+		wall.bottomBottom = CheckWall(readMap, new Vector3Int(position.x, position.y - 2, position.z));
+	}
+
+	void SetTile(ref Tilemap tileMap, Vector3Int position, List<Tile> list)
     {
-		wallTileMap.SetTile(position, list[Random.Range(0, list.Count)]);
+		tileMap.SetTile(position, list[Random.Range(0, list.Count)]);
 	}
 
+
+	// This function can only fill in basic walls and will ignore wall extensions
+	// Those will need to be added manually
 	void FillInWall(WallType type, Vector3Int position)
     {
 		switch (type)
 		{
 			case WallType.center:
 				{
-					SetTile(position, centerWallTiles);
+					SetTile(ref groundTileMap, position, centerWallTiles);
 					break;
 				}
 			case WallType.topLeft:
 				{
-					SetTile(position, topLeftWallTiles);
+					SetTile(ref wallTileMap, position, topLeftWallTiles);
 					break;
 				}
 			case WallType.topRight:
 				{
-					SetTile(position, topRightWallTiles);
+					SetTile(ref wallTileMap, position, topRightWallTiles);
 					break;
 				}
 			case WallType.topTop:
 				{
-					SetTile(position, topTopWallTiles);
+					SetTile(ref wallTileMap, position, topTopWallTiles);
 					break;
 				}
 			case WallType.left:
 				{
-					SetTile(position, leftWallTiles);
+					SetTile(ref wallTileMap, position, leftWallTiles);
 					break;
 				}
 			case WallType.right:
 				{
-					SetTile(position, rightWallTiles);
+					SetTile(ref wallTileMap, position, rightWallTiles);
 					break;
 				}
 			case WallType.bottom:
 				{
-					SetTile(position, bottomWallTiles);
+					SetTile(ref wallTileMap, position, bottomWallTiles);
 					break;
 				}
 			case WallType.bottomLeft:
 				{
-					SetTile(position, bottomLeftWallTiles);
+					SetTile(ref wallTileMap, position, bottomLeftWallTiles);
 					break;
 				}
 			case WallType.bottomRight:
 				{
-					SetTile(position, bottomRightWallTiles);
+					SetTile(ref wallTileMap, position, bottomRightWallTiles);
 					break;
 				}
 			case WallType.bottomRightCorner:
 				{
-					SetTile(position, bottomRightCornerWallTiles);
+					SetTile(ref wallTileMap, position, bottomRightCornerWallTiles);
 					break;
 				}
 			case WallType.topRightCorner:
 				{
-					SetTile(position, topRightCornerWallTiles);
+					SetTile(ref wallTileMap, position, topRightCornerWallTiles);
 					break;
 				}
 			case WallType.bottomLeftCorner:
 				{
-					SetTile(position, bottomLeftCornerWallTiles);
+					SetTile(ref wallTileMap, position, bottomLeftCornerWallTiles);
 					break;
 				}
 			case WallType.topLeftCorner:
 				{
-					SetTile(position, topLeftWallTiles);
+					SetTile(ref wallTileMap, position, topLeftCornerWallTiles);
 					break;
 				}
 			case WallType.topU:
 				{
-					SetTile(position, topUWallTiles);
+					SetTile(ref wallTileMap, position, topUWallTiles);
 					break;
 				}
 			case WallType.botU:
 				{
-					SetTile(position, botUWallTiles);
+					SetTile(ref wallTileMap, position, botUWallTiles);
 					break;
 				}
 			case WallType.leftU:
 				{
-					SetTile(position, leftUWallTiles);
+					SetTile(ref wallTileMap, position, leftUWallTiles);
 					break;
 				}
 			case WallType.rightU:
 				{
-					SetTile(position, rightUWallTiles);
+					SetTile(ref wallTileMap, position, rightUWallTiles);
 					break;
 				}
 		}
@@ -1087,7 +1156,48 @@ public class Dungeon : MonoBehaviour
 		// Fill in the wall tiles based on ground tiles
 		for (int i = 0; i < wallLocations.Count; i++)
 		{
-			FillInWall(CheckWall(readMap, wallLocations[i]), wallLocations[i]);		
+			WallData wallData = CheckWall(readMap, wallLocations[i]);
+			TileGenData tileData = FillInSurroundingTiles(readMap, wallData.position);
+			FillInWall(wallData.type, wallLocations[i]);
+
+			// Fill in the wall extensions
+
+			// Top top
+			if (wallData.type == WallType.center)
+            {
+				FillInWall(WallType.topTop, tileData.top.position);
+			}
+
+			// Top left
+			if ((wallData.type == WallType.left ||
+				wallData.type == WallType.topLeftCorner) &&
+				tileData.top.state == TileState.empty)
+			{
+				FillInWall(WallType.topLeft, tileData.top.position);
+			}
+			// Top right,
+			if ((wallData.type == WallType.right ||
+				wallData.type == WallType.topRightCorner) &&
+				tileData.top.state == TileState.empty)
+			{
+				FillInWall(WallType.topRight, tileData.top.position);
+			}
+
+			// Bottom right
+			if ((wallData.type == WallType.left ||
+				 wallData.type == WallType.bottomLeftCorner) &&
+				 tileData.bottomBottom.state == TileState.empty)
+			{
+				FillInWall(WallType.bottomRight, tileData.bottom.position);
+			}
+
+			// Bottom Left
+			if ((wallData.type == WallType.right ||
+				 wallData.type == WallType.bottomRightCorner) &&
+				 tileData.bottomBottom.state == TileState.empty)
+			{
+				FillInWall(WallType.bottomLeft, tileData.bottom.position);
+			}
 		}
 	}
 

@@ -52,10 +52,10 @@ public class PlayerController : Controller
             }
 
             //This should give access to the UI manager.
-            if (inventoryRef == null)
-            {
-                inventoryRef = GameObject.FindWithTag("UI").GetComponent<UI>();
-            }
+            //if (inventoryRef == null)
+            //{
+            //    inventoryRef = GameObject.FindWithTag("UI").GetComponent<UI>();
+            //}
 
 
             if (!isUsingInterface)

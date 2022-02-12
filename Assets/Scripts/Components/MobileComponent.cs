@@ -38,7 +38,7 @@ public class MobileComponent : MovementComponent
                 return;
             }
         }
-
+        teleportTo.z = Globals.SPRITE_Z;
         rb.position = teleportTo;
     }
 
@@ -90,7 +90,7 @@ public class MobileComponent : MovementComponent
         // Update the movmement
         rb.transform.Translate(velocity, Space.World);
         position = rb.transform.position;
-        position.z = 0.0f;
+        position.z = Globals.SPRITE_Z;
         rb.transform.position = position;
         rb.velocity = Vector3.zero;
 

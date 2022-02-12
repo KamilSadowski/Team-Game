@@ -43,6 +43,7 @@ public class FollowingCamera : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         Setup();
     }
     void Setup()
