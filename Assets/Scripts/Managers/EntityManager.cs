@@ -36,17 +36,21 @@ public class EntityManager : MonoBehaviour
     // Creates a player with his weapons
     public int TryCreatePlayer(Vector3 position)
     {
-        playerID = TryCreateEntity(playerPrefab, position);
-        if (playerID != -1)
+        if (!player)
         {
-            player = entities[playerID] as Player;
-            if (player)
+            playerID = TryCreateEntity(playerPrefab, position);
+            if (playerID != -1)
             {
-                TryCreateListedWeapon(1, position);
-                TryCreateListedWeapon(1, position);
+                player = entities[playerID] as Player;
+                if (player)
+                {
+                    TryCreateListedWeapon(1, position);
+                    TryCreateListedWeapon(1, position);
+                }
             }
+            return playerID;
         }
-        return playerID;
+        return -1;
     }
 
 

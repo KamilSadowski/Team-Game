@@ -6,26 +6,27 @@ using UnityEngine.Tilemaps;
 public class Room : MonoBehaviour
 {
     // Global objects
-    EntityManager entityManager;
+    protected EntityManager entityManager;
 
     // Room Data
     public Vector3Int size { get; private set; } // Room size
-    List<Vector3Int> groundTiles; // Positions of any tile that entites can stand on
-    Dungeon map;
-    Tilemap groundTileMap;
     public List<Door> doors { get; private set; }
+    protected Vector3 center = new Vector3(); // Room position on the map
+    protected List<Vector3Int> groundTiles; // Positions of any tile that entites can stand on
+    protected Dungeon map;
+    protected Tilemap groundTileMap;
 
     // Room properties
-    int enemiesAlive;
-    [SerializeField] int enemyNo = 2;
+    [SerializeField] protected int enemyNo = 2;
+    protected int enemiesAlive;
 
     // Room state
-    bool wasEntered = false;
-    bool wasCleared = false;
+    protected bool wasEntered = false;
+    protected bool wasCleared = false;
 
     // Temporary variables
-    NotPlayer currentNPC;
-    int currentEntityID;
+    protected NotPlayer currentNPC;
+    protected int currentEntityID;
 
     // Update is called once per frame
     void Update()
@@ -44,6 +45,11 @@ public class Room : MonoBehaviour
         map = thisMap;
         groundTileMap = map.GetGroundTileMap();
         enemyNo = enemyNumber;
+    }
+
+    public void SetRoomCenter(Vector3 roomCenter)
+    {
+        center = roomCenter;
     }
 
     public int GetEnemyNo()
@@ -68,8 +74,10 @@ public class Room : MonoBehaviour
     }
     
     // Close all the doors and spawn enemies
-    public void EnterRoom()
+    public virtual void EnterRoom()
     {
+        map.LightSwitch(true);
+        map.SetLightPosition(center);
         if (!wasEntered)
         {
             CloseDoors();
@@ -81,7 +89,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void ExitRoom()
+    public virtual void ExitRoom()
     {
 
     }
@@ -113,7 +121,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void EntityRemoved()
+    public virtual void EntityRemoved()
     {
         --enemiesAlive;
         if (enemiesAlive <= 0)

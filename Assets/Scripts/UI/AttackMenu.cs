@@ -32,18 +32,18 @@ public class AttackMenu : MonoBehaviour
     private void FixedUpdate()
     {
 #if UNITY_EDITOR
-        if (_playerRef == null)
-        {
-            _playerRef = PriorityChar_Manager.instance.getPlayer().transform;
-
-            UIElement temp;
-            if (_playerRef != null)
-                for (int i = 0; i < 25; ++i)
-                {
-                    temp = new UIElement();
-                    AddClass(temp);
-                }
-        }
+        //if (_playerRef == null)
+        //{
+        //    _playerRef = PriorityChar_Manager.instance.getPlayer().transform;
+        //
+        //    UIElement temp;
+        //    if (_playerRef != null)
+        //        for (int i = 0; i < 25; ++i)
+        //        {
+        //            temp = new UIElement();
+        //            AddClass(temp);
+        //        }
+        //}
 
 #endif
     }
