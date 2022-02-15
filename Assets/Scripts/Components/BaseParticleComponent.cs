@@ -258,8 +258,8 @@ public class BaseParticleComponent : MonoBehaviour
                 InvokeRepeating("ParticleEmittion", 0, _fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization));
             else
             {
-                //for (int i = 0; _fireRate * i < _emissionDuration; ++i)
-                    StartCoroutine(ParticleEmittion(((_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * 0), temporaryID));
+                for (int i = 0; _fireRate * i < _emissionDuration; ++i)
+                    StartCoroutine(ParticleEmittion(((_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i), temporaryID));
                 //Invoke("ParticleEmittion", organizedChildren.Count-1, (_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i);
 
                 //In theory, assuming a particle spawns at the last instant with the max possible time, the time between its death and startup time is the duration plus its lifespan, with max potential modifiers.
@@ -292,6 +292,9 @@ public class BaseParticleComponent : MonoBehaviour
 
             if (system != null)
             {
+                if (liveTargetPos != null)
+                    child.transform.LookAt(liveTargetPos());
+                
 
 
                 var emitParams = new ParticleSystem.EmitParams();
