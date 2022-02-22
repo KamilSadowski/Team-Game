@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1
   drag: 0.5
+  DashModifier: 10
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &4619791482859612889
 Rigidbody2D:
@@ -220,7 +221,7 @@ MonoBehaviour:
   - {fileID: 3144804587324779500}
   attackParticle:
   - {fileID: 786521778890424543}
-  isTargettingPlayer: 00
+  isTargettingPlayer: 01
   attackCooldown: 0.15
 --- !u!114 &3658232903247980384
 MonoBehaviour:
@@ -316,7 +317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
-      value: 360
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: rotationSpeed
@@ -336,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _numberOfColumns
-      value: 16
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: sortingLayerName
@@ -360,7 +361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: collisionLayers.m_Bits
-      value: 128
+      value: 192
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage

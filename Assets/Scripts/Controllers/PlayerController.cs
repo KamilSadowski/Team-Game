@@ -122,19 +122,25 @@ public class PlayerController : Controller
             }
             isUsingInterface = inventoryRef.ToggleMenu();        
         }
+        if (player == null)
+        {
+            playerObject = PriorityChar_Manager.instance.getPlayer();
+            if (playerObject)
+            {
+                player = playerObject.GetComponent<Player>();
+            }
+        }
 
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.GetComponent<MobileComponent>().dash();
+        }
 
         if (Debug.isDebugBuild)
         {
 
-            if (player == null)
-            {
-                playerObject = PriorityChar_Manager.instance.getPlayer();
-                if (playerObject)
-                {
-                    player = playerObject.GetComponent<Player>();
-                }
-            }
+
 
             if (player)
             {

@@ -42,7 +42,7 @@ public class EntityManager : MonoBehaviour
             if (playerID != -1)
             {
                 player = entities[playerID] as Player;
-                if (player)
+                if (false && player)
                 {
                     TryCreateListedWeapon(1, position);
                     TryCreateListedWeapon(1, position);
@@ -233,8 +233,7 @@ public class EntityManager : MonoBehaviour
         }
 
         //If any of the following are invalid then this IF statement is TRUE;
-        if (-1 != TryCreateListedWeapon(0, Vector3.forward) 
-            && 
+        if (
             -1 != TryCreatePlayer(Vector3.zero))
             //&& 
             //-1 != TryCreateListedNPC(0, Vector3.left))

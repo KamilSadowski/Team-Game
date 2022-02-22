@@ -10,6 +10,7 @@ public class MobileComponent : MovementComponent
     protected SpriteRenderer spriteRenderer;
 
     //Movement noises
+    [SerializeField] protected float DashModifier = 10.0f;
     [SerializeField] protected readonly float FOOTSTEP_INTERVAL = 1.0f;
     protected SoundManager footStepRandomizer;
     protected float timeSinceLastInterval = 0f;
@@ -21,13 +22,16 @@ public class MobileComponent : MovementComponent
     protected Vector3 currentInput;
 
     protected bool isFacingRight = true;
+    protected List<RaycastHit2D> hits;
 
+    MortalHealthComponent HealthRef;
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
         footStepRandomizer = gameObject.GetComponent<SoundManager>();
-
+        hits = new List<RaycastHit2D>();
+        HealthRef = GetComponent<MortalHealthComponent>();
     }
 
     public override void Teleport(Vector3 teleportTo)
@@ -44,8 +48,38 @@ public class MobileComponent : MovementComponent
         rb.position = teleportTo;
     }
 
+    public void dash()
+    {
+        if (rb == null)
+        {
+            return;
+        }
+        velocity = velocity * DashModifier;
+
+        if (HealthRef == null)
+            HealthRef = GetComponent<MortalHealthComponent>();
+
+        HealthRef.SetInvincible(true);
+
+    }
+
     public override void Move(Vector3 input)
     {
+        rb.Cast(new Vector2(velocity.x, velocity.y), hits, Vector3.Distance(position, position + velocity));
+        if (hits.Count > 0)
+        {
+            hits.Clear();
+            velocity = new Vector3(0, 0, 0);
+
+            if(HealthRef == null)
+                HealthRef = GetComponent<MortalHealthComponent>();
+
+            HealthRef.SetInvincible(false);
+
+            return;
+        }
+
+
         if (footStepRandomizer != null)
         {
             if (Mathf.Abs(velocity.x) > 0.01 ||
@@ -89,10 +123,17 @@ public class MobileComponent : MovementComponent
             velocity = Vector3.zero;
         }
 
+
+
         // Update the movmement
         rb.transform.Translate(velocity, Space.World);
         position = rb.transform.position;
         position.z = Globals.SPRITE_Z;
+
+
+
+
+
         rb.transform.position = position;
         rb.velocity = Vector3.zero;
 

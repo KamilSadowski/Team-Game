@@ -84,7 +84,7 @@ public class WeaponController : ProjectileController
         if (!isHeld)
         {
             isDropped = false;
-            transform.position = Vector3.zero;
+            transform.position = new Vector3(1000,1000,1000);
 
             if (GetParentRef())
             {

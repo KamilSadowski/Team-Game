@@ -5,6 +5,8 @@ using UnityEngine;
 public class MortalHealthComponent : BaseHealthComponent
 {
     [SerializeField] float maxHealth = 100;
+    bool isInvincible = false;
+
     protected float currentHealth;
     protected UI_ChargingBar healthBar;
     public const bool IS_HEALTH_LOG_OUTPUT = false;
@@ -33,9 +35,16 @@ public class MortalHealthComponent : BaseHealthComponent
 
         if (currentHealth > maxHealth) currentHealth = maxHealth;
     }
+
+    public void SetInvincible(bool isTrue)
+    {
+        isInvincible = isTrue;
+    }
     // Update is called once per frame
     public override bool TakeDamage(float damage)
     {
+        if (isInvincible) return false;
+
         if (soundOutputComponent)
             soundOutputComponent.PlaySound(1);
         else
