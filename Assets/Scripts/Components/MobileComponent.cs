@@ -5,6 +5,10 @@ using UnityEngine;
 public class MobileComponent : MovementComponent
 {
     // Properties
+    [SerializeField] protected int DodgingLayerID;
+    protected int BaseLayerID;
+
+
     [SerializeField] protected float movementSpeed = 1.0f;
     [SerializeField] protected float drag = 0.5f;
     protected SpriteRenderer spriteRenderer;
@@ -37,6 +41,7 @@ public class MobileComponent : MovementComponent
         footStepRandomizer = gameObject.GetComponent<SoundManager>();
         hits = new List<RaycastHit2D>();
         HealthRef = GetComponent<MortalHealthComponent>();
+        BaseLayerID = gameObject.layer;
     }
 
     public override void Teleport(Vector3 teleportTo)
@@ -57,58 +62,63 @@ public class MobileComponent : MovementComponent
 
     IEnumerator DashOngoing(Vector3 input)
     {
-        if (HealthRef == null)
-            HealthRef = GetComponent<MortalHealthComponent>();
-        HealthRef.SetInvincible(true);
+        if (!(Mathf.Abs(input.x) < 0.05 && Mathf.Abs(input.y) < 0.05))
+        {
 
-        float distanceTravelled = 0;
-        float stepDistance;
+            if (HealthRef == null)
+                HealthRef = GetComponent<MortalHealthComponent>();
 
-
-        // Add velocity based on input
-        velocity.x += input.x * DashSpeed;
-        velocity.y += input.y * DashSpeed;
-        velocity = velocity * drag;// Apply drag
+            HealthRef.SetInvincible(true);
+            gameObject.layer = DodgingLayerID;
+            float distanceTravelled = 0;
+            float stepDistance;
 
 
-        stepDistance = Vector3.Distance(position, position + velocity);
+            // Add velocity based on input
+            velocity.x += input.x * DashSpeed;
+            velocity.y += input.y * DashSpeed;
+            velocity = velocity * drag;// Apply drag
 
 
-        if (stepDistance > DashSpeed * 0.35f)
-            while (hits.Count == 0 && distanceTravelled < DashDistance)
-            {
+            stepDistance = Vector3.Distance(position, position + velocity);
 
-                distanceTravelled += stepDistance * Time.deltaTime;
 
-                rb.Cast(new Vector2(velocity.x, velocity.y), MovementContactData, hits, stepDistance * Time.deltaTime);
-                if (hits.Count == 0)
+            if (stepDistance > DashSpeed * 0.25f)
+                while (hits.Count == 0 && distanceTravelled < DashDistance)
                 {
-                    // Update the movmement
-                    rb.transform.Translate(velocity * Time.deltaTime, Space.World);
-                    position = rb.transform.position;
-                    position.z = Globals.SPRITE_Z;
 
-                    rb.transform.position = position;
+                    distanceTravelled += stepDistance * Time.deltaTime;
 
+                    rb.Cast(new Vector2(velocity.x, velocity.y), MovementContactData, hits, stepDistance * Time.deltaTime);
+                    if (hits.Count == 0)
+                    {
+                        // Update the movmement
+                        rb.transform.Translate(velocity * Time.deltaTime, Space.World);
+                        position = rb.transform.position;
+                        position.z = Globals.SPRITE_Z;
+
+                        rb.transform.position = position;
+
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    yield return new WaitForEndOfFrame();
                 }
-                else
-                {
-                    break;
-                }
-                yield return new WaitForEndOfFrame();
-            }
-        rb.velocity = Vector3.zero;
-        hits.Clear();
-        velocity = new Vector3(0, 0, 0);
+            rb.velocity = Vector3.zero;
+            hits.Clear();
+            velocity = new Vector3(0, 0, 0);
 
 
 
-        isDashing = false;
-        HealthRef.SetInvincible(false);
+            isDashing = false;
+            HealthRef.SetInvincible(false);
+            gameObject.layer = BaseLayerID;
 
-        yield return new WaitForSecondsRealtime(DashCooldown);
-        HasDashCooldown = true;
-
+            yield return new WaitForSecondsRealtime(DashCooldown);
+            HasDashCooldown = true;
+        }
         yield return null;
     }
 
