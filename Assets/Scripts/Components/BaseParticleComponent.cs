@@ -27,7 +27,8 @@ public class BaseParticleComponent : MonoBehaviour
 
     [SerializeField] float _size = 0.15f * .4f;
     [SerializeField] float _sizeRandomizationPercentage = 0.1f;
-    [SerializeField] float _angle;
+    float _angle;
+    [SerializeField] float _attackRadius = 360;
     [SerializeField] Material _material;
     protected float time;
     [SerializeField] float rotationSpeed;
@@ -51,6 +52,7 @@ public class BaseParticleComponent : MonoBehaviour
     const int MAX_PARTICLE_COUNT = 1;
     List<Transform>[] organizedChildren;
     List<Transform> childrenInput;
+
 
 
     #region CHILDREN_ID_MANAGER
@@ -154,11 +156,8 @@ public class BaseParticleComponent : MonoBehaviour
                     _material = new Material(Shader.Find("Particles/Standard Unlit"));
                 }
 
-                if (liveTargetPos == null)
-                    _angle = 360.0f / _numberOfColumns;
-                else
-                    _numberOfColumns = 1;
 
+                _angle = _attackRadius / _numberOfColumns;
 
                 for (int i = 0; i < _numberOfColumns; ++i)
                 {
@@ -168,7 +167,10 @@ public class BaseParticleComponent : MonoBehaviour
 
                     var go = new GameObject("Particle System");
                     childrenInput.Add(go.transform);
-                    if (liveTargetPos == null)
+
+                    if (liveTargetPos != null)
+                        go.transform.Rotate( (i-_numberOfColumns/2) * _angle,0,0);
+                    else
                         go.transform.Rotate(i * _angle, 90, 0);
 
                     system = go.AddComponent<ParticleSystem>();
@@ -181,18 +183,16 @@ public class BaseParticleComponent : MonoBehaviour
 
 
                     //IsRay is asking if the attack 
-                    if (liveTargetPos != null)
-                    {
+                    
+                    
 
-                        go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, -0.1f);
-                        go.transform.LookAt(liveTargetPos());
-                    }
 
                     var mainModule = system.main;
                     mainModule.startColor = Color.white;
                     mainModule.startSize = .25f * .25f;
                     mainModule.startSpeed = _speed;
                     
+                    //If too extreme then it'll need to be simulated. If slow you can just guestimate
                     if (_speed > 0.25 && (_emissionDuration + _lifetime + _lifetimeRandomization + (_fireRateRandomization * (_emissionDuration / _fireRate))) > 1.0)
                         mainModule.cullingMode = ParticleSystemCullingMode.AlwaysSimulate;
                     else
@@ -284,6 +284,9 @@ public class BaseParticleComponent : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+          if (liveTargetPos != null)
+              transform.LookAt(liveTargetPos());
+
         int gradiantMult = Random.Range(0, _color.Length);
         foreach (Transform child in organizedChildren[index])
         {
@@ -292,8 +295,8 @@ public class BaseParticleComponent : MonoBehaviour
 
             if (system != null)
             {
-                if (liveTargetPos != null)
-                    child.transform.LookAt(liveTargetPos());
+              //  if (liveTargetPos != null)
+              //      child.transform.LookAt(liveTargetPos());
                 
 
 
