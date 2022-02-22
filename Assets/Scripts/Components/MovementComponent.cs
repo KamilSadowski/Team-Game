@@ -25,7 +25,7 @@ public class MovementComponent : MonoBehaviour
         
     }
 
-    public virtual void Move(Vector3 input)
+    public virtual void Move(Vector3 input, bool isDash = false)
     {
 
     }

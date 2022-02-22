@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6078d44ff51bb64ca7f5d8dab6f20fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPCList: []
 --- !u!114 &1589646956122958797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +139,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2
   drag: 0.5
+  DashSpeed: 10
+  DashDistance: 0.5
+  movementContactData:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 384
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &216694388319099011
 Rigidbody2D:

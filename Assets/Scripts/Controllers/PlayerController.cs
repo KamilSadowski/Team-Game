@@ -25,6 +25,8 @@ public class PlayerController : Controller
     protected bool isUsingInterface = false;
     private bool isFacingRight = true;
 
+    protected bool isDashing = false;
+
     // protected bool[] isCharging = { false, false }; //Potentially use this if "Update" is not fast enough and stutters.
 
     // Start is called before the first frame update
@@ -56,6 +58,7 @@ public class PlayerController : Controller
             //}
 
 
+
             if (!isUsingInterface)
             {
                 FollowingCamera.instance.CameraUpdata();
@@ -69,7 +72,8 @@ public class PlayerController : Controller
                     temp.x += Input.GetAxis("Horizontal");
                     temp.y += Input.GetAxis("Vertical");
 
-                    entityMoveComp.Move(temp);
+
+                    entityMoveComp.Move(temp, isDashing);
 
                     player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
 
@@ -110,17 +114,21 @@ public class PlayerController : Controller
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            isDashing = true;
+        else if (Input.GetKeyUp(KeyCode.Space))
+            isDashing = false;
 
         if (inventoryRef != null && Input.GetKeyDown(KeyCode.E))
         {
             if (InventoryNoise)
             {
-                if(isUsingInterface)
-                audioSource.PlayOneShot(InventoryNoise, InventoryVolume);
+                if (isUsingInterface)
+                    audioSource.PlayOneShot(InventoryNoise, InventoryVolume);
                 else
-                    audioSource.PlayOneShot(InventoryNoise, InventoryVolume*0.75f);
+                    audioSource.PlayOneShot(InventoryNoise, InventoryVolume * 0.75f);
             }
-            isUsingInterface = inventoryRef.ToggleMenu();        
+            isUsingInterface = inventoryRef.ToggleMenu();
         }
         if (player == null)
         {
@@ -132,10 +140,6 @@ public class PlayerController : Controller
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            player.GetComponent<MobileComponent>().dash();
-        }
 
         if (Debug.isDebugBuild)
         {
