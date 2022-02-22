@@ -13,9 +13,11 @@ public class MobileComponent : MovementComponent
     [SerializeField] protected float DashSpeed = 10.0f;
     [SerializeField] protected float DashDistance = 10.0f;
     [SerializeField] protected readonly float FOOTSTEP_INTERVAL = 1.0f;
-    [SerializeField] ContactFilter2D movementContactData;
+    [SerializeField] ContactFilter2D MovementContactData;
+    [SerializeField] protected float DashCooldown = 0.25f;
+    protected bool HasDashCooldown = true;
     protected SoundManager footStepRandomizer;
-    protected float timeSinceLastInterval = 0f;
+    protected float TimeSinceLastInterval = 0f;
 
     // Movement variables
     public Vector3 velocity;
@@ -78,7 +80,7 @@ public class MobileComponent : MovementComponent
 
                 distanceTravelled += stepDistance * Time.deltaTime;
 
-                rb.Cast(new Vector2(velocity.x, velocity.y), movementContactData, hits, stepDistance * Time.deltaTime);
+                rb.Cast(new Vector2(velocity.x, velocity.y), MovementContactData, hits, stepDistance * Time.deltaTime);
                 if (hits.Count == 0)
                 {
                     // Update the movmement
@@ -99,8 +101,13 @@ public class MobileComponent : MovementComponent
         hits.Clear();
         velocity = new Vector3(0, 0, 0);
 
+
+
         isDashing = false;
         HealthRef.SetInvincible(false);
+
+        yield return new WaitForSecondsRealtime(DashCooldown);
+        HasDashCooldown = true;
 
         yield return null;
     }
@@ -110,9 +117,10 @@ public class MobileComponent : MovementComponent
         //Player can only move if not dashing. 
         if (!isDashing)
         {
-            if (isDash)
+            if (isDash && HasDashCooldown)
             {
                 isDashing = true;
+                HasDashCooldown = false;
                 StartCoroutine(DashOngoing(input));
                 return;
             }
@@ -123,16 +131,16 @@ public class MobileComponent : MovementComponent
                     Mathf.Abs(velocity.y) > 0.01 ||
                     Mathf.Abs(velocity.z) > 0.01)
                 {
-                    timeSinceLastInterval += Time.deltaTime;
+                    TimeSinceLastInterval += Time.deltaTime;
 
-                    if (timeSinceLastInterval > FOOTSTEP_INTERVAL / movementSpeed)
+                    if (TimeSinceLastInterval > FOOTSTEP_INTERVAL / movementSpeed)
                     {
-                        timeSinceLastInterval = 0;
+                        TimeSinceLastInterval = 0;
                         footStepRandomizer.PlaySound(0);
                     }
                 }
                 else
-                    timeSinceLastInterval = 0;
+                    TimeSinceLastInterval = 0;
             }
 
 
