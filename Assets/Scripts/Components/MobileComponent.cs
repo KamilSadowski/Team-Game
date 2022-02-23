@@ -82,6 +82,11 @@ public class MobileComponent : MovementComponent
 
             stepDistance = Vector3.Distance(position, position + velocity);
 
+            //Should never occur but minor error checking in case of "IsMoveCollision" or other similar functions using Hit at this time. 
+            while (hits.Count > 0)
+            {
+                yield return new WaitForFixedUpdate();
+            }
 
             if (stepDistance > DashSpeed * 0.25f)
                 while (hits.Count == 0 && distanceTravelled < DashDistance)
@@ -120,6 +125,28 @@ public class MobileComponent : MovementComponent
             HasDashCooldown = true;
         }
         yield return null;
+    }
+
+    public override bool isMoveCollision(Vector3 input)
+    {
+        if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity) 
+            return false;
+  
+        rb.Cast
+            (
+            new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime), 
+            MovementContactData, 
+            hits, 
+            movementSpeed * Time.deltaTime
+            );
+
+        if (hits.Count > 0)
+        {
+            hits.Clear();
+            return true;
+        }
+
+        return false;
     }
 
     public override void Move(Vector3 input, bool isDash = false)

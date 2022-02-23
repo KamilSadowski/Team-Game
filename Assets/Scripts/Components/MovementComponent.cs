@@ -34,7 +34,10 @@ public class MovementComponent : MonoBehaviour
     {
 
     }
-
+    public virtual bool isMoveCollision(Vector3 input)
+    {
+        return false;
+    }
     //Unity will occasionally pass functions without any return. This will be called if the current movement change is important.
     public virtual bool ConfirmedMove(Vector3 input)
     {
