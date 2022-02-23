@@ -40,7 +40,7 @@ public class EnemyController : Controller
         while (true)
         {
             direction = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Globals.SPRITE_Z);
-
+            GetComponent<Animator>().SetBool("IsWalking", true);
             if (direction.y < 0f) isFacingFront = true;
             else isFacingFront = false;
 
@@ -118,8 +118,8 @@ public class EnemyController : Controller
             BindVariables();
         }
 
-        if (isWalking)
-            GetComponent<Animator>().SetBool("IsWalking", isWalking);
+
+            
        
         if (prevIsFacingFront != isFacingFront)
             GetComponent<Animator>().SetBool("Front", isFacingFront);
