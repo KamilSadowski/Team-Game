@@ -14,6 +14,9 @@ public class EnemyController : Controller
     protected float kitingDistance = 1.0f; // Space to maintain between the enemy and the player
 
 
+    protected Vector3 positionCalc;
+    protected float distance;
+    Vector3 direction;
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
 
@@ -28,14 +31,31 @@ public class EnemyController : Controller
         }   
 
         BindVariables();
+        StartCoroutine(WalkingThread());
     }
 
+
+    IEnumerator WalkingThread()
+    {
+        while (true)
+        {
+            direction = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Globals.SPRITE_Z);
+
+            if (direction.y < 0f) isFacingFront = true;
+            else isFacingFront = false;
+
+            yield return new WaitForSecondsRealtime(Random.Range(0.25f,5.0f));
+        }
+    }
     // Update is called once per frame
     void Update()
     {
 
         var prevIsWalking = isWalking;
         var prevIsFacingFront = isFacingFront;
+
+        isWalking = true;
+        entityMoveComp.Move(direction);
 
         if (!cControlledObject)
         {
@@ -45,19 +65,17 @@ public class EnemyController : Controller
         if (isValidReferences() && playerObject != null && entityMoveComp != null && playerHealth != null)
         {
 
-            //Calculate any required information about the player the AI might need. 
-            Vector3 positionCalc = playerObject.transform.position - transform.position;
-            float distance = positionCalc.magnitude;
+
 
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
-            Vector3 direction = positionCalc / distance;
+           
 
-            if (direction.y < 0f) isFacingFront = true;
-            else isFacingFront = false;
+
+
 
             //DELETE THIS COMMENT LATER
             //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
-            if (playerHealth != null && distance < kitingDistance)
+            if (playerHealth != null)
             {
                 isWalking = false;
                 //if (playerHealth.TakeDamage(cControlledObject.GetStrength() * Time.deltaTime))
@@ -78,12 +96,7 @@ public class EnemyController : Controller
                     }
                 }
             }
-            else
-            {
-                isWalking = true;
-                entityMoveComp.Move(direction);
-            }
-
+            
         }
         else
         {
@@ -97,7 +110,7 @@ public class EnemyController : Controller
             BindVariables();
         }
 
-        if (prevIsWalking != isWalking)
+        if (isWalking)
             GetComponent<Animator>().SetBool("IsWalking", isWalking);
        
         if (prevIsFacingFront != isFacingFront)
