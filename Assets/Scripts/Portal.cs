@@ -27,13 +27,6 @@ public class Portal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            _spriteRenderer.color = Color.clear;
-            var anim = Instantiate(animation);
-            if (_swapSprite) _swapSprite.Swap();
-            Invoke(nameof(Teleport), animDuration);
-        }
     }
 
     public void Enable(bool show)
@@ -57,10 +50,13 @@ public class Portal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            _spriteRenderer.color = Color.clear;
+            _player.gameObject.SetActive(false);
+            Instantiate(animation);
+            if (_swapSprite) _swapSprite.Swap();
             Invoke(nameof(Teleport), animDuration);
-            var anim = Instantiate(animation);
         }
-    }
+  }
 
     private void Teleport()
     {
