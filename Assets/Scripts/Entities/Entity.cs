@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour
     protected Vector3 AccelerationEvent;
     protected bool isMobile = true;
     protected EntityManager entityManager;
+    protected bool isInvincible = false;
 
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
@@ -69,8 +70,7 @@ public class Entity : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-
-
+        if (isInvincible) return;
         if (!healthComponent)
         {
             healthComponent = GetComponent<BaseHealthComponent>();
@@ -82,5 +82,15 @@ public class Entity : MonoBehaviour
                 DestroyEntity();
             }
         }
+    }
+
+    public virtual void Invincible(bool makeInvincible)
+    {
+        isInvincible = makeInvincible;
+    }
+
+    public virtual void ToggleInvincible()
+    {
+        isInvincible = !isInvincible;
     }
 }

@@ -21,7 +21,6 @@ public class Player : Character
 
     protected const float MAX_FORCE_MOD = 0.5f; //Discuss this in detail later- What factor limits the throwing power? 
 
-
     protected float[] WeaponCharge = { 0, 0 };
     protected Vector3 SpawnPosition;
     WeaponController spawnedWeaponReference;
@@ -173,6 +172,7 @@ public class Player : Character
 
     public override void TakeDamage(float damage)
     {
+        if (isInvincible) return;
         if (!healthComponent)
         {
             healthComponent = GetComponent<BaseHealthComponent>();
@@ -194,4 +194,6 @@ public class Player : Character
             }
         }
     }
+
+
 }

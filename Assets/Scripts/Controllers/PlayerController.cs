@@ -166,6 +166,16 @@ public class PlayerController : Controller
                 {
                     player.SpawnRandomPickup();
                 }
+
+                if (Input.GetKeyDown(KeyCode.Backspace))
+                {
+                    Portal.TeleportTo(Globals.Scenes.Dungeon);
+                }
+
+                if (Input.GetKeyDown(KeyCode.Delete))
+                {
+                    player.ToggleInvincible();
+                }
             }
 
         }

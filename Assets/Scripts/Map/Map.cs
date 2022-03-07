@@ -586,15 +586,15 @@ public class Dungeon : MonoBehaviour
 		// Create the first room
 		mapGrid[currentRoomPosition.x, currentRoomPosition.y].prefabNo = Random.Range(0, roomPrefabs.Count);
 		Tilemap chosenPrefab = roomPrefabs[mapGrid[currentRoomPosition.x, currentRoomPosition.y].prefabNo].GetComponent<Tilemap>();
-		if (chosenPrefab.cellBounds.size.y > biggestX[currentRoomPosition.y])
+		if (chosenPrefab.cellBounds.size.x > biggestX[currentRoomPosition.y])
 		{
-			biggestX[currentRoomPosition.y] = chosenPrefab.cellBounds.size.y;
+			biggestX[currentRoomPosition.y] = chosenPrefab.cellBounds.size.x;
 		}
 
 		chosenPrefab = roomPrefabs[mapGrid[currentRoomPosition.x, currentRoomPosition.y].prefabNo].GetComponent<Tilemap>();
-		if (chosenPrefab.cellBounds.size.x > biggestY[currentRoomPosition.x])
+		if (chosenPrefab.cellBounds.size.y > biggestY[currentRoomPosition.x])
 		{
-			biggestY[currentRoomPosition.x] = chosenPrefab.cellBounds.size.x;
+			biggestY[currentRoomPosition.x] = chosenPrefab.cellBounds.size.y;
 		}
 		roomGridPositions.Add(currentRoomPosition);
 
@@ -624,19 +624,31 @@ public class Dungeon : MonoBehaviour
 				}
 
 
+				//chosenPrefab = roomPrefabs[mapGrid[currentRoomPosition.x, currentRoomPosition.y].prefabNo].GetComponent<Tilemap>();
 				if (chosenPrefab.cellBounds.size.x > biggestX[currentRoomPosition.y])
                 {
 					biggestX[currentRoomPosition.y] = chosenPrefab.cellBounds.size.x;
 				}
 
-				chosenPrefab = roomPrefabs[mapGrid[currentRoomPosition.x, currentRoomPosition.y].prefabNo].GetComponent<Tilemap>();
 				if (chosenPrefab.cellBounds.size.y > biggestY[currentRoomPosition.x])
 				{
 					biggestY[currentRoomPosition.x] = chosenPrefab.cellBounds.size.y;
 				}
 
+
 				roomGridPositions.Add(currentRoomPosition);
 			}
+		}
+		Debug.Log("X:");
+		foreach(int x in biggestX)
+        {
+			Debug.Log(x + " ");
+		}
+
+		Debug.Log("Y:");
+		foreach (int y in biggestY)
+		{
+			Debug.Log(y + " ");
 		}
 
 		// Find the position for each row and column

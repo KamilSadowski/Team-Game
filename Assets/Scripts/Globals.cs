@@ -25,7 +25,7 @@ public static class Globals
     public const int MAP_GRID_SIZE = 10; // Size of the map grid that is used for map creation
     public const float ROOM_SIZE = 20; // Maximum room size, the doors need to match up with the room size boundaries
     public const int MIN_CORRIDOR_DIST = 3; // How long a corridor has to be away from the room to avoid wall clipping
-    public const int ROOM_PLACEMENT_OFFSET = 8; // Distance between room grid fields, needs to exist to avoid wall clipping and allow corridors
+    public const int ROOM_PLACEMENT_OFFSET = 5; // Distance between room grid fields, needs to exist to avoid wall clipping and allow corridors
 
     public const float SPRITE_Z = -0.05f; // How much to offset sprites to cast shadows
 

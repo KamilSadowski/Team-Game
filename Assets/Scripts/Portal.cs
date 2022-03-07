@@ -64,4 +64,10 @@ public class Portal : MonoBehaviour
         gameManager.EnterScene(destination);
     }
 
+    public static void TeleportTo(Globals.Scenes dest)
+    {
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        gameManager.EnterScene(dest);
+    }
+
 }
