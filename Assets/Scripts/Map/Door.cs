@@ -9,6 +9,8 @@ public class Door : MonoBehaviour
     SpriteRenderer door;
     Collider2D collider;
     Animator animator;
+
+    public Vector3 offset;
     public Room room { get; private set; }
 
     // Start is called before the first frame update

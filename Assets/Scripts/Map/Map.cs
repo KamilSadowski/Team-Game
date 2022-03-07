@@ -430,22 +430,26 @@ public class Dungeon : MonoBehaviour
 			{
 				case Globals.Direction.north:
 					{
-						rooms[room1].AddDoor(Instantiate<Door>(northDoors[Random.Range(0, northDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, northDoors.Count - 1);
+						rooms[room1].AddDoor(Instantiate<Door>(northDoors[index], pos + northDoors[index].offset, Quaternion.identity));
 						break;
 					}
 				case Globals.Direction.south:
 					{
-						rooms[room1].AddDoor(Instantiate<Door>(southDoors[Random.Range(0, southDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, southDoors.Count - 1);
+						rooms[room1].AddDoor(Instantiate<Door>(southDoors[index], pos + southDoors[index].offset, Quaternion.identity));
 						break;
 					}
 				case Globals.Direction.east:
 					{
-						rooms[room1].AddDoor(Instantiate<Door>(eastDoors[Random.Range(0, eastDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, eastDoors.Count - 1);
+						rooms[room1].AddDoor(Instantiate<Door>(eastDoors[index], pos + eastDoors[index].offset, Quaternion.identity));
 						break;
 					}
 				case Globals.Direction.west:
 					{
-						rooms[room1].AddDoor(Instantiate<Door>(westDoors[Random.Range(0, westDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, westDoors.Count - 1);
+						rooms[room1].AddDoor(Instantiate<Door>(westDoors[index], pos + westDoors[index].offset, Quaternion.identity));
 						break;
 					}
 			}
@@ -466,22 +470,26 @@ public class Dungeon : MonoBehaviour
 			{
 				case Globals.Direction.north:
 					{
-						rooms[room2].AddDoor(Instantiate<Door>(northDoors[Random.Range(0, northDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, northDoors.Count - 1);
+						rooms[room2].AddDoor(Instantiate<Door>(northDoors[index], pos + northDoors[index].offset, Quaternion.identity));
 						break;
 					}
 				case Globals.Direction.south:
 					{
-						rooms[room2].AddDoor(Instantiate<Door>(southDoors[Random.Range(0, southDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, southDoors.Count - 1);
+						rooms[room2].AddDoor(Instantiate<Door>(southDoors[index], pos + southDoors[index].offset, Quaternion.identity));
 						break;
 					}
 				case Globals.Direction.east:
 					{
-						rooms[room2].AddDoor(Instantiate<Door>(eastDoors[Random.Range(0, eastDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, eastDoors.Count - 1);
+						rooms[room2].AddDoor(Instantiate<Door>(eastDoors[index], pos + eastDoors[index].offset, Quaternion.identity));
 						break;
 					}
 				case Globals.Direction.west:
 					{
-						rooms[room2].AddDoor(Instantiate<Door>(westDoors[Random.Range(0, westDoors.Count - 1)], pos, Quaternion.identity));
+						int index = Random.Range(0, westDoors.Count - 1);
+						rooms[room2].AddDoor(Instantiate<Door>(westDoors[index], pos + westDoors[index].offset, Quaternion.identity));
 						break;
 					}
 			}
