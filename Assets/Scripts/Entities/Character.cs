@@ -14,8 +14,8 @@ public class Character : Entity2D
 
     public float GetHealthPercentage()
     {
-        if(playerHealth)
-        return playerHealth.GetHealthPercentage();
+        if (playerHealth)
+            return playerHealth.GetHealthPercentage();
 
         return 1.0f;
     }
@@ -34,7 +34,7 @@ public class Character : Entity2D
     protected virtual void Update()
     {
         UpdateEntity();
-        if(playerHealth == null)
+        if (playerHealth == null)
             playerHealth = GetComponent<MortalHealthComponent>();
     }
 }

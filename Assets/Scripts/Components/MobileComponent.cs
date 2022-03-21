@@ -159,6 +159,7 @@ public class MobileComponent : MovementComponent
                 isDashing = true;
                 HasDashCooldown = false;
                 StartCoroutine(DashOngoing(input));
+                GetComponent<Animator>().SetTrigger("Dash");
                 return;
             }
 

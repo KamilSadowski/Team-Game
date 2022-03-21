@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: -7478836296794279649}
   - component: {fileID: 3268132898823917366}
   - component: {fileID: 4203032469166797033}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NorthDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d50e1d7be8d1fba45b16db776c4b10f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
 --- !u!95 &3268132898823917366
 Animator:
   serializedVersion: 4
