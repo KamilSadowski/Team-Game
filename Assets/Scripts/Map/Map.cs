@@ -174,6 +174,7 @@ public class Dungeon : MonoBehaviour
 	[SerializeField] List<Tile> rightUWallTiles;
 
 	[SerializeField] List<Prop> nearTopWallProps;
+	[SerializeField] List<Prop> roomProps;
 
 
 	[SerializeField] BossRoom emptyBossRoomPrefab;
@@ -902,15 +903,15 @@ public class Dungeon : MonoBehaviour
         {
 			if (tile.left.state == TileState.ground)
 			{
-				if (tile.bottom.state == TileState.ground)
-				{
-					// Right U
-					return new WallData(WallType.rightU, position);
-				}
-				else if (tile.right.state == TileState.ground)
+				if (tile.right.state == TileState.ground)
 				{
 					// Bottom U
 					return new WallData(WallType.botU, position);
+				}
+				else if(tile.bottom.state == TileState.ground)
+				{
+					// Right U
+					return new WallData(WallType.rightU, position);
 				}
 				else
 			    {
@@ -923,15 +924,15 @@ public class Dungeon : MonoBehaviour
 
 			if (tile.right.state == TileState.ground)
 			{
-				if (tile.bottom.state == TileState.ground)
-				{
-					// Left U
-					return new WallData(WallType.leftU, position);
-				}
-				else if (tile.left.state == TileState.ground)
+				if (tile.left.state == TileState.ground)
 				{
 					// Bottom U
 					return new WallData(WallType.botU, position);
+				}
+				else if (tile.bottom.state == TileState.ground)
+				{
+					// Left U
+					return new WallData(WallType.leftU, position);
 				}
 				else
 				{
@@ -1227,7 +1228,14 @@ public class Dungeon : MonoBehaviour
     {
 		foreach (Vector3Int propPos in propPositons)
 		{
-			if (readMap[propPos.x, propPos.y])
+			// Check if to place a top wall prop
+			if (IsGround(readMap[propPos.x, propPos.y + 1]))
+            {
+				int propIndex = Random.Range(0, roomProps.Count);
+				entityManager.TryCreateEntity(roomProps[propIndex].gameObject,
+											  groundTileMap.GetCellCenterWorld(propPos) + roomProps[propIndex].GetOffset());
+			}
+			else
             {
 				int propIndex = Random.Range(0, nearTopWallProps.Count);
 				entityManager.TryCreateEntity(nearTopWallProps[propIndex].gameObject,

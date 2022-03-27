@@ -13,8 +13,13 @@ public class Entity : MonoBehaviour
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
 
+    protected MaterialPropertyBlock material;
+    protected SpriteRenderer renderer;
+
     //HealthComponent healthComponent;
     //InteractComponent interactComponent;
+
+    [SerializeField] Color[] colours = new Color[3];
 
     protected virtual void UpdateEntity()
     {
@@ -37,6 +42,15 @@ public class Entity : MonoBehaviour
     {
         entityID = id;
         movementComponent = GetComponent<MovementComponent>();
+
+        renderer = GetComponent<SpriteRenderer>();
+        material = new MaterialPropertyBlock();
+        renderer.GetPropertyBlock(material);
+        material.SetColor("_PrimaryColor", colours[0]);
+        material.SetColor("_SecondaryColor", colours[1]);
+        material.SetColor("_TertiaryColor", colours[2]);
+
+        renderer.SetPropertyBlock(material);
     }
 
     public MovementComponent GetMovementComponent()

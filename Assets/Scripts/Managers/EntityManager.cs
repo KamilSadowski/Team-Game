@@ -42,6 +42,7 @@ public class EntityManager : MonoBehaviour
             if (playerID != -1)
             {
                 player = entities[playerID] as Player;
+                player.Create(playerID);
                 if (false && player)
                 {
                     TryCreateListedWeapon(1, position);
