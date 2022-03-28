@@ -908,7 +908,12 @@ public class Dungeon : MonoBehaviour
 					// Bottom U
 					return new WallData(WallType.botU, position);
 				}
-				else if(tile.bottom.state == TileState.ground)
+				else if (tile.bottom.state == TileState.ground)
+				{
+					// Center
+					return new WallData(WallType.center, position);
+				}
+				else if (tile.bottomRight.state != TileState.empty)
 				{
 					// Right U
 					return new WallData(WallType.rightU, position);
@@ -930,6 +935,11 @@ public class Dungeon : MonoBehaviour
 					return new WallData(WallType.botU, position);
 				}
 				else if (tile.bottom.state == TileState.ground)
+                {
+					// Center
+					return new WallData(WallType.center, position);
+				}
+				else if (tile.bottomLeft.state != TileState.empty)
 				{
 					// Left U
 					return new WallData(WallType.leftU, position);
@@ -1007,7 +1017,7 @@ public class Dungeon : MonoBehaviour
 	bool IsCenterWall(TileBase[,] readMap, Vector3Int position)
 	{
 		TileGenData tile = FillInSurroundingTiles(readMap, position);
-		return tile.bottom.state == TileState.ground && tile.top.state != TileState.ground;
+		return tile.bottom.state == TileState.ground;// && tile.top.state != TileState.ground;
     }
 
 	TileGenData FillInSurroundingTiles(TileBase[,] readMap, Vector3Int position)
