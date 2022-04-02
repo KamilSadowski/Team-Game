@@ -42,6 +42,12 @@ public class MobileComponent : MovementComponent
         hits = new List<RaycastHit2D>();
         HealthRef = GetComponent<MortalHealthComponent>();
         BaseLayerID = gameObject.layer;
+        HasDashCooldown = true;
+    }
+    private void Update()
+    {
+       
+     
     }
 
     public override void Teleport(Vector3 teleportTo)
@@ -58,6 +64,7 @@ public class MobileComponent : MovementComponent
         rb.position = teleportTo;
     }
 
+    
 
 
     IEnumerator DashOngoing(Vector3 input)
