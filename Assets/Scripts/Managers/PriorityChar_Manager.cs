@@ -18,6 +18,7 @@ public class PriorityChar_Manager : MonoBehaviour
     // Start is called before the first frame update
 
     private GameObject player;
+    private Crosshair crosshair;
 
     public GameObject getPlayer()
     {
@@ -34,9 +35,18 @@ public class PriorityChar_Manager : MonoBehaviour
         return Vector3.zero;
     }
 
+    public Crosshair getCrosshair()
+    {
+        if (crosshair)
+            return crosshair;
+
+        return null;
+    }
+
     // Update is called once per frame
     public void FixedUpdate()
     {
+        if(!crosshair) crosshair = FindObjectOfType<Crosshair>();
         if (!player) { player = GameObject.FindWithTag("Player"); } 
     }
 }

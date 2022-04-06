@@ -129,6 +129,10 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0.8028641, a: 0}
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 1, g: 0, b: 0.77281, a: 0}
+  equipmentManager: {fileID: 0}
+  CHARGE_STRENGTH_MOD: 10
+  MAX_STRENGTH_MOD: 2
+  BASE_STRENGTH: 3.5
 --- !u!114 &1589646956122958797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +152,7 @@ MonoBehaviour:
   DashDistance: 1.5
   MovementContactData:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0

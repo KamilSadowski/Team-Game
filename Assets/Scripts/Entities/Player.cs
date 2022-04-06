@@ -6,113 +6,68 @@ using UnityEngine;
 
 public class Player : Character
 {
-    public struct PWeapon
-    {
-        public GameObject gameObject;
-        public WeaponController weaponController;
-    }
 
-    const int WEAPON_COUNT = 2;
-    public PWeapon[] equipment;
+
+    //The player will have modifiers for weapons but the WeaponController will spawn and manage the weapons. User stats can be added at a later date. m
+    [SerializeField] protected WeaponController equipmentManager;
+
+
+    // const int WEAPON_COUNT = 2;
+    // [SerializeField] protected int weaponCount = 2;
+    // protected int weaponsUsed = 0;
+    // [SerializeField] protected float weaponMaxCooldown;
+    // protected float WeaponCharge = 0;
 
     protected EntityManager entitySpawner;
 
+    [SerializeField] protected float CHARGE_STRENGTH_MOD = 10.0f;
+    [SerializeField] protected float MAX_STRENGTH_MOD = 2.0f; //120% currently.
+    [SerializeField] protected float BASE_STRENGTH = 5.0f;
+    protected float curStrength = .0f;
 
-    protected const float MAX_FORCE_MOD = 0.5f; //Discuss this in detail later- What factor limits the throwing power? 
-
-    protected float[] WeaponCharge = { 0, 0 };
     protected Vector3 SpawnPosition;
-    WeaponController spawnedWeaponReference;
+
     Crosshair crosshair;
     GameManager gameManager;
 
     //Direct reference to the progress bars held within the UI
-    UI_ChargingBar[] weaponCharge_UI = new UI_ChargingBar[WEAPON_COUNT];
+    UI_ChargingBar weaponCharge_UI;
     private Animator animator;
-
+   
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        crosshair = FindObjectOfType<Crosshair>();
+        crosshair = PriorityChar_Manager.instance.getCrosshair();
         entitySpawner = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
-        if (equipment == null)
-        {
-            equipment = new PWeapon[WEAPON_COUNT];
-        }
-
-        int i = 0;
-        foreach (Transform child in GameObject.FindWithTag("ChargeBar").GetComponent<Transform>())
-        {
-            if (i < WEAPON_COUNT)
-            {
-                weaponCharge_UI[i] = child.GetComponent<UI_ChargingBar>();
-                ++i;
-            }
-        }
+        curStrength = BASE_STRENGTH;
     }
 
     private void Update()
     {
-        // Maybe this code goes in Update()
-        if (animator)
-        {
-            // If either of the weapons are fully charged 
-            if (WeaponCharge[0] >= .1f || WeaponCharge[1] >= .1f)
-            {
-                // Avoid multiple calculations of the same thing
-                var maxCharge = strength * MAX_FORCE_MOD;
-
-                var isPlaying = animator.GetBool("Attack");
-
-                // Play the animation attacking if it is not playing - Not sure if it really works
-                if (!isPlaying) animator.SetBool("Attack", true);
-
-                // If either of the weapons are fully charged 
-                if (WeaponCharge[0] >= maxCharge || WeaponCharge[1] >= maxCharge)
-                {
-                    // Stop the throwing animation
-                    animator.SetFloat("AttackAnimationSpeed", 0f);
-                }
-            }
-        }
-        else
+        if(!crosshair)
+            crosshair = PriorityChar_Manager.instance.getCrosshair(); 
+        //Weapon controller please.
+        if (!animator)
         {
             animator = GetComponent<Animator>();
         }
+        equipmentManager.PlayerUpdate();
+
     }
 
-    public void ReleaseWeapon(int index)
+    //Weapon controller please.
+    public void ReleaseWeapon()
     {
-        if (IsWeaponAvailable(index))
-        {
-            //Stops the projectile spawning directly under the entity (Currently 5% crosshair pos effect) //NOTE: LOOK INTO ALTERNATIVES
-            SpawnPosition = (transform.position * .95f) + (crosshair.GetPosition() * .05f);
+        //Animations are organized here. Easier to force a level of charge to be present.
+        ChargeWeapon();
 
-            //In the future the listed projectile (the 1) will instead inherit a projectile from the equipped weapon (First variable in function)
-            //Set the force and direction within the projectile class for its own use.
-            spawnedWeaponReference =
-                entitySpawner.GetEntity(entitySpawner.TryCreateListedProjectile(1, SpawnPosition,
-                        (transform.position - crosshair.transform.position).normalized, WeaponCharge[index]))
-                    .GetComponent<WeaponController>();
 
-            if (spawnedWeaponReference != null)
+           if (equipmentManager != null)
             {
-                spawnedWeaponReference.SetThrowing(WeaponCharge[index], crosshair.GetPosition());
-                spawnedWeaponReference.SetParent(equipment[index].gameObject.GetComponent<Entity>().entityID);
-                //SetParent
-
-                //This will tell the "Source" weapon that it has spawned a clone, to throw. 
-                equipment[index].weaponController.ThrowWeapon();
-
-                WeaponCharge[index] = 0.01f;
-
-                //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
-                if (weaponCharge_UI[index] != null)
-                    weaponCharge_UI[index].UpdateProgBar(0);
-
-                // Update animation
+            equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
+            curStrength = BASE_STRENGTH;
 
                 if (animator)
                 {
@@ -121,81 +76,75 @@ public class Player : Character
                 }
 
             }
-        }
+        
+        
     }
 
-    public void ChargeWeapon(int index)
+    public void ChargeWeapon()
     {
-        if (IsWeaponAvailable(index))
+        if (animator)
         {
+
             // Avoid multiple calculations of the same thing
-            var maxCharge = strength * MAX_FORCE_MOD;
+            curStrength += Time.deltaTime * CHARGE_STRENGTH_MOD;
 
-            //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
-            //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
-            if (WeaponCharge[index] < maxCharge) WeaponCharge[index] += strength * Time.deltaTime;
+            animator.SetFloat("AttackAnimationSpeed", Time.deltaTime * CHARGE_STRENGTH_MOD);
 
-            //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
-            if (weaponCharge_UI[index] != null)
-                weaponCharge_UI[index].UpdateProgBar(WeaponCharge[index] / (maxCharge));
+            var isPlaying = animator.GetBool("Attack");
+
+            // Play the animation attacking if it is not playing - Not sure if it really works
+            if (!isPlaying) animator.SetBool("Attack", true);
+
+            // If either of the weapons are fully charged 
+            if (curStrength > BASE_STRENGTH * MAX_STRENGTH_MOD)
+            {
+                curStrength = BASE_STRENGTH * MAX_STRENGTH_MOD;
+                // Stop the throwing animation
+                animator.SetFloat("AttackAnimationSpeed", 0f);
+            }
+
         }
     }
-
-    public bool PickupWeapon(GameObject weapon)
-    {
-        if (equipment == null)
+        /*
+        public void ChargeWeapon()
         {
-            equipment = new PWeapon[WEAPON_COUNT];
+            if (IsWeaponAvailable())
+            {
+                // Avoid multiple calculations of the same thing
+                var maxCharge = strength * MAX_FORCE_MOD;
+
+                //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
+                //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
+                if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
+
+                //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
+                if (weaponCharge_UI != null)
+                    weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
+            }
         }
+        */
+
+        public bool PickupNewWeapon(WeaponController weapon)
+    {
+
+
 
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
-            for (int i = 0; i < WEAPON_COUNT; ++i)
-            {
-                //This cannot use "IsWeaponAvailable" as it checks if the weapon is out of hand, rather than in hand. 
-                //If "IsHeldWeapon" then it should not interact with the null class.
-                if (equipment[i].weaponController == null || !equipment[i].weaponController.GetIsEquipped()) //
-                {
-                    WeaponController inputWeapon = weapon.GetComponent<WeaponController>();
-                    if (!inputWeapon.IsParent()) //If it is not a "Source" weapon.
-                    {
-                        break;
-                    }
-
-                    //Make sure there isn't an accidental duplicate. "This shouldn't be possible." (Programmer, 2021)
-                    if (inputWeapon == equipment[0].weaponController || inputWeapon == equipment[1].weaponController)
-                    {
-                        return false;
-                    }
-
-                    if (inputWeapon != null)
-                    {
-                        equipment[i].gameObject = weapon;
-                        equipment[i].weaponController = inputWeapon;
-                        return true;
-                    }
-                }
-            }
-
-        return false;
-    }
-
-
-    //If the equipment slot is empty, or the weapon has been "Thrown" it will be unavailable.
-    private bool IsWeaponAvailable(int index)
-    {
-        if (equipment == null)
         {
-            equipment = new PWeapon[WEAPON_COUNT];
+                equipmentManager = weapon;
+            return true;
         }
 
-        if (equipment[index].gameObject != null)
-            if (equipment[index].weaponController.GetIsEquipped())
-                return true;
-
         return false;
     }
 
+    public bool isSameWeapon(Weapon input)
+    {
+        if(equipmentManager.GetBoundWeapon())
+        return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
+        return false;
+    }
     public void SpawnWeaponPickup()
     {
         entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());

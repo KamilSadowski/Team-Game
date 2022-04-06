@@ -124,6 +124,7 @@ public class FollowingCamera : MonoBehaviour
     public void CameraUpdata()
     {
         // Convert the position from screen space to world space
+        if(camera != null && crosshair != null)
         crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
     }
 

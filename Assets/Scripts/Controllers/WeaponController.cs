@@ -1,167 +1,148 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponController : ProjectileController
 {
-    const bool IS_WEAPON_LOG_OUTPUT = false;
-    protected float counterGetIsEquipped = COUNTER_GET_IS_EQUIPPED_MAX;
-    const float COUNTER_GET_IS_EQUIPPED_MAX = 1.0f;
+    [SerializeField] float MAX_WEAPON_COOLDOWN = 2.5f;
+    [SerializeField] float WEAPON_THROW_COST = 1.0f;
+    [SerializeField] float WEAPON_PICKUP_REWARD = 1.0f;
+    protected float PlayerThrowCostMod = 1.0f;
+    protected float PlayerCooldownMod = 1.0f;
 
-    //entityMan.DeleteEntity(entityID);
-    protected int parentID = -1;
-    private Entity parentRef;
-    private WeaponController parentWeapCont;
-
-    protected bool isProjectile = true; //This will be set to false when picked up and to true when it moves.
-    protected bool isPickup = true;
-    protected bool isHeld = false;
-    [SerializeField] bool isDropped = false;
+    protected float currentWeaponCooldown = 0.0f;
+    private Weapon boundPlayerWeapon;
 
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
 
+    protected Crosshair crosshair;
+
+    protected Entity spawnedWeaponEntityReference;
+    protected Weapon spawnedWeaponWeaponReference;
+
+    UI_ChargingBar chargeBarRef;
+    TMP_Text textOutput;
+    protected Player playerRef;
     // Start is called before the first frame update
     void Start()
     {
         entityManager = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
         BindVariables();
-        CollisionSetup();
+
+        crosshair = PriorityChar_Manager.instance.getCrosshair();
+        boundPlayerWeapon = this.GetComponent<Weapon>();
     }
 
-
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
         BindVariables();
-        if (playerCollision == null || weaponCollision == null)
-        {
-            CollisionSetup();
-        }
-        else
-        if (!isHeld)
-        {
-            isProjectile = true;
-            //This is for when it has just spawned or is placed. 
-            if (isDropped)
-            {
-                if (playerCollision.bounds.Intersects(weaponCollision.bounds))
-                {
-                    PlayerPickup();
-
-                }
-            }
-            else
-            {
-                //Once "IsPickup" is false, this function will have "Used up" its force and so it's disabled and the player can pick up the weapon.
-                if (isPickup)
-                {
-                    isPickup = ProjFixedUpdate();
-                }
-                else
-                {
-                    isHeld = false;
-                    //This could set "IsDropped" to true but it would effectively do the same thing. 
-                    if (playerCollision.bounds.Intersects(weaponCollision.bounds))
-                    {
-                        PlayerPickup();
-                    }
-                }
-            }
-        }
     }
 
-    protected void CollisionSetup()
+    private void BindVariables()
     {
-        //This function is called whenever an asset is not found. Nothing should run while this is "False"
-        playerCollision = FindObjectOfType<Player>().GetComponent<CapsuleCollider2D>();
-        weaponCollision = GetComponent<BoxCollider2D>();
-        Physics2D.IgnoreCollision(playerCollision, weaponCollision);
+        if (!playerRef)
+        {
+            GameObject tempRef = PriorityChar_Manager.instance.getPlayer();
+
+            if (tempRef)
+                playerRef = PriorityChar_Manager.instance.getPlayer().GetComponent<Player>();
+        }
+        if (!crosshair)
+            crosshair = PriorityChar_Manager.instance.getCrosshair();
+        if (MAX_WEAPON_COOLDOWN * PlayerCooldownMod > currentWeaponCooldown)
+            currentWeaponCooldown += Time.deltaTime;
+        
+    }
+    public GameObject GetBoundWeapon()
+    {
+        if(controlledObject)
+        return controlledObject.gameObject;
+        return null;
     }
 
     public void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
-        if (!isHeld)
+        if(playerRef)
+        if (playerRef.isSameWeapon(boundPlayerWeapon))
         {
-            isDropped = false;
-            transform.position = new Vector3(1000,1000,1000);
-
-            if (GetParentRef())
-            {
-                if (parentWeapCont == null) return;
-                if (IS_WEAPON_LOG_OUTPUT)
-                {
-                    Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Parent ID:" + parentWeapCont.parentID + " OR " + parentWeapCont.controlledObject.entityID);
-                }
-                parentWeapCont.isHeld = true;
-                parentWeapCont.isProjectile = false;
+            currentWeaponCooldown -= WEAPON_PICKUP_REWARD;
+              
             }
-
-            if (!FindObjectOfType<Player>().PickupWeapon(gameObject) && !isHeld)
-            {
-                if (IS_WEAPON_LOG_OUTPUT)
-                {
-                    Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + ", ID:" + controlledObject.entityID + " , Destroyed. Parent ID:" + parentID);
-                }
-                //No where to put entity. Delete it, for now. 
-                controlledObject.DestroyEntity();
-            }
-            else
-            {
-                //Weapon has been picked up and is now a reference for cloning.
-                isProjectile = false;
-                isHeld = true;
-            }
-        }       
-    }
-
-    public void ThrowWeapon()
-    {
-        isHeld = false;
-    }
-
-    public void SetParent(int ID)
-    {
-        parentID = ID;
-    }
-    public bool IsParent()
-    {
-        return (parentID == -1);
-    }
-
-    //Sets up parent references, returning false if it is the parent. 
-    private bool GetParentRef()
-    {
-        if (parentID != -1)
+        else
+        //Remove weapon from play, even if it cannot be picked up.
+        if (boundPlayerWeapon && playerRef)
         {
-            if (parentRef != null && parentWeapCont != null)
+            transform.position = new Vector3(1000, 1000, 1000);
+           
+            if (!playerRef.PickupNewWeapon(this))
             {
-                return true;
+                    boundPlayerWeapon.DestroyEntity();
             }
-            //Generic safety checks
-            parentRef = entityManager.GetEntity(parentID);
-            if (parentRef != null)
-            {
-                if(!entityManager)
-                    entityManager = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
-
-                parentWeapCont = parentRef.GetComponent<WeaponController>();
-                if (parentWeapCont != null)
-                {
-                    if (IS_WEAPON_LOG_OUTPUT)
-                    {
-                        Debug.Log(Time.realtimeSinceStartup + ": Multiple weapon layers detected.");
-                    }
-                    //Will recursively repeat this function until the parentID is equal to -1.
-                    return true;
-                }
-
-            }
-            //Weapon is invalid. (Error has occured)
-            controlledObject.DestroyEntity();
-            return true;
         }
-        return false;
+
+    }
+
+    public void PlayerUpdate()
+    {
+        if (playerRef)
+            boundPlayerWeapon.SetInactive();
+        if (chargeBarRef == null)
+        {
+            chargeBarRef = GameObject.FindWithTag("ChargeBar").GetComponent<UI_ChargingBar>();
+            if (chargeBarRef)
+                textOutput = chargeBarRef.gameObject.GetComponentInChildren<TMP_Text>();
+        }
+        else
+        {
+            int i = 0;
+            float percentage = currentWeaponCooldown / (WEAPON_THROW_COST * PlayerThrowCostMod);
+
+            while (percentage > 1.0f)
+            {
+                percentage -= 1.0f;
+                ++i;
+            }
+
+            textOutput.text = (i).ToString();
+            chargeBarRef.UpdateProgBar(percentage);
+        }
+    }
+
+    public void ThrowWeapon(float force, Vector3 direction)
+    {
+        if (WEAPON_THROW_COST * PlayerThrowCostMod < currentWeaponCooldown)
+        {
+            BindVariables();
+            currentWeaponCooldown -= WEAPON_THROW_COST * PlayerThrowCostMod;
+
+            spawnedWeaponEntityReference =
+         entityManager.GetEntity(entityManager.TryCreateListedProjectile(1, playerRef.transform.position,
+                 (transform.position - crosshair.transform.position).normalized, force));
+            spawnedWeaponWeaponReference = spawnedWeaponEntityReference.GetComponent<Weapon>();
+            if (spawnedWeaponWeaponReference)
+            {
+               float rotation =  (float)((System.Math.Atan2(transform.position.x - crosshair.transform.position.x, transform.position.y - crosshair.transform.position.y))/ System.Math.PI) * 180.0f;
+
+                spawnedWeaponEntityReference.gameObject.transform.rotation = new Quaternion(0,0, rotation,1.0f);
+                spawnedWeaponWeaponReference.SetThrowing(force, direction);
+
+            }
+            //   spawnedWeaponClassReference
+            /*
+            if (!crosshair)
+                crosshair = PriorityChar_Manager.instance.getCrosshair();
+
+            SpawnPosition = (transform.position * .95f) + (crosshair.GetPosition() * .05f);
+           
+     
+            currentWeaponCooldown += 0;
+            boundPlayerWeapon.SetThrowing(force, direction);
+            */
+
+
+        }
     }
 
 
@@ -169,24 +150,7 @@ public class WeaponController : ProjectileController
     //Bit of recursion but it should be fine as it will only be a single level, unless something has gone wrong.
     public bool GetIsEquipped()
     {
-        if (GetParentRef())
-        {
-            //Will recursively repeat this function until the parentID is equal to -1.
-            return parentWeapCont.GetIsEquipped();
-        }
-
-        if (IS_WEAPON_LOG_OUTPUT && counterGetIsEquipped > COUNTER_GET_IS_EQUIPPED_MAX)
-        {
-            counterGetIsEquipped = 0.0f;
-            Debug.Log(Time.realtimeSinceStartup + ": " + gameObject.name + " , Weapon is equipped:" + (isHeld && !isProjectile));
-        }
-        else
-        {
-            counterGetIsEquipped += Time.deltaTime;
-        }
-
-
-        return (isHeld && !isProjectile);
+        return boundPlayerWeapon != null;
     }
 
 }

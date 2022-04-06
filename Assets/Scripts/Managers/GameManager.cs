@@ -18,18 +18,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioMixer musicMixer;
 
     // Weapon data
-    Globals.WeaponData[] weaponsToGive;
-    WeaponController[] weaponControllers;
-    int[] weaponsToGiveIDs;
+    Globals.WeaponData weaponsToGive;
+    WeaponController weaponControllers;
+    int weaponsToGiveIDs;
     bool weaponsGiven = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        weaponsToGive = new Globals.WeaponData[2];
-        weaponsToGiveIDs = new int[2];
-        weaponsToGive[0].prefabID = 1;
-        weaponsToGive[1].prefabID = 1;
+        weaponsToGive = new Globals.WeaponData();
+        weaponsToGive.prefabID = 1;
+
 
         // Game manager cannot be destroyed
         DontDestroyOnLoad(gameObject);
@@ -80,31 +79,24 @@ public class GameManager : MonoBehaviour
                 entityManager = FindObjectOfType<EntityManager>();
             }
 
-            if (weaponControllers == null)
-            {
-                weaponControllers = new WeaponController[2];
-            }
 
             if (player && entityManager)
             {
-                for (int i = 0; i < weaponsToGive.Length; i++)
-                {
-                    if(weaponsToGive[i].prefabID > -1)
+
+                    if(weaponsToGive.prefabID > -1)
                     {
-                        weaponsToGiveIDs[i] = entityManager.TryCreateListedWeapon(weaponsToGive[i].prefabID, Vector3.zero);
+                        weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.zero);
                     }
 
-                }
-
-                for (int i = 0; i < weaponsToGiveIDs.Length; i++)
-                {
-                    if (weaponsToGiveIDs[i] != -1)
+               
+                
+                    if (weaponsToGiveIDs != -1)
                     {
-                        weaponControllers[i] = entityManager.GetEntity(weaponsToGiveIDs[i]).GetComponent<WeaponController>();
-                        weaponControllers[i].PlayerPickup();
-                        player.PickupWeapon(weaponControllers[i].gameObject);
+                        weaponControllers = entityManager.GetEntity(weaponsToGiveIDs).GetComponent<WeaponController>();
+                        weaponControllers.PlayerPickup();
+                        player.PickupNewWeapon(weaponControllers);
                     }
-                }
+                
 
                 weaponsGiven = true;
             }
@@ -141,8 +133,7 @@ public class GameManager : MonoBehaviour
 
         if (player)
         {
-            weaponsToGive[0].prefabID = 1;
-            weaponsToGive[1].prefabID = 1;
+            weaponsToGive.prefabID = 1;
             weaponsGiven = false;
             player = null;
         }

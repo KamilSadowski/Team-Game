@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7183137209490659154}
   - component: {fileID: 2566258519793261882}
   - component: {fileID: -2866657720055413519}
+  - component: {fileID: 6698053271892808964}
   m_Layer: 3
   m_Name: ProjectileBase
   m_TagString: Untagged
@@ -123,6 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2da73ffb6f5aa246aea3c2dac6ed802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colours:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8514985764260257263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +140,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6ff6d079b7a0d469b697e2b24ad3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DodgingLayerID: 9
   movementSpeed: 1
   drag: 0.5
+  DashSpeed: 10
+  DashDistance: 10
+  MovementContactData:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 1
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  DashCooldown: 0.25
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &7126638304656815046
 Rigidbody2D:
@@ -197,9 +220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce8b9405aa54954197a490f2d82f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon_sharpness: 0.5
-  weapon_damage: 25
-  isDropped: 0
+  MAX_WEAPON_COOLDOWN: 5
+  WEAPON_THROW_COST: 2.5
+  WEAPON_PICKUP_REWARD: 1
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -226,3 +249,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.1610316}
   m_EdgeRadius: 0
+--- !u!114 &6698053271892808964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733697913478852489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95fd531c6c26e8643b337ca7329397e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colours:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  weapon_sharpness: 0.25
+  weapon_damage: 10

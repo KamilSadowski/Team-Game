@@ -20,7 +20,6 @@ public class PlayerController : Controller
     protected GameObject playerObject;
     protected UI_ChargingBar healthBarRef;
     protected UI inventoryRef;
-    public bool[] isCharging;
 
     protected bool isUsingInterface = false;
     private bool isFacingRight = true;
@@ -32,9 +31,7 @@ public class PlayerController : Controller
     // Start is called before the first frame update
     void Start()
     {
-        isCharging = new bool[2];
-        isCharging[0] = false;
-        isCharging[1] = false;
+
     }
 
     // Update is called once per frame
@@ -91,16 +88,8 @@ public class PlayerController : Controller
                 var mousePlayerV = mouseWorldPos - player.transform.position;
                 var mousePlayerVNomalized = Vector3.Normalize(mousePlayerV);
 
+//                player.ChargeWeapon();
 
-
-                //See. "Update"
-                for (int i = 0; i < 2; ++i)
-                {
-                    if (isCharging[i])
-                    {
-                        player.ChargeWeapon(i);
-                    }
-                }
             }
         }
         else
@@ -114,10 +103,7 @@ public class PlayerController : Controller
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            isDashing = true;
-        else if (Input.GetKeyUp(KeyCode.Space))
-            isDashing = false;
+
 
         if (inventoryRef != null && Input.GetKeyDown(KeyCode.E))
         {
@@ -180,21 +166,22 @@ public class PlayerController : Controller
 
         }
 
-
-        //This will work as a "Toggle" disguised as a "While holding" which will activate when the mouse button is down, as there may potentially be complications with update speed
-        //This should also (Very slightly) reduce the required processing time as it simply ignores the IF statement if the bool is not in the correct section.
-        for (int i = 0; i < 2; ++i)
+        if (player)
         {
-            if (!isCharging[i] && Input.GetMouseButtonDown(i))
-            {
-                isCharging[i] = true;
-            }
-            else if (isCharging[i] && Input.GetMouseButtonUp(i))
-            {
-                isCharging[i] = false;
-                player.ReleaseWeapon(i);
-            }
+            if (Input.GetMouseButton(0))
+                player.ReleaseWeapon();
+            if (Input.GetMouseButtonDown(0))
+                player.ChargeWeapon();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            isDashing = true;
+            entityMoveComp.Move(Vector3.zero, isDashing);
+        }
+        else
+            isDashing = false;
+        
+
     }
 
 }

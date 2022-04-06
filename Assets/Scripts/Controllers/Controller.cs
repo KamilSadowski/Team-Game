@@ -22,7 +22,7 @@ public class Controller : MonoBehaviour
     protected void BindVariables()
     {
         if (entityMoveComp == null)
-        {        
+        {
             entityMoveComp = gameObject.GetComponent<MovementComponent>();
         }
         if (controlledObject == null)

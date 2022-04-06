@@ -33,6 +33,7 @@ public class MobileComponent : MovementComponent
     protected List<RaycastHit2D> hits;
     protected bool isDashing = false;
 
+    Crosshair crosshair;
     MortalHealthComponent HealthRef;
     // Start is called before the first frame update
     void Start()
@@ -43,12 +44,9 @@ public class MobileComponent : MovementComponent
         HealthRef = GetComponent<MortalHealthComponent>();
         BaseLayerID = gameObject.layer;
         HasDashCooldown = true;
+        crosshair = PriorityChar_Manager.instance.getCrosshair();
     }
-    private void Update()
-    {
-       
-     
-    }
+
 
     public override void Teleport(Vector3 teleportTo)
     {
@@ -66,10 +64,12 @@ public class MobileComponent : MovementComponent
 
     
 
-
+    //Looks like threads are disabled on map change. This means there will need to be a HasDashCooldown reset in start. 
+    //This function is an ongoing function which uses threads to utilize their timer components. Could be put in While 
+    //And given its own timer functionality but it's nothing major. Expense of thread is unknown.
     IEnumerator DashOngoing(Vector3 input)
     {
-        if (!(Mathf.Abs(input.x) < 0.05 && Mathf.Abs(input.y) < 0.05))
+
         {
 
             if (HealthRef == null)
@@ -136,9 +136,9 @@ public class MobileComponent : MovementComponent
 
     public override bool isMoveCollision(Vector3 input)
     {
-        if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity) 
+        if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null) 
             return false;
-  
+
         rb.Cast
             (
             new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime), 
@@ -147,6 +147,7 @@ public class MobileComponent : MovementComponent
             movementSpeed * Time.deltaTime
             );
 
+        
         if (hits.Count > 0)
         {
             hits.Clear();
@@ -158,89 +159,118 @@ public class MobileComponent : MovementComponent
 
     public override void Move(Vector3 input, bool isDash = false)
     {
-        //Player can only move if not dashing. 
-        if (!isDashing)
+        if (crosshair)
         {
-            if (isDash && HasDashCooldown)
+            
+            //Player can only move if not dashing. 
+            if (!isDashing)
             {
-                isDashing = true;
-                HasDashCooldown = false;
-                StartCoroutine(DashOngoing(input));
-                GetComponent<Animator>().SetTrigger("Dash");
-                return;
-            }
-
-            if (footStepRandomizer != null)
-            {
-                if (Mathf.Abs(velocity.x) > 0.01 ||
-                    Mathf.Abs(velocity.y) > 0.01 ||
-                    Mathf.Abs(velocity.z) > 0.01)
+                if (isDash && HasDashCooldown)
                 {
-                    TimeSinceLastInterval += Time.deltaTime;
+                    isDashing = true;
+                    HasDashCooldown = false;
 
-                    if (TimeSinceLastInterval > FOOTSTEP_INTERVAL / movementSpeed)
-                    {
-                        TimeSinceLastInterval = 0;
-                        footStepRandomizer.PlaySound(0);
-                    }
-                }
-                else
-                    TimeSinceLastInterval = 0;
-            }
+                    input = (crosshair.transform.position - transform.position).normalized;
 
+                  //Could have put this in a funciton or lambda.
+                    if (spriteRenderer != null)
+                        if (isFacingRight)
+                        {
+                            if (input.x < 0f)
+                            {
+                                spriteRenderer.flipX = true;
+                                isFacingRight = false;
+                            }
+                        }
+                        else
+                        {
+                            if (input.x > 0f)
+                            {
+                                spriteRenderer.flipX = false;
+                                isFacingRight = true;
+                            }
 
-            // currentInput = input;
-            if (rb == null)
-            {
-                Create();
-                if (rb == null)
-                {
+                        }
+
+                    StartCoroutine(DashOngoing(input));
+                    GetComponent<Animator>().SetTrigger("Dash");
                     return;
                 }
-            }
 
-            // Add velocity based on input
-            velocity.x += input.x * movementSpeed * Time.deltaTime;
-            velocity.y += input.y * movementSpeed * Time.deltaTime;
-
-            // Apply drag
-            velocity = velocity * drag;
-
-            // Stop the movement if below a threshold
-            if (Mathf.Abs(velocity.magnitude) <= minVelocity)
-            {
-                velocity = Vector3.zero;
-            }
-
-            // Update the movmement
-            rb.transform.Translate(velocity, Space.World);
-            position = rb.transform.position;
-            position.z = Globals.SPRITE_Z;
-
-            rb.transform.position = position;
-            rb.velocity = Vector3.zero;
-
-            if (spriteRenderer == null)
-                spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
-            if (spriteRenderer != null)
-                if (isFacingRight)
+                if (footStepRandomizer != null)
                 {
-                    if (input.x < 0f)
+                    if (Mathf.Abs(velocity.x) > 0.01 ||
+                        Mathf.Abs(velocity.y) > 0.01 ||
+                        Mathf.Abs(velocity.z) > 0.01)
                     {
-                        spriteRenderer.flipX = true;
-                        isFacingRight = false;
+                        TimeSinceLastInterval += Time.deltaTime;
+
+                        if (TimeSinceLastInterval > FOOTSTEP_INTERVAL / movementSpeed)
+                        {
+                            TimeSinceLastInterval = 0;
+                            footStepRandomizer.PlaySound(0);
+                        }
+                    }
+                    else
+                        TimeSinceLastInterval = 0;
+                }
+
+
+                // currentInput = input;
+                if (rb == null)
+                {
+                    Create();
+                    if (rb == null)
+                    {
+                        return;
                     }
                 }
-                else
-                {
-                    if (input.x > 0f)
-                    {
-                        spriteRenderer.flipX = false;
-                        isFacingRight = true;
-                    }
 
+                // Add velocity based on input
+                velocity.x += input.x * movementSpeed * Time.deltaTime;
+                velocity.y += input.y * movementSpeed * Time.deltaTime;
+
+                // Apply drag
+                velocity = velocity * drag;
+
+                // Stop the movement if below a threshold
+                if (Mathf.Abs(velocity.magnitude) <= minVelocity)
+                {
+                    velocity = Vector3.zero;
                 }
+
+                // Update the movmement
+                rb.transform.Translate(velocity, Space.World);
+                position = rb.transform.position;
+                position.z = Globals.SPRITE_Z;
+
+                rb.transform.position = position;
+                rb.velocity = Vector3.zero;
+
+                if (spriteRenderer == null)
+                    spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+                if (spriteRenderer != null)
+                    if (isFacingRight)
+                    {
+                        if (input.x < 0f)
+                        {
+                            spriteRenderer.flipX = true;
+                            isFacingRight = false;
+                        }
+                    }
+                    else
+                    {
+                        if (input.x > 0f)
+                        {
+                            spriteRenderer.flipX = false;
+                            isFacingRight = true;
+                        }
+
+                    }
+            }
         }
+        else
+            crosshair = PriorityChar_Manager.instance.getCrosshair();
     }
 }
