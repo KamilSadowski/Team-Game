@@ -37,6 +37,7 @@ public class PlayerController : Controller
     // Update is called once per frame
     void FixedUpdate()
     {
+        BindVariables();
         if (player != null)
         {
             if (healthBarRef == null)
@@ -82,11 +83,7 @@ public class PlayerController : Controller
                 }
 
 
-                // TODO: Rotate the player according to mouse position 
-                var mousePos = Input.mousePosition;
-                var mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, player.transform.position.z));
-                var mousePlayerV = mouseWorldPos - player.transform.position;
-                var mousePlayerVNomalized = Vector3.Normalize(mousePlayerV);
+           
 
 //                player.ChargeWeapon();
 
@@ -168,7 +165,7 @@ public class PlayerController : Controller
 
         if (player)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonUp(0))
                 player.ReleaseWeapon();
             if (Input.GetMouseButtonDown(0))
                 player.ChargeWeapon();

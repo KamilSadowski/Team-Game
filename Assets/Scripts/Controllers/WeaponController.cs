@@ -127,7 +127,7 @@ public class WeaponController : ProjectileController
 
                 spawnedWeaponEntityReference.gameObject.transform.rotation = new Quaternion(0,0, rotation,1.0f);
                 spawnedWeaponWeaponReference.SetThrowing(force, direction);
-
+                spawnedWeaponEntityReference.transform.rotation = new Quaternion(0, 0, Vector3.Dot(crosshair.transform.position, transform.position),1.0f);
             }
             //   spawnedWeaponClassReference
             /*

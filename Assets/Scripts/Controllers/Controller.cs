@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    protected Crosshair crosshair;
     protected MovementComponent entityMoveComp;
     protected Entity controlledObject;
     protected Vector3 input;
@@ -21,6 +22,8 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     protected void BindVariables()
     {
+        if (crosshair)
+            PriorityChar_Manager.instance.getCrosshair();
         if (entityMoveComp == null)
         {
             entityMoveComp = gameObject.GetComponent<MovementComponent>();
