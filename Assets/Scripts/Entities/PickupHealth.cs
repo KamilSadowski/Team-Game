@@ -13,7 +13,7 @@ public class PickupHealth : Pickup
 
 
         if (health)
-            health.heal(healAmount);
+            health.Heal(healAmount);
         //Overwrite only this function
         entityManager.DeleteEntity(entityID);
     }

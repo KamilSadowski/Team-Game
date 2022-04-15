@@ -65,7 +65,7 @@ public class WeaponController : ProjectileController
     public void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
         if(playerRef)
-        if (playerRef.isSameWeapon(boundPlayerWeapon))
+        if (playerRef.IsSameWeapon(boundPlayerWeapon))
         {
             currentWeaponCooldown -= WEAPON_PICKUP_REWARD;
               
