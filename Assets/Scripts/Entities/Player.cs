@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Player : Character
 {
-
-
     //The player will have modifiers for weapons but the WeaponController will spawn and manage the weapons. User stats can be added at a later date. m
     [SerializeField] protected WeaponController equipmentManager;
 
@@ -33,7 +31,6 @@ public class Player : Character
     //Direct reference to the progress bars held within the UI
     UI_ChargingBar weaponCharge_UI;
     private Animator animator;
-   
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +43,8 @@ public class Player : Character
 
     private void Update()
     {
+        UpdateEntity();
+
         if(!crosshair)
             crosshair = PriorityChar_Manager.instance.getCrosshair(); 
         //Weapon controller please.
@@ -57,6 +56,7 @@ public class Player : Character
 
     }
 
+
     //Weapon controller please.
     public void ReleaseWeapon()
     {
@@ -65,19 +65,17 @@ public class Player : Character
 
 
            if (equipmentManager != null)
-            {
-            equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
-            curStrength = BASE_STRENGTH;
+           {
+           equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
+           curStrength = BASE_STRENGTH;
 
-                if (animator)
-                {
-                    animator.SetTrigger("Throw");
-                    animator.SetBool("Attack", false);
-                }
+               if (animator)
+               {
+                   animator.SetTrigger("Throw");
+                   animator.SetBool("Attack", false);
+               }
 
-            }
-        
-        
+           }      
     }
 
     public void ChargeWeapon()
@@ -139,7 +137,7 @@ public class Player : Character
         return false;
     }
 
-    public bool isSameWeapon(Weapon input)
+    public bool IsSameWeapon(Weapon input)
     {
         if(equipmentManager.GetBoundWeapon())
         return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
@@ -167,27 +165,35 @@ public class Player : Character
 
     public override void TakeDamage(float damage)
     {
-        if (isInvincible) return;
+        base.TakeDamage(damage);
+    }
+
+    public void ForceKill()
+    {
         if (!healthComponent)
         {
             healthComponent = GetComponent<BaseHealthComponent>();
         }
-
-        if (healthComponent)
+        else
         {
-            if (healthComponent.TakeDamage(damage))
-            {
-                // If player is killed, he is taken to the hubworld
-                if (!gameManager)
-                {
-                    gameManager = FindObjectOfType<GameManager>();
-                }
-
-                if (gameManager)
-                {
-                    gameManager.EnterScene(Globals.Scenes.HubWorld);
-                }
-            }
+            MortalHealthComponent tmpHealthComponent = healthComponent as MortalHealthComponent;
+            tmpHealthComponent.SetInvincible(false);
+            TakeDamage(tmpHealthComponent.GetHealth() + 1.0f);
         }
+    }
+
+    public override bool DestroyEntity()
+    {
+        // If player is killed, he is taken to the hubworld
+        if (!gameManager)
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+
+        if (gameManager)
+        {
+            gameManager.EnterScene(Globals.Scenes.HubWorld);
+        }
+        return true;
     }
 }

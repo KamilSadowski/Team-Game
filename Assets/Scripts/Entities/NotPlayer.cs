@@ -17,8 +17,6 @@ public class NotPlayer : Character
     void Update()
     {
         UpdateEntity();
-
-
     }
 
     public override void OnRemove()

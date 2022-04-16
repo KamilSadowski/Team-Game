@@ -29,6 +29,8 @@ public static class Globals
 
     public const float SPRITE_Z = -0.05f; // How much to offset sprites to cast shadows
 
+    public const int COLOURS_PER_SHADER = 3; // How many colours the colouring shader supports
+
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
     public static string[] SceneNames = new string[3] { "MainMenu", "HubWorld", "Dungeon" };
