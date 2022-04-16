@@ -75,6 +75,35 @@ public class BaseParticleComponent : MonoBehaviour
     }
     #endregion
 
+
+    public void setParticleParameters(
+    int? numberOfColumns = null,
+    float? speed = null,
+    Sprite texture = null,
+    Color[] color = null,
+    float? lifetime = null,
+    float? fireRate = null,
+    float? size = null,
+    float? emissionDuration = null,
+    Material material = null,
+    float? alpha = null,
+    float? lifetimeRand = null,
+    float? rotateSpeed = null)
+    {
+        if (numberOfColumns != null) _numberOfColumns = (int)numberOfColumns;
+        if (speed != null) _speed = (float)speed;
+        if (texture != null) _texture = texture;
+        if (color != null) _color = color;
+        if (lifetime != null) _lifetime = (float)lifetime;
+        if (fireRate != null) _fireRate = (float)fireRate;
+        if (size != null) _size = (float)size;
+        if (material != null) _material = material;
+        if (emissionDuration != null) _emissionDuration = (float)emissionDuration;
+        if (rotateSpeed != null) rotationSpeed = (float)rotateSpeed;
+        if (lifetimeRand != null) _lifetimeRandomization = (float)lifetimeRand;
+
+    }
+
     private void Awake()
     {
         organizedChildren = new List<Transform>[MAX_PARTICLE_COUNT];
@@ -119,11 +148,9 @@ public class BaseParticleComponent : MonoBehaviour
                 if (organizedChildren[temporaryID] != null)
                 {
                     foreach(Transform particles in organizedChildren[temporaryID])
-                        Destroy(particles);
+                    Destroy(particles);
                 }
-
-                ParticleParent = inputPos;
-                
+                    ParticleParent = inputPos;
                 if (_material == null)
                 {
                     _material = new Material(Shader.Find("Particles/Standard Unlit"));
@@ -205,7 +232,6 @@ public class BaseParticleComponent : MonoBehaviour
 
                         var trigger = system.trigger;
                             trigger.enabled = true;
-                        
 
                         collision.enabled = true;
                         collision.type = ParticleSystemCollisionType.World;
