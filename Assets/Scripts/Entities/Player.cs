@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class Player : Character
@@ -45,8 +42,8 @@ public class Player : Character
     {
         UpdateEntity();
 
-        if(!crosshair)
-            crosshair = PriorityChar_Manager.instance.getCrosshair(); 
+        if (!crosshair)
+            crosshair = PriorityChar_Manager.instance.getCrosshair();
         //Weapon controller please.
         if (!animator)
         {
@@ -63,19 +60,18 @@ public class Player : Character
         //Animations are organized here. Easier to force a level of charge to be present.
         ChargeWeapon();
 
+        if (equipmentManager != null)
+        {
+            equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
+            curStrength = BASE_STRENGTH;
 
-           if (equipmentManager != null)
-           {
-           equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
-           curStrength = BASE_STRENGTH;
+            if (animator)
+            {
+                animator.SetTrigger("Throw");
+                animator.SetBool("Attack", false);
+            }
 
-               if (animator)
-               {
-                   animator.SetTrigger("Throw");
-                   animator.SetBool("Attack", false);
-               }
-
-           }      
+        }
     }
 
     public void ChargeWeapon()
@@ -103,34 +99,31 @@ public class Player : Character
 
         }
     }
-        /*
-        public void ChargeWeapon()
-        {
-            if (IsWeaponAvailable())
-            {
-                // Avoid multiple calculations of the same thing
-                var maxCharge = strength * MAX_FORCE_MOD;
-
-                //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
-                //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
-                if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
-
-                //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
-                if (weaponCharge_UI != null)
-                    weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
-            }
-        }
-        */
-
-        public bool PickupNewWeapon(WeaponController weapon)
+    /*
+    public void ChargeWeapon()
     {
+        if (IsWeaponAvailable())
+        {
+            // Avoid multiple calculations of the same thing
+            var maxCharge = strength * MAX_FORCE_MOD;
 
+            //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
+            //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
+            if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
 
+            //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
+            if (weaponCharge_UI != null)
+                weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
+        }
+    }
+    */
 
+    public bool PickupNewWeapon(WeaponController weapon)
+    {
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
         {
-                equipmentManager = weapon;
+            equipmentManager = weapon;
             return true;
         }
 
@@ -139,8 +132,8 @@ public class Player : Character
 
     public bool IsSameWeapon(Weapon input)
     {
-        if(equipmentManager.GetBoundWeapon())
-        return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
+        if (equipmentManager.GetBoundWeapon())
+            return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
         return false;
     }
     public void SpawnWeaponPickup()

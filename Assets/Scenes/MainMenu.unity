@@ -1441,6 +1441,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 797925266410363827, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 797925266410363827, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: orthographic size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 797925266410363827, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4286888117465516770, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -1488,6 +1500,10 @@ PrefabInstance:
     - target: {fileID: 4286888117465516775, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5917385051535001449, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6553424600800839762, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_AnchorMax.x
