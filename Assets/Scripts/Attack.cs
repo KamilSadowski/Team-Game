@@ -57,7 +57,7 @@ public class Attack : MonoBehaviour
                         if (Vector3.Magnitude(allParticles[i].position - colEvent.intersection) < 0.05f)
                         {
                             allParticles[i].remainingLifetime = -1; // Kills the particle
-                            entity.TakeDamage(damage, allParticles[i].position, allParticles[i].velocity); // Damages the entity
+                            entity.TakeDamage(damage); // Damages the entity
                             attackParticleSystem.SetParticles(allParticles); // Updates particle system
                             break;
                         }

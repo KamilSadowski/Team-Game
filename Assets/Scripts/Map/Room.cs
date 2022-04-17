@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
 public class Room : MonoBehaviour
 {
@@ -33,6 +31,7 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
 
@@ -73,7 +72,7 @@ public class Room : MonoBehaviour
     {
         return groundTileMap.GetCellCenterWorld(groundTiles[Random.Range(0, groundTiles.Count)]);
     }
-
+    
     // Close all the doors and spawn enemies
     public virtual void EnterRoom()
     {
@@ -86,36 +85,24 @@ public class Room : MonoBehaviour
             {
                 CreateEntity();
             }
-
             wasEntered = true;
-
-            // Minimap Code
-            // Disable hiding image
-            var canvas = GetComponentInChildren<Canvas>();
-            if (canvas)
-            {
-                var img = canvas.GetComponentInChildren<Image>();
-                if (img)
-                {
-                    img.color = Color.clear;
-                }
-            }
         }
     }
 
     public virtual void ExitRoom()
     {
+
     }
 
-    protected virtual void CreateEntity()
+    void CreateEntity()
     {
-        currentEntityID = entityManager.TryCreateEnemy(map.GetRandomEnemy(), GetRandomGroundPosition());
+        currentEntityID = entityManager.TryCreateListedNPC(0, GetRandomGroundPosition());
         if (currentEntityID != -1)
         {
             currentNPC = entityManager.GetEntity(currentEntityID) as NotPlayer;
             currentNPC.AddRoom(this);
             ++enemiesAlive;
-        }
+        }   
     }
 
     public void OpenDoors()

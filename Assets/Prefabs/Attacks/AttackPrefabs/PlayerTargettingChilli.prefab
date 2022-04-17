@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numberOfColumns: 360
   _speed: 1.05
-  _texture: {fileID: 1379201073, guid: 7ad2677dadbbfb64f8e2b2553368039d, type: 3}
+  _texture: {fileID: 21300000, guid: f05d415db508fe54f986561965822fd1, type: 3}
   _color:
   - {r: 1, g: 0, b: 0, a: 0.3}
   - {r: 0.9, g: 0.5686275, b: 0, a: 0.3}
@@ -66,7 +66,7 @@ MonoBehaviour:
   _emissionDuration: 0.01
   _size: 0.15
   _sizeRandomizationPercentage: 0
-  _attackRadius: 360
+  _angle: 0
   _material: {fileID: 2100000, guid: 4e8fedfd8ce66fc4b9c6090c5c48182d, type: 2}
   rotationSpeed: 0
   _lifetime: 2.5

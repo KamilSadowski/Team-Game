@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
                     }
                 
 
-                    weaponsGiven = true;
+                weaponsGiven = true;
             }
         }
     }

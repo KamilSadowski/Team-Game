@@ -7,7 +7,7 @@ public class EnemyController : Controller
     protected GameObject playerObject;
     protected BaseHealthComponent playerHealth;
     protected AttackComponent attackComponent;
-    protected Character controlledObject;
+    protected Character cControlledObject;
     protected Animator animator;
     protected bool isWalking = false;
     protected bool isFacingFront = true;
@@ -65,9 +65,9 @@ public class EnemyController : Controller
         else
             entityMoveComp.Move(direction);
 
-        if (!controlledObject)
+        if (!cControlledObject)
         {
-            controlledObject = (Character)base.controlledObject;
+            cControlledObject = (Character)controlledObject;
         }
 
         if (isValidReferences() && playerObject != null && entityMoveComp != null && playerHealth != null)
@@ -124,4 +124,15 @@ public class EnemyController : Controller
         if (prevIsFacingFront != isFacingFront)
             GetComponent<Animator>().SetBool("Front", isFacingFront);
     }
+
+    public void DamageEntity(float input)
+    {
+
+
+        if (cControlledObject.GetPlayerHealth().TakeDamage(input))
+        {
+            controlledObject.GetComponent<Entity>().DestroyEntity();
+        }
+    }
+
 }

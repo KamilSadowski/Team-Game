@@ -27,14 +27,9 @@ public class MortalHealthComponent : BaseHealthComponent
     public override float GetHealthPercentage()
     {
         return currentHealth / maxHealth;
-    }  
-    
-    public override float GetHealth()
-    {
-        return currentHealth;
     }
 
-    public void Heal(int input)
+    public void heal(int input)
     {
         currentHealth += Mathf.Abs(input);
 
