@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     SpriteRenderer door;
     Collider2D collider;
     Animator animator;
+    DoorKillTrigger killTrigger;
 
     public Vector3 offset;
     public Room room { get; private set; }
@@ -50,12 +51,14 @@ public class Door : MonoBehaviour
     {
         animator.SetBool("Open", true);
         collider.enabled = false;
+        killTrigger.OpenDoor();
     }
 
     public void CloseDoor()
     {
         animator.SetBool("Open", false);
         collider.enabled = true;
+        killTrigger.CloseDoor();
     }
 
     public void CheckDoorComponents()
@@ -67,6 +70,10 @@ public class Door : MonoBehaviour
         if (!collider)
         {
             collider = GetComponentInChildren<Collider2D>();
+        }
+        if (!killTrigger)
+        {
+            killTrigger = GetComponentInChildren<DoorKillTrigger>();
         }
         if (!animator)
         {

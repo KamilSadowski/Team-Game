@@ -65,15 +65,18 @@ public class PlayerController : Controller
                 if (entityMoveComp != null)
                 {
 
-                    Vector3 temp = Vector3.zero;
+                    if (player && !player.isDead)
+                    {
+                        Vector3 temp = Vector3.zero;
 
-                    temp.x += Input.GetAxis("Horizontal");
-                    temp.y += Input.GetAxis("Vertical");
+                        temp.x += Input.GetAxis("Horizontal");
+                        temp.y += Input.GetAxis("Vertical");
 
 
-                    entityMoveComp.Move(temp, isDashing);
+                        entityMoveComp.Move(temp, isDashing);
 
-                    player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
+                        player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
+                    }
 
                 }
                 else
@@ -122,16 +125,11 @@ public class PlayerController : Controller
             }
         }
 
-
-
-        if (Debug.isDebugBuild)
+        if (player && !player.isDead)
         {
 
-
-
-            if (player)
+            if (Debug.isDebugBuild)
             {
-
 
                 if (Input.GetKeyDown(KeyCode.L))
                 {
@@ -161,10 +159,6 @@ public class PlayerController : Controller
                 }
             }
 
-        }
-
-        if (player)
-        {
             if (Input.GetMouseButtonUp(0))
                 player.ReleaseWeapon();
             if (Input.GetMouseButtonDown(0))

@@ -211,10 +211,10 @@ public class Weapon : Entity
 
         output *= damageMod;
 
-        EnemyController tempRef = collision.gameObject.GetComponent<EnemyController>();
+        Entity tempRef = collision.gameObject.GetComponent<Entity>();
 
         if (tempRef != null)
-            tempRef.DamageEntity(output);
+            tempRef.TakeDamage(output, transform.position, Vector3.zero);
 
     }
 }

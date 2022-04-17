@@ -52,7 +52,7 @@ public class ParticleCollisionsComponent : MonoBehaviour
                             allParticles[i].remainingLifetime = -1; // Kills the particle
 
                         // Damages the entity
-                        entity.TakeDamage(10);
+                        entity.TakeDamage(10, allParticles[i].position, allParticles[i].velocity);
                         system.SetParticles(allParticles);
                         break;
                         }
