@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class FollowingCamera : MonoBehaviour
 {
@@ -10,12 +11,17 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] Vector3 cameraEntityOffset;
     [SerializeField] float cameraForwardOffset = 1.0f;
     [SerializeField] float cameraForwardAimingOffset = 3.0f;
+    [SerializeField] CanvasGroup deathScreen;
+
     Crosshair crosshair;
     //[SerializeField] Material effectMaterial;
-    //PostProcessVolume postProcessing;
-    //ColorGrading colorGrading;
-    //Vignette vignette;
+    PostProcessVolume postProcessing;
+    ColorGrading colorGrading;
+    Vignette vignette;
+    LensDistortion lansDistortion;
+    float defaultLansDistortion;
     float defaultVignette;
+    float defaultSaturation;
     Camera camera;
 
     // Camera states
@@ -63,16 +69,21 @@ public class FollowingCamera : MonoBehaviour
         originPoint = gameObject.GetComponentInParent<Transform>();
         camera = GetComponent<Camera>();
         crosshair = FindObjectOfType<Crosshair>();
-        //postProcessing = GetComponent<PostProcessVolume>();
+        postProcessing = GetComponent<PostProcessVolume>();
 
         // Get colour grading
-        //postProcessing.profile.TryGetSettings(out colorGrading);
-        //colorGrading.saturation.overrideState = true;
-        //colorGrading.contrast.overrideState = true;
+        postProcessing.profile.TryGetSettings(out colorGrading);
+        colorGrading.saturation.overrideState = true;
+        defaultSaturation = colorGrading.saturation;
+        colorGrading.contrast.overrideState = true;
 
         // Get vignette
-        //postProcessing.profile.TryGetSettings(out vignette);
-        //defaultVignette = vignette.intensity.value;
+        postProcessing.profile.TryGetSettings(out vignette);
+        defaultVignette = vignette.intensity.value;
+
+        // Get lens distortion
+        postProcessing.profile.TryGetSettings(out lansDistortion);
+        defaultLansDistortion = lansDistortion.intensity.value;
     }
 
     // Update is called once per frame
@@ -202,24 +213,48 @@ public class FollowingCamera : MonoBehaviour
     //    Graphics.Blit(source, destination, effectMaterial);
     //}
 
-    //public void SetSaturation(float saturation)
-    //{
-    //    colorGrading.saturation.value = saturation;
-    //}
-    //
-    //public void SetContrast(float contrast)
-    //{
-    //    colorGrading.contrast.value = contrast;
-    //}
-    //
-    //public void SetAdditionalVignette(float amount)
-    //{
-    //    vignette.intensity.value = defaultVignette + amount;
-    //}
+    public void SetSaturation(float saturation)
+    {
+        colorGrading.saturation.value = saturation;
+    }
+
+    public void ResetSaturation()
+    {
+        colorGrading.saturation.value = defaultSaturation;
+    }
+
+    public void SetContrast(float contrast)
+    {
+        colorGrading.contrast.value = contrast;
+    }
+    
+    public void SetAdditionalVignette(float amount)
+    {
+        vignette.intensity.value = defaultVignette + amount;
+    }
+
+    public void SetLensDistortion(float amount)
+    {
+        lansDistortion.intensity.value = amount;
+    }
 
     public void Aim(bool aim)
     {
         aiming = aim;
+    }
+
+    public void ShowDeathScreen()
+    {
+        deathScreen.alpha = 1.0f;
+        deathScreen.interactable = true;
+        deathScreen.blocksRaycasts = true;
+    }
+
+    public void HideDeathScreen()
+    {
+        deathScreen.alpha = 0.0f;
+        deathScreen.interactable = false;
+        deathScreen.blocksRaycasts = false;
     }
 
     //public void Explosion(Vector3 explosionPosition, float intensity)

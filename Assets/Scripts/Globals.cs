@@ -31,6 +31,8 @@ public static class Globals
 
     public const int COLOURS_PER_SHADER = 3; // How many colours the colouring shader supports
 
+    public const int MAX_SPRITES = 1000; // Total amount of blood splashes and other sprite effects allowed at once
+
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
     public static string[] SceneNames = new string[3] { "MainMenu", "HubWorld", "Dungeon" };

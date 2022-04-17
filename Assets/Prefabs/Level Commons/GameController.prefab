@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 8521521568420228402}
   - component: {fileID: 8521521568420228401}
   - component: {fileID: 8521521568420228400}
+  - component: {fileID: 3513389854081760338}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -200,3 +201,16 @@ MonoBehaviour:
   audioSource: {fileID: 5360386095806380454}
   InventoryNoise: {fileID: 8300000, guid: d73b73743ea434d9b98c5c0b04b51e3a, type: 3}
   InventoryVolume: 1
+--- !u!114 &3513389854081760338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521521568420228366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e97a753d7358f745aeba87e5a2e4c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptySprite: {fileID: 1288651112909265565, guid: 6455d85c51f328844bfd521ff25fb8f5, type: 3}

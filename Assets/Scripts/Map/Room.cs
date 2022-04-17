@@ -94,9 +94,9 @@ public class Room : MonoBehaviour
 
     }
 
-    void CreateEntity()
+    protected virtual void CreateEntity()
     {
-        currentEntityID = entityManager.TryCreateListedNPC(0, GetRandomGroundPosition());
+        currentEntityID = entityManager.TryCreateEnemy(map.GetRandomEnemy(), GetRandomGroundPosition());
         if (currentEntityID != -1)
         {
             currentNPC = entityManager.GetEntity(currentEntityID) as NotPlayer;

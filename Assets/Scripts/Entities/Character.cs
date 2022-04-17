@@ -6,6 +6,12 @@ public class Character : Entity2D
 {
     protected float strength = 5.0f;
     protected BaseHealthComponent playerHealth;
+    SpriteManager spriteManager;
+
+    [SerializeField] protected List<Sprite> splashes;
+    protected float splatterDistance = 0.1f;
+    protected float randomThreshold = 0.05f;
+
     // Start is called before the first frame update
     public float GetStrength()
     {
@@ -28,6 +34,22 @@ public class Character : Entity2D
         if (playerHealth != null)
             return playerHealth;
         return null;
+    }
+
+    public override void TakeDamage(float damage, Vector3 sourcePosition, Vector3 sourceVelocity)
+    {
+        if (isFlashing) return;
+        base.TakeDamage(damage, sourcePosition, sourceVelocity);
+        if (!spriteManager)
+        {
+            spriteManager = FindObjectOfType<SpriteManager>();
+        }
+
+        float randomOffset = Random.Range(0.0f, randomThreshold);
+        Vector3 splatterOffset = (sourcePosition + sourceVelocity - transform.position).normalized * (splatterDistance + randomOffset);
+        splatterOffset.z = 0.0f;
+
+        spriteManager.AddSprite(transform.position - splatterOffset, splashes[Random.Range(0, splashes.Count)]);
     }
 
     // Update is called once per frame

@@ -82,6 +82,11 @@ public class EntityManager : MonoBehaviour
         return -1;
     }
 
+    public int TryCreateEnemy(GameObject enemy, Vector3 Position)
+    {
+        return TryCreateEntity(enemy, Position);
+    }
+
     public int TryCreateListedProp(int index, Vector3 Position)
     {
         if (index >= 0 && index < PropList.Length)

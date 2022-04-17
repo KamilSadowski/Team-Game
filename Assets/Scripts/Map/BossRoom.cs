@@ -29,4 +29,15 @@ public class BossRoom : Room
             returnPortal.Enable(true);
         }
     }
+
+    protected override void CreateEntity()
+    {
+        currentEntityID = entityManager.TryCreateEnemy(map.GetRandomBoss(), GetRandomGroundPosition());
+        if (currentEntityID != -1)
+        {
+            currentNPC = entityManager.GetEntity(currentEntityID) as NotPlayer;
+            currentNPC.AddRoom(this);
+            ++enemiesAlive;
+        }
+    }
 }

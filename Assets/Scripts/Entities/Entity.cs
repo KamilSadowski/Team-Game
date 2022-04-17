@@ -13,8 +13,10 @@ public class Entity : MonoBehaviour
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
 
-    protected MaterialPropertyBlock material;
+    public MaterialPropertyBlock material;
     protected SpriteRenderer renderer;
+    
+    public bool colourChecked = false; // Was the colour checked by the reflection
 
     //HealthComponent healthComponent;
     //InteractComponent interactComponent;
@@ -25,7 +27,7 @@ public class Entity : MonoBehaviour
 
     const int DAMAGE_COLOURS = 3;
     Timer flashTimer = new Timer(0.0f);
-    bool isFlashing = false;
+    protected bool isFlashing = false;
     int flashIndex = 0;
 
     [SerializeField] protected Color[] multiplyFlashColour = new Color[Globals.COLOURS_PER_SHADER];
@@ -91,6 +93,7 @@ public class Entity : MonoBehaviour
         material.SetColor("_SecondaryColor", colour2);
         material.SetColor("_TertiaryColor", colour3);
         renderer.SetPropertyBlock(material);
+        colourChecked = false;
     }
 
     public MovementComponent GetMovementComponent()
@@ -101,14 +104,17 @@ public class Entity : MonoBehaviour
 
     public virtual bool DestroyEntity()
     {
+        if (!entityManager)
+        {
+            entityManager = FindObjectOfType<EntityManager>();
+        }
+
         if (entityManager)
         {
             entityManager.DeleteEntity(entityID);
             return true;
         }
 
-
-        entityManager = FindObjectOfType<EntityManager>();
         return false;
     }
     // Called when the entity is to be removed
@@ -122,7 +128,7 @@ public class Entity : MonoBehaviour
         movementComponent.Teleport(teleportTo);
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, Vector3 sourcePosition, Vector3 sourceVelocity)
     {       
         // Flashing of the entity indicates the invincibility frame after getting hit
         if (isFlashing) return;
