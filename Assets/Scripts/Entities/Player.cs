@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Player : Character
 {
@@ -32,11 +28,6 @@ public class Player : Character
     //Direct reference to the progress bars held within the UI
     UI_ChargingBar weaponCharge_UI;
     private Animator animator;
-    public bool isDead { get; private set; } = false;
-    const float deathDuration = 3.0f;
-    Timer killTimer = new Timer(deathDuration);
-
-    FollowingCamera camera;
 
     // Start is called before the first frame update
     void Start()
@@ -49,48 +40,17 @@ public class Player : Character
 
     private void Update()
     {
-        if (Debug.isDebugBuild)
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                TakeDamage(10.0f, transform.position, Vector3.zero);
-            }
-        }
+        UpdateEntity();
 
-        if (isDead)
+        if (!crosshair)
+            crosshair = PriorityChar_Manager.instance.getCrosshair();
+        //Weapon controller please.
+        if (!animator)
         {
-            if (killTimer.Update(Time.deltaTime))
-            {
-                // If player is killed, he is taken to the hubworld
-                if (!gameManager)
-                {
-                    gameManager = FindObjectOfType<GameManager>();
-                }
-
-                if (gameManager)
-                {
-                    camera.SetAdditionalVignette(0.0f);
-                    camera.ResetSaturation();
-                    camera.HideDeathScreen();
-                    isDead = false;
-                    killTimer.Reset(deathDuration);
-                    gameManager.EnterScene(Globals.Scenes.HubWorld);
-                }
-            }
+            animator = GetComponent<Animator>();
         }
-        else
-        {
-            UpdateEntity();
+        equipmentManager.PlayerUpdate();
 
-            if (!crosshair)
-                crosshair = PriorityChar_Manager.instance.getCrosshair();
-            //Weapon controller please.
-            if (!animator)
-            {
-                animator = GetComponent<Animator>();
-            }
-            equipmentManager.PlayerUpdate();
-        }
     }
 
 
@@ -100,19 +60,18 @@ public class Player : Character
         //Animations are organized here. Easier to force a level of charge to be present.
         ChargeWeapon();
 
+        if (equipmentManager != null)
+        {
+            equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
+            curStrength = BASE_STRENGTH;
 
-           if (equipmentManager != null)
-           {
-           equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
-           curStrength = BASE_STRENGTH;
+            if (animator)
+            {
+                animator.SetTrigger("Throw");
+                animator.SetBool("Attack", false);
+            }
 
-               if (animator)
-               {
-                   animator.SetTrigger("Throw");
-                   animator.SetBool("Attack", false);
-               }
-
-           }      
+        }
     }
 
     public void ChargeWeapon()
@@ -140,34 +99,31 @@ public class Player : Character
 
         }
     }
-        /*
-        public void ChargeWeapon()
-        {
-            if (IsWeaponAvailable())
-            {
-                // Avoid multiple calculations of the same thing
-                var maxCharge = strength * MAX_FORCE_MOD;
-
-                //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
-                //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
-                if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
-
-                //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
-                if (weaponCharge_UI != null)
-                    weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
-            }
-        }
-        */
-
-        public bool PickupNewWeapon(WeaponController weapon)
+    /*
+    public void ChargeWeapon()
     {
+        if (IsWeaponAvailable())
+        {
+            // Avoid multiple calculations of the same thing
+            var maxCharge = strength * MAX_FORCE_MOD;
 
+            //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
+            //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
+            if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
 
+            //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
+            if (weaponCharge_UI != null)
+                weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
+        }
+    }
+    */
 
+    public bool PickupNewWeapon(WeaponController weapon)
+    {
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
         {
-                equipmentManager = weapon;
+            equipmentManager = weapon;
             return true;
         }
 
@@ -176,8 +132,8 @@ public class Player : Character
 
     public bool IsSameWeapon(Weapon input)
     {
-        if(equipmentManager.GetBoundWeapon())
-        return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
+        if (equipmentManager.GetBoundWeapon())
+            return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
         return false;
     }
     public void SpawnWeaponPickup()
@@ -200,9 +156,9 @@ public class Player : Character
         entitySpawner.TryCreateRandomListedPickup(crosshair.GetPosition());
     }
 
-    public override void TakeDamage(float damage, Vector3 sourcePosition, Vector3 sourceVelocity)
+    public override void TakeDamage(float damage)
     {
-        base.TakeDamage(damage, sourcePosition, sourceVelocity);
+        base.TakeDamage(damage);
     }
 
     public void ForceKill()
@@ -215,25 +171,22 @@ public class Player : Character
         {
             MortalHealthComponent tmpHealthComponent = healthComponent as MortalHealthComponent;
             tmpHealthComponent.SetInvincible(false);
-            TakeDamage(tmpHealthComponent.GetHealth() + 1.0f, transform.position, Vector3.zero);
+            TakeDamage(tmpHealthComponent.GetHealth() + 1.0f);
         }
     }
 
     public override bool DestroyEntity()
     {
-        isDead = true;
-        CheckCamera();
-        camera.SetAdditionalVignette(0.7f);
-        camera.SetSaturation(-100.0f);
-        camera.ShowDeathScreen();
-        return true;
-    }
-
-    void CheckCamera()
-    {
-        if (!camera)
+        // If player is killed, he is taken to the hubworld
+        if (!gameManager)
         {
-            camera = FindObjectOfType<FollowingCamera>();
+            gameManager = FindObjectOfType<GameManager>();
         }
+
+        if (gameManager)
+        {
+            gameManager.EnterScene(Globals.Scenes.HubWorld);
+        }
+        return true;
     }
 }

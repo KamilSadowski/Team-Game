@@ -11,9 +11,9 @@ public class EntityManager : MonoBehaviour
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject[] NPCList;
-    [SerializeField] GameObject[] WeaponList;
-    [SerializeField] GameObject[] PropList;
-    [SerializeField] GameObject[] PickupList;
+    [SerializeField] public GameObject[] WeaponList { get; private set; }
+    [SerializeField] private GameObject[] PropList { get; set; }
+    [SerializeField] public GameObject[] PickupList { get; private set; }
 
     List<Entity> entities = new List<Entity>();
     Stack<int> entitySlots = new Stack<int>();
@@ -58,7 +58,7 @@ public class EntityManager : MonoBehaviour
     public int TryCreateListedWeapon(int index, Vector3 Position)
     {
         if(index >= 0 && index < WeaponList.Length)
-        return TryCreateEntity(WeaponList[index], Position);
+            return TryCreateEntity(WeaponList[index], Position);
 
         //-1 is commonly used as "Invalid"
         return -1;
@@ -100,7 +100,7 @@ public class EntityManager : MonoBehaviour
     {
 
         if(PropList.Length>0)
-        return TryCreateEntity(PropList[0], Position);
+            return TryCreateEntity(PropList[0], Position);
 
         //-1 is commonly used as "Invalid"
         return -1;
@@ -120,9 +120,9 @@ public class EntityManager : MonoBehaviour
         tempEntityGameObject.transform.position = position;
 
         if(IS_DEBUGGING)
-        tempEntityGameObject.name += ID;
+            tempEntityGameObject.name += ID;
 
-        if (tempEntity != null)
+        if (tempEntity)
         {
             ID = entitySlots.Peek();
             tempEntity.Create(entitySlots.Peek());
@@ -150,7 +150,7 @@ public class EntityManager : MonoBehaviour
             return -1;
         }
 
-        if (entity != null)
+        if (entity)
         {
             ID = entitySlots.Peek();
             entity.Create(entitySlots.Peek());

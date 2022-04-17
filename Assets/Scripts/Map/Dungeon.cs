@@ -7,27 +7,27 @@ public class Map : MonoBehaviour
 {
 	GameManager gameManager;
 
-	// A list of room prefabs that can be used
-	[SerializeField] List<Room> roomPrefabs = new List<Room>();
+    // A list of room prefabs that can be used
+    [SerializeField] List<Room> roomPrefabs = new List<Room>();
 
-	// List of rooms created on a 2D grid
-	bool[,] hasRoom = new bool[Globals.MAP_GRID_SIZE, Globals.MAP_GRID_SIZE];
+    // List of rooms created on a 2D grid
+    bool[,] hasRoom = new bool[Globals.MAP_GRID_SIZE, Globals.MAP_GRID_SIZE];
 
-	// Room positions on a 2D grid
-	Globals.Grid2D currentRoomPosition = new Globals.Grid2D();
-	Globals.Grid2D tmpRoomPosition = new Globals.Grid2D();
+    // Room positions on a 2D grid
+    Globals.Grid2D currentRoomPosition = new Globals.Grid2D();
+    Globals.Grid2D tmpRoomPosition     = new Globals.Grid2D();
 
-	Globals.Direction newDirection;
-	List<Globals.Direction> directionsAvailable = new List<Globals.Direction>();
+    Globals.Direction       newDirection;
+    List<Globals.Direction> directionsAvailable = new List<Globals.Direction>();
 
-	List<Room> roomsCreated = new List<Room>();
-	List<Globals.Grid2D> roomGridPositions = new List<Globals.Grid2D>();
+    List<Room>           roomsCreated      = new List<Room>();
+    List<Globals.Grid2D> roomGridPositions = new List<Globals.Grid2D>();
 
-	// Room creation variables
-	Vector3 roomPosition = Vector3.zero;
-	Vector3 roomRotation = new Vector3(0.0f, 0.0f, 90.0f);
+    // Room creation variables
+    Vector3 roomPosition = Vector3.zero;
+    Vector3 roomRotation = new Vector3(0.0f, 0.0f, 90.0f);
 
-	bool reloadMap = true;
+    bool reloadMap = true;
 
 	private void Start()
 	{
