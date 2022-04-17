@@ -217,6 +217,10 @@ public class Dungeon : MonoBehaviour
     [SerializeField] List<Room> roomPrefabs     = new List<Room>();
     [SerializeField] List<Room> bossRoomPrefabs = new List<Room>();
 
+    [SerializeField] List<GameObject> enemyList = new List<GameObject>();
+    [SerializeField] List<GameObject> bossList = new List<GameObject>();
+
+
     // Represents generated rooms on a 2d grid
     MapGridData[,] mapGrid = new MapGridData[Globals.MAP_GRID_SIZE, Globals.MAP_GRID_SIZE];
 
@@ -235,6 +239,16 @@ public class Dungeon : MonoBehaviour
     // Room creation variables
     Vector3 roomPosition = Vector3.zero;
     Vector3 roomRotation = new Vector3(0.0f, 0.0f, 90.0f);
+
+    public GameObject GetRandomEnemy()
+    {
+        return enemyList[Random.Range(0, enemyList.Count)];
+    }
+
+    public GameObject GetRandomBoss()
+    {
+        return bossList[Random.Range(0, bossList.Count)];
+    }
 
     private void Start()
     {

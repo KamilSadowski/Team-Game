@@ -22,8 +22,8 @@ TagManager:
   - Map
   - Enemy
   - Minimap
-  - 
-  - 
+  - Reflection
+  - Dodge
   - 
   - 
   - 
@@ -50,6 +50,9 @@ TagManager:
     locked: 0
   - name: GroundLayer
     uniqueID: 2263241335
+    locked: 0
+  - name: Reflection
+    uniqueID: 1811646077
     locked: 0
   - name: CharacterLayer
     uniqueID: 2600671285

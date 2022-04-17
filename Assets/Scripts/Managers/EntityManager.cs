@@ -11,9 +11,9 @@ public class EntityManager : MonoBehaviour
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject[] NPCList;
-    [SerializeField] public GameObject[] WeaponList { get; private set; }
-    [SerializeField] private GameObject[] PropList { get; set; }
-    [SerializeField] public GameObject[] PickupList { get; private set; }
+    [SerializeField] public GameObject[] WeaponList;
+    [SerializeField] public GameObject[] PropList;
+    [SerializeField] public GameObject[] PickupList;
 
     List<Entity> entities = new List<Entity>();
     Stack<int> entitySlots = new Stack<int>();

@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Player : Character
 {
@@ -29,6 +30,12 @@ public class Player : Character
     UI_ChargingBar weaponCharge_UI;
     private Animator animator;
 
+    public bool isDead { get; private set; } = false;
+    const float deathDuration = 3.0f;
+    Timer killTimer = new Timer(deathDuration);
+
+    FollowingCamera camera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,17 +47,48 @@ public class Player : Character
 
     private void Update()
     {
-        UpdateEntity();
-
-        if (!crosshair)
-            crosshair = PriorityChar_Manager.instance.getCrosshair();
-        //Weapon controller please.
-        if (!animator)
+        if (Debug.isDebugBuild)
         {
-            animator = GetComponent<Animator>();
+            if (Input.GetKey(KeyCode.Space))
+            {
+                TakeDamage(10.0f, transform.position, Vector3.zero);
+            }
         }
-        equipmentManager.PlayerUpdate();
 
+        if (isDead)
+        {
+            if (killTimer.Update(Time.deltaTime))
+            {
+                // If player is killed, he is taken to the hubworld
+                if (!gameManager)
+                {
+                    gameManager = FindObjectOfType<GameManager>();
+                }
+
+                if (gameManager)
+                {
+                    camera.SetAdditionalVignette(0.0f);
+                    camera.ResetSaturation();
+                    camera.HideDeathScreen();
+                    isDead = false;
+                    killTimer.Reset(deathDuration);
+                    gameManager.EnterScene(Globals.Scenes.HubWorld);
+                }
+            }
+        }
+        else
+        {
+            UpdateEntity();
+
+            if (!crosshair)
+                crosshair = PriorityChar_Manager.instance.getCrosshair();
+            //Weapon controller please.
+            if (!animator)
+            {
+                animator = GetComponent<Animator>();
+            }
+            equipmentManager.PlayerUpdate();
+        }
     }
 
 
@@ -78,7 +116,6 @@ public class Player : Character
     {
         if (animator)
         {
-
             // Avoid multiple calculations of the same thing
             curStrength += Time.deltaTime * CHARGE_STRENGTH_MOD;
 
@@ -156,9 +193,9 @@ public class Player : Character
         entitySpawner.TryCreateRandomListedPickup(crosshair.GetPosition());
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, Vector3 sourcePosition, Vector3 sourceVelocity)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, sourcePosition, sourceVelocity);
     }
 
     public void ForceKill()
@@ -171,22 +208,25 @@ public class Player : Character
         {
             MortalHealthComponent tmpHealthComponent = healthComponent as MortalHealthComponent;
             tmpHealthComponent.SetInvincible(false);
-            TakeDamage(tmpHealthComponent.GetHealth() + 1.0f);
+            TakeDamage(tmpHealthComponent.GetHealth() + 1.0f, transform.position, Vector3.zero);
         }
     }
 
     public override bool DestroyEntity()
     {
-        // If player is killed, he is taken to the hubworld
-        if (!gameManager)
-        {
-            gameManager = FindObjectOfType<GameManager>();
-        }
-
-        if (gameManager)
-        {
-            gameManager.EnterScene(Globals.Scenes.HubWorld);
-        }
+        isDead = true;
+        CheckCamera();
+        camera.SetAdditionalVignette(0.7f);
+        camera.SetSaturation(-100.0f);
+        camera.ShowDeathScreen();
         return true;
+    }
+
+    void CheckCamera()
+    {
+        if (!camera)
+        {
+            camera = FindObjectOfType<FollowingCamera>();
+        }
     }
 }

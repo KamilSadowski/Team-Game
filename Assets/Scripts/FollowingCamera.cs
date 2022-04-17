@@ -11,7 +11,7 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] Vector3 cameraEntityOffset;
     [SerializeField] float cameraForwardOffset = 1.0f;
     [SerializeField] float cameraForwardAimingOffset = 3.0f;
-    [SerializeField] CanvasGroup deathScreen;
+    [SerializeField] GameObject deathScreen;
 
     Crosshair crosshair;
     //[SerializeField] Material effectMaterial;
@@ -245,16 +245,12 @@ public class FollowingCamera : MonoBehaviour
 
     public void ShowDeathScreen()
     {
-        deathScreen.alpha = 1.0f;
-        deathScreen.interactable = true;
-        deathScreen.blocksRaycasts = true;
+        deathScreen.active = true;
     }
 
     public void HideDeathScreen()
     {
-        deathScreen.alpha = 0.0f;
-        deathScreen.interactable = false;
-        deathScreen.blocksRaycasts = false;
+        deathScreen.active = false;
     }
 
     //public void Explosion(Vector3 explosionPosition, float intensity)
