@@ -7,6 +7,7 @@ public class Reflection : MonoBehaviour
     SpriteRenderer rendererToReflect;
     SpriteRenderer renderer;
     Entity parent;
+    Prop prop;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +16,7 @@ public class Reflection : MonoBehaviour
         transform.parent.gameObject.TryGetComponent<Entity>(out parent);
         renderer = GetComponent<SpriteRenderer>();
         renderer.material = rendererToReflect.material;
-
+        transform.parent.gameObject.TryGetComponent(out prop);
     }
 
     // Update is called once per frame
@@ -23,9 +24,12 @@ public class Reflection : MonoBehaviour
     {
         renderer.flipX = !rendererToReflect.flipX;
         renderer.flipY = rendererToReflect.flipY;
-        renderer.sprite = rendererToReflect.sprite;
+        Sprite sprite = rendererToReflect.sprite;
+        renderer.sprite = sprite;
 
-        transform.localPosition = new Vector3(0, -renderer.bounds.size.y);
+
+        transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y - UnityEngine.Sprites.DataUtility.GetPadding(sprite).y));
+
 
         if (parent && !parent.colourChecked)
         {
