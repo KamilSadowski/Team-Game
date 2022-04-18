@@ -7,7 +7,6 @@ public class EnemyController : Controller
     protected GameObject playerObject;
     protected BaseHealthComponent playerHealth;
     protected AttackComponent attackComponent;
-    protected Character controlledObject;
     protected Animator animator;
     protected bool isWalking = false;
     protected bool isFacingFront = true;
@@ -28,7 +27,7 @@ public class EnemyController : Controller
         if (playerObject)
         {
             playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
-        }   
+        }
 
         BindVariables();
         StartCoroutine(WalkingThread());
@@ -44,7 +43,7 @@ public class EnemyController : Controller
             if (direction.y < 0f) isFacingFront = true;
             else isFacingFront = false;
 
-            yield return new WaitForSecondsRealtime(Random.Range(0.25f,5.0f));
+            yield return new WaitForSecondsRealtime(Random.Range(0.25f, 5.0f));
         }
     }
     // Update is called once per frame
@@ -76,7 +75,7 @@ public class EnemyController : Controller
 
 
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
-           
+
 
 
 
@@ -96,7 +95,7 @@ public class EnemyController : Controller
                 }
                 else
                 {
-                    
+
                     attackComponent = gameObject.GetComponent<AttackComponent>();
                     if (attackComponent)
                     {
@@ -104,7 +103,7 @@ public class EnemyController : Controller
                     }
                 }
             }
-            
+
         }
         else
         {
@@ -119,8 +118,8 @@ public class EnemyController : Controller
         }
 
 
-            
-       
+
+
         if (prevIsFacingFront != isFacingFront)
             GetComponent<Animator>().SetBool("Front", isFacingFront);
     }
