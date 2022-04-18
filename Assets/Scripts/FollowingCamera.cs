@@ -109,14 +109,19 @@ public class FollowingCamera : MonoBehaviour
         if (targetToFollow != null)
         {
             moveTo = targetToFollow.transform.position + cameraEntityOffset;
-                  
+
+            Vector3 distance = (crosshair.transform.position - targetToFollow.transform.position);
+
+            distance.x = Mathf.Clamp(distance.x, -Screen.width * 1.1f, Screen.width * 1.1f);
+            distance.y = Mathf.Clamp(distance.y, -Screen.height * 1.1f, Screen.height * 1.1f);
+
             if (aiming)
             {
-                moveTo += (crosshair.transform.position - targetToFollow.transform.position).normalized * cameraForwardAimingOffset;
+                moveTo += distance * cameraForwardAimingOffset;
             }
             else
             {
-                moveTo += (crosshair.transform.position - targetToFollow.transform.position).normalized * cameraForwardOffset;
+                moveTo += distance * cameraForwardOffset;
             }
 
             moveTo.z = cameraHeight;

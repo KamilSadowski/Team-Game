@@ -17,6 +17,7 @@ public class PlayerController : Controller
 
 
     protected Player player;
+    protected FollowingCamera camera;
     protected GameObject playerObject;
     protected UI_ChargingBar healthBarRef;
     protected UI inventoryRef;
@@ -31,7 +32,7 @@ public class PlayerController : Controller
     // Start is called before the first frame update
     void Start()
     {
-
+        camera = FindObjectOfType<FollowingCamera>();
     }
 
     // Update is called once per frame
@@ -171,8 +172,8 @@ public class PlayerController : Controller
         }
         else
             isDashing = false;
-        
 
+        camera.Aim(Input.GetKey(KeyCode.LeftShift));
     }
 
 }
