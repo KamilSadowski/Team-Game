@@ -30,8 +30,7 @@ Transform:
   m_LocalPosition: {x: 0.9306994, y: 7.120852, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 716671379457165527}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43,8 +42,8 @@ SpriteRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7659026385825737276}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -133,6 +132,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71e7501ab375704c8c05b6ba8227b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shader: {fileID: -6465566751694194690, guid: ea8dfbcdc35279b4fbe74418f46b487e, type: 3}
   DissolveSpeed: 1
   Reversed: 1

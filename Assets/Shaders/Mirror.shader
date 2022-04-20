@@ -20,6 +20,7 @@ Shader "Custom/Mirror" {
         {
             Tags
             {
+                "RenderPipeline" = "UniversalPipeline"
                 "Queue" = "Geometry"
                 "IgnoreProjector" = "True"
                 "RenderType" = "Transparent"
@@ -43,9 +44,9 @@ Shader "Custom/Mirror" {
 
             struct Input
             {
-                float2 uv_MainTex;
-                fixed4 color;
-                float4 screenPos;
+                float2 uv_MainTex : TEXTCOORD0;
+                fixed4 color : COLOR;
+                float4 screenPos : SV_POSITION;
             };
 
             void vert(inout appdata_full v, out Input o)
