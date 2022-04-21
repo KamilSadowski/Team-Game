@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
                     if(weaponsToGive.prefabID > -1)
                     {
-                        if (entityManager) weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.zero);
+                        weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.zero);
                     }
 
                

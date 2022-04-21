@@ -1,29 +1,26 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class DissolveEffect : MonoBehaviour
-{
-    // Start is called before the first frame update
+public class Dissolve : MonoBehaviour
+{ // Start is called before the first frame update
 
     private Material material;
-    
-    [SerializeField] private float  DissolveSpeed = 2;
-    [SerializeField] private bool   Reversed;
 
-    private float time;
-    private static readonly int MyTime = Shader.PropertyToID("_MyTime");
+    [SerializeField] private float DissolveSpeed = 2;
+    [SerializeField] private bool  Reversed;
+
+    private                 float time;
+    private static readonly int   MyTime = Shader.PropertyToID("_MyTime");
 
 
     void Start()
     {
         var shader = Shader.Find("Dissolve");
 
-        if(!shader) shader = Shader.Find("GeneratedFromGraph-Dissolve");
-        if(!shader) shader = Shader.Find("DissolveGenerated");
-        if(!shader) { Debug.Log("Shader not found", this); return; }
+        if (!shader) shader = Shader.Find("GeneratedFromGraph-Dissolve");
+        if (!shader) shader = Shader.Find("DissolveGenerated");
+        if (!shader) { Debug.Log("Shader not found", this); return; }
 
         material                                = new Material(shader);
         GetComponent<SpriteRenderer>().material = material;
@@ -33,7 +30,7 @@ public class DissolveEffect : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(material) Destroy(material);
+        if (material) Destroy(material);
     }
 
     // Update is called once per frame
@@ -44,7 +41,7 @@ public class DissolveEffect : MonoBehaviour
         if (material) material.SetFloat(MyTime, time);
         else material = GetComponent<SpriteRenderer>().material;
 
-        if (Mathf.Abs(time) > 2f)
+        if (time > 2f || time <0f)
         {
             time = Reversed ? 2f : 0f;
         }

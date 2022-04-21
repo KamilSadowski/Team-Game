@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ShadowCastingSprite
-  m_Shader: {fileID: -6465566751694194690, guid: 5082953d69870174c803d989936d94b1, type: 3}
+  m_Shader: {fileID: 4800000, guid: e8412477670787b48a7ee8b82f479b07, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -27,39 +27,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
-    - _Cutoff: 0.473
+    - _Cutoff: 0.5
     - _EnableExternalAlpha: 0
-    - _Enabled: 0
-    - _MyTime: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EdgeColour: {r: 0, g: 0.1238661, b: 4, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _PrimaryColor: {r: 0, g: 1, b: 0.096796036, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SecondaryColor: {r: 0, g: 0.15888166, b: 1, a: 1}
-    - _TertiaryColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

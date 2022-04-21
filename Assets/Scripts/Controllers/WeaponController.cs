@@ -53,34 +53,34 @@ public class WeaponController : ProjectileController
             crosshair = PriorityChar_Manager.instance.getCrosshair();
         if (MAX_WEAPON_COOLDOWN * PlayerCooldownMod > currentWeaponCooldown)
             currentWeaponCooldown += Time.deltaTime;
-
+        
     }
     public GameObject GetBoundWeapon()
     {
-        if (controlledObject)
-            return controlledObject.gameObject;
+        if(controlledObject)
+        return controlledObject.gameObject;
         return null;
     }
 
     public void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
-        if (playerRef)
-            if (playerRef.IsSameWeapon(boundPlayerWeapon))
-            {
-                currentWeaponCooldown -= WEAPON_PICKUP_REWARD;
-
+        if(playerRef)
+        if (playerRef.IsSameWeapon(boundPlayerWeapon))
+        {
+            currentWeaponCooldown -= WEAPON_PICKUP_REWARD;
+              
             }
-            else
-            //Remove weapon from play, even if it cannot be picked up.
-            if (boundPlayerWeapon && playerRef)
+        else
+        //Remove weapon from play, even if it cannot be picked up.
+        if (boundPlayerWeapon && playerRef)
+        {
+            transform.position = new Vector3(1000, 1000, 1000);
+           
+            if (!playerRef.PickupNewWeapon(this))
             {
-                transform.position = new Vector3(1000, 1000, 1000);
-
-                if (!playerRef.PickupNewWeapon(this))
-                {
                     boundPlayerWeapon.DestroyEntity();
-                }
             }
+        }
 
     }
 
@@ -123,11 +123,11 @@ public class WeaponController : ProjectileController
             spawnedWeaponWeaponReference = spawnedWeaponEntityReference.GetComponent<Weapon>();
             if (spawnedWeaponWeaponReference)
             {
-                float rotation = (float)((System.Math.Atan2(transform.position.x - crosshair.transform.position.x, transform.position.y - crosshair.transform.position.y)) / System.Math.PI) * 180.0f;
+               float rotation =  (float)((System.Math.Atan2(transform.position.x - crosshair.transform.position.x, transform.position.y - crosshair.transform.position.y))/ System.Math.PI) * 180.0f;
 
-                spawnedWeaponEntityReference.gameObject.transform.rotation = new Quaternion(0, 0, rotation, 1.0f);
+                spawnedWeaponEntityReference.gameObject.transform.rotation = new Quaternion(0,0, rotation,1.0f);
                 spawnedWeaponWeaponReference.SetThrowing(force, direction);
-                spawnedWeaponEntityReference.transform.rotation = new Quaternion(0, 0, Vector3.Dot(crosshair.transform.position, transform.position), 1.0f);
+                spawnedWeaponEntityReference.transform.rotation = new Quaternion(0, 0, Vector3.Dot(crosshair.transform.position, transform.position),1.0f);
             }
             //   spawnedWeaponClassReference
             /*

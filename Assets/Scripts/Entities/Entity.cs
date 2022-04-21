@@ -88,6 +88,7 @@ public class Entity : MonoBehaviour
     public void ChangeColours(Color colour1, Color colour2, Color colour3)
     {
         material = new MaterialPropertyBlock();
+        renderer.GetPropertyBlock(material);
         material.SetColor("_PrimaryColor", colour1);
         material.SetColor("_SecondaryColor", colour2);
         material.SetColor("_TertiaryColor", colour3);

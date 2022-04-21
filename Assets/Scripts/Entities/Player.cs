@@ -82,117 +82,116 @@ public class Player : Character
 
             if (!crosshair)
                 crosshair = PriorityChar_Manager.instance.getCrosshair();
-
             //Weapon controller please.
             if (!animator)
             {
                 animator = GetComponent<Animator>();
             }
-
-            if (equipmentManager != null) equipmentManager.PlayerUpdate();
+            equipmentManager.PlayerUpdate();
         }
     }
 
+
     //Weapon controller please.
-        public void ReleaseWeapon()
+    public void ReleaseWeapon()
+    {
+        //Animations are organized here. Easier to force a level of charge to be present.
+        ChargeWeapon();
+
+        if (equipmentManager != null)
         {
-            //Animations are organized here. Easier to force a level of charge to be present.
-            ChargeWeapon();
+            equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
+            curStrength = BASE_STRENGTH;
 
-            if (equipmentManager != null)
-            {
-                equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
-                curStrength = BASE_STRENGTH;
-
-                if (animator)
-                {
-                    animator.SetTrigger("Throw");
-                    animator.SetBool("Attack", false);
-                }
-
-            }
-        }
-
-        public void ChargeWeapon()
-        {
             if (animator)
             {
-                // Avoid multiple calculations of the same thing
-                curStrength += Time.deltaTime * CHARGE_STRENGTH_MOD;
-
-                animator.SetFloat("AttackAnimationSpeed", Time.deltaTime * CHARGE_STRENGTH_MOD);
-
-                var isPlaying = animator.GetBool("Attack");
-
-                // Play the animation attacking if it is not playing - Not sure if it really works
-                if (!isPlaying) animator.SetBool("Attack", true);
-
-                // If either of the weapons are fully charged 
-                if (curStrength > BASE_STRENGTH * MAX_STRENGTH_MOD)
-                {
-                    curStrength = BASE_STRENGTH * MAX_STRENGTH_MOD;
-                    // Stop the throwing animation
-                    animator.SetFloat("AttackAnimationSpeed", 0f);
-                }
-
+                animator.SetTrigger("Throw");
+                animator.SetBool("Attack", false);
             }
+
         }
-        /*
-        public void ChargeWeapon()
+    }
+
+    public void ChargeWeapon()
+    {
+        if (animator)
         {
-            if (IsWeaponAvailable())
+            // Avoid multiple calculations of the same thing
+            curStrength += Time.deltaTime * CHARGE_STRENGTH_MOD;
+
+            animator.SetFloat("AttackAnimationSpeed", Time.deltaTime * CHARGE_STRENGTH_MOD);
+
+            var isPlaying = animator.GetBool("Attack");
+
+            // Play the animation attacking if it is not playing - Not sure if it really works
+            if (!isPlaying) animator.SetBool("Attack", true);
+
+            // If either of the weapons are fully charged 
+            if (curStrength > BASE_STRENGTH * MAX_STRENGTH_MOD)
             {
-                // Avoid multiple calculations of the same thing
-                var maxCharge = strength * MAX_FORCE_MOD;
-
-                //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
-                //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
-                if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
-
-                //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
-                if (weaponCharge_UI != null)
-                    weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
-            }
-        }
-        */
-
-        public bool PickupNewWeapon(WeaponController weapon)
-        {
-            //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
-            if (weapon != null)
-            {
-                equipmentManager = weapon;
-                return true;
+                curStrength = BASE_STRENGTH * MAX_STRENGTH_MOD;
+                // Stop the throwing animation
+                animator.SetFloat("AttackAnimationSpeed", 0f);
             }
 
-            return false;
+        }
+    }
+    /*
+    public void ChargeWeapon()
+    {
+        if (IsWeaponAvailable())
+        {
+            // Avoid multiple calculations of the same thing
+            var maxCharge = strength * MAX_FORCE_MOD;
+
+            //If the current value is less than the max value (See. If Statement) then increase the stored "Charge" by your strength
+            //Delta time is applied to avoid dividing anything by 50 (Fixed update should be done 50 times a second but it can be adjusted, hence the time calculation)
+            if (WeaponCharge < maxCharge) WeaponCharge += strength * Time.deltaTime;
+
+            //Directly update the progress bar to avoid the usage of "Update" - Only updating it when a change is made.
+            if (weaponCharge_UI != null)
+                weaponCharge_UI.UpdateProgBar(WeaponCharge / (maxCharge));
+        }
+    }
+    */
+
+    public bool PickupNewWeapon(WeaponController weapon)
+    {
+        //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
+        if (weapon != null)
+        {
+            equipmentManager = weapon;
+            return true;
         }
 
-        public bool IsSameWeapon(Weapon input)
-        {
-            if (equipmentManager.GetBoundWeapon())
-                return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
-            return false;
-        }
-        public void SpawnWeaponPickup()
-        {
-            entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
-        }
+        return false;
+    }
 
-        public void SpawnWeaponPickupAt(Vector3 position)
-        {
-            entitySpawner.TryCreateListedWeapon(1, position);
-        }
+    public bool IsSameWeapon(Weapon input)
+    {
+        if (equipmentManager.GetBoundWeapon())
+            return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
+        return false;
+    }
+    public void SpawnWeaponPickup()
+    {
+        entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
+    }
 
-        public void SpawnEnemyTarget()
-        {
-            entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
-        }
+    public void SpawnWeaponPickupAt(Vector3 position)
+    {
+        entitySpawner.TryCreateListedWeapon(1, position);
+    }
 
-        public void SpawnRandomPickup()
-        {
-            entitySpawner.TryCreateRandomListedPickup(crosshair.GetPosition());
-        }
+    public void SpawnEnemyTarget()
+    {
+        entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
+    }
+
+    public void SpawnRandomPickup()
+    {
+        entitySpawner.TryCreateRandomListedPickup(crosshair.GetPosition());
+    }
 
     public override void TakeDamage(float damage, Vector3 sourcePosition, Vector3 sourceVelocity)
     {
