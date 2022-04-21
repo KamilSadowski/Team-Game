@@ -12,20 +12,23 @@ public class Dissolve : MonoBehaviour
 
     private                 float time;
     private static readonly int   MyTime = Shader.PropertyToID("_MyTime");
+    private static readonly int   Enabled = Shader.PropertyToID("_Enabled");
 
 
     void Start()
     {
-        var shader = Shader.Find("Dissolve");
-
-        if (!shader) shader = Shader.Find("GeneratedFromGraph-Dissolve");
-        if (!shader) shader = Shader.Find("DissolveGenerated");
+        var shader = Shader.Find("Custom/Dissolve");
+        
         if (!shader) { Debug.Log("Shader not found", this); return; }
 
         material                                = new Material(shader);
         GetComponent<SpriteRenderer>().material = material;
 
         time = Reversed ? 2f : 0f;
+
+
+        if (material) material.SetFloat(Enabled, 1);
+
     }
 
     private void OnDestroy()
@@ -41,9 +44,10 @@ public class Dissolve : MonoBehaviour
         if (material) material.SetFloat(MyTime, time);
         else material = GetComponent<SpriteRenderer>().material;
 
-        if (time > 2f || time <0f)
+        if (time is > 2f or < 0f)
         {
             time = Reversed ? 2f : 0f;
+            // TODO: enable when finished testing if (material) material.SetFloat(Enabled, 0);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -111,12 +112,24 @@ public class Entity : MonoBehaviour
 
         if (entityManager)
         {
-            entityManager.DeleteEntity(entityID);
+            var dissolveEffect = gameObject.AddComponent<Dissolve>();
+
+            StartCoroutine(DestroyEntityCoroutine());
+
             return true;
         }
 
         return false;
     }
+
+    IEnumerator DestroyEntityCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+
+            entityManager.DeleteEntity(entityID);
+    }
+
+
     // Called when the entity is to be removed
     public virtual void OnRemove()
     {

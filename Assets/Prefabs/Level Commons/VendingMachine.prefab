@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 250095948100125954}
   - component: {fileID: 3073717373095410569}
   - component: {fileID: 3001456680862180812}
-  - component: {fileID: 2094264988348242588}
+  - component: {fileID: 7116367918522552706}
+  - component: {fileID: 8075279930630261091}
   m_Layer: 0
   m_Name: VendingMachine
   m_TagString: Untagged
@@ -121,20 +122,53 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   type: 0
   things: []
---- !u!114 &2094264988348242588
-MonoBehaviour:
+--- !u!50 &7116367918522552706
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7659026385825737276}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &8075279930630261091
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7659026385825737276}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2997e4bb9e5ffe7428931f2f08b480c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DissolveSpeed: 2
-  Reversed: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.13498259}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.31863344, y: 0.23003483}
+  m_EdgeRadius: 0
 --- !u!1001 &7616405991962132392
 PrefabInstance:
   m_ObjectHideFlags: 0
