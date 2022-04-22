@@ -20,6 +20,7 @@ public class Room : MonoBehaviour
 
     // Room properties
     [SerializeField] protected int enemyNo = 2;
+    [SerializeField] protected int enemyRandRangeNo = 1;
     protected int enemiesAlive;
 
     // Room state
@@ -82,7 +83,9 @@ public class Room : MonoBehaviour
         if (!wasEntered)
         {
             CloseDoors();
-            for (int i = 0; i < enemyNo; ++i)
+
+            int enemyCount = enemyNo + Random.Range(-enemyRandRangeNo, enemyRandRangeNo+1);
+            for (int i = 0; i < enemyCount; ++i)
             {
                 CreateEntity();
             }

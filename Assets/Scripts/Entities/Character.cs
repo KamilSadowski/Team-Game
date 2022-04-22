@@ -49,6 +49,7 @@ public class Character : Entity2D
         Vector3 splatterOffset = (sourcePosition + sourceVelocity - transform.position).normalized * (splatterDistance + randomOffset);
         splatterOffset.z = 0.0f;
 
+        if(splashes.Count > 0)
         spriteManager.AddSprite(transform.position - splatterOffset, splashes[Random.Range(0, splashes.Count-1)]);
     }
 
