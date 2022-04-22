@@ -8,12 +8,16 @@ public class ParticleCollisionsComponent : MonoBehaviour
     ParticleSystem CollidableSystems;
     List<ParticleCollisionEvent> CollisionEvents;
     ParticleSystem.Particle[] allParticles;
+    float damageOutput = 10.0f;
     // Start is called before the first frame update
     void Awake()
     {
         CollisionEvents = new List<ParticleCollisionEvent>();
     }
-
+    public void SetDamage(float damage)
+    {
+        damageOutput = damage;
+    }
     private void OnParticleCollision(GameObject other)
     {
    
@@ -52,7 +56,7 @@ public class ParticleCollisionsComponent : MonoBehaviour
                             allParticles[i].remainingLifetime = -1; // Kills the particle
 
                         // Damages the entity
-                        entity.TakeDamage(10, allParticles[i].position, allParticles[i].velocity);
+                        entity.TakeDamage(damageOutput, allParticles[i].position, allParticles[i].velocity);
                         system.SetParticles(allParticles);
                         break;
                         }

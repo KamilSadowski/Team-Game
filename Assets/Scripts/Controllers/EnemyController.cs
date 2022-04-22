@@ -81,8 +81,6 @@ public class EnemyController : Controller
 
 
 
-            //DELETE THIS COMMENT LATER
-            //**Here you will likely need to grab the data from the enemy itself, giving you an attack range and an attack type, potentially changing attack style based on the range, i.e. a false ally could be friendly at a distance.**
             if (playerHealth != null)
             {
                 isWalking = false;

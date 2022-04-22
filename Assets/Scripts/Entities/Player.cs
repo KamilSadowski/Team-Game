@@ -160,6 +160,8 @@ public class Player : Character
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
         {
+            if(equipmentManager)
+            equipmentManager.GetComponent<Entity>().DestroyEntity();
             equipmentManager = weapon;
             return true;
         }
@@ -167,11 +169,13 @@ public class Player : Character
         return false;
     }
 
-    public bool IsSameWeapon(Weapon input)
+    public Weapon getEquippedWeapon()
     {
         if (equipmentManager.GetBoundWeapon())
-            return (equipmentManager.GetBoundWeapon().GetComponent<Weapon>() == input);
-        return false;
+        {
+            return equipmentManager.GetBoundWeapon().GetComponent<Weapon>();
+        }
+        return null;
     }
     public void SpawnWeaponPickup()
     {
@@ -185,7 +189,7 @@ public class Player : Character
 
     public void SpawnEnemyTarget()
     {
-        entitySpawner.TryCreateListedNPC(0, crosshair.GetPosition());
+        entitySpawner.TryCreateRandomListedNPC(crosshair.GetPosition());
     }
 
     public void SpawnRandomPickup()

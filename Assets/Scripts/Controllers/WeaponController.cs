@@ -65,11 +65,11 @@ public class WeaponController : ProjectileController
     public void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
         if(playerRef)
-        if (playerRef.IsSameWeapon(boundPlayerWeapon))
+        if (playerRef.getEquippedWeapon() != null && playerRef.getEquippedWeapon().GetComponent<WeaponController>() != null && playerRef.getEquippedWeapon().name == name)
         {
-            currentWeaponCooldown -= WEAPON_PICKUP_REWARD;
-              
-            }
+             playerRef.getEquippedWeapon().GetComponent<WeaponController>().currentWeaponCooldown += WEAPON_PICKUP_REWARD;
+             boundPlayerWeapon.DestroyEntity();
+        }
         else
         //Remove weapon from play, even if it cannot be picked up.
         if (boundPlayerWeapon && playerRef)

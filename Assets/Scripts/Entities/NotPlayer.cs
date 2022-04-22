@@ -6,7 +6,7 @@ public class NotPlayer : Character
 {
     // Store the room the AI was created in, on death, the room will be notified that one of the entities has been defeated
     Room room;
-
+    [SerializeField] int HealthDropChance = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +17,14 @@ public class NotPlayer : Character
     void Update()
     {
         UpdateEntity();
+    }
+    public override bool DestroyEntity()
+    {
+        if (entityManager)
+            if(Random.Range(0,100) < HealthDropChance)
+            entityManager.TryCreateRandomListedPickup(transform.position);
+
+        return base.DestroyEntity();
     }
 
     public override void OnRemove()

@@ -82,6 +82,16 @@ public class EntityManager : MonoBehaviour
         return -1;
     }
 
+    public int TryCreateRandomListedNPC(Vector3 Position)
+    {
+        int ID = Random.Range(0, NPCList.Length);
+        if (ID >= 0 && ID < NPCList.Length)
+            return TryCreateEntity(NPCList[ID], Position);
+
+        //-1 is commonly used as "Invalid"
+        return -1;
+    }
+
     public int TryCreateEnemy(GameObject enemy, Vector3 Position)
     {
         return TryCreateEntity(enemy, Position);

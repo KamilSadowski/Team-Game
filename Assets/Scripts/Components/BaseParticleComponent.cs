@@ -7,7 +7,7 @@ public class BaseParticleComponent : MonoBehaviour
 
     const float RGB_MAX_VAL = 1.0f / 255.0f;
     [SerializeField] int _numberOfColumns = 180;
-    
+    [SerializeField] float _damage = 10.0f;
     [SerializeField] float _speed = .75f;
     [SerializeField] Sprite _texture;
 
@@ -52,7 +52,7 @@ public class BaseParticleComponent : MonoBehaviour
     const int MAX_PARTICLE_COUNT = 1;
     List<Transform>[] organizedChildren;
     List<Transform> childrenInput;
-
+    float scalingMod = 1.0f;
 
 
     #region CHILDREN_ID_MANAGER
@@ -76,33 +76,7 @@ public class BaseParticleComponent : MonoBehaviour
     #endregion
 
 
-    public void setParticleParameters(
-    int? numberOfColumns = null,
-    float? speed = null,
-    Sprite texture = null,
-    Color[] color = null,
-    float? lifetime = null,
-    float? fireRate = null,
-    float? size = null,
-    float? emissionDuration = null,
-    Material material = null,
-    float? alpha = null,
-    float? lifetimeRand = null,
-    float? rotateSpeed = null)
-    {
-        if (numberOfColumns != null) _numberOfColumns = (int)numberOfColumns;
-        if (speed != null) _speed = (float)speed;
-        if (texture != null) _texture = texture;
-        if (color != null) _color = color;
-        if (lifetime != null) _lifetime = (float)lifetime;
-        if (fireRate != null) _fireRate = (float)fireRate;
-        if (size != null) _size = (float)size;
-        if (material != null) _material = material;
-        if (emissionDuration != null) _emissionDuration = (float)emissionDuration;
-        if (rotateSpeed != null) rotationSpeed = (float)rotateSpeed;
-        if (lifetimeRand != null) _lifetimeRandomization = (float)lifetimeRand;
-
-    }
+  
 
     private void Awake()
     {
@@ -129,6 +103,7 @@ public class BaseParticleComponent : MonoBehaviour
     {
         liveTargetPos = TargetPos;
 
+        scalingMod = startPos.transform.localScale.x;
         //If this IF statement is not passed then it means that the particle system is either running or does not have enough data.
         if ((startPos != null && inputPos != null))
             StartCoroutine(CreateParticles(inputPos, startPos));
@@ -190,8 +165,8 @@ public class BaseParticleComponent : MonoBehaviour
                     var mainModule = system.main;
                     mainModule.startColor = Color.white;
                     mainModule.startSize = .25f * .25f;
-                    mainModule.startSpeed = _speed;
-                    
+                    mainModule.startSpeed = _speed  * scalingMod;
+                    mainModule.scalingMode = ParticleSystemScalingMode.Hierarchy;
                     //If too extreme then it'll need to be simulated. If slow you can just guestimate
                     if (_speed > 0.25 && (_emissionDuration + _lifetime + _lifetimeRandomization + (_fireRateRandomization * (_emissionDuration / _fireRate))) > 1.0)
                         mainModule.cullingMode = ParticleSystemCullingMode.AlwaysSimulate;
@@ -259,15 +234,15 @@ public class BaseParticleComponent : MonoBehaviour
             else
             {
                 for (int i = 0; _fireRate * i < _emissionDuration; ++i)
-                    StartCoroutine(ParticleEmittion(((_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i), temporaryID));
+                    StartCoroutine(ParticleEmittion((((_fireRate* scalingMod) + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i), temporaryID));
                 //Invoke("ParticleEmittion", organizedChildren.Count-1, (_fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i);
 
                 //In theory, assuming a particle spawns at the last instant with the max possible time, the time between its death and startup time is the duration plus its lifespan, with max potential modifiers.
 
-                StartCoroutine(ParticleCleanup((_emissionDuration + _lifetime + _lifetimeRandomization + (_fireRateRandomization * (_emissionDuration / _fireRate))), temporaryID));
+                StartCoroutine(ParticleCleanup((_emissionDuration + _lifetime + _lifetimeRandomization + (_fireRateRandomization * (_emissionDuration / _fireRate * scalingMod))), temporaryID));
             }
         }
-
+        ParticleCollisionsClass.SetDamage(_damage);
         yield return null;
     }
 
@@ -301,7 +276,7 @@ public class BaseParticleComponent : MonoBehaviour
 
 
                 var emitParams = new ParticleSystem.EmitParams();
-                emitParams.startSize = _size * (1.0f + Random.Range(-_sizeRandomizationPercentage, _sizeRandomizationPercentage));
+                emitParams.startSize = (_size* scalingMod) * (1.0f + Random.Range(-_sizeRandomizationPercentage, _sizeRandomizationPercentage)) ;
 
                 if (_lifetimeRandomization > 0.01f)
                     emitParams.startLifetime = _lifetime + Random.Range(-_lifetimeRandomization, _lifetimeRandomization);
