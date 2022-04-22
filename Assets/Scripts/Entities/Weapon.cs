@@ -10,6 +10,7 @@ public class Weapon : Entity
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
 
+    protected static bool isCollisionSet = true;
 
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
@@ -45,11 +46,16 @@ public class Weapon : Entity
     {
         oldPos = gameObject.transform.position;
         controller = GetComponent<WeaponController>();
+       // CollisionSetup();
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if (!isCollisionSet) {
+            CollisionSetup();
+            isCollisionSet = true;
+                }
         UpdateEntity();
         if (playerCollision == null || weaponCollision == null)
         {
@@ -192,8 +198,9 @@ public class Weapon : Entity
 
     protected void CollisionSetup()
     {
+        //if (PriorityChar_Manager.instance.getPlayer() == null) return;
         //This function is called whenever an asset is not found. Nothing should run while this is "False"
-        if (playerCollision && weaponCollision)  
+        if (playerCollision && weaponCollision )  
             return;
         
         playerCollision = PriorityChar_Manager.instance.getPlayer().GetComponent<CapsuleCollider2D>();

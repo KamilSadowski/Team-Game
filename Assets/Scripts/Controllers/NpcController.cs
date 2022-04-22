@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NpcController : Controller
 {
-    public KeyCode ActivationKey = KeyCode.E;
+    [SerializeField] public KeyCode ActivationKey = KeyCode.E;
+    [SerializeField] public GameObject InteractionEntity;
     protected EntityManager entityManager;
 
     public const float interactionRadius = .25f;
@@ -18,6 +19,7 @@ public class NpcController : Controller
     protected GameObject objectRef;
     // Start is called before the first frame update
 
+    
 
     protected virtual void ActivateInteraction()
     {
@@ -30,6 +32,8 @@ public class NpcController : Controller
 
     protected bool IsPlayerWithinRadius()
     {
+
+        if (!InteractionEntity) return false;
         float collRad = interactionRadius * ((transform.localScale.x + transform.localScale.y));
        
 
@@ -50,17 +54,12 @@ public class NpcController : Controller
                     newScale.Set(interactionBaseScale, interactionBaseScale, interactionBaseScale);
 
 
-                    interactionID = entityManager.TryCreateInteractionUI(transform.position + (Vector3.up * interactionBaseScale * 1.5f));
+                    interactionID = entityManager.TryCreateEntity(InteractionEntity, transform.position + (Vector3.up * interactionBaseScale * 1.5f));
                     objectRef = entityManager.GetEntity(interactionID).gameObject;//
                     objectRef.transform.localScale = newScale * transform.localScale.x;
                     objectRef.transform.SetParent(gameObject.transform);
                 }
                 interactionSpawned = true;
-
-                if (Input.GetKeyDown(ActivationKey))
-                {
-                    ActivateInteraction();
-                }
             }
            
         }
@@ -74,6 +73,7 @@ public class NpcController : Controller
             {
                 EndInteraction();
             }
+
         }
         return true;
 
@@ -83,10 +83,14 @@ public class NpcController : Controller
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, interactionRadius * ((transform.localScale.x + transform.localScale.y)));
     }
-
+    protected virtual void InheritedUpdate()
+    {
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
+        InheritedUpdate();
+
         if (entityManager == null)
         {
             entityManager = FindObjectOfType<EntityManager>();
@@ -101,9 +105,13 @@ public class NpcController : Controller
         {
             playerRef = PriorityChar_Manager.instance.getPlayer();
         }
-        else
+        else if(IsPlayerWithinRadius())
         {
-            IsPlayerWithinRadius();
+            if (Input.GetKeyDown(ActivationKey))
+            {
+                ActivateInteraction();
+            }
+     
         }
     }
 }

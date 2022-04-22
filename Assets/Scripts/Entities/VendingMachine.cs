@@ -23,13 +23,7 @@ public class VendingMachine : Entity
         };
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V)) Use();
-    }
-
-    void Use()
+    public void Use()
     {
         var em = EntityManager.instance;
         if (em)
