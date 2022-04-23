@@ -162,7 +162,8 @@ public class Player : Character
         {
             if(equipmentManager)
             equipmentManager.GetComponent<Entity>().DestroyEntity();
-            equipmentManager = weapon;
+            equipmentManager =weapon;
+            weapon.disableWeapon();
             return true;
         }
 

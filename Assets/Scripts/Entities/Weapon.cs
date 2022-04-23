@@ -10,7 +10,7 @@ public class Weapon : Entity
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
 
-    protected static bool isCollisionSet = true;
+    static bool CollisionsSetup = false;
 
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
@@ -46,16 +46,17 @@ public class Weapon : Entity
     {
         oldPos = gameObject.transform.position;
         controller = GetComponent<WeaponController>();
-       // CollisionSetup();
+
+
+        CollisionSetup();
+        
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (!isCollisionSet) {
-            CollisionSetup();
-            isCollisionSet = true;
-                }
+
+
         UpdateEntity();
         if (playerCollision == null || weaponCollision == null)
         {
@@ -98,6 +99,18 @@ public class Weapon : Entity
     public void SetInactive()
     {
         currentState = States.inactive;
+    }
+
+    public void SetDropped()
+    {
+        currentState = States.Dropped;
+    }
+
+    public bool IsActive()
+    {
+        
+            return !(currentState == States.inactive);
+        
     }
 
     protected bool MoveWithMin(float min)
@@ -198,30 +211,32 @@ public class Weapon : Entity
 
     protected void CollisionSetup()
     {
-        //if (PriorityChar_Manager.instance.getPlayer() == null) return;
+        if (PriorityChar_Manager.instance.getPlayer() == null)
+            return;
         //This function is called whenever an asset is not found. Nothing should run while this is "False"
-        if (playerCollision && weaponCollision )  
+        if (playerCollision && weaponCollision)  
             return;
         
         playerCollision = PriorityChar_Manager.instance.getPlayer().GetComponent<CapsuleCollider2D>();
         weaponCollision = GetComponent<BoxCollider2D>();
-        Physics2D.IgnoreCollision(playerCollision, weaponCollision);
+            Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (damageMod < 0)
+        if (currentState == States.Thrown)
         {
-            damageMod = weapon_sharpness * transform.localScale.magnitude;
+            if (damageMod < 0)
+            {
+                damageMod = weapon_sharpness * transform.localScale.magnitude;
+            }
+            float output = weapon_damage * Vector3.Dot(nDirection, nDirection);
+
+            output *= damageMod;
+
+            Entity tempRef = collision.gameObject.GetComponent<Entity>();
+
+            if (tempRef != null)
+                tempRef.TakeDamage(output, transform.position, Vector3.zero);
         }
-        float output = weapon_damage * Vector3.Dot(nDirection, nDirection);
-
-        output *= damageMod;
-
-        Entity tempRef = collision.gameObject.GetComponent<Entity>();
-
-        if (tempRef != null)
-            tempRef.TakeDamage(output, transform.position, Vector3.zero);
-
     }
 }

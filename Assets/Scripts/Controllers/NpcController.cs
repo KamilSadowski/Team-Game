@@ -8,7 +8,7 @@ public class NpcController : Controller
     [SerializeField] public GameObject InteractionEntity;
     protected EntityManager entityManager;
 
-    public const float interactionRadius = .25f;
+    [SerializeField] public float interactionRadius = .25f;
     GameObject playerRef;
 
     protected bool interactionSpawned = false;
@@ -87,7 +87,7 @@ public class NpcController : Controller
     {
     }
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         InheritedUpdate();
 

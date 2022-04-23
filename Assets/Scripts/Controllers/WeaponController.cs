@@ -33,6 +33,7 @@ public class WeaponController : ProjectileController
 
         crosshair = PriorityChar_Manager.instance.getCrosshair();
         boundPlayerWeapon = this.GetComponent<Weapon>();
+        
     }
 
     private void Update()
@@ -64,6 +65,8 @@ public class WeaponController : ProjectileController
 
     public void PlayerPickup()
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
+        if (boundPlayerWeapon != null && boundPlayerWeapon.IsActive()) return;
+
         if(playerRef)
         if (playerRef.getEquippedWeapon() != null && playerRef.getEquippedWeapon().GetComponent<WeaponController>() != null && playerRef.getEquippedWeapon().name == name)
         {
@@ -146,7 +149,13 @@ public class WeaponController : ProjectileController
     }
 
 
-
+    public void disableWeapon()
+    {
+        if (!boundPlayerWeapon)
+            boundPlayerWeapon = GetComponent<Weapon>(); 
+        if (boundPlayerWeapon)
+            boundPlayerWeapon.SetInactive();
+    }
     //Bit of recursion but it should be fine as it will only be a single level, unless something has gone wrong.
     public bool GetIsEquipped()
     {
