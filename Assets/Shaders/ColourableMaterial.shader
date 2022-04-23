@@ -61,20 +61,23 @@ Shader "Custom/SpriteShadow" {
 
             void surf(Input IN, inout SurfaceOutput o)
             {
+                const float MIN_THRESHOLD = 0.1f;
+                const float MAX_THRESHOLD = 0.3f;
+
                 fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
-                if (c.r < 0.3f && c.g > 0.25f && c.b < 0.3f)
+                if (c.r < MAX_THRESHOLD && c.g > MIN_THRESHOLD && c.b < MAX_THRESHOLD)
                 {
                     c.r = c.g;
                     c.b = c.g;
                     c.rgb *= _PrimaryColor;
                 }
-                else if (c.r < 0.3f && c.g < 0.3f && c.b > 0.25f)
+                else if (c.r < MAX_THRESHOLD && c.g < MAX_THRESHOLD && c.b > MIN_THRESHOLD)
                 {
                     c.r = c.b;
                     c.g = c.b;
                     c.rgb *= _SecondaryColor;
                 }
-                else if (c.r > 0.25f && c.g < 0.3f && c.b < 0.3f)
+                else if (c.r > MIN_THRESHOLD && c.g < MAX_THRESHOLD && c.b < MAX_THRESHOLD)
                 {
                     c.g = c.r;
                     c.b = c.r;
