@@ -28,7 +28,7 @@ public class Reflection : MonoBehaviour
         renderer.sprite = sprite;
 
 
-        transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y - UnityEngine.Sprites.DataUtility.GetPadding(sprite).y));
+        transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y), 0);
 
 
         if (parent && !parent.colourChecked)

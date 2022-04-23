@@ -196,11 +196,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5362781022150293590, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_Name
-      value: EnemyIcon
+      value: Icon
       objectReference: {fileID: 0}
     - target: {fileID: 7232956713734012134, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232956713734012134, guid: 93f9713a35841274a99620356620a40b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232956713734012134, guid: 93f9713a35841274a99620356620a40b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232956713734012134, guid: 93f9713a35841274a99620356620a40b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7232956713734012134, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_LocalPosition.x

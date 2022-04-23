@@ -1,31 +1,7 @@
 fileFormatVersion: 2
-guid: 1850ec7461fb4bb4b8aa7fafaddda7a6
+guid: fef7cfd4bf81c9340a849dc16dfd08a5
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -7332862187377415976
-    second: AngryHotDogIdle_0
-  - first:
-      213: -654513856930151563
-    second: AngryHotDogIdle_1
-  - first:
-      213: -3095750456416257845
-    second: AngryHotDogIdle_2
-  - first:
-      213: 4174737017378345747
-    second: AngryHotDogIdle_3
-  - first:
-      213: -2036029581025431159
-    second: AngryHotDogIdle_4
-  - first:
-      213: 2861122108292807021
-    second: AngryHotDogIdle_5
-  - first:
-      213: -7888347343610832253
-    second: AngryHotDogIdle_6
-  - first:
-      213: -453121811035592044
-    second: AngryHotDogIdle_7
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -104,7 +80,7 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -116,19 +92,7 @@ TextureImporter:
     buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -138,6 +102,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 4
@@ -164,112 +140,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AngryHotDogIdle_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 224
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8d8a97611b07c3a90800000000000000
-      internalID: -7332862187377415976
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryHotDogIdle_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 192
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5738b196d13bae6f0800000000000000
-      internalID: -654513856930151563
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryHotDogIdle_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc83e04ac5fa905d0800000000000000
-      internalID: -3095750456416257845
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryHotDogIdle_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3139287d235afe930800000000000000
-      internalID: 4174737017378345747
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryHotDogIdle_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 981bac622e19eb3e0800000000000000
-      internalID: -2036029581025431159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryHotDogIdle_5
+      name: AngryMushroomWalkingBack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -283,14 +154,56 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d693fcb066fb4b720800000000000000
-      internalID: 2861122108292807021
+      spriteID: 18a3603cc6d610340a3847e758ad82a0
+      internalID: 240979308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AngryHotDogIdle_6
+      name: AngryMushroomWalkingBack_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b976d59c04978d46a5fab19a13814e3
+      internalID: 1008179775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryMushroomWalkingBack_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87601f844ea0dd40a161f55d0b211a0
+      internalID: 1368795544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryMushroomWalkingBack_3
       rect:
         serializedVersion: 2
         x: 0
@@ -304,14 +217,56 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38a1e2f92e5f68290800000000000000
-      internalID: -7888347343610832253
+      spriteID: 2f820082a3567754db8cab1958c5a504
+      internalID: -1712520276
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AngryHotDogIdle_7
+      name: AngryMushroomWalkingBack_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5972e7281e3480d4391af20665e52de3
+      internalID: 1678680721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryMushroomWalkingBack_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e20834516349f84d94f266abc068bfe
+      internalID: -1172651337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AngryMushroomWalkingBack_6
       rect:
         serializedVersion: 2
         x: 0
@@ -325,8 +280,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49aed351d1036b9f0800000000000000
-      internalID: -453121811035592044
+      spriteID: 4883deb269cb29840ae1910b890111e8
+      internalID: -1438653750
       vertices: []
       indices: 
       edges: []
@@ -334,7 +289,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 52f23da1e293f8a4086b3c835f98bd6c
+    spriteID: 2361eed547d5e5546b13d8652a2af8bd
     internalID: 0
     vertices: []
     indices: 
@@ -342,14 +297,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AngryHotDogIdle_0: -7332862187377415976
-      AngryHotDogIdle_4: -2036029581025431159
-      AngryHotDogIdle_6: -7888347343610832253
-      AngryHotDogIdle_1: -654513856930151563
-      AngryHotDogIdle_7: -453121811035592044
-      AngryHotDogIdle_2: -3095750456416257845
-      AngryHotDogIdle_3: 4174737017378345747
-      AngryHotDogIdle_5: 2861122108292807021
+      AngryMushroomWalkingBack_2: 1368795544
+      AngryMushroomWalkingBack_3: -1712520276
+      AngryMushroomWalkingBack_5: -1172651337
+      AngryMushroomWalkingBack_0: 240979308
+      AngryMushroomWalkingBack_1: 1008179775
+      AngryMushroomWalkingBack_6: -1438653750
+      AngryMushroomWalkingBack_4: 1678680721
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

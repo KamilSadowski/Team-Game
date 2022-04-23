@@ -33,7 +33,7 @@ public class WeaponController : ProjectileController
 
         crosshair = PriorityChar_Manager.instance.getCrosshair();
         boundPlayerWeapon = this.GetComponent<Weapon>();
-        
+        gameObject.layer = LayerMask.NameToLayer("Projectile");
     }
 
     private void Update()
