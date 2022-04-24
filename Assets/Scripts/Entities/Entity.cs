@@ -84,6 +84,9 @@ public class Entity : MonoBehaviour
         multiplyColour = renderer.color;
 
         ChangeColours(colours[0], colours[1], colours[2]);
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, Globals.SPRITE_Z);
+
     }
 
     public void ChangeColours(Color colour1, Color colour2, Color colour3)
@@ -139,6 +142,7 @@ public class Entity : MonoBehaviour
     public virtual void Teleport(Vector3 teleportTo)
     {
         movementComponent.Teleport(teleportTo);
+        transform.position = teleportTo;
     }
 
     public virtual void TakeDamage(float damage, Vector3 sourcePosition, Vector3 sourceVelocity)

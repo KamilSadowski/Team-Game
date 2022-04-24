@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numberOfColumns: 360
+  _damage: 10
   _speed: 1.05
   _texture: {fileID: 1379201073, guid: 7ad2677dadbbfb64f8e2b2553368039d, type: 3}
   _color:
@@ -73,7 +74,7 @@ MonoBehaviour:
   _lifetimeRandomization: 0.5
   collisionLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8384
   sortingLayerName: 
 --- !u!114 &6408601391070692132
 MonoBehaviour:

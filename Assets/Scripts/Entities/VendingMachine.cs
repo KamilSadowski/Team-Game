@@ -8,6 +8,9 @@ public class VendingMachine : Entity
 
     [SerializeField] private EType type;
     [SerializeField] private GameObject[] things;
+    [SerializeField] int cost = 1;
+    [SerializeField] GameObject vendingMachineHole;
+    static GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -26,14 +29,16 @@ public class VendingMachine : Entity
     public void Use()
     {
         var em = EntityManager.instance;
-        if (em)
+
+        if (!gameManager)
         {
-            var i = em.TryCreateEntity(things[Random.Range(0, things.Length)], transform.position);
-            var v = em.GetEntity(i);
-            if (v)
-            {
-                v.GetMovementComponent().Move(Vector3.back, true);
-            }
+            gameManager = FindObjectOfType<GameManager>();
+        }
+        if (!em) return;
+
+        if (gameManager.TrySpendCoins(cost))
+        {
+            var i = em.TryCreateEntity(things[Random.Range(0, things.Length)], vendingMachineHole.transform.position);
         }
     }
 }

@@ -19,14 +19,16 @@ public class SpriteManager : MonoBehaviour
         }
     }
 
-    public void AddSprite(Vector2 position, Sprite image)
+    public void AddSprite(Vector2 position, Sprite image, Color color)
     {
         if (currentIndex == Globals.MAX_SPRITES)
         {
             currentIndex = 0;
         }
         spriteObjectList[currentIndex].transform.position = position;
+        spriteObjectList[currentIndex].transform.rotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f));
         spriteList[currentIndex].sprite = image;
+        spriteList[currentIndex].color = color;
 
         currentIndex++;
     }

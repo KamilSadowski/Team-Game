@@ -17,17 +17,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioMixer effectsMixer;
     [SerializeField] AudioMixer musicMixer;
 
+    // Player data
+    int coins = 20;
+
     // Weapon data
     Globals.WeaponData weaponsToGive;
     WeaponController weaponControllers;
     int weaponsToGiveIDs;
     bool weaponsGiven = false;
+    FollowingCamera camera;
 
     // Start is called before the first frame update
     void Start()
     {
         weaponsToGive = new Globals.WeaponData();
-        weaponsToGive.prefabID = 1;
+        weaponsToGive.prefabID = 0;
 
 
         // Game manager cannot be destroyed
@@ -46,6 +50,8 @@ public class GameManager : MonoBehaviour
         // Update variables based on player prefs data
         musicMixer.SetFloat("masterVolume", Mathf.Log10(PlayerPrefs.GetFloat("Music") * 20));
         effectsMixer.SetFloat("masterVolume", Mathf.Log10(PlayerPrefs.GetFloat("FX") * 20));
+
+        UpdateCurrency(coins);
     }
 
     // Update is called once per frame
@@ -133,7 +139,7 @@ public class GameManager : MonoBehaviour
 
         if (player)
         {
-            weaponsToGive.prefabID = 1;
+            weaponsToGive.prefabID = 0;
             weaponsGiven = false;
             player = null;
         }
@@ -166,5 +172,29 @@ public class GameManager : MonoBehaviour
         }
         effectsSlider.value = PlayerPrefs.GetFloat("FX");
         musicSlider.value = PlayerPrefs.GetFloat("Music");
+    }
+
+    public void AddCoins(int amount)
+    {
+        coins += amount;
+        UpdateCurrency(coins);
+    }
+
+    // Returns false if cannot afford
+    public bool TrySpendCoins(int amount)
+    {
+        if (amount <= coins)
+        {
+            coins -= amount;
+            UpdateCurrency(coins);
+            return true;
+        }
+        return false;
+    }
+
+    public void UpdateCurrency(int newAmount)
+    {
+        if (!camera) camera = FindObjectOfType<FollowingCamera>();
+        camera.UpdateCurrency(newAmount.ToString());
     }
 }

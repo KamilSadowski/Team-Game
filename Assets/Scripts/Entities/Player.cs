@@ -87,7 +87,10 @@ public class Player : Character
             {
                 animator = GetComponent<Animator>();
             }
-            equipmentManager.PlayerUpdate();
+            if (equipmentManager)
+            {
+                equipmentManager.PlayerUpdate();
+            }
         }
     }
 
@@ -180,12 +183,12 @@ public class Player : Character
     }
     public void SpawnWeaponPickup()
     {
-        entitySpawner.TryCreateListedWeapon(1, crosshair.GetPosition());
+        entitySpawner.TryCreateListedWeapon(0, crosshair.GetPosition());
     }
 
     public void SpawnWeaponPickupAt(Vector3 position)
     {
-        entitySpawner.TryCreateListedWeapon(1, position);
+        entitySpawner.TryCreateListedWeapon(0, position);
     }
 
     public void SpawnEnemyTarget()

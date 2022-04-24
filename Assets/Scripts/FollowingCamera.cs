@@ -12,6 +12,7 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] float cameraForwardOffset = 1.0f;
     [SerializeField] float cameraForwardAimingOffset = 3.0f;
     [SerializeField] GameObject deathScreen;
+    [SerializeField] TMPro.TextMeshPro currency;
 
     Crosshair crosshair;
     //[SerializeField] Material effectMaterial;
@@ -32,6 +33,7 @@ public class FollowingCamera : MonoBehaviour
 
     // Camera data
     public Entity targetToFollow { get; protected set; }
+    public FadeAnimation fadeAnimation { get; protected set; }
     Vector3 moveTo;
     Vector3 teleportTo;
     Transform originPoint; // Point you attach the camera through (separate to the camera object to allow shaking)
@@ -59,6 +61,7 @@ public class FollowingCamera : MonoBehaviour
 
     #endregion
 
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -84,6 +87,8 @@ public class FollowingCamera : MonoBehaviour
         // Get lens distortion
         postProcessing.profile.TryGetSettings(out lansDistortion);
         defaultLansDistortion = lansDistortion.intensity.value;
+
+        fadeAnimation = GetComponentInChildren<FadeAnimation>();
     }
 
     // Update is called once per frame
@@ -137,7 +142,7 @@ public class FollowingCamera : MonoBehaviour
 
     }
 
-    public void CameraUpdata()
+    public void CameraUpdate()
     {
         // Convert the position from screen space to world space
         if(camera != null && crosshair != null)
@@ -256,6 +261,11 @@ public class FollowingCamera : MonoBehaviour
     public void HideDeathScreen()
     {
         deathScreen.active = false;
+    }
+
+    public void UpdateCurrency(string newCurrency)
+    {
+        currency.text = newCurrency;
     }
 
     //public void Explosion(Vector3 explosionPosition, float intensity)

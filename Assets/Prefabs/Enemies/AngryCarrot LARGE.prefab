@@ -154,6 +154,11 @@ MonoBehaviour:
   damageFlashInterval: 0.1
   splashes:
   - {fileID: 21300000, guid: 747ca78b4a5f21c4b8fdb08f5dacdb0c, type: 3}
+  - {fileID: 21300000, guid: aed7282061975dd40b1e1799dcb15daf, type: 3}
+  - {fileID: 21300000, guid: 004dd0558f6d65f42b3cf5d69604f728, type: 3}
+  - {fileID: 21300000, guid: 7b512a762ff06bd498276838cd237e65, type: 3}
+  - {fileID: 21300000, guid: 0df46cdd9f1e01549abc5e77654c9586, type: 3}
+  splashColour: {r: 1, g: 0.61530614, b: 0, a: 1}
   HealthDropChance: 10
 --- !u!114 &1979068975391386596
 MonoBehaviour:
@@ -418,7 +423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: collisionLayers.m_Bits
-      value: 192
+      value: 8384
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage
@@ -569,7 +574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: collisionLayers.m_Bits
-      value: 192
+      value: 8384
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage
@@ -720,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: collisionLayers.m_Bits
-      value: 192
+      value: 8384
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage
@@ -1003,7 +1008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: collisionLayers.m_Bits
-      value: 192
+      value: 8384
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage
@@ -1154,7 +1159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: collisionLayers.m_Bits
-      value: 192
+      value: 8384
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage

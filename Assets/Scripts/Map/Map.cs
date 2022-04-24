@@ -311,7 +311,7 @@ public class Dungeon : MonoBehaviour
         Vector3 roomCenter = new Vector3();
         int     doorsFound = 0;
         //roomCenter += roomPrefabTilemap.cellBounds.size / 2;
-        rooms[rooms.Count - 1].Initialise(roomPrefabTilemap.cellBounds.size, this, roomPrefabScript.GetEnemyNo());
+        rooms[rooms.Count - 1].Initialise(roomPrefabTilemap.cellBounds.size, this);
 
         doors.Add(new List<DoorData>());
 

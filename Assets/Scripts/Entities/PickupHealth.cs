@@ -7,7 +7,7 @@ public class PickupHealth : Pickup
     public int healAmount = 5;
     private MortalHealthComponent health;
 
-    protected override void activatePickup()
+    protected override void ActivatePickup()
     {
         health = PriorityChar_Manager.instance.getPlayer().GetComponent<MortalHealthComponent>();
 

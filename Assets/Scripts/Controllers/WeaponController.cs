@@ -121,7 +121,7 @@ public class WeaponController : ProjectileController
             currentWeaponCooldown -= WEAPON_THROW_COST * PlayerThrowCostMod;
 
             spawnedWeaponEntityReference =
-         entityManager.GetEntity(entityManager.TryCreateListedProjectile(1, playerRef.transform.position,
+         entityManager.GetEntity(entityManager.TryCreateListedProjectile(0, playerRef.transform.position,
                  (transform.position - crosshair.transform.position).normalized, force));
             spawnedWeaponWeaponReference = spawnedWeaponEntityReference.GetComponent<Weapon>();
             if (spawnedWeaponWeaponReference)

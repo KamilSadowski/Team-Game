@@ -233,6 +233,11 @@ MonoBehaviour:
   damageFlashInterval: 0.1
   splashes:
   - {fileID: 21300000, guid: 747ca78b4a5f21c4b8fdb08f5dacdb0c, type: 3}
+  - {fileID: 21300000, guid: aed7282061975dd40b1e1799dcb15daf, type: 3}
+  - {fileID: 21300000, guid: 004dd0558f6d65f42b3cf5d69604f728, type: 3}
+  - {fileID: 21300000, guid: 7b512a762ff06bd498276838cd237e65, type: 3}
+  - {fileID: 21300000, guid: 0df46cdd9f1e01549abc5e77654c9586, type: 3}
+  splashColour: {r: 1, g: 0, b: 0, a: 1}
   equipmentManager: {fileID: 0}
   CHARGE_STRENGTH_MOD: 10
   MAX_STRENGTH_MOD: 2
@@ -263,7 +268,7 @@ MonoBehaviour:
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 384
+      m_Bits: 8576
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0

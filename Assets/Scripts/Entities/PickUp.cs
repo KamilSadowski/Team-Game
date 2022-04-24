@@ -29,18 +29,18 @@ public class Pickup : Entity2D
     void FixedUpdate()
     {
         if (BindVariables())
-            if (isPlayerCollision())
+            if (IsPlayerCollision())
             {
-                activatePickup();
+                ActivatePickup();
             }
     }
 
-    protected bool isPlayerCollision()
+    protected bool IsPlayerCollision()
     {
         return playerCollider.bounds.Intersects(thisCollider.bounds);
     }
 
-    protected virtual void activatePickup()
+    protected virtual void ActivatePickup()
     {
         entityManager.DeleteEntity(entityID);
     }

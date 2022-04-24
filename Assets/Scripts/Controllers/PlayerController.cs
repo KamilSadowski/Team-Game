@@ -60,7 +60,7 @@ public class PlayerController : Controller
 
             if (!isUsingInterface)
             {
-                FollowingCamera.instance.CameraUpdata();
+                FollowingCamera.instance.CameraUpdate();
 
                 //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
                 if (entityMoveComp != null)

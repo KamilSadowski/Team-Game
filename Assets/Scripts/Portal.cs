@@ -22,6 +22,7 @@ public class Portal : MonoBehaviour
         _swapSprite = GetComponent<SwapSprite>();
         renderer = GetComponent<SpriteRenderer>();
         collider = GetComponent<Collider2D>();
+        animation = FindObjectOfType<FollowingCamera>().fadeAnimation;
     }
 
     // Update is called once per frame

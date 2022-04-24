@@ -9,6 +9,7 @@ public class Character : Entity2D
     SpriteManager spriteManager;
 
     [SerializeField] protected List<Sprite> splashes;
+    [SerializeField] protected Color splashColour;
     protected float splatterDistance = 0.1f;
     protected float randomThreshold = 0.05f;
 
@@ -49,8 +50,7 @@ public class Character : Entity2D
         Vector3 splatterOffset = (sourcePosition + sourceVelocity - transform.position).normalized * (splatterDistance + randomOffset);
         splatterOffset.z = 0.0f;
 
-        if(splashes.Count > 0)
-        spriteManager.AddSprite(transform.position - splatterOffset, splashes[Random.Range(0, splashes.Count-1)]);
+        spriteManager.AddSprite(transform.position - splatterOffset, splashes[Random.Range(0, splashes.Count)], splashColour);
     }
 
     // Update is called once per frame
