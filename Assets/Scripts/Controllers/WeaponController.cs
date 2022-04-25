@@ -8,7 +8,7 @@ public class WeaponController : ProjectileController
     [SerializeField] float MAX_WEAPON_COOLDOWN = 2.5f;
     [SerializeField] float WEAPON_THROW_COST = 1.0f;
     [SerializeField] float WEAPON_PICKUP_REWARD = 1.0f;
-    [SerializeField] int EntityID = 0;
+
     protected float PlayerThrowCostMod = 1.0f;
     protected float PlayerCooldownMod = 1.0f;
 
@@ -29,6 +29,7 @@ public class WeaponController : ProjectileController
     // Start is called before the first frame update
     void Start()
     {
+        
         entityManager = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
         BindVariables();
 
@@ -61,6 +62,7 @@ public class WeaponController : ProjectileController
     {
         if(controlledObject)
         return controlledObject.gameObject;
+        
         return null;
     }
 
@@ -123,7 +125,7 @@ public class WeaponController : ProjectileController
             currentWeaponCooldown -= WEAPON_THROW_COST * PlayerThrowCostMod;
 
             spawnedWeaponEntityReference =
-         entityManager.GetEntity(entityManager.TryCreateListedProjectile(EntityID, playerRef.transform.position,
+         entityManager.GetEntity(entityManager.TryCreateMovingEntity(playerRef.getEquippedWeapon().gameObject, playerRef.transform.position,
                  (transform.position - crosshair.transform.position).normalized, force));
             spawnedWeaponWeaponReference = spawnedWeaponEntityReference.GetComponent<Weapon>();
             if (spawnedWeaponWeaponReference)

@@ -24,6 +24,13 @@ public class MortalHealthComponent : BaseHealthComponent
             soundOutputComponent = gameObject.GetComponent<SoundManager>();
         }
     }
+
+    public override void applyDifficultyModifier() 
+    {
+        maxHealth *= Globals.DifficultyModifier;
+        currentHealth = maxHealth;
+    }
+
     public override float GetHealthPercentage()
     {
         return currentHealth / maxHealth;

@@ -58,6 +58,8 @@ public class Character : Entity2D
     {
         UpdateEntity();
         if (playerHealth == null)
-            playerHealth = GetComponent<MortalHealthComponent>();
+        {
+            playerHealth = healthComponent;
+        }
     }
 }

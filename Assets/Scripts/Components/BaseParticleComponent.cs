@@ -71,16 +71,11 @@ public class BaseParticleComponent : MonoBehaviour
         }
         return -1;
     }
-
     void AddID(int ID)
     {
         childrenIDs.Add(ID);
     }
     #endregion
-
-
-  
-
     private void Awake()
     {
         organizedChildren = new List<Transform>[MAX_PARTICLE_COUNT];
@@ -102,11 +97,18 @@ public class BaseParticleComponent : MonoBehaviour
     }
 
 
+
     public void StartParticleEffect(Transform inputPos /*Parent*/, Transform startPos = null/*StartPosition*/, System.Func<Vector3> TargetPos = null)
     {
         liveTargetPos = TargetPos;
 
         scalingMod = startPos.transform.localScale.x;
+
+        _damage *= Globals.DifficultyModifier;
+        _emissionDuration *= Globals.DifficultyModifier;
+
+
+
         //If this IF statement is not passed then it means that the particle system is either running or does not have enough data.
         if ((startPos != null && inputPos != null))
             StartCoroutine(CreateParticles(inputPos, startPos));
@@ -249,9 +251,6 @@ public class BaseParticleComponent : MonoBehaviour
             }
             //If there is no lifespan then assume the duration is indefinite. Removes need for a boolean toggle as a duration of 0 is likely to be never used.
             //Random.Range likely makes this a bit more expensive than it would otherwise be but it makes more visually appealing effects when introducing randomization,
-            if (_emissionDuration <= 0)
-                InvokeRepeating("ParticleEmittion", 0, _fireRate + Random.Range(-_fireRateRandomization, _fireRateRandomization));
-            else
             {
                 for (int i = 0; _fireRate * i < _emissionDuration; ++i)
                     StartCoroutine(ParticleEmittion((((_fireRate* scalingMod) + Random.Range(-_fireRateRandomization, _fireRateRandomization)) * i), temporaryID));

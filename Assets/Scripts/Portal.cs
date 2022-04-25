@@ -51,6 +51,7 @@ public class Portal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Globals.DifficultyModifier += 0.1f;
             _spriteRenderer.color = Color.clear;
             _player.gameObject.SetActive(false);
             Instantiate(animation);

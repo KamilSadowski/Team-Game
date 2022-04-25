@@ -28,8 +28,9 @@ public class EnemyController : Controller
         if (playerObject)
         {
             playerHealth = playerObject.GetComponent<Character>().GetPlayerHealth();
-        }   
+        }
 
+        
         BindVariables();
         StartCoroutine(WalkingThread());
     }

@@ -19,6 +19,7 @@ public class BulletHellAttackComponent : AttackComponent
     void Start()
     {
         targetPosition = PriorityChar_Manager.instance.getPlayerPosition;
+
     }
 
     // Update is called once per frame
