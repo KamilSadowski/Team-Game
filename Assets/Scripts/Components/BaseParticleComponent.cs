@@ -9,6 +9,8 @@ public class BaseParticleComponent : MonoBehaviour
     [SerializeField] int _numberOfColumns = 180;
     [SerializeField] float _damage = 10.0f;
     [SerializeField] float _speed = .75f;
+    [SerializeField] float IncrementingSpeed = 0.0f;
+
     [SerializeField] Sprite _texture;
 
     //Iterates through colors when creating particles. Abusing this I can make a colour palette without adding extra calculations in real time.
@@ -26,6 +28,7 @@ public class BaseParticleComponent : MonoBehaviour
     [SerializeField] float _emissionDuration = FIRE_RATE_BASE * 25.0f;
 
     [SerializeField] float _size = 0.15f * .4f;
+    [SerializeField] float _sizeOverLifetime = 0.0f;
     [SerializeField] float _sizeRandomizationPercentage = 0.1f;
     float _angle;
     [SerializeField] float _attackRadius = 360;
@@ -166,6 +169,7 @@ public class BaseParticleComponent : MonoBehaviour
                     mainModule.startColor = Color.white;
                     mainModule.startSize = .25f * .25f;
                     mainModule.startSpeed = _speed  * scalingMod;
+                  
                     mainModule.scalingMode = ParticleSystemScalingMode.Hierarchy;
                     //If too extreme then it'll need to be simulated. If slow you can just guestimate
                     if (_speed > 0.25 && (_emissionDuration + _lifetime + _lifetimeRandomization + (_fireRateRandomization * (_emissionDuration / _fireRate))) > 1.0)
@@ -196,6 +200,22 @@ public class BaseParticleComponent : MonoBehaviour
                         tex.AddSprite(_texture);
                     }
 
+                    if (0 < Mathf.Abs(_sizeOverLifetime))
+                    {
+                        var sizeOverLife = system.sizeOverLifetime;
+
+                        sizeOverLife.enabled = true;
+                        sizeOverLife.sizeMultiplier = _sizeOverLifetime;
+                    }
+
+                    if(0 < Mathf.Abs(IncrementingSpeed))
+                    {
+                        var velOverLifetime = system.velocityOverLifetime;
+
+                        velOverLifetime.enabled = true;
+                        velOverLifetime.speedModifier = IncrementingSpeed;
+
+                    }
 
                     //Collisions
                     if (collisionLayers.value > 0)
@@ -254,7 +274,7 @@ public class BaseParticleComponent : MonoBehaviour
         // ParticleParent = null;
     }
 
-
+   
     IEnumerator ParticleEmittion(float delay, int index)
     {
         yield return new WaitForSeconds(delay);
@@ -285,11 +305,11 @@ public class BaseParticleComponent : MonoBehaviour
 
 
                 emitParams.startColor = _color[gradiantMult];
-
+               
                 ++gradiantMult;
                 if (gradiantMult >= _color.Length) gradiantMult = 0;
 
-
+            
                 system.Emit(emitParams, 1);
 
             }
