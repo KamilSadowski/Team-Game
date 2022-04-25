@@ -44,7 +44,7 @@ public class Dissolve : MonoBehaviour
         if (material) material.SetFloat(MyTime, time);
         else material = GetComponent<SpriteRenderer>().material;
 
-        if (time is > 2f or < 0f)
+        if (time > 2.0f || time < 0.0f)
         {
             time = Reversed ? 2f : 0f;
             // TODO: enable when finished testing if (material) material.SetFloat(Enabled, 0);

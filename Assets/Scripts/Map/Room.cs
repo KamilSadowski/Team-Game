@@ -19,8 +19,8 @@ public class Room : MonoBehaviour
     protected Tilemap groundTileMap;
 
     // Room properties
-    [SerializeField] protected int maxEnemyNo = 2;
-    [SerializeField] protected int minEnemyNo = 1;
+    public int maxEnemyNo = 2;
+    public int minEnemyNo = 1;
     protected int enemyNo = 1;
     protected int enemiesAlive;
 
@@ -39,7 +39,7 @@ public class Room : MonoBehaviour
 
 
     // Room constructor
-    public void Initialise(Vector3Int roomSize, Dungeon thisMap)
+    public void Initialise(Vector3Int roomSize, Dungeon thisMap, int minEnemies, int maxEnemies)
     {
         size = roomSize;
         doors = new List<Door>();
@@ -47,6 +47,8 @@ public class Room : MonoBehaviour
         entityManager = FindObjectOfType<EntityManager>();
         map = thisMap;
         groundTileMap = map.GetGroundTileMap();
+        minEnemyNo = minEnemies;
+        maxEnemyNo = maxEnemies;
         enemyNo = Random.Range(minEnemyNo, maxEnemyNo);
     }
 

@@ -295,6 +295,7 @@ public class Dungeon : MonoBehaviour
         Vector3Int prefabPosition = new Vector3Int(); // Position within the prefab
         Vector3Int globalPosition = new Vector3Int(); // Position on the map
 
+        // Add a new room to the list
         if (bossRoom)
         {
             rooms.Add(Instantiate<BossRoom>(emptyBossRoomPrefab));
@@ -305,13 +306,14 @@ public class Dungeon : MonoBehaviour
             rooms.Add(newRoom);
         }
 
+        // Fill in the room that has just been added with data from the prefab
         Room    roomPrefabScript  = roomPrefab.GetComponent<Room>();
         Tilemap roomPrefabTilemap = roomPrefab.GetComponent<Tilemap>();
         roomPrefabTilemap.CompressBounds();
         Vector3 roomCenter = new Vector3();
         int     doorsFound = 0;
         //roomCenter += roomPrefabTilemap.cellBounds.size / 2;
-        rooms[rooms.Count - 1].Initialise(roomPrefabTilemap.cellBounds.size, this);
+        rooms[rooms.Count - 1].Initialise(roomPrefabTilemap.cellBounds.size, this, roomPrefabScript.minEnemyNo, roomPrefabScript.maxEnemyNo);
 
         doors.Add(new List<DoorData>());
 
