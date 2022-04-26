@@ -101,12 +101,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55c5c11f1b8ed9841bfd1422b4590d8b, type: 2}
   rightUWallTiles:
   - {fileID: 11400000, guid: 4573b2489b9afd148a7b4f172f5cb74e, type: 2}
-  nearTopWallProps:
-  - {fileID: 5834226697503283585, guid: 5107a54071bdaa547847b4de50adbb79, type: 3}
+  commonNearTopWallProps:
   - {fileID: 3672667769868969295, guid: cc5d10d664312fe47a87de04f500c6e7, type: 3}
-  roomProps:
+  uncommonNearTopWallProps:
+  - {fileID: 5834226697503283585, guid: 5107a54071bdaa547847b4de50adbb79, type: 3}
+  rareNearTopWallProps:
+  - {fileID: 3001456680862180812, guid: 2f25c6ea442baec428f99d3cfa2f501e, type: 3}
+  commonRoomProps:
   - {fileID: 3986926667946167286, guid: c85a05e4e14daa049a94a47472a5ced7, type: 3}
+  uncommonRoomProps:
   - {fileID: 3986926667946167286, guid: dbdaf18b7d197894892b1ae5bb945d0a, type: 3}
+  rareRoomProps:
+  - {fileID: 3877544954245258586, guid: 7c8f4263107ec394fb6a507789f855d6, type: 3}
   emptyBossRoomPrefab: {fileID: -7725025818627621477, guid: 13670c77d00b7444c9b8f0ff708c4fe9, type: 3}
   emptyRoomPrefab: {fileID: 5677266474391530819, guid: 5cf295cf24b17ca47851646e3936fc02, type: 3}
   lightPrefab: {fileID: 4706677968071202491, guid: f2dffe87a5bf28a4bb05ef5942276cb3, type: 3}
@@ -133,6 +139,9 @@ MonoBehaviour:
   - {fileID: 3803924984938410212, guid: a45d730fd19a67a4190837ad5ce933f5, type: 3}
   - {fileID: 3803924984938410212, guid: 31bb772c2f677f94d870fb7e76872d4d, type: 3}
   - {fileID: 3803924984938410212, guid: 7ce9d68974a8e3940abd0b7a3f4d0f5b, type: 3}
+  - {fileID: 3803924984938410212, guid: feb75b5a33702c847b10d40a7c833beb, type: 3}
+  - {fileID: 3803924984938410212, guid: fd8b886c9d9ed53449504f5184d7c057, type: 3}
+  - {fileID: 3803924984938410212, guid: 2fc7918759468834fa8a2043907705fc, type: 3}
   bossRoomPrefabs:
   - {fileID: 1879307424236399065, guid: 4e99528d72df4d143adc3673bd14bd1e, type: 3}
   enemyList:

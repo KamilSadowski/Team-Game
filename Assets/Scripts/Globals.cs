@@ -27,6 +27,11 @@ public static class Globals
     public const int MIN_CORRIDOR_DIST = 3; // How long a corridor has to be away from the room to avoid wall clipping
     public const int ROOM_PLACEMENT_OFFSET = 5; // Distance between room grid fields, needs to exist to avoid wall clipping and allow corridors
 
+    // How rare the props are on the map (chances are relative to the sum of all of the chances so if they add up to 100 then the chance is in 100)
+    public const int COMMON_CHANCE = 68;
+    public const int UNCOMMON_CHANCE = 30;
+    public const int RARE_CHANCE = 2;
+
     public const float SPRITE_Z = -0.05f; // How much to offset sprites to cast shadows
 
     public const int COLOURS_PER_SHADER = 3; // How many colours the colouring shader supports

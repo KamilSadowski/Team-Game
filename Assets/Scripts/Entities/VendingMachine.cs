@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class VendingMachine : Entity
+public class VendingMachine : Prop
 {
     private enum EType { PickUp, Weapon };
 

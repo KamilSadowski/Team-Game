@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     // Room Data
     public Vector3Int size { get; private set; } // Room size
     public List<Door> doors { get; private set; }
-    protected Vector3 center = new Vector3(); // Room position on the map
+    public Vector3 center = new Vector3(); // Room position on the map
     protected List<Vector3Int> groundTiles; // Positions of any tile that entites can stand on
     protected Dungeon map;
     protected Tilemap groundTileMap;
@@ -50,11 +50,6 @@ public class Room : MonoBehaviour
         minEnemyNo = minEnemies;
         maxEnemyNo = maxEnemies;
         enemyNo = Random.Range(minEnemyNo, maxEnemyNo);
-    }
-
-    public void SetRoomCenter(Vector3 roomCenter)
-    {
-        center = roomCenter;
     }
 
     public int GetEnemyNo()

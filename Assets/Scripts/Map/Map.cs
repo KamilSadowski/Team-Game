@@ -197,8 +197,12 @@ public class Dungeon : MonoBehaviour
     [SerializeField] List<Tile> leftUWallTiles;
     [SerializeField] List<Tile> rightUWallTiles;
 
-    [SerializeField] List<Prop> nearTopWallProps;
-    [SerializeField] List<Prop> roomProps;
+    [SerializeField] List<Prop> commonNearTopWallProps;
+    [SerializeField] List<Prop> uncommonNearTopWallProps;
+    [SerializeField] List<Prop> rareNearTopWallProps;
+    [SerializeField] List<Prop> commonRoomProps;
+    [SerializeField] List<Prop> uncommonRoomProps;
+    [SerializeField] List<Prop> rareRoomProps;
 
 
     [SerializeField] BossRoom emptyBossRoomPrefab;
@@ -302,8 +306,7 @@ public class Dungeon : MonoBehaviour
         }
         else
         {
-            var newRoom = Instantiate<Room>(emptyRoomPrefab);
-            rooms.Add(newRoom);
+            rooms.Add(Instantiate<Room>(emptyRoomPrefab));
         }
 
         // Fill in the room that has just been added with data from the prefab
@@ -387,7 +390,7 @@ public class Dungeon : MonoBehaviour
 
         roomCenter /= doorsFound;
         roomCenter =  groundTileMap.CellToWorld(new Vector3Int((int)roomCenter.x, (int)roomCenter.y, (int)roomCenter.z));
-        rooms[rooms.Count - 1].SetRoomCenter(roomCenter);
+        rooms[rooms.Count - 1].center = roomCenter;
 
 
         // Minimap Code
@@ -462,7 +465,7 @@ public class Dungeon : MonoBehaviour
 
     // Connects the 2 selected rooms using the closest doors from door data, doors needed are added to the instance of the room
     void ConnectRooms(ref TileBase[,] map, ref List<Room> rooms, ref List<List<DoorData>> roomDoors, int room1,
-        int room2)
+                      int room2, Globals.Direction door1Direction, Globals.Direction door2Direction)
     {
         // If no doors, return
         if (roomDoors[room1].Count == 0 || roomDoors[room2].Count == 0)
@@ -471,34 +474,30 @@ public class Dungeon : MonoBehaviour
         }
 
         // Find out which of the doors are the closest
-        int   closestRoom1Door = 0;
-        int   closestRoom2Door = 0;
-        float closestDistance  = float.MaxValue;
-        float tmpDist          = 0;
+        int door1 = FindDoorWithDirection(roomDoors[room1], door1Direction);
+        int door2 = FindDoorWithDirection(roomDoors[room2], door2Direction);
 
-        for (int room1Door = 0; room1Door < roomDoors[room1].Count; ++room1Door)
+        // Returns the index of the door with the matching direction
+        int FindDoorWithDirection(List<DoorData> roomDoors, Globals.Direction direction)
         {
-            for (int room2Door = 0; room2Door < roomDoors[room2].Count; ++room2Door)
+            for (int i = 0; i < 4; ++i)
             {
-                tmpDist = Vector3Int.Distance(roomDoors[room1][room1Door].corridorStart,
-                    roomDoors[room2][room2Door].corridorStart);
-                if (tmpDist < closestDistance)
+                if (roomDoors[i].direction == direction)
                 {
-                    closestRoom1Door = room1Door;
-                    closestRoom2Door = room2Door;
-                    closestDistance  = tmpDist;
+                    return i;
                 }
             }
+            return -1;
         }
 
         // Create a door if it does not exist
-        if (!roomDoors[room1][closestRoom1Door].exists)
+        if (!roomDoors[room1][door1].exists)
         {
-            Vector3 pos = groundTileMap.GetCellCenterWorld(roomDoors[room1][closestRoom1Door].position);
-            roomDoors[room1][closestRoom1Door].CreateDoor();
+            Vector3 pos = groundTileMap.GetCellCenterWorld(roomDoors[room1][door1].position);
+            roomDoors[room1][door1].CreateDoor();
 
             // Choose the door prefab to instantiate based on the door direction
-            switch (roomDoors[room1][closestRoom1Door].direction)
+            switch (roomDoors[room1][door1].direction)
             {
                 case Globals.Direction.north:
                 {
@@ -506,7 +505,6 @@ public class Dungeon : MonoBehaviour
                     rooms[room1].AddDoor(Instantiate<Door>(northDoors[index],
                                     pos + northDoors[index].offset,
                                     Quaternion.identity));
-
                     break;
                 }
                 case Globals.Direction.south:
@@ -515,7 +513,6 @@ public class Dungeon : MonoBehaviour
                     rooms[room1].AddDoor(Instantiate<Door>(southDoors[index],
                                     pos + southDoors[index].offset,
                                     Quaternion.identity));
-
                     break;
                 }
                 case Globals.Direction.east:
@@ -524,7 +521,6 @@ public class Dungeon : MonoBehaviour
                     rooms[room1].AddDoor(Instantiate<Door>(eastDoors[index],
                                     pos + eastDoors[index].offset,
                                     Quaternion.identity));
-
                     break;
                 }
                 case Globals.Direction.west:
@@ -533,7 +529,6 @@ public class Dungeon : MonoBehaviour
                     rooms[room1].AddDoor(Instantiate<Door>(westDoors[index],
                                     pos + westDoors[index].offset,
                                     Quaternion.identity));
-
                     break;
                 }
             }
@@ -542,18 +537,18 @@ public class Dungeon : MonoBehaviour
 
             // Door needs a small corridor, rooms will link to the end of it
             WriteCorridor(ref map,
-                            roomDoors[room1][closestRoom1Door].position, 
-                            roomDoors[room1][closestRoom1Door].direction, 
-                            (int)Vector3Int.Distance(roomDoors[room1][closestRoom1Door].corridorStart, 
-                                            roomDoors[room1][closestRoom1Door].position) + 1);
+                            roomDoors[room1][door1].position, 
+                            roomDoors[room1][door1].direction, 
+                            (int)Vector3Int.Distance(roomDoors[room1][door1].corridorStart, 
+                                            roomDoors[room1][door1].position) + 1);
         }
 
-        if (!roomDoors[room2][closestRoom2Door].exists)
+        if (!roomDoors[room2][door2].exists)
         {
-            Vector3 pos = groundTileMap.GetCellCenterWorld(roomDoors[room2][closestRoom2Door].position);
-            roomDoors[room2][closestRoom2Door].CreateDoor();
+            Vector3 pos = groundTileMap.GetCellCenterWorld(roomDoors[room2][door2].position);
+            roomDoors[room2][door2].CreateDoor();
 
-            switch (roomDoors[room2][closestRoom2Door].direction)
+            switch (roomDoors[room2][door2].direction)
             {
                 case Globals.Direction.north:
                 {
@@ -590,11 +585,11 @@ public class Dungeon : MonoBehaviour
             // Door needs a small corridor, rooms will link to the end of it
             WriteCorridor(
                 ref map,
-                roomDoors[room2][closestRoom2Door].position,
-                roomDoors[room2][closestRoom2Door].direction,
+                roomDoors[room2][door2].position,
+                roomDoors[room2][door2].direction,
                 (int)Vector3Int.Distance(
-                    roomDoors[room2][closestRoom2Door].corridorStart,
-                    roomDoors[room2][closestRoom2Door].position) + 1);
+                    roomDoors[room2][door2].corridorStart,
+                    roomDoors[room2][door2].position) + 1);
         }
 
 
@@ -605,37 +600,37 @@ public class Dungeon : MonoBehaviour
 
 
         // Connect the rooms together
-        Vector3Int currentPosition = roomDoors[room1][closestRoom1Door].corridorStart;
+        Vector3Int currentPosition = roomDoors[room1][door1].corridorStart;
         while (true)
         {
             // Right
-            if (currentPosition.x < roomDoors[room2][closestRoom2Door].corridorStart.x)
+            if (currentPosition.x < roomDoors[room2][door2].corridorStart.x)
             {
-                int distance = roomDoors[room2][closestRoom2Door].corridorStart.x - currentPosition.x;
+                int distance = roomDoors[room2][door2].corridorStart.x - currentPosition.x;
                 WriteCorridor(ref map, currentPosition, Globals.Direction.east, distance);
                 currentPosition.x += distance;
             }
 
             // Left
-            else if (currentPosition.x > roomDoors[room2][closestRoom2Door].corridorStart.x)
+            else if (currentPosition.x > roomDoors[room2][door2].corridorStart.x)
             {
-                int distance = currentPosition.x - roomDoors[room2][closestRoom2Door].corridorStart.x;
+                int distance = currentPosition.x - roomDoors[room2][door2].corridorStart.x;
                 WriteCorridor(ref map, currentPosition, Globals.Direction.west, distance);
                 currentPosition.x -= distance;
             }
 
             // Up
-            else if (currentPosition.y < roomDoors[room2][closestRoom2Door].corridorStart.y)
+            else if (currentPosition.y < roomDoors[room2][door2].corridorStart.y)
             {
-                int distance = roomDoors[room2][closestRoom2Door].corridorStart.y - currentPosition.y;
+                int distance = roomDoors[room2][door2].corridorStart.y - currentPosition.y;
                 WriteCorridor(ref map, currentPosition, Globals.Direction.north, distance);
                 currentPosition.y += distance;
             }
 
             // Down
-            else if (currentPosition.y > roomDoors[room2][closestRoom2Door].corridorStart.y)
+            else if (currentPosition.y > roomDoors[room2][door2].corridorStart.y)
             {
-                int distance = currentPosition.y - roomDoors[room2][closestRoom2Door].corridorStart.y;
+                int distance = currentPosition.y - roomDoors[room2][door2].corridorStart.y;
                 WriteCorridor(ref map, currentPosition, Globals.Direction.south, distance);
                 currentPosition.y -= distance;
             }
@@ -819,23 +814,25 @@ public class Dungeon : MonoBehaviour
             for (int x = 0; x < Globals.MAP_GRID_SIZE; ++x)
             {
                 // Linking every room to the one above and to the left will connect all of the rooms together
-                if (x > 0)
+                if (x < Globals.MAP_GRID_SIZE - 1)
                 {
-                    if (mapGrid[x - 1, y].roomIndex != -1 && mapGrid[x, y].roomIndex != -1)
+                    if (mapGrid[x + 1, y].roomIndex != -1 && mapGrid[x, y].roomIndex != -1)
                     {
                         ConnectRooms(ref readMap, ref roomsCreated, ref doorsCreationData,
                             mapGrid[x, y].roomIndex,
-                            mapGrid[x - 1, y].roomIndex);
+                            mapGrid[x + 1, y].roomIndex, 
+                            Globals.Direction.east, Globals.Direction.west);
                     }
                 }
 
-                if (y > 0)
+                if (y < Globals.MAP_GRID_SIZE - 1)
                 {
-                    if (mapGrid[x, y].roomIndex != -1 && mapGrid[x, y - 1].roomIndex != -1)
+                    if (mapGrid[x, y].roomIndex != -1 && mapGrid[x, y + 1].roomIndex != -1)
                     {
                         ConnectRooms(ref readMap, ref roomsCreated, ref doorsCreationData,
                             mapGrid[x, y].roomIndex,
-                            mapGrid[x, y - 1].roomIndex);
+                            mapGrid[x, y + 1].roomIndex,
+                            Globals.Direction.north, Globals.Direction.south);
                     }
                 }
             }
@@ -997,6 +994,7 @@ public class Dungeon : MonoBehaviour
         }
     }
 
+    // The function returns which wall should be placed at the given position based on the tiles surrounding it
     WallData CheckWall(TileBase[,] readMap, Vector3Int position)
     {
         // Update the tile
@@ -1064,6 +1062,11 @@ public class Dungeon : MonoBehaviour
                 if (tile.bottom.state == TileState.ground ||
                     tile.bottomBottom.state == TileState.ground)
                 {
+                    if (tile.topRight.state == TileState.ground &&
+                        tile.right.state == TileState.wall)
+                    {
+                        return new WallData(WallType.topTop, position);
+                    }
                     return new WallData(WallType.topLeftCorner, position);
                 }
                 // Left
@@ -1076,6 +1079,13 @@ public class Dungeon : MonoBehaviour
                     }
                 }
             }
+            if (tile.right.state != TileState.empty &&
+                tile.bottom.state != TileState.ground &&
+                tile.bottomBottom.state != TileState.ground &&
+                IsCenterWall(readMap, tile.right.position))
+            {
+                return new WallData(WallType.left, position);
+            }
         }
 
         if (tile.left.state != TileState.empty)
@@ -1086,6 +1096,11 @@ public class Dungeon : MonoBehaviour
                 if (tile.bottom.state == TileState.ground ||
                     tile.bottomBottom.state == TileState.ground)
                 {
+                    if (tile.topLeft.state == TileState.ground &&
+                        tile.left.state == TileState.wall)
+                    {
+                        return new WallData(WallType.topTop, position);
+                    }
                     return new WallData(WallType.topRightCorner, position);
                 }
                 // Right
@@ -1098,6 +1113,13 @@ public class Dungeon : MonoBehaviour
                     }
                 }
             }
+            if (tile.left.state != TileState.empty &&            
+                tile.bottom.state != TileState.ground && 
+                tile.bottomBottom.state != TileState.ground && 
+                IsCenterWall(readMap, tile.left.position))
+            {
+                return new WallData(WallType.right, position);
+            }
         }
 
         if (tile.bottom.state == TileState.ground)
@@ -1108,8 +1130,72 @@ public class Dungeon : MonoBehaviour
 
         if (tile.top.state == TileState.empty)
         {
-            // Top U
-            return new WallData(WallType.topU, position);
+            if (tile.bottomRight.state == TileState.wall &&
+                tile.bottomLeft.state != TileState.ground)
+            {
+                // Top right corner
+                return new WallData(WallType.topRightCorner, position);
+            }
+            else if (tile.bottomLeft.state == TileState.wall &&
+                     tile.bottomRight.state != TileState.ground)
+            {
+                // Top left corner
+                return new WallData(WallType.topLeftCorner, position);
+            }
+            else if ((tile.bottomLeft.state != TileState.ground &&
+                     tile.bottomRight.state != TileState.ground))
+            {
+                // Top U
+                return new WallData(WallType.topU, position);
+            }
+            else if (tile.bottom.state != TileState.wall)
+            {
+                if (tile.right.state == TileState.ground ||
+                    IsCenterWall(readMap, tile.right.position))
+                {
+                    return new WallData(WallType.left, position);
+                }
+                else if (tile.left.state == TileState.ground ||
+                         IsCenterWall(readMap, tile.left.position))
+                {
+                    return new WallData(WallType.right, position);
+                }
+            }
+
+        }
+        else
+        {
+            if (tile.bottomBottom.state != TileState.ground)
+            {
+                if (tile.right.state == TileState.ground ||
+                    IsCenterWall(readMap, tile.right.position))
+                {
+                    return new WallData(WallType.left, position);
+                }
+                else if (tile.left.state == TileState.ground ||
+                         IsCenterWall(readMap, tile.left.position))
+                {
+                    return new WallData(WallType.right, position);
+                }
+            }
+            else
+            {
+                if (tile.bottomRight.state == TileState.wall &&
+                    tile.bottomLeft.state != TileState.wall &&
+                    tile.topRight.state != TileState.ground)
+                {
+                    // Top right corner
+                    return new WallData(WallType.topRightCorner, position);
+                }
+                else if (tile.bottomLeft.state == TileState.wall && 
+                         tile.bottomRight.state != TileState.wall &&
+                         tile.topLeft.state != TileState.ground)
+                {
+                    // Top left corner
+                    return new WallData(WallType.topLeftCorner, position);
+                }
+            }
+
         }
 
         return new WallData(WallType.none, position);
@@ -1284,42 +1370,70 @@ public class Dungeon : MonoBehaviour
 
             // Fill in the wall extensions
 
-            // Top top
-            if (wallData.type == WallType.center)
-            {
-                FillInWall(WallType.topTop, tileData.top.position);
-            }
-
             // Top left
             if ((wallData.type == WallType.left ||
                  wallData.type == WallType.topLeftCorner) &&
-                tileData.top.state == TileState.empty)
+                 tileData.top.state == TileState.empty)
             {
                 FillInWall(WallType.topLeft, tileData.top.position);
             }
 
-            // Top right,
-            if ((wallData.type == WallType.right ||
-                 wallData.type == WallType.topRightCorner) &&
-                tileData.top.state == TileState.empty)
+            // Top right
+            else if ((wallData.type == WallType.right ||
+                     wallData.type == WallType.topRightCorner) &&
+                     tileData.top.state == TileState.empty)
             {
                 FillInWall(WallType.topRight, tileData.top.position);
             }
 
-            // Bottom right
-            if ((wallData.type == WallType.left ||
-                 wallData.type == WallType.bottomLeftCorner) &&
-                tileData.bottomBottom.state == TileState.empty)
+            // Top top
+            else if(wallData.type == WallType.center)
             {
-                FillInWall(WallType.bottomRight, tileData.bottom.position);
+                TileGenData topTileData = FillInSurroundingTiles(readMap, tileData.top.position);
+                if (topTileData.currentTile.state != TileState.ground)
+                {
+                    if (topTileData.left.state != TileState.empty &&
+                        topTileData.bottomLeft.state != TileState.wall &&
+                        topTileData.bottomRight.state != TileState.wall)
+                    {
+                        FillInWall(WallType.topU, tileData.top.position);
+                        continue;
+                    }
+                    else if (topTileData.bottomLeft.state != TileState.wall)
+                    {
+                        FillInWall(WallType.topRightCorner, tileData.top.position);
+                        continue;
+                    }
+
+                    if (topTileData.left.state != TileState.empty &&
+                        topTileData.bottomRight.state != TileState.wall)
+                    {
+                        FillInWall(WallType.topLeftCorner, tileData.top.position);
+                        continue;
+                    }
+                }
+                FillInWall(WallType.topTop, tileData.top.position);
+
+            }
+
+            // Bottom right
+            else if((wallData.type == WallType.left ||
+                    wallData.type == WallType.bottomLeftCorner))
+            {
+                if (tileData.bottomBottom.state == TileState.empty)
+                {
+                    FillInWall(WallType.bottomRight, tileData.bottom.position);
+                }
             }
 
             // Bottom Left
-            if ((wallData.type == WallType.right ||
-                 wallData.type == WallType.bottomRightCorner) &&
-                tileData.bottomBottom.state == TileState.empty)
+            else if((wallData.type == WallType.right ||
+                    wallData.type == WallType.bottomRightCorner))
             {
-                FillInWall(WallType.bottomLeft, tileData.bottom.position);
+                if (tileData.bottomBottom.state == TileState.empty)     
+                {
+                    FillInWall(WallType.bottomLeft, tileData.bottom.position);
+                }
             }
         }
     }
@@ -1327,19 +1441,56 @@ public class Dungeon : MonoBehaviour
     // Places random props in the specified positions
     void PlaceProps(TileBase[,] readMap, List<Vector3Int> propPositons)
     {
+        const int totalChance = Globals.COMMON_CHANCE + Globals.UNCOMMON_CHANCE + Globals.RARE_CHANCE;
+
+        int rarity = 0;
+        Prop prop;
+
         foreach (Vector3Int propPos in propPositons)
         {
+            rarity = Random.Range(0, totalChance);
+
             // Check if to place a top wall prop
             if (IsGround(readMap[propPos.x, propPos.y + 1]))
             {
-                int propIndex = Random.Range(0, roomProps.Count);
-                entityManager.TryCreateEntity(roomProps[propIndex].gameObject, groundTileMap.GetCellCenterWorld(propPos) + roomProps[propIndex].GetOffset());
+                // Check how rare of a prop type to use
+                if (rarity <= Globals.COMMON_CHANCE)
+                {
+                    int propIndex = Random.Range(0, commonRoomProps.Count);
+                    prop = commonRoomProps[propIndex];
+                }
+                else if (rarity < Globals.UNCOMMON_CHANCE + Globals.COMMON_CHANCE)
+                {
+                    int propIndex = Random.Range(0, uncommonRoomProps.Count);
+                    prop = uncommonRoomProps[propIndex];
+                }
+                else
+                {
+                    int propIndex = Random.Range(0, rareRoomProps.Count);
+                    prop = rareRoomProps[propIndex];
+                }
             }
             else
             {
-                int propIndex = Random.Range(0, nearTopWallProps.Count);
-                entityManager.TryCreateEntity(nearTopWallProps[propIndex].gameObject, groundTileMap.GetCellCenterWorld(propPos) + nearTopWallProps[propIndex].GetOffset());
+                if (rarity <= Globals.COMMON_CHANCE)
+                {
+                    int propIndex = Random.Range(0, commonNearTopWallProps.Count);
+                    prop = commonNearTopWallProps[propIndex];
+                }
+                else if (rarity < Globals.UNCOMMON_CHANCE + Globals.COMMON_CHANCE)
+                {
+                    int propIndex = Random.Range(0, uncommonNearTopWallProps.Count);
+                    prop = uncommonNearTopWallProps[propIndex];
+                }
+                else
+                {
+                    int propIndex = Random.Range(0, rareNearTopWallProps.Count);
+                    prop = rareNearTopWallProps[propIndex];
+                }
             }
+            // Create the selected prop
+            entityManager.TryCreateEntity(prop.gameObject,
+                                          groundTileMap.GetCellCenterWorld(propPos) + prop.GetOffset());
         }
     }
 
