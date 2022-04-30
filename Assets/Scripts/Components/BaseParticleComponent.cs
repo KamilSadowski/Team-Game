@@ -57,6 +57,7 @@ public class BaseParticleComponent : MonoBehaviour
     List<Transform> childrenInput;
     float scalingMod = 1.0f;
 
+    private bool doOnce = true;
 
     #region CHILDREN_ID_MANAGER
     List<int> childrenIDs;
@@ -100,12 +101,18 @@ public class BaseParticleComponent : MonoBehaviour
 
     public void StartParticleEffect(Transform inputPos /*Parent*/, Transform startPos = null/*StartPosition*/, System.Func<Vector3> TargetPos = null)
     {
+
         liveTargetPos = TargetPos;
 
         scalingMod = startPos.transform.localScale.x;
 
-        _damage *= Globals.DifficultyModifier;
-        _emissionDuration *= Globals.DifficultyModifier;
+
+        if (doOnce)
+        {
+            doOnce = false;
+            _damage *= Globals.DifficultyModifier;
+            _emissionDuration *= Globals.DifficultyModifier;
+        }
 
 
 
