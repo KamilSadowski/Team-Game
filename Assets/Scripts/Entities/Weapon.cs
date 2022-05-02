@@ -12,6 +12,8 @@ public class Weapon : Entity
 
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
+    [SerializeField] string[] bounceLayers;
+    [SerializeField] float bounceStrength = 0.4f;
     const float MIN_DISTANCE_TRAVELLED = 2.0f;
 
     // Decide if projectile is in the air based on speed
@@ -187,7 +189,7 @@ public class Weapon : Entity
         //Checks for wall collisions using the raycast as it's the safest method of doing so.
         if (!hasBounced)
             previousDirection = nDirection;
-
+#if (RAYCASTBOUNCE)
         //New nDirection would be calculated here.
         nDirection = movementComponent.ReflectCollisionDirection(nDirection);
         if (!hasBounced && nDirection != previousDirection)
@@ -200,6 +202,16 @@ public class Weapon : Entity
             nDirection = new Vector3((nDirection.x + collision.collider.bounds.center.x), (nDirection.y + collision.collider.bounds.center.y), nDirection.z);
             nDirection.x *= -.6f; nDirection.y *= -.6f;
         }
+#else
+        //Props and enemy collisions. 
+        for(int i = 0; i < bounceLayers.Length; ++i)
+        if (collision.gameObject.layer == LayerMask.NameToLayer(bounceLayers[i]))//.collider.bounds.Intersects(weaponCollision.bounds))
+        {
+            hasBounced = true;
+            nDirection = new Vector3((nDirection.x + collision.collider.bounds.center.x), (nDirection.y + collision.collider.bounds.center.y), nDirection.z);
+            nDirection.x *= -.6f; nDirection.y *= -bounceStrength;
+        }
+#endif
     }
 
     protected void ProjectileUpdate()

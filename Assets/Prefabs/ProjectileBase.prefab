@@ -301,6 +301,11 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   weapon_sharpness: 0.25
   weapon_damage: 10
+  bounceLayers:
+  - Map
+  - Prop
+  - Enemy
+  bounceStrength: 0.4
 --- !u!1001 &7944970863688089875
 PrefabInstance:
   m_ObjectHideFlags: 0

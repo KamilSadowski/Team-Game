@@ -177,6 +177,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
+  isFacingRight: 1
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &7126638304656815046
 Rigidbody2D:
@@ -240,7 +241,6 @@ MonoBehaviour:
   MAX_WEAPON_COOLDOWN: 10
   WEAPON_THROW_COST: 5
   WEAPON_PICKUP_REWARD: 3
-  EntityID: 1
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -301,6 +301,11 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   weapon_sharpness: 0.25
   weapon_damage: 25
+  bounceLayers:
+  - Map
+  - Prop
+  - Enemy
+  bounceStrength: 0.4
 --- !u!1001 &7944970863688089875
 PrefabInstance:
   m_ObjectHideFlags: 0
