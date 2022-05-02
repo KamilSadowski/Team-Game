@@ -180,22 +180,21 @@ public class Weapon : Entity
 
     protected bool ProjectileUpdate()
     {
-         
         if (movementComponent != null)
         {
 
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
-            List<RaycastHit2D> Hits = movementComponent.GetHits(nDirection);
-            if (Hits.Count > 0)
+
+            if (movementComponent.IsMoveCollision(nDirection))
             {
                 currentState = States.Dropped;
-            }    
+            }
             else
             if (MoveWithMin(minDistanceTravelled))
             {
                 if (movementComponent.ConfirmedMove(nDirection))
                 {
-                  
+
                     UpdateDirection();
                 }
             }

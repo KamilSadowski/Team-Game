@@ -170,7 +170,7 @@ public class MobileComponent : MovementComponent
         yield return null;
     }
 
-    public override bool isMoveCollision(Vector3 input)
+    public override bool IsMoveCollision(Vector3 input)
     {
         if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null) 
             return false;
