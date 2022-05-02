@@ -182,6 +182,26 @@ public class Weapon : Entity
         }
     }
 
+    protected void CheckBounce(Collision2D collision)
+    {
+        //Checks for wall collisions using the raycast as it's the safest method of doing so.
+        if (!hasBounced)
+            previousDirection = nDirection;
+
+        //New nDirection would be calculated here.
+        nDirection = movementComponent.ReflectCollisionDirection(nDirection);
+        if (!hasBounced && nDirection != previousDirection)
+            hasBounced = true;
+
+        //Props and enemy collisions. 
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("Prop"))//.collider.bounds.Intersects(weaponCollision.bounds))
+        {
+            hasBounced = true;
+            nDirection = new Vector3((nDirection.x + collision.collider.bounds.center.x), (nDirection.y + collision.collider.bounds.center.y), nDirection.z);
+            nDirection.x *= -.6f; nDirection.y *= -.6f;
+        }
+    }
+
     protected void ProjectileUpdate()
     {
         if (movementComponent != null)
@@ -189,19 +209,12 @@ public class Weapon : Entity
 
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
 
-            if (!hasBounced)
-                previousDirection = nDirection;
-            else
-            if (playerCollision.bounds.Intersects(weaponCollision.bounds))// || weaponCollision.Distance(playerCollision).distance < 1.0f)
+            if (hasBounced && playerCollision.bounds.Intersects(weaponCollision.bounds))// || weaponCollision.Distance(playerCollision).distance < 1.0f)
             {
                 SetInactive(); //Player should deal with it. If it's picked up then this is jsut a safety net. 
                 controller.PlayerPickup(Weapon_Parent_ID);
                 return;
             }
-
-            nDirection = movementComponent.ReflectCollisionDirection(nDirection);
-            if (!hasBounced && nDirection != previousDirection)
-                hasBounced = true;
 
             if (MoveWithMin(minDistanceTravelled))
             {
@@ -254,6 +267,9 @@ public class Weapon : Entity
     {
         if (currentState == States.Thrown)
         {
+
+            CheckBounce(collision);
+
             if (damageMod < 0)
             {
                 damageMod = weapon_sharpness * transform.localScale.magnitude;
@@ -266,6 +282,7 @@ public class Weapon : Entity
 
             if (tempRef != null)
                 tempRef.TakeDamage(output, transform.position, Vector3.zero);
+
 
         }
     }
