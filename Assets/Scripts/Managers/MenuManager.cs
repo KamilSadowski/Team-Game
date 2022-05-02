@@ -6,6 +6,7 @@ public class MenuManager : MonoBehaviour
 {
     GameManager gameManager;
     [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject editCharacterMenu;
     [SerializeField] GameObject optionsMenu;
 
     // Start is called before the first frame update
@@ -29,6 +30,7 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         mainMenu.SetActive(false);
+        editCharacterMenu.SetActive(false);
         optionsMenu.SetActive(true);
         gameManager.UpdateSettingsSliders();
     }
@@ -36,6 +38,14 @@ public class MenuManager : MonoBehaviour
     public void MainMenu()
     {
         mainMenu.SetActive(true);
+        editCharacterMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+    }
+
+    public void EditCharacter()
+    {
+        mainMenu.SetActive(false);
+        editCharacterMenu.SetActive(true);
         optionsMenu.SetActive(false);
     }
 }

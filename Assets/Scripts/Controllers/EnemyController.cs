@@ -56,7 +56,7 @@ public class EnemyController : Controller
         var prevIsFacingFront = isFacingFront;
 
         isWalking = true;
-        if (entityMoveComp && entityMoveComp.isMoveCollision(direction))
+        if (entityMoveComp && entityMoveComp.IsMoveCollision(direction))
         {
             direction = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Globals.SPRITE_Z);
 

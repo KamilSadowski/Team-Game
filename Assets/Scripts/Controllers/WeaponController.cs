@@ -153,7 +153,7 @@ public class WeaponController : ProjectileController
     }
 
 
-    public void disableWeapon()
+    public void DisableWeapon()
     {
         if (!boundPlayerWeapon)
             boundPlayerWeapon = GetComponent<Weapon>(); 

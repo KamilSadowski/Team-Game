@@ -62,7 +62,11 @@ public class MobileComponent : MovementComponent
         rb.position = teleportTo;
     }
 
-    
+    public override void Redirect(float forceMultiplier, Vector3 direction)
+    {
+        velocity = velocity.magnitude * forceMultiplier * direction;
+    }
+
 
     //Looks like threads are disabled on map change. This means there will need to be a HasDashCooldown reset in start. 
     //This function is an ongoing function which uses threads to utilize their timer components. Could be put in While 
@@ -134,7 +138,7 @@ public class MobileComponent : MovementComponent
         yield return null;
     }
 
-    public override bool isMoveCollision(Vector3 input)
+    public override bool IsMoveCollision(Vector3 input)
     {
         if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null) 
             return false;
@@ -155,6 +159,23 @@ public class MobileComponent : MovementComponent
         }
 
         return false;
+    }
+
+    public override List<RaycastHit2D> GetHits(Vector3 input)
+    {
+        if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null)
+            return new List<RaycastHit2D>();
+
+        rb.Cast
+            (
+            new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime),
+            MovementContactData,
+            hits,
+            movementSpeed * Time.deltaTime
+            );
+
+
+        return hits;
     }
 
     public override void Move(Vector3 input, bool isDash = false)

@@ -49,7 +49,7 @@ public class Weapon : Entity
 
 
         CollisionSetup();
-        
+
     }
 
     // Update is called once per frame
@@ -168,8 +168,8 @@ public class Weapon : Entity
         {
 
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
-
-            if(movementComponent.isMoveCollision(nDirection))
+            List<RaycastHit2D> Hits = movementComponent.GetHits(nDirection);
+            if (Hits.Count > 0)
             {
                 currentState = States.Dropped;
             }    
@@ -237,6 +237,7 @@ public class Weapon : Entity
 
             if (tempRef != null)
                 tempRef.TakeDamage(output, transform.position, Vector3.zero);
+
         }
     }
 }

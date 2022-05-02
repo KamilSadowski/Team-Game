@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8850283724221997679}
   - component: {fileID: 3478987190499635806}
   - component: {fileID: -8038274421022642137}
-  m_Layer: 0
+  - component: {fileID: 4266117761073249369}
+  m_Layer: 13
   m_Name: Prop1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,8 +44,8 @@ SpriteRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5258664259809984757}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -55,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0a46da59da1d25343927265a062566e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,6 +147,19 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   positionOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &4266117761073249369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258664259809984757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823b8a7afd24f744e8e34b173023fc1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1001 &1607858580254968063
 PrefabInstance:
   m_ObjectHideFlags: 0

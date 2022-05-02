@@ -9,7 +9,6 @@ public class ChangeColours : MonoBehaviour
     public MaterialPropertyBlock material;
     protected SpriteRenderer renderer;
 
-
     protected Color multiplyColour;
     [SerializeField] protected Color[] colours = new Color[3];
 
@@ -25,6 +24,12 @@ public class ChangeColours : MonoBehaviour
     void Update()
     {
         material = new MaterialPropertyBlock();
+        ChangeColour(colours);
+    }
+
+    public void ChangeColour(Color[] newColours)
+    {
+        colours = newColours;
         renderer.GetPropertyBlock(material);
         material.SetColor("_PrimaryColor", colours[0]);
         material.SetColor("_SecondaryColor", colours[1]);
