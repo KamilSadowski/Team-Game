@@ -193,6 +193,30 @@ public class MobileComponent : MovementComponent
         return false;
     }
 
+    public override Vector3 ReflectCollisionDirection(Vector3 input)
+    {
+        if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null)
+            return input;
+
+        rb.Cast
+            (
+            new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime),
+            MovementContactData,
+            hits,
+            movementSpeed * Time.deltaTime
+            );
+
+
+        if (hits.Count > 0)
+        {
+            var Output = new Vector3((hits[0].point.x - input.x) * movementSpeed, (hits[0].point.y - input.y) * movementSpeed, input.z) ;
+            hits.Clear();
+            return -input;
+        }
+
+        return input;
+    }
+
     public override void Move(Vector3 input, bool isDash = false)
     {
         if (crosshair)

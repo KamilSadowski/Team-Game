@@ -185,6 +185,7 @@ public class Weapon : Entity
 
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
 
+            nDirection = movementComponent.ReflectCollisionDirection(nDirection);
             if (movementComponent.IsMoveCollision(nDirection))
             {
                 currentState = States.Dropped;

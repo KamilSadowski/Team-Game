@@ -39,9 +39,9 @@ public class MovementComponent : MonoBehaviour
         return false;
     }
 
-    public virtual List<RaycastHit2D> GetHits(Vector3 input)
+    public virtual Vector3 ReflectCollisionDirection(Vector3 input)
     {
-        return new List<RaycastHit2D>();
+        return input;
     }
     //Unity will occasionally pass functions without any return. This will be called if the current movement change is important.
     public virtual bool ConfirmedMove(Vector3 input)
