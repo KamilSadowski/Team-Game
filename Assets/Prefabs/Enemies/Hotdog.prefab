@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1280444534853037937}
   - component: {fileID: 5307539292665847357}
   - component: {fileID: 3658232903247980384}
+  - component: {fileID: 33762393579049396}
   m_Layer: 8
   m_Name: Hotdog
   m_TagString: Untagged
@@ -204,6 +205,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
+  isFacingRight: 1
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &4619791482859612889
 Rigidbody2D:
@@ -302,6 +304,36 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b1e15b00e5c084b14b2fee5b2f708e7d, type: 3}
   - {fileID: 8300000, guid: c118d1cdc5f634c28bfb87ef52703522, type: 3}
   movementClipVolume: 0.075
+--- !u!114 &33762393579049396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262865065329714056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4494fd80a162eea4eab4b6038257d0d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTrailSpawnTimer: 0.025
+  maxTrailSpawnTimer: 0.2
+  Trail_Sprites:
+  - {fileID: 21300000, guid: 747ca78b4a5f21c4b8fdb08f5dacdb0c, type: 3}
+  - {fileID: 21300000, guid: aed7282061975dd40b1e1799dcb15daf, type: 3}
+  - {fileID: 21300000, guid: 004dd0558f6d65f42b3cf5d69604f728, type: 3}
+  - {fileID: 21300000, guid: 7b512a762ff06bd498276838cd237e65, type: 3}
+  - {fileID: 21300000, guid: 0df46cdd9f1e01549abc5e77654c9586, type: 3}
+  Trail_Colours:
+  - {r: 0.8490566, g: 0.8280285, b: 0.54067284, a: 0.5882353}
+  - {r: 0.8196521, g: 0.8509804, b: 0.5411765, a: 0.5882353}
+  - {r: 0.8509804, g: 0.7508172, b: 0.5411765, a: 0.5882353}
+  - {r: 0.8125048, g: 0.8490566, b: 0.43654326, a: 0.5882353}
+  - {r: 0.9811321, g: 0.9533642, b: 0.61552155, a: 0.5882353}
+  Min_Alpha: 1
+  Max_Alpha: 1
+  Min_Trail_Scale: 0.25
+  Max_Trail_Scale: 0.75
 --- !u!1001 &2617280610847286867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -373,7 +405,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_Name
-      value: SlowAOE (3)
+      value: BurstAttack3
       objectReference: {fileID: 0}
     - target: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_RootOrder
@@ -618,7 +650,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_Name
-      value: SlowAOE (4)
+      value: BurstAttack4
       objectReference: {fileID: 0}
     - target: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_RootOrder
@@ -706,7 +738,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4e8fedfd8ce66fc4b9c6090c5c48182d, type: 2}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: rotationSpeed
@@ -762,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _sizeRandomizationPercentage
-      value: 0.85
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6408601391070692132, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
@@ -797,7 +829,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_Name
-      value: SlowAOE
+      value: BurstAttack
       objectReference: {fileID: 0}
     - target: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_RootOrder
@@ -976,7 +1008,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_Name
-      value: SlowAOE (1)
+      value: BurstAttack1
       objectReference: {fileID: 0}
     - target: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_RootOrder
@@ -1125,9 +1157,9 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6408601391070692132, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
---- !u!1 &6827736880394773079 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
+--- !u!4 &5279078617208817770 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
   m_PrefabInstance: {fileID: 6698903017475041360}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &9191320159210424676 stripped
@@ -1141,9 +1173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987beabebaf7ea34da0ce049db2f0918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &5279078617208817770 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
+--- !u!1 &6827736880394773079 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
   m_PrefabInstance: {fileID: 6698903017475041360}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7299955857385042909
@@ -1155,7 +1187,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159796740112239111, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_Name
-      value: SlowAOE (2)
+      value: BurstAttack2
       objectReference: {fileID: 0}
     - target: {fileID: 1563952782752604218, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: m_RootOrder

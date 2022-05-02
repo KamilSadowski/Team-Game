@@ -19,6 +19,8 @@ public class MobileComponent : MovementComponent
     [SerializeField] protected readonly float FOOTSTEP_INTERVAL = 1.0f;
     [SerializeField] ContactFilter2D MovementContactData;
     [SerializeField] protected float DashCooldown = 0.25f;
+    [SerializeField] protected bool isFacingRight = true;
+
     protected bool HasDashCooldown = true;
     protected SoundManager footStepRandomizer;
     protected float TimeSinceLastInterval = 0f;
@@ -29,7 +31,8 @@ public class MobileComponent : MovementComponent
     protected float minVelocity = 0.0001f;
     protected Vector3 currentInput;
 
-    protected bool isFacingRight = true;
+   
+    protected bool baseFacingDirection;
     protected List<RaycastHit2D> hits;
     protected bool isDashing = false;
 
@@ -45,6 +48,8 @@ public class MobileComponent : MovementComponent
         BaseLayerID = gameObject.layer;
         HasDashCooldown = true;
         crosshair = PriorityChar_Manager.instance.getCrosshair();
+
+        baseFacingDirection = isFacingRight;
     }
 
 
@@ -62,7 +67,38 @@ public class MobileComponent : MovementComponent
         rb.position = teleportTo;
     }
 
-    
+
+    void isGoingInDirection(bool isGoingRight, float facingDirectionX)
+    {
+        if (isGoingRight != baseFacingDirection)
+        {
+            if (facingDirectionX < 0f)
+            {
+                spriteRenderer.flipX = !isGoingRight;
+                isFacingRight = isGoingRight;
+            }
+            else
+            if (facingDirectionX > 0f)
+            {
+                spriteRenderer.flipX = isGoingRight;
+                isFacingRight = !isGoingRight;
+            }
+        }
+        else
+        {
+            if (facingDirectionX > 0f)
+            {
+                spriteRenderer.flipX = !isGoingRight;
+                isFacingRight = isGoingRight;
+            }
+            else
+            if (facingDirectionX < 0f)
+            {
+                spriteRenderer.flipX = isGoingRight;
+                isFacingRight = !isGoingRight;
+            }
+        }
+    }
 
     //Looks like threads are disabled on map change. This means there will need to be a HasDashCooldown reset in start. 
     //This function is an ongoing function which uses threads to utilize their timer components. Could be put in While 
@@ -172,25 +208,11 @@ public class MobileComponent : MovementComponent
 
                     input = (crosshair.transform.position - transform.position).normalized;
 
-                  //Could have put this in a funciton or lambda.
-                    if (spriteRenderer != null)
-                        if (isFacingRight)
-                        {
-                            if (input.x < 0f)
-                            {
-                                spriteRenderer.flipX = true;
-                                isFacingRight = false;
-                            }
-                        }
-                        else
-                        {
-                            if (input.x > 0f)
-                            {
-                                spriteRenderer.flipX = false;
-                                isFacingRight = true;
-                            }
+                    //Could have put this in a funciton or lambda.
 
-                        }
+                    if (spriteRenderer != null)
+                        isGoingInDirection(isFacingRight == baseFacingDirection, input.x);
+
 
                     StartCoroutine(DashOngoing(input));
                     GetComponent<Animator>().SetTrigger("Dash");
@@ -251,23 +273,7 @@ public class MobileComponent : MovementComponent
                     spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
                 if (spriteRenderer != null)
-                    if (isFacingRight)
-                    {
-                        if (input.x < 0f)
-                        {
-                            spriteRenderer.flipX = true;
-                            isFacingRight = false;
-                        }
-                    }
-                    else
-                    {
-                        if (input.x > 0f)
-                        {
-                            spriteRenderer.flipX = false;
-                            isFacingRight = true;
-                        }
-
-                    }
+                    isGoingInDirection(isFacingRight == baseFacingDirection, input.x);
             }
         }
         else

@@ -28,6 +28,7 @@ public class BaseParticleComponent : MonoBehaviour
     [SerializeField] float _emissionDuration = FIRE_RATE_BASE * 25.0f;
 
     [SerializeField] float _size = 0.15f * .4f;
+    [SerializeField] float _minSize = 1.0f;
     [SerializeField] float _sizeOverLifetime = 0.0f;
     [SerializeField] float _sizeRandomizationPercentage = 0.1f;
     float _angle;
@@ -302,7 +303,9 @@ public class BaseParticleComponent : MonoBehaviour
 
 
                 var emitParams = new ParticleSystem.EmitParams();
-                emitParams.startSize = (_size* scalingMod) * (1.0f + Random.Range(-_sizeRandomizationPercentage, _sizeRandomizationPercentage)) ;
+
+                
+                emitParams.startSize = (_size* scalingMod) * Random.Range(_minSize, _sizeRandomizationPercentage) ;
 
                 if (_lifetimeRandomization > 0.01f)
                     emitParams.startLifetime = _lifetime + Random.Range(-_lifetimeRandomization, _lifetimeRandomization);

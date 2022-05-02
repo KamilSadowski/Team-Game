@@ -98,8 +98,9 @@ public class GameManager : MonoBehaviour
                 
                     if (weaponsToGiveIDs != -1)
                     {
-                        weaponControllers = entityManager.GetEntity(weaponsToGiveIDs).GetComponent<WeaponController>();
-                        weaponControllers.PlayerPickup();
+                        Entity entityRef = entityManager.GetEntity(weaponsToGiveIDs);
+                        weaponControllers = entityRef.GetComponent<WeaponController>();
+                        weaponControllers.PlayerPickup(entityRef.entityID);
                         player.PickupNewWeapon(weaponControllers);
                     }
                 

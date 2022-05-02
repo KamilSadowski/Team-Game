@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8075279930630261091}
   - component: {fileID: 2751298762885369029}
   m_Layer: 0
-  m_Name: VendingMachine
+  m_Name: RareVendingMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,9 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colourChecked: 0
   colours:
-  - {r: 0.8301887, g: 0.4268423, b: 0.4268423, a: 0}
-  - {r: 0.9150943, g: 0.75538445, b: 0.75538445, a: 0}
-  - {r: 0.3301887, g: 0.054512277, b: 0.054512277, a: 0}
+  - {r: 0.83137256, g: 0.6355599, b: 0.42745098, a: 0}
+  - {r: 0.9137255, g: 0.84828347, b: 0.75686276, a: 0}
+  - {r: 0.32941177, g: 0.22125657, b: 0.05490195, a: 0}
   multiplyFlashColour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
@@ -155,9 +155,10 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   positionOffset: {x: 0, y: 0.3, z: 0}
-  type: 1
-  things:
-  - {fileID: 5733697913478852489, guid: 6b86cf40834a9de4a8fe89e23dec5261, type: 3}
+  DroppableItems:
+  - {fileID: 5733697913478852489, guid: 38b0209ad3994fc44a2735f8bf22e2d0, type: 3}
+  - {fileID: 5733697913478852489, guid: dde8370c58e27d84793673eeb160ec87, type: 3}
+  - {fileID: 5733697913478852489, guid: fc431dc1e56441e4fab262ca12f16a64, type: 3}
   cost: 1
   vendingMachineHole: {fileID: 6322085060307511080}
 --- !u!50 &7116367918522552706
@@ -299,15 +300,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: d8e778bf640588c4b81beb1e9eba7f18, type: 3}
     - target: {fileID: 7418086854180118402, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7418086854180118402, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_Color.g
-      value: 0.1462264
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7418086854180118402, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_Color.r
-      value: 0.1483617
+      value: 0.2265538
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93f9713a35841274a99620356620a40b, type: 3}
