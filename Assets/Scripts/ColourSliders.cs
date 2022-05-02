@@ -57,4 +57,14 @@ public class ColourSliders : MonoBehaviour
     {
         currentColour = index;
     }
+
+    public void Save()
+    {
+        PlayerColourSave c = new PlayerColourSave();
+        c.Colours = colour;
+
+        // Save it
+        string json = JsonUtility.ToJson(c);
+        PlayerPrefs.SetString("PlayerColours",json);
+    }
 }
