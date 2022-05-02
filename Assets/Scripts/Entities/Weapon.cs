@@ -6,7 +6,7 @@ public class Weapon : Entity
 {
     protected WeaponController controller;
     protected GameObject weaponObj;
-
+    protected int Weapon_Parent_ID = -1;
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
 
@@ -77,6 +77,13 @@ public class Weapon : Entity
 
                     ProjectileUpdate();
                     break;
+
+                    //Once the state is inactive that means it is being used as a reference for other weapons. What this means is that every weapon that is created as a copy needs to know
+                    //If it's a copy and so making this id accessible is a must
+                case States.inactive:
+
+                    Weapon_Parent_ID = entityID;
+                    break;
             default:
                     //Safety check
                 break;
@@ -95,7 +102,10 @@ public class Weapon : Entity
 
 
     }
-
+    public void SetParentID(int ID)
+    {
+        Weapon_Parent_ID = ID;
+    }
     public void SetInactive()
     {
         currentState = States.inactive;
@@ -112,6 +122,13 @@ public class Weapon : Entity
             return !(currentState == States.inactive);
         
     }
+
+
+    public bool IsChildOf(int ID)
+    {
+        return (Weapon_Parent_ID != -1 && ID == Weapon_Parent_ID);
+    }
+
 
     protected bool MoveWithMin(float min)
     {
@@ -157,7 +174,7 @@ public class Weapon : Entity
         if (playerCollision.bounds.Intersects(weaponCollision.bounds))
         {
             SetInactive(); //Player should deal with it. If it's picked up then this is jsut a safety net. 
-            controller.PlayerPickup();
+            controller.PlayerPickup(Weapon_Parent_ID);
         }
     }
 

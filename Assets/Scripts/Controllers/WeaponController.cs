@@ -66,12 +66,12 @@ public class WeaponController : ProjectileController
         return null;
     }
 
-    public void PlayerPickup()
+    public void PlayerPickup(int weaponID)
     { //Since the two layers do not interact, it will be checking if the two bounding boxes are overlayed. 
         if (boundPlayerWeapon != null && boundPlayerWeapon.IsActive()) return;
 
         if(playerRef)
-        if (playerRef.getEquippedWeapon() != null && playerRef.getEquippedWeapon().GetComponent<WeaponController>() != null && playerRef.getEquippedWeapon().name == name)
+        if (playerRef.getEquippedWeapon() != null && playerRef.getEquippedWeapon().GetComponent<WeaponController>() != null && playerRef.getEquippedWeapon().entityID == weaponID)
         {
              playerRef.getEquippedWeapon().GetComponent<WeaponController>().currentWeaponCooldown += WEAPON_PICKUP_REWARD;
              boundPlayerWeapon.DestroyEntity();
@@ -134,6 +134,7 @@ public class WeaponController : ProjectileController
 
                 spawnedWeaponEntityReference.gameObject.transform.rotation = new Quaternion(0,0, rotation,1.0f);
                 spawnedWeaponWeaponReference.SetThrowing(force, direction);
+                spawnedWeaponWeaponReference.SetParentID(playerRef.getEquippedWeapon().entityID);
                 spawnedWeaponEntityReference.transform.rotation = new Quaternion(0, 0, Vector3.Dot(crosshair.transform.position, transform.position),1.0f);
             }
             //   spawnedWeaponClassReference

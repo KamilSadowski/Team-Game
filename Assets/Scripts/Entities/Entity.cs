@@ -5,7 +5,6 @@ public class Entity : MonoBehaviour
 {
     public int entityID { get; protected set; } = -1;
     protected Vector3 AccelerationEvent;
-    protected bool isMobile = true;
     protected EntityManager entityManager;
     protected bool isInvincible = false;
 

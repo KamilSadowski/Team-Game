@@ -181,6 +181,13 @@ public class Player : Character
         }
         return null;
     }
+
+
+    public int getEquippedWeaponID()
+    {
+        return entityID;
+    }
+
     public void SpawnWeaponPickup()
     {
         entitySpawner.TryCreateListedWeapon(0, crosshair.GetPosition());

@@ -13,6 +13,11 @@ public class Character : Entity2D
     protected float splatterDistance = 0.1f;
     protected float randomThreshold = 0.05f;
 
+
+    private void Start()
+    {
+        spriteManager = SpriteManager.instance;
+    }
     // Start is called before the first frame update
     public float GetStrength()
     {
@@ -43,7 +48,7 @@ public class Character : Entity2D
         base.TakeDamage(damage, sourcePosition, sourceVelocity);
         if (!spriteManager)
         {
-            spriteManager = FindObjectOfType<SpriteManager>();
+            spriteManager = SpriteManager.instance;
         }
 
         float randomOffset = Random.Range(0.0f, randomThreshold);
