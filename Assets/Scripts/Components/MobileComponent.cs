@@ -200,7 +200,7 @@ public class MobileComponent : MovementComponent
 
         rb.Cast
             (
-            new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime),
+            new Vector2(input.x * movementSpeed * Time.deltaTime * 1.25f, input.y * movementSpeed * Time.deltaTime * 1.25f),
             MovementContactData,
             hits,
             movementSpeed * Time.deltaTime
@@ -209,9 +209,13 @@ public class MobileComponent : MovementComponent
 
         if (hits.Count > 0)
         {
-            var Output = new Vector3((hits[0].point.x - input.x) * movementSpeed, (hits[0].point.y - input.y) * movementSpeed, input.z) ;
+            if (hits[0].distance <= 0.001f)
+            {
+                transform.position -= new Vector3(input.x * movementSpeed * Time.deltaTime * 0.6f, input.y * movementSpeed * Time.deltaTime * 0.6f, 0.0f);
+            }
+            var output = new Vector3((- input.x), ( - input.y), input.z) ;
             hits.Clear();
-            return -input;
+            return output;
         }
 
         return input;

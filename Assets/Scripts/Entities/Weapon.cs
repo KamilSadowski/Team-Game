@@ -10,18 +10,16 @@ public class Weapon : Entity
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
 
-    static bool CollisionsSetup = false;
-
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
     const float MIN_DISTANCE_TRAVELLED = 2.0f;
 
     // Decide if projectile is in the air based on speed
-    const float MIN_AIR_SPEED = 2.5f; // Speed for the projectile to hit the ground, should be higher than on ground
-    const float MIN_GROUND_SPEED = 0.5f; // Speed for the projectile to fully stop, should be less than in air
+    const float MIN_AIR_SPEED = .45f; // Speed for the projectile to hit the ground, should be higher than on ground
+    const float MIN_GROUND_SPEED = 0.3f; // Speed for the projectile to fully stop, should be less than in air
 
     // Drag of the projectile based on the state/speed
-    const float IN_AIR_DRAG = 0.1f;
+    const float IN_AIR_DRAG = 0.4f;
     const float ON_GROUND_DRAG = 0.9999f;
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
@@ -29,6 +27,9 @@ public class Weapon : Entity
     protected Vector3 nDirection;
     protected Vector3 oldPos;
     protected States currentState = States.Dropped;
+
+    protected bool hasBounced = false;
+    protected Vector3 previousDirection;
 
     [SerializeField] const float MAX_LIFESPAN = 5.0f;
     protected float currentLifespawn = MAX_LIFESPAN;
@@ -40,7 +41,7 @@ public class Weapon : Entity
         inactive
     }
 
- 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,31 +64,32 @@ public class Weapon : Entity
             CollisionSetup();
         }
         else
-        switch (currentState)
-        {
-            case States.Dropped:
+            switch (currentState)
+            {
+                case States.Dropped:
                     if (currentLifespawn <= 0)
                     {
                         DestroyEntity();
 
                     }
+                    nDirection = Vector3.zero;
                     DroppedStateUpdate();
-                break;
-            case States.Thrown:
+                    break;
+                case States.Thrown:
 
                     ProjectileUpdate();
                     break;
 
-                    //Once the state is inactive that means it is being used as a reference for other weapons. What this means is that every weapon that is created as a copy needs to know
-                    //If it's a copy and so making this id accessible is a must
+                //Once the state is inactive that means it is being used as a reference for other weapons. What this means is that every weapon that is created as a copy needs to know
+                //If it's a copy and so making this id accessible is a must
                 case States.inactive:
 
                     Weapon_Parent_ID = entityID;
                     break;
-            default:
+                default:
                     //Safety check
-                break;
-        }
+                    break;
+            }
     }
 
     public void SetThrowing(float inputForce, Vector3 direction)
@@ -118,9 +120,9 @@ public class Weapon : Entity
 
     public bool IsActive()
     {
-        
-            return !(currentState == States.inactive);
-        
+
+        return !(currentState == States.inactive);
+
     }
 
 
@@ -135,7 +137,7 @@ public class Weapon : Entity
         return ((Mathf.Abs(nDirection.x) > min || Mathf.Abs(nDirection.y) > min));
     }
 
-    
+
     protected void UpdateDirection()
     {
         for (int i = 0; i < 3; ++i)
@@ -161,16 +163,18 @@ public class Weapon : Entity
             // Manual stop of projectiles to prevent slow sliding and issues with picking them up
             else
             {
-               
+
                 nDirection = Vector3.zero;
             }
         }
         oldPos = transform.position;
+
     }
 
     protected void DroppedStateUpdate()
     {
         currentLifespawn -= Time.deltaTime;
+
         if (playerCollision.bounds.Intersects(weaponCollision.bounds))
         {
             SetInactive(); //Player should deal with it. If it's picked up then this is jsut a safety net. 
@@ -178,19 +182,27 @@ public class Weapon : Entity
         }
     }
 
-    protected bool ProjectileUpdate()
+    protected void ProjectileUpdate()
     {
         if (movementComponent != null)
         {
 
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
 
-            nDirection = movementComponent.ReflectCollisionDirection(nDirection);
-            if (movementComponent.IsMoveCollision(nDirection))
-            {
-                currentState = States.Dropped;
-            }
+            if (!hasBounced)
+                previousDirection = nDirection;
             else
+            if (playerCollision.bounds.Intersects(weaponCollision.bounds))// || weaponCollision.Distance(playerCollision).distance < 1.0f)
+            {
+                SetInactive(); //Player should deal with it. If it's picked up then this is jsut a safety net. 
+                controller.PlayerPickup(Weapon_Parent_ID);
+                return;
+            }
+
+            nDirection = movementComponent.ReflectCollisionDirection(nDirection);
+            if (!hasBounced && nDirection != previousDirection)
+                hasBounced = true;
+
             if (MoveWithMin(minDistanceTravelled))
             {
                 if (movementComponent.ConfirmedMove(nDirection))
@@ -209,7 +221,7 @@ public class Weapon : Entity
                         UpdateDirection();
                     }
                 //if there's no force then why have a projectile?
-                return false;
+                return;
             }
 
         }
@@ -223,7 +235,7 @@ public class Weapon : Entity
                 this.DestroyEntity();
             }
         }
-        return true;
+        return;
     }
 
     protected void CollisionSetup()
@@ -231,12 +243,12 @@ public class Weapon : Entity
         if (PriorityChar_Manager.instance.getPlayer() == null)
             return;
         //This function is called whenever an asset is not found. Nothing should run while this is "False"
-        if (playerCollision && weaponCollision)  
+        if (playerCollision && weaponCollision)
             return;
-        
+
         playerCollision = PriorityChar_Manager.instance.getPlayer().GetComponent<CapsuleCollider2D>();
         weaponCollision = GetComponent<BoxCollider2D>();
-            Physics2D.IgnoreCollision(playerCollision, weaponCollision);
+        Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
