@@ -50,7 +50,6 @@ public class Weapon : Entity
         oldPos = gameObject.transform.position;
         controller = GetComponent<WeaponController>();
 
-
         CollisionSetup();
 
     }
@@ -102,8 +101,6 @@ public class Weapon : Entity
 
         oldPos = this.transform.position;
         currentState = States.Thrown;
-
-
 
     }
     public void SetParentID(int ID)
@@ -157,7 +154,7 @@ public class Weapon : Entity
         }
         else
         {
-            currentState = States.Dropped;
+            SetDropped();
             if (nDirection.magnitude > MIN_GROUND_SPEED)
             {
                 nDirection -= (transform.position - oldPos) * ON_GROUND_DRAG;
@@ -208,8 +205,7 @@ public class Weapon : Entity
         if (collision.gameObject.layer == LayerMask.NameToLayer(bounceLayers[i]))//.collider.bounds.Intersects(weaponCollision.bounds))
         {
             hasBounced = true;
-            nDirection = new Vector3((nDirection.x + collision.collider.bounds.center.x), (nDirection.y + collision.collider.bounds.center.y), nDirection.z);
-            nDirection.x *= -.6f; nDirection.y *= -bounceStrength;
+            nDirection = -nDirection * bounceStrength;
         }
 #endif
     }

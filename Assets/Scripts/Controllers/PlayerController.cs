@@ -164,14 +164,15 @@ public class PlayerController : Controller
                 player.ReleaseWeapon();
             if (Input.GetMouseButtonDown(0))
                 player.ChargeWeapon();
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                isDashing = true;
+                entityMoveComp.Move(Vector3.zero, isDashing);
+            }
+            else
+                isDashing = false;
         }
-        if (Input.GetMouseButtonDown(1))
-        {
-            isDashing = true;
-            entityMoveComp.Move(Vector3.zero, isDashing);
-        }
-        else
-            isDashing = false;
 
         camera.Aim(Input.GetKey(KeyCode.LeftShift));
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     GameManager gameManager;
+    AudioSettings audioSettings;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject editCharacterMenu;
     [SerializeField] GameObject optionsMenu;
@@ -12,6 +13,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSettings = FindObjectOfType<AudioSettings>();
         gameManager = FindObjectOfType<GameManager>();
         MainMenu();
     }
@@ -32,7 +34,7 @@ public class MenuManager : MonoBehaviour
         mainMenu.SetActive(false);
         editCharacterMenu.SetActive(false);
         optionsMenu.SetActive(true);
-        gameManager.UpdateSettingsSliders();
+        audioSettings.UpdateSettingsSliders();
     }
 
     public void MainMenu()

@@ -841,8 +841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a685f630c179c240b5a843e8c710b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectsMixer: {fileID: 24100000, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
-  musicMixer: {fileID: 24100000, guid: 303ade08902669743adf907932be1261, type: 2}
 --- !u!114 &268435719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,15 +1724,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 2034190487}
   m_HandleRect: {fileID: 86178362}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 268435718}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1104139392}
+        m_TargetAssemblyTypeName: AudioSettings, Assembly-CSharp
         m_MethodName: UpdateMusicSlider
         m_Mode: 1
         m_Arguments:
@@ -1744,7 +1742,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!1 &533824828
 GameObject:
   m_ObjectHideFlags: 0
@@ -3538,6 +3536,7 @@ GameObject:
   - component: {fileID: 1104139391}
   - component: {fileID: 1104139390}
   - component: {fileID: 1104139389}
+  - component: {fileID: 1104139392}
   m_Layer: 5
   m_Name: OptionsMenuCanvas
   m_TagString: Untagged
@@ -3631,6 +3630,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1104139392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104139387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ebce0b785ef3b41ac6b8342839605f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectsMixer: {fileID: 24100000, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
+  musicMixer: {fileID: 24100000, guid: 303ade08902669743adf907932be1261, type: 2}
 --- !u!1 &1118098376
 GameObject:
   m_ObjectHideFlags: 0
@@ -4753,15 +4766,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 1460588586}
   m_HandleRect: {fileID: 274260036}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 268435718}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1104139392}
+        m_TargetAssemblyTypeName: AudioSettings, Assembly-CSharp
         m_MethodName: UpdateFXSlider
         m_Mode: 1
         m_Arguments:
@@ -4771,7 +4784,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!1 &1497199666
 GameObject:
   m_ObjectHideFlags: 0

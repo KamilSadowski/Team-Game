@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip[] movementClip;
     [SerializeField] AudioClip[] onDamageClip;
     [SerializeField] float movementClipVolume = 1.0f;
+    [SerializeField] AudioMixerGroup audioMixer;
     private List<AudioSource> activeAudioSources;
 
     GameObject tempObject;
@@ -17,8 +19,9 @@ public class SoundManager : MonoBehaviour
 
         activeAudioSources.Add(tempObject.AddComponent<AudioSource>());
 
+        activeAudioSources[activeAudioSources.Count - 1].outputAudioMixerGroup = audioMixer;
 
-        
+
         if (index <= 0)
             activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(movementClip[Random.Range(0, movementClip.Length)], movementClipVolume);
         else if (index <= 1)

@@ -13,6 +13,7 @@ Shader "Custom/Mirror" {
         [PerRendererData] _AlphaTex("External Alpha", 2D) = "white" {}
         [PerRendererData] _EnableExternalAlpha("Enable External Alpha", Float) = 0
         _ReflectionStrength("Reflection strength", Range(0,1)) = 0.5
+        _ColourStrength("Colour strength", Range(0,1)) = 0.5
         _Alpha("Alpha", Range(0,1)) = 0.5
     }
 
@@ -40,6 +41,7 @@ Shader "Custom/Mirror" {
             #include "UnitySprites.cginc"
 
             fixed _ReflectionStrength;
+            fixed _ColourStrength;
 
             struct Input
             {
@@ -66,14 +68,14 @@ Shader "Custom/Mirror" {
 
             void surf(Input IN, inout SurfaceOutput o)
             {
-                fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
+                fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color * _ColourStrength;
 
                 float screenAspect = _ScreenParams.x / _ScreenParams.y;
                 fixed2 coords = IN.screenPos.xy / (IN.screenPos.w + 0.001f);
 
                 fixed4 r = tex2D(_ReflectionTexture, UNITY_PROJ_COORD(coords)) * c.a;
 
-                o.Albedo = lerp(c, r, _ReflectionStrength);
+                o.Albedo = c + r * _ReflectionStrength;
                 o.Alpha = c.a * _Alpha;
             }
             ENDCG

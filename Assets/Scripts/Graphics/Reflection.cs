@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// The reflection looks for a sprite renderer in its parent and then reflects its current sprite every frame
 public class Reflection : MonoBehaviour
 {
     SpriteRenderer rendererToReflect;
@@ -28,7 +29,7 @@ public class Reflection : MonoBehaviour
         renderer.sprite = sprite;
 
 
-        transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y), 0);
+        transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y / rendererToReflect.gameObject.transform.localScale.y), 0);
 
 
         if (parent && !parent.colourChecked)
