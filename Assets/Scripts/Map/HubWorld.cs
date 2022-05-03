@@ -10,6 +10,10 @@ public class HubWorld : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+
+
+
+
         gameManager.GivePlayerEquipment();
     }
 

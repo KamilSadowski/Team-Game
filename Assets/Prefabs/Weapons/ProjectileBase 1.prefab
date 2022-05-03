@@ -112,7 +112,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5733697913478852487}
   - component: {fileID: 5733697913478852486}
-  - component: {fileID: 3650767725004706615}
   - component: {fileID: 8514985764260257263}
   - component: {fileID: 7126638304656815046}
   - component: {fileID: 7183137209490659154}
@@ -135,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 5733697913478852489}
   m_LocalRotation: {x: 0, y: 0, z: -0.92097473, w: 0.38962227}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1422126834862376472}
@@ -162,38 +161,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3650767725004706615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5733697913478852489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2da73ffb6f5aa246aea3c2dac6ed802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colourChecked: 0
-  colours:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  multiplyFlashColour:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  damagedColours:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  damageFlashInterval: 0.01
 --- !u!114 &8514985764260257263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 2
+  movementSpeed: 1.5
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -287,8 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce8b9405aa54954197a490f2d82f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_WEAPON_COOLDOWN: 10
-  WEAPON_THROW_COST: 5
+  MAX_WEAPON_COOLDOWN: 6
+  WEAPON_THROW_COST: 6
   WEAPON_PICKUP_REWARD: 3
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
@@ -349,7 +316,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   VisualRef: {fileID: 176591314593575664}
-  weapon_sharpness: 0.25
+  weapon_sharpness: 3
   weapon_damage: 50
   bounceLayers:
   - Map

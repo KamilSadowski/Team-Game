@@ -7,14 +7,9 @@ public class Pickup : Entity2D
     protected Collider2D thisCollider;
     protected Collider2D playerCollider;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        UpdateEntity();
-    }
     protected bool BindVariables()
     {
-        UpdateEntity();
+   
 
         bool output = false;
 
@@ -28,6 +23,8 @@ public class Pickup : Entity2D
     // Update is called once per frame
     void FixedUpdate()
     {
+        UpdateEntity();
+
         if (BindVariables())
             if (IsPlayerCollision())
             {

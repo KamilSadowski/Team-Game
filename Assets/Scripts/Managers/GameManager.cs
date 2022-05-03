@@ -67,23 +67,37 @@ public class GameManager : MonoBehaviour
             if (player && entityManager)
             {
 
-                    if(weaponsToGive.prefabID > -1)
-                    {
-                        weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.zero);
-                    }
 
-               
-                
-                    if (weaponsToGiveIDs != -1)
-                    {
-                        Entity entityRef = entityManager.GetEntity(weaponsToGiveIDs);
-                        weaponControllers = entityRef.GetComponent<WeaponController>();
-                        weaponControllers.PlayerPickup(entityRef.entityID);
-                        player.PickupNewWeapon(weaponControllers);
-                    }
-                
+                if (weaponsToGive.prefabID > -1)
+                {
+                    string weaponClass = PlayerPrefs.GetString("PlayerWeapon");
+                    
+                    
+                    if (weaponClass is { Length: > 0 }) {
+                        PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClass);
+                        if (s.WeaponObj != null)
+                            weaponsToGiveIDs = entityManager.TryCreateEntity(s.WeaponObj, Vector3.forward * 5.0f);
+                        else
+                            weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.up * 50.0f);
 
-                    weaponsGiven = true;
+                    }
+                    else
+                    weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.up * 50.0f);
+                }
+
+
+
+                if (weaponsToGiveIDs != -1)
+                {
+                    Entity entityRef = entityManager.GetEntity(weaponsToGiveIDs);
+                    weaponControllers = entityRef.GetComponent<WeaponController>();
+                    weaponControllers.PlayerPickup(entityRef.entityID);
+                    player.PickupNewWeapon(weaponControllers);
+                }
+
+
+                weaponsGiven = true;
+
             }
         }
     }

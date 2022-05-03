@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Player : Character
 {
@@ -114,8 +113,9 @@ public class Player : Character
         //Animations are organized here. Easier to force a level of charge to be present.
         ChargeWeapon();
 
-        if (equipmentManager != null)
+        if (equipmentManager != null && crosshair != null)
         {
+     
             equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
             curStrength = BASE_STRENGTH;
 
@@ -180,7 +180,20 @@ public class Player : Character
             equipmentManager.GetComponent<Entity>().DestroyEntity();
             equipmentManager =weapon;
             weapon.DisableWeapon();
-            return true;
+
+            PlayerWeaponSaves weaponClass = new PlayerWeaponSaves();
+            weaponClass.WeaponObj = weapon.gameObject;
+
+            // Save it
+            string json = JsonUtility.ToJson(weaponClass);
+            PlayerPrefs.SetString("PlayerWeapon", json);
+
+            string weaponClassy = PlayerPrefs.GetString("PlayerWeapon");
+            PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClassy);
+            if (s.WeaponObj != null)
+                return true;
+
+                return true;
         }
 
         return false;
@@ -188,7 +201,7 @@ public class Player : Character
 
     public Weapon getEquippedWeapon()
     {
-        if (equipmentManager.GetBoundWeapon())
+        if (equipmentManager && equipmentManager.GetBoundWeapon())
         {
             return equipmentManager.GetBoundWeapon().GetComponent<Weapon>();
         }

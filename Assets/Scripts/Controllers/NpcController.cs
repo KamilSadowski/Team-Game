@@ -61,7 +61,7 @@ public class NpcController : Controller
                 }
                 interactionSpawned = true;
             }
-           
+            return true;
         }
         else if(interactionSpawned)
         {
@@ -73,9 +73,10 @@ public class NpcController : Controller
             {
                 EndInteraction();
             }
+            return true;
 
         }
-        return true;
+        return false;
 
     }
     protected void OnDrawGizmosSelected()

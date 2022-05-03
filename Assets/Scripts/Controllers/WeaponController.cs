@@ -122,11 +122,15 @@ public class WeaponController : ProjectileController
         if (WEAPON_THROW_COST * PlayerThrowCostMod < currentWeaponCooldown)
         {
             BindVariables();
+            //Remove weapon cost from resource.
             currentWeaponCooldown -= WEAPON_THROW_COST * PlayerThrowCostMod;
 
+            //Create moving entity in crosshair direction.
             spawnedWeaponEntityReference =
          entityManager.GetEntity(entityManager.TryCreateMovingEntity(playerRef.getEquippedWeapon().gameObject, playerRef.transform.position,
                  (transform.position - crosshair.transform.position).normalized, force));
+
+            if(spawnedWeaponEntityReference)
             spawnedWeaponWeaponReference = spawnedWeaponEntityReference.GetComponent<Weapon>();
             if (spawnedWeaponWeaponReference)
             {
@@ -136,6 +140,7 @@ public class WeaponController : ProjectileController
                 spawnedWeaponWeaponReference.SetThrowing(force, direction);
                 spawnedWeaponWeaponReference.SetParentID(playerRef.getEquippedWeapon().entityID);
                 spawnedWeaponEntityReference.transform.rotation = new Quaternion(0, 0, Vector3.Dot(crosshair.transform.position, transform.position),1.0f);
+                spawnedWeaponWeaponReference = null;
             }
             //   spawnedWeaponClassReference
             /*

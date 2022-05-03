@@ -43,11 +43,7 @@ public class EntityManager : MonoBehaviour
             {
                 player = entities[playerID] as Player;
                 player.Create(playerID);
-                if (false && player)
-                {
-                    TryCreateListedWeapon(1, position);
-                    TryCreateListedWeapon(1, position);
-                }
+
             }
             return playerID;
         }
@@ -129,8 +125,10 @@ public class EntityManager : MonoBehaviour
     public int TryCreateEntity(GameObject entity, Vector3 position)
     {
         //-1 is commonly used as "Invalid"
+        Debug.Log(entity.name + " " + entitySlots.Count);
         if (entitySlots.Count == 0)
         {
+           
             return -1;
         }
 
@@ -190,43 +188,28 @@ public class EntityManager : MonoBehaviour
 
     public int TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)
     {
-        //-1 is commonly used as "Invalid"
-        if (entitySlots.Count == 0)
-        {
-            return -1;
-        }
-
-        tempEntityGameObject = Instantiate<GameObject>(entity);
-        tempEntityGameObject.TryGetComponent<Entity>(out tempEntity);
-        tempEntityGameObject.transform.position = position;
-
-        canThrow = tempEntityGameObject.GetComponent<MobileComponent>();
+        ID = TryCreateEntity(entity, position);
+        tempEntity = GetEntity(ID);
 
         if (tempEntity != null)
         {
+            canThrow = tempEntity.GetComponent<MobileComponent>();
 
-            ID = entitySlots.Peek();
             if (canThrow != null)
             {
                 canThrow.Move(Direction * force);
             }
 
-            tempEntity.Create(entitySlots.Peek());
-            entities[ID] = tempEntity;
-            entitySlots.Pop();
-
-            return ID;
         }
-
-        Destroy(tempEntityGameObject);
+        
         tempEntity = null;
         tempEntityGameObject = null;
-        return -1;
+        return ID;
     }
 
 
 
-    // Setting the bull will skip destroying if its to be done manually
+    // Setting the bool will skip destroying if its to be done manually
     public void DeleteEntity(int id, bool destroy = true)
     {
         // Destroy the entity if not destroyed

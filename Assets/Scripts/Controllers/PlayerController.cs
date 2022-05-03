@@ -23,7 +23,6 @@ public class PlayerController : Controller
     protected UI inventoryRef;
 
     protected bool isUsingInterface = false;
-    private bool isFacingRight = true;
 
     protected bool isDashing = false;
 
@@ -60,6 +59,7 @@ public class PlayerController : Controller
 
             if (!isUsingInterface)
             {
+                if(FollowingCamera.instance)
                 FollowingCamera.instance.CameraUpdate();
 
                 //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 

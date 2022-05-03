@@ -15,6 +15,6 @@ public class PickupHealth : Pickup
         if (health)
             health.Heal(healAmount);
         //Overwrite only this function
-        entityManager.DeleteEntity(entityID);
+        base.ActivatePickup();
     }
 }

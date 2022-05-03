@@ -22,6 +22,6 @@ public class PickupCoin : Pickup
         value = 0;
 
         //Overwrite only this function
-        entityManager.DeleteEntity(entityID);
+        base.ActivatePickup();
     }
 }
