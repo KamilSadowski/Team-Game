@@ -6,7 +6,7 @@ using UnityEngine;
 public class UI_ChargingBar : MonoBehaviour
 {
     public Image progBar;
-    [SerializeField] float OverMaxSensitivity = 0.01f;
+    [SerializeField] protected float OverMaxSensitivity = 0.01f;
 
     // Start is called before the first frame update
     void Start()

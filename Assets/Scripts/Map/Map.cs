@@ -244,6 +244,8 @@ public class Dungeon : MonoBehaviour
     Vector3 roomPosition = Vector3.zero;
     Vector3 roomRotation = new Vector3(0.0f, 0.0f, 90.0f);
 
+    [SerializeField] private GameObject HideFromMinimapPrefab;
+
     public GameObject GetRandomEnemy()
     {
         return enemyList[Random.Range(0, enemyList.Count)];
@@ -413,7 +415,7 @@ public class Dungeon : MonoBehaviour
                     rect.center = roomCenter;
                     rect.height = prefabTRect.height;
                     rect.width  = prefabTRect.width;
-                    
+                    T.sizeDelta = prefabT.sizeDelta;
                 }
             }
         }
@@ -593,11 +595,6 @@ public class Dungeon : MonoBehaviour
         }
 
 
-        // Minimap code
-        // Put image between the two rooms
-
-        //TODO
-
 
         // Connect the rooms together
         Vector3Int currentPosition = roomDoors[room1][door1].corridorStart;
@@ -639,6 +636,29 @@ public class Dungeon : MonoBehaviour
                 break;
             }
         }
+
+
+        // Minimap code
+        // Put image between the two rooms
+
+
+        // Get the position between the rooms
+        var startPos = roomDoors[room1][door1].corridorStart;
+        var endPos = currentPosition;
+        var dist = startPos - endPos;
+        var middle = startPos + dist;
+                Debug.Log("Distance :");
+                Debug.Log(dist);
+
+        //var o = Instantiate(HideFromMinimapPrefab, middle , Quaternion.identity);
+        //if (o)
+        //{
+        //    var canvasTransform = o.GetComponentInChildren<Canvas>().transform as RectTransform;
+        //    if (canvasTransform)
+        //    {
+        //    }
+        //}
+
     }
 
     // Returns the tile type for the given tile

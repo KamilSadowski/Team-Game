@@ -43,6 +43,19 @@ public class Player : Character
         crosshair = PriorityChar_Manager.instance.getCrosshair();
         entitySpawner = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
         curStrength = BASE_STRENGTH;
+
+
+        // Get colours from stored
+        string c = PlayerPrefs.GetString("PlayerColours");
+        if (c is { Length: > 0 })
+        {
+            PlayerColourSave s = JsonUtility.FromJson<PlayerColourSave>(c);
+            if (s != null)
+            {
+                colours = s.Colours;
+                ChangeColours(colours[0],colours[1],colours[3]);
+            }
+        }
     }
 
     private void Update()

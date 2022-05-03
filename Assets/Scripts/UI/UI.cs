@@ -1,10 +1,10 @@
 using UnityEngine;
-using TMPro;
 using System.Collections;
 
 public class UI : MonoBehaviour
 {
     [SerializeField] private CanvasGroup menu;
+    [SerializeField] private CanvasGroup MapMenu;
     private bool isViewing = false;
     private static readonly float animationTime = 0.5f;
 
@@ -24,6 +24,10 @@ public class UI : MonoBehaviour
     
     }
 
+    void LateUpdate()
+    {
+       
+    }
 
     private void Awake()
     {
@@ -34,6 +38,7 @@ public class UI : MonoBehaviour
             menu.blocksRaycasts = false;
         }
     }
+
     private IEnumerator ShowCanvas(CanvasGroup group, float target, bool isBlockRaycast)
     {
         if (group != null)
