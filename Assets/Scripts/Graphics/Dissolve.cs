@@ -21,8 +21,12 @@ public class Dissolve : MonoBehaviour
         
         if (!shader) { Debug.Log("Shader not found", this); return; }
 
+        var renderRef = GetComponent<SpriteRenderer>();
+        if (!renderRef) renderRef = GetComponentInChildren<SpriteRenderer>();
+
         material                                = new Material(shader);
-        GetComponent<SpriteRenderer>().material = material;
+        renderRef.material = material;
+        
 
         time = Reversed ? 2f : 0f;
 

@@ -77,7 +77,8 @@ public class Entity : MonoBehaviour
         movementComponent = GetComponent<MovementComponent>();
 
         renderer = GetComponent<SpriteRenderer>();
-
+        if (!renderer)
+            renderer = GetComponentInChildren<SpriteRenderer>();
         multiplyColour = renderer.color;
 
         ChangeColours(colours[0], colours[1], colours[2]);

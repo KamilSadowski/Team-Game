@@ -9,6 +9,7 @@ public class Weapon : Entity
     protected int Weapon_Parent_ID = -1;
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
+    [SerializeField] GameObject VisualRef;
 
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
@@ -35,7 +36,7 @@ public class Weapon : Entity
 
     [SerializeField] const float MAX_LIFESPAN = 5.0f;
     protected float currentLifespawn = MAX_LIFESPAN;
-
+    protected float currentProjectileLifespawn = 0;
     protected enum States
     {
         Dropped,
@@ -215,6 +216,11 @@ public class Weapon : Entity
     {
         if (movementComponent != null)
         {
+            if (VisualRef)
+            {
+                VisualRef.transform.Rotate(Vector3.forward * currentProjectileLifespawn);
+                currentProjectileLifespawn += Time.deltaTime * (nDirection.magnitude * 4.0f);
+            }
 
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
 
