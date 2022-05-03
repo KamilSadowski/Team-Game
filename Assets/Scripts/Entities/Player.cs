@@ -203,12 +203,12 @@ public class Player : Character
 
     public void SpawnWeaponPickup()
     {
-        entitySpawner.TryCreateListedWeapon(0, crosshair.GetPosition());
+        entitySpawner.TryCreateRandomListedWeapon(crosshair.GetPosition());
     }
 
     public void SpawnWeaponPickupAt(Vector3 position)
     {
-        entitySpawner.TryCreateListedWeapon(0, position);
+        entitySpawner.TryCreateRandomListedWeapon(position);
     }
 
     public void SpawnEnemyTarget()

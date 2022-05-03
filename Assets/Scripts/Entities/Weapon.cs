@@ -150,7 +150,8 @@ public class Weapon : Entity
         // Drag depends on whether the projectile is still in the air (depends on current speed of the projecitle)
         if (nDirection.magnitude > MIN_AIR_SPEED)
         {
-            nDirection -= (transform.position - oldPos) * IN_AIR_DRAG;
+            if (!movementComponent.IsMoveCollision(nDirection*0.75f))
+                nDirection -= (transform.position - oldPos) * IN_AIR_DRAG;
         }
         else
         {
@@ -224,9 +225,11 @@ public class Weapon : Entity
                 return;
             }
 
+           
             if (MoveWithMin(minDistanceTravelled))
             {
-                if (movementComponent.ConfirmedMove(nDirection))
+              
+                    if (movementComponent.ConfirmedMove(nDirection))
                 {
 
                     UpdateDirection();

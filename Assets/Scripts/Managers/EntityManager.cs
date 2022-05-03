@@ -64,6 +64,15 @@ public class EntityManager : MonoBehaviour
         return -1;
     }
 
+    public int TryCreateRandomListedWeapon(Vector3 Position)
+    {
+
+            return TryCreateEntity(WeaponList[Random.Range(0, WeaponList.Length)], Position);
+
+        //-1 is commonly used as "Invalid"
+        return -1;
+    }
+
     public int TryCreateListedProjectile(int index, Vector3 Position, Vector3 NormalDirection, float force)
     {
         if (index >= 0 && index < WeaponList.Length)

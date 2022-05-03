@@ -35,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 5733697913478852489}
   m_LocalRotation: {x: 0, y: 0, z: -0.92097473, w: 0.38962227}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1009647304979904108}
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: 8f3774e6f38821149a22f46b385bcabe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
+  m_FlipX: 1
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 0.14, y: 0.38}
   m_AdaptiveModeThreshold: 0.5
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 1
+  movementSpeed: 2
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -214,7 +214,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0009204075, y: -0.0010369774}
+  m_Offset: {x: 0.0015202612, y: 0.05422879}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -225,7 +225,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.10056807, y: 0.1000687}
+  m_Size: {x: 0.23395869, y: 0.21060027}
   m_EdgeRadius: 0
 --- !u!114 &2566258519793261882
 MonoBehaviour:
@@ -255,7 +255,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.00051579997}
+  m_Offset: {x: 0.0022500902, y: 0.05385095}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -266,7 +266,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.1610316}
+  m_Size: {x: 0.29193136, y: 0.26976502}
   m_EdgeRadius: 0
 --- !u!114 &6698053271892808964
 MonoBehaviour:
@@ -301,12 +301,12 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   weapon_sharpness: 0.25
-  weapon_damage: 25
+  weapon_damage: 50
   bounceLayers:
   - Map
   - Prop
   - Enemy
-  bounceStrength: 0.9
+  bounceStrength: 0.4
 --- !u!114 &4277359961982557046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,9 +320,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colours:
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.7416694, g: 1, b: 0, a: 0}
-  - {r: 0, g: 0.5955162, b: 1, a: 0}
+  - {r: 0.7924528, g: 0.75133497, b: 0.75133497, a: 0}
+  - {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
+  - {r: 0.8062033, g: 0.88235766, b: 0.9339623, a: 0}
 --- !u!1001 &7944970863688089875
 PrefabInstance:
   m_ObjectHideFlags: 0
