@@ -53,7 +53,7 @@ public class Player : Character
             if (s != null)
             {
                 colours = s.Colours;
-                ChangeColours(colours[0],colours[1],colours[3]);
+                ChangeColours(colours[0],colours[1],colours[2]);
             }
         }
     }
