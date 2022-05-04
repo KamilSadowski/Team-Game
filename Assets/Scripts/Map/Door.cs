@@ -11,6 +11,11 @@ public class Door : MonoBehaviour
     Animator animator;
     DoorKillTrigger killTrigger;
 
+    // Door sounds
+    [SerializeField] AudioClip doorOpening;
+    [SerializeField] AudioClip doorClosing;
+    AudioSource audioSource;
+
     public Vector3 offset;
     public Room room { get; private set; }
 
@@ -52,6 +57,7 @@ public class Door : MonoBehaviour
         animator.SetBool("Open", true);
         collider.enabled = false;
         killTrigger.OpenDoor();
+        audioSource.PlayOneShot(doorOpening);
     }
 
     public void CloseDoor()
@@ -59,6 +65,7 @@ public class Door : MonoBehaviour
         animator.SetBool("Open", false);
         collider.enabled = true;
         killTrigger.CloseDoor();
+        audioSource.PlayOneShot(doorClosing);
     }
 
     public void CheckDoorComponents()
@@ -78,6 +85,10 @@ public class Door : MonoBehaviour
         if (!animator)
         {
             animator = GetComponent<Animator>();
+        }
+        if (!audioSource)
+        {
+            audioSource = GetComponent<AudioSource>();
         }
     }
 }

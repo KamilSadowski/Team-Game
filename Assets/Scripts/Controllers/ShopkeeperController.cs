@@ -6,6 +6,8 @@ public class ShopkeeperController : NpcController
 {
     VendingMachine ControlledObject;
 
+
+
     // Start is called before the first frame update
     protected override void ActivateInteraction()
     {

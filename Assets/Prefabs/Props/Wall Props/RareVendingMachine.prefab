@@ -159,7 +159,7 @@ MonoBehaviour:
   - {fileID: 5733697913478852489, guid: 38b0209ad3994fc44a2735f8bf22e2d0, type: 3}
   - {fileID: 5733697913478852489, guid: dde8370c58e27d84793673eeb160ec87, type: 3}
   - {fileID: 5733697913478852489, guid: fc431dc1e56441e4fab262ca12f16a64, type: 3}
-  cost: 1
+  cost: 20
   vendingMachineHole: {fileID: 6322085060307511080}
 --- !u!50 &7116367918522552706
 Rigidbody2D:
@@ -221,8 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivationKey: 101
-  InteractionEntity: {fileID: 4764984543346663842, guid: d6ceb994b3e1cd348a22fb169773aac7, type: 3}
   interactionRadius: 0.5
+  interactText: Buy Weapon ($20)
+  interactPrefab: {fileID: 4780815454733598455, guid: 9713dc6bf71dad641b01d368f1fe2e96, type: 3}
 --- !u!1001 &5854484622189302438
 PrefabInstance:
   m_ObjectHideFlags: 0

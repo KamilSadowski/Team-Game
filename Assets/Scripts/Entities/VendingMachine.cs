@@ -31,7 +31,6 @@ public class VendingMachine : Prop
 
             if (gameManager.TrySpendCoins(cost))
             {
-
                 var i = em.TryCreateEntity(DroppableItems[Random.Range(0, DroppableItems.Length)], vendingMachineHole.transform.position);
             }
         }

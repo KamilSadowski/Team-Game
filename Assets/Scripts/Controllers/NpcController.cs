@@ -5,21 +5,25 @@ using UnityEngine;
 public class NpcController : Controller
 {
     [SerializeField] public KeyCode ActivationKey = KeyCode.E;
-    [SerializeField] public GameObject InteractionEntity;
     protected EntityManager entityManager;
 
     [SerializeField] public float interactionRadius = .25f;
     GameObject playerRef;
 
-    protected bool interactionSpawned = false;
-    protected int interactionID = -1;
+    // Text to show when interacting
+    [SerializeField] string interactText;
+    [SerializeField] EditableText interactPrefab;
+    EditableText text;
 
-    const float interactionBaseScale = 0.1875f;
-    protected Vector3 newScale;
-    protected GameObject objectRef;
     // Start is called before the first frame update
+    private void Start()
+    {
+        text = Instantiate(interactPrefab);
+        text.transform.parent = transform;
+        text.transform.localPosition = interactPrefab.transform.position;
+        text.SetText(interactText);
+    }
 
-    
 
     protected virtual void ActivateInteraction()
     {
@@ -32,51 +36,36 @@ public class NpcController : Controller
 
     protected bool IsPlayerWithinRadius()
     {
+        if (text == null)
+        {
+            text = Instantiate(interactPrefab);
+            text.transform.parent = transform;
+            text.transform.localPosition = interactPrefab.transform.position;
+            text.SetText(interactText);
+        }
 
-        if (!InteractionEntity) return false;
         float collRad = interactionRadius * ((transform.localScale.x + transform.localScale.y));
-       
-
 
         //Doesn  float collRad = interactionRadius * ((transform.localScale.x + transform.localScale.y));'t have to be accurate. Just a general sphere that scales with the object.
         //If distance is less than the stored radius.
         if (collRad >= Vector3.Distance(transform.position, playerRef.transform.position))
         {
-           if (entityManager && !interactionSpawned)
+           if (entityManager)
             {
-                if (objectRef != null)
-                {
-                    objectRef.SetActive(true);
-                }
-                else
-                {
-                    //Set NewScale as custom scale so it can be used in Vector multiplication
-                    newScale.Set(interactionBaseScale, interactionBaseScale, interactionBaseScale);
-
-
-                    interactionID = entityManager.TryCreateEntity(InteractionEntity, transform.position + (Vector3.up * interactionBaseScale * 1.5f));
-                    objectRef = entityManager.GetEntity(interactionID).gameObject;//
-                    objectRef.transform.localScale = newScale * transform.localScale.x;
-                    objectRef.transform.SetParent(gameObject.transform);
-                }
-                interactionSpawned = true;
+                text.TextVisible(true);
             }
             return true;
         }
-        else if(interactionSpawned)
+        else
         {
-            objectRef.SetActive(false);// = ;
-            //entityManager.DeleteEntity(interactionID);
-            interactionSpawned = false;
+            text.TextVisible(false);
 
             if (Input.GetKeyDown(ActivationKey))
             {
                 EndInteraction();
             }
-            return true;
-
+            return false;
         }
-        return false;
 
     }
     protected void OnDrawGizmosSelected()
@@ -112,7 +101,9 @@ public class NpcController : Controller
             {
                 ActivateInteraction();
             }
-     
         }
+
+
+
     }
 }
