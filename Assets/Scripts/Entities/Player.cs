@@ -52,7 +52,7 @@ public class Player : Character
             if (s != null)
             {
                 colours = s.Colours;
-                ChangeColours(colours[0],colours[1],colours[2]);
+                ChangeColours(colours[0], colours[1], colours[2]);
             }
         }
     }
@@ -115,7 +115,7 @@ public class Player : Character
 
         if (equipmentManager != null && crosshair != null)
         {
-     
+
             equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
             curStrength = BASE_STRENGTH;
 
@@ -176,9 +176,9 @@ public class Player : Character
         //Mostly safety checks to see if anything has not been set and if there is no weapon held, at the moment in time. 
         if (weapon != null)
         {
-            if(equipmentManager)
-            equipmentManager.GetComponent<Entity>().DestroyEntity();
-            equipmentManager =weapon;
+            if (equipmentManager)
+                equipmentManager.GetComponent<Entity>().DestroyEntity();
+            equipmentManager = weapon;
             weapon.DisableWeapon();
 
             PlayerWeaponSaves weaponClass = new PlayerWeaponSaves();
@@ -193,7 +193,7 @@ public class Player : Character
             if (s.WeaponObj != null)
                 return true;
 
-                return true;
+            return true;
         }
 
         return false;

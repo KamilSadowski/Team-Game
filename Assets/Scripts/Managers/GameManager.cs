@@ -35,17 +35,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-            if (FollowingCamera.instance && FollowingCamera.instance.targetToFollow == null)
+        if (FollowingCamera.instance && FollowingCamera.instance.targetToFollow == null)
+        {
+            if (player != null)
             {
-                if (player != null)
-                {
-                    FollowingCamera.instance.SetTarget(player);
-                }
-                else
-                {
-                    player = FindObjectOfType<Player>();
-                }
+                FollowingCamera.instance.SetTarget(player);
             }
+            else
+            {
+                player = FindObjectOfType<Player>();
+            }
+        }
     }
 
     public void GivePlayerEquipment()
@@ -66,14 +66,13 @@ public class GameManager : MonoBehaviour
 
             if (player && entityManager)
             {
-
-
                 if (weaponsToGive.prefabID > -1)
                 {
                     string weaponClass = PlayerPrefs.GetString("PlayerWeapon");
-                    
-                    
-                    if (weaponClass is { Length: > 0 }) {
+
+
+                    if (weaponClass is { Length: > 0 })
+                    {
                         PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClass);
                         if (s.WeaponObj != null)
                             weaponsToGiveIDs = entityManager.TryCreateEntity(s.WeaponObj, Vector3.forward * 5.0f);
@@ -82,10 +81,8 @@ public class GameManager : MonoBehaviour
 
                     }
                     else
-                    weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.up * 50.0f);
+                        weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.up * 50.0f);
                 }
-
-
 
                 if (weaponsToGiveIDs != -1)
                 {
@@ -136,7 +133,7 @@ public class GameManager : MonoBehaviour
             weaponsGiven = false;
             player = null;
         }
-        
+
         // Load the new scene
         SceneManager.LoadScene(Globals.SceneNames[(int)scene]);
     }
