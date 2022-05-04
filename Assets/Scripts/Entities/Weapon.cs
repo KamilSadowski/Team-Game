@@ -15,6 +15,9 @@ public class Weapon : Entity
     [SerializeField] float weapon_damage = 10;
     [SerializeField] string[] bounceLayers;
     [SerializeField] float bounceStrength = 0.4f;
+    [SerializeField] AudioClip hitSound;
+    AudioSource audioSource;
+    ParticleSystem particleSystem;
     const float MIN_DISTANCE_TRAVELLED = 2.0f;
 
     // Decide if projectile is in the air based on speed
@@ -50,6 +53,8 @@ public class Weapon : Entity
     {
         oldPos = gameObject.transform.position;
         controller = GetComponent<WeaponController>();
+        audioSource = GetComponent<AudioSource>();
+        particleSystem = GetComponentInChildren<ParticleSystem>();
 
         CollisionSetup();
 
@@ -299,7 +304,11 @@ public class Weapon : Entity
 
             if (tempRef != null)
                 tempRef.TakeDamage(output, transform.position, Vector3.zero);
-
+            else
+            {
+                audioSource.PlayOneShot(hitSound);
+                particleSystem.Play();
+            }
 
         }
     }
