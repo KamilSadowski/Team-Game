@@ -9,8 +9,11 @@ public class Weapon : Entity
     protected int Weapon_Parent_ID = -1;
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
+
+    //Visual representation of weapon. Allows for custom movements to be applied.
     [SerializeField] GameObject VisualRef;
 
+    //Weapon stats for calculating damage.
     [SerializeField] float weapon_sharpness = 0.25f;
     [SerializeField] float weapon_damage = 10;
     [SerializeField] string[] bounceLayers;
@@ -26,7 +29,7 @@ public class Weapon : Entity
     const float ON_GROUND_DRAG = 0.9999f;
     //Store the players transform. If the enemies targeted more than one enemy then this might be an issue but assuming
     //That only the player is a viable target, this can be used to calculate if they're within range and where they are, in comparison.
-    protected float damageMod = -1;
+
     protected Vector3 nDirection;
     protected Vector3 oldPos;
     protected States currentState = States.Dropped;
@@ -93,6 +96,36 @@ public class Weapon : Entity
                     break;
             }
     }
+
+    //Getters
+    public float getSharpness()
+    {
+        return weapon_sharpness;
+    }
+    public float getDamage()
+    {
+        return weapon_damage;
+    }
+    public float getBounceStr()
+    {
+        return bounceStrength;
+    }
+
+
+    //else Setters
+    public void setSharpness(float input)
+    {
+        weapon_sharpness = input;
+    }
+    public void setDamage(float input)
+    {
+        weapon_damage = input;
+    }
+    public void setBounceStr(float input)
+    {
+        bounceStrength = input;
+    }
+
 
     public void SetThrowing(float inputForce, Vector3 direction)
     {
@@ -287,13 +320,9 @@ public class Weapon : Entity
 
             CheckBounce(collision);
 
-            if (damageMod < 0)
-            {
-                damageMod = weapon_sharpness * transform.localScale.magnitude;
-            }
             float output = weapon_damage * Vector3.Dot(nDirection, nDirection);
 
-            output *= damageMod;
+            output *= weapon_sharpness * transform.localScale.magnitude;
 
             Entity tempRef = collision.gameObject.GetComponent<Entity>();
 

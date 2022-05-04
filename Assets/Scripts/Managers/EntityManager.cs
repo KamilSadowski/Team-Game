@@ -54,7 +54,7 @@ public class EntityManager : MonoBehaviour
     public int TryCreateListedWeapon(int index, Vector3 Position)
     {
         if(index >= 0 && index < WeaponList.Length)
-            return TryCreateEntity(WeaponList[index], Position);
+            return TryCreateEntity(WeaponList[index], Position, index);
 
         //-1 is commonly used as "Invalid"
         return -1;
@@ -62,8 +62,8 @@ public class EntityManager : MonoBehaviour
 
     public int TryCreateRandomListedWeapon(Vector3 Position)
     {
-
-            return TryCreateEntity(WeaponList[Random.Range(0, WeaponList.Length)], Position);
+        ID = Random.Range(0, WeaponList.Length);
+            return TryCreateEntity(WeaponList[ID], Position, ID);
 
         //-1 is commonly used as "Invalid"
         return -1;
@@ -71,9 +71,9 @@ public class EntityManager : MonoBehaviour
 
     public int TryCreateListedProjectile(int index, Vector3 Position, Vector3 NormalDirection, float force)
     {
-        if (index >= 0 && index < WeaponList.Length)
-            return TryCreateMovingEntity(WeaponList[index], Position, NormalDirection, force);
-
+        if (index >= 0 && index < WeaponList.Length) {
+            return TryCreateMovingEntity(WeaponList[index], Position, NormalDirection, force, index); 
+        }
         //-1 is commonly used as "Invalid"
         return -1;
     }
@@ -81,7 +81,7 @@ public class EntityManager : MonoBehaviour
     public int TryCreateListedNPC(int index, Vector3 Position)
     {
         if (index >= 0 && index < NPCList.Length)
-            return TryCreateEntity(NPCList[index], Position);
+            return TryCreateEntity(NPCList[index], Position, index);
 
         //-1 is commonly used as "Invalid"
         return -1;
@@ -91,7 +91,7 @@ public class EntityManager : MonoBehaviour
     {
         int ID = Random.Range(0, NPCList.Length);
         if (ID >= 0 && ID < NPCList.Length)
-            return TryCreateEntity(NPCList[ID], Position);
+            return TryCreateEntity(NPCList[ID], Position , ID);
 
         //-1 is commonly used as "Invalid"
         return -1;
@@ -105,24 +105,14 @@ public class EntityManager : MonoBehaviour
     public int TryCreateListedProp(int index, Vector3 Position)
     {
         if (index >= 0 && index < PropList.Length)
-            return TryCreateEntity(PropList[index], Position);
-
-        //-1 is commonly used as "Invalid"
-        return -1;
-    }
-
-    public int TryCreateInteractionUI(Vector3 Position)
-    {
-
-        if(PropList.Length>0)
-            return TryCreateEntity(PropList[0], Position);
+            return TryCreateEntity(PropList[index], Position, index);
 
         //-1 is commonly used as "Invalid"
         return -1;
     }
 
     // Returns false if failed
-    public int TryCreateEntity(GameObject entity, Vector3 position)
+    public int TryCreateEntity(GameObject entity, Vector3 position, int TemplateID = -1)
     {
         //-1 is commonly used as "Invalid"
         Debug.Log(entity.name + " " + entitySlots.Count);
@@ -142,7 +132,7 @@ public class EntityManager : MonoBehaviour
         if (tempEntity)
         {
             ID = entitySlots.Peek();
-            tempEntity.Create(entitySlots.Peek());
+            tempEntity.Create(entitySlots.Peek(), TemplateID);
             entities[ID] = tempEntity;
             entitySlots.Pop();
 
@@ -186,9 +176,9 @@ public class EntityManager : MonoBehaviour
         return TryCreateEntity(PickupList[number], Position);
     }
 
-    public int TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force)
+    public int TryCreateMovingEntity(GameObject entity, Vector3 position, Vector3 Direction, float force, int index = -1)
     {
-        ID = TryCreateEntity(entity, position);
+        ID = TryCreateEntity(entity, position, index);
         tempEntity = GetEntity(ID);
 
         if (tempEntity != null)

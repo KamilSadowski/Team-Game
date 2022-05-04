@@ -77,11 +77,6 @@ public class EnemyController : Controller
 
 
             //Adjusts the position calculation to instead be a "Step" in the correct direction, which the movement speed should be able to automatically sort itself.
-           
-
-
-
-
             if (playerHealth != null)
             {
                 isWalking = false;

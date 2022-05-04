@@ -21,6 +21,9 @@ public static class Globals
         }
     };
 
+    public const string PLAYER_COLOUR_SAVE = "PlayerColours";
+    public const string PLAYER_WEAPON_SAVE = "PlayerWeapon";
+
     public const int MAX_ROOM_NO = 15; // Max amount of rooms allowed, at least 3 required
     public const int MAP_GRID_SIZE = 10; // Size of the map grid that is used for map creation
     public const float ROOM_SIZE = 20; // Maximum room size, the doors need to match up with the room size boundaries

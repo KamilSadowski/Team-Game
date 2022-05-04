@@ -15,7 +15,7 @@ public class MortalHealthComponent : BaseHealthComponent
     void Start()
     {
         currentHealth = maxHealth;
-        int i = 0;
+ 
 
         healthBar = GetComponentInChildren<UI_ChargingBar>();
 

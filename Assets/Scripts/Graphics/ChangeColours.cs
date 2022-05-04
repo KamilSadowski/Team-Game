@@ -13,27 +13,39 @@ public class ChangeColours : MonoBehaviour
     [SerializeField] protected Color[] colours = new Color[3];
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         renderer = GetComponent<SpriteRenderer>();
 
         multiplyColour = renderer.color;
+
+        material = new MaterialPropertyBlock();
+    }
+
+    private void Start()
+    {
+        ChangeColour(colours); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        material = new MaterialPropertyBlock();
-        ChangeColour(colours);
+
+    }
+
+    public Color[] GetColours()
+    {
+        return colours;
     }
 
     public void ChangeColour(Color[] newColours)
     {
-        colours = newColours;
-        renderer.GetPropertyBlock(material);
-        material.SetColor("_PrimaryColor", colours[0]);
-        material.SetColor("_SecondaryColor", colours[1]);
-        material.SetColor("_TertiaryColor", colours[2]);
-        renderer.SetPropertyBlock(material);
+            colours = newColours;
+            renderer.GetPropertyBlock(material);
+            material.SetColor("_PrimaryColor", colours[0]);
+            material.SetColor("_SecondaryColor", colours[1]);
+            material.SetColor("_TertiaryColor", colours[2]);
+            renderer.SetPropertyBlock(material);
+        
     }
 }

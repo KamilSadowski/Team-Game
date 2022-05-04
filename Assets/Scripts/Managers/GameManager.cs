@@ -70,16 +70,16 @@ public class GameManager : MonoBehaviour
 
                 if (weaponsToGive.prefabID > -1)
                 {
-                    string weaponClass = PlayerPrefs.GetString("PlayerWeapon");
+                    string weaponClass = PlayerPrefs.GetString(Globals.PLAYER_WEAPON_SAVE);
                     
                     
                     if (weaponClass is { Length: > 0 }) {
-                        PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClass);
-                        if (s.WeaponObj != null)
-                            weaponsToGiveIDs = entityManager.TryCreateEntity(s.WeaponObj, Vector3.forward * 5.0f);
-                        else
-                            weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.up * 50.0f);
-
+                        //PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClass);
+                        //if (s != null)
+                        //    weaponsToGiveIDs = entityManager.TryCreateEntity(new GameObject, Vector3.forward * 5.0f);
+                        //else
+                        weaponsToGiveIDs = entityManager.TryCreateListedWeapon(player.GetSavedWeaponTemplateID(), Vector3.up * 50.0f);
+                        player.WeaponLoad(entityManager.GetEntity(weaponsToGiveIDs).gameObject);
                     }
                     else
                     weaponsToGiveIDs = entityManager.TryCreateListedWeapon(weaponsToGive.prefabID, Vector3.up * 50.0f);

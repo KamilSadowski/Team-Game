@@ -19,7 +19,7 @@ public class MobileComponent : MovementComponent
     [SerializeField] protected readonly float FOOTSTEP_INTERVAL = 1.0f;
     [SerializeField] ContactFilter2D MovementContactData;
     [SerializeField] protected float DashCooldown = 0.25f;
-    [SerializeField] protected bool isFacingRight = true;
+    protected bool isFacingRight = true;
 
     protected bool HasDashCooldown = true;
     protected SoundManager footStepRandomizer;
@@ -52,6 +52,28 @@ public class MobileComponent : MovementComponent
         baseFacingDirection = isFacingRight;
     }
 
+    //Start Getters & Setters
+    public float getDrag()
+    {
+        return drag;
+    }
+
+    public void setDrag(float input)
+    {
+        drag = input;
+    }
+
+    public float getMovementSpeed()
+    {
+        return movementSpeed;
+    }
+
+    public void setMovementSpeed(float input)
+    {
+        movementSpeed = input;
+    }
+
+    //End Getters & Setters
 
     public override void Teleport(Vector3 teleportTo)
     {

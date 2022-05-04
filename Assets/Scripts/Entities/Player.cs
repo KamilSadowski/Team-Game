@@ -45,7 +45,7 @@ public class Player : Character
 
 
         // Get colours from stored
-        string c = PlayerPrefs.GetString("PlayerColours");
+        string c = PlayerPrefs.GetString(Globals.PLAYER_COLOUR_SAVE);
         if (c is { Length: > 0 })
         {
             PlayerColourSave s = JsonUtility.FromJson<PlayerColourSave>(c);
@@ -103,6 +103,105 @@ public class Player : Character
             {
                 equipmentManager.PlayerUpdate();
             }
+        }
+    }
+    public int GetSavedWeaponTemplateID()
+    {
+        string weaponClassy = PlayerPrefs.GetString(Globals.PLAYER_WEAPON_SAVE);
+        PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClassy);
+        if (s == null || s.WeaponTemplateID < 0)
+            return 0;
+        return s.WeaponTemplateID;
+    }
+
+    public GameObject WeaponLoad(GameObject obj)
+    {
+        var weapon = obj.GetComponent<Weapon>();
+        var weapCont = obj.GetComponent<WeaponController>();
+        var mobileComp = obj.GetComponent<MobileComponent>();
+        var colour = obj.GetComponentInChildren<ChangeColours>();
+
+        if (weapon && weapCont && mobileComp && colour)
+        {
+            string weaponClassy = PlayerPrefs.GetString(Globals.PLAYER_WEAPON_SAVE);
+            PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClassy);
+            if (s == null)
+                return obj;
+
+            obj.transform.localScale = s.Scale;
+            //Weapon class
+            weapon.setBounceStr(s.bounceStr);
+            weapon.setSharpness(s.sharpness);
+            weapon.setDamage(s.damage);
+
+            //Weapon controller
+            weapCont.setWeaponCooldown(s.WeaponCD);
+            weapCont.SetWeaponCost(s.WeaponCost);
+            weapCont.SetWeaponReward(s.WeaponPickupReward);
+
+            //Mobile component
+            mobileComp.setMovementSpeed(s.MovementSpeed);
+            mobileComp.setDrag(s.Drag);
+
+            //Colours
+            //Can assume all 3 will be null or not null. (Primary/Secondary/Tetiary)
+            if (s.PrimaryColoursRGB != null)
+            {
+                Color[] input = new Color[3];
+                input[0] = s.PrimaryColoursRGB;
+                input[1] = s.SecondaryColoursRGB;
+                input[2] = s.TetiaryColoursRGB;
+
+
+                colour.ChangeColour(input);
+
+            }
+        }
+        return obj;
+    }
+
+    private void WeaponSave(GameObject obj)
+    {
+        var weapon = obj.GetComponent<Weapon>();
+        var weapCont = obj.GetComponent<WeaponController>();
+        var mobileComp = obj.GetComponent<MobileComponent>();
+        var colour = obj.GetComponentInChildren<ChangeColours>();
+
+        if (weapon && weapCont && mobileComp && colour)
+        {
+            PlayerWeaponSaves weaponClass = new PlayerWeaponSaves();
+
+            weaponClass.WeaponTemplateID = weapon.templateID;
+            weaponClass.Scale = weapon.gameObject.transform.localScale;
+            //Weapon class
+            weaponClass.bounceStr = weapon.getBounceStr();
+            weaponClass.sharpness = weapon.getSharpness();
+            weaponClass.damage = weapon.getDamage();
+
+            //Weapon controller
+            weaponClass.WeaponCD = weapCont.getWeaponCooldown();
+            weaponClass.WeaponCost = weapCont.getWeaponCost();
+            weaponClass.WeaponPickupReward = weapCont.getWeaponReward();
+
+            //Mobile component
+            weaponClass.MovementSpeed = mobileComp.getMovementSpeed();
+            weaponClass.Drag = mobileComp.getDrag();
+
+            //Colours
+            //Can assume all 3 will be null or not null. (Primary/Secondary/Tetiary)
+            if (weaponClass.PrimaryColoursRGB != null)
+            {
+                Color[] input = colour.GetColours();
+                weaponClass.PrimaryColoursRGB   = input[0];
+                weaponClass.SecondaryColoursRGB = input[1];
+                weaponClass.TetiaryColoursRGB   = input[2];
+
+            }
+   
+
+            // Save it
+            string json = JsonUtility.ToJson(weaponClass);
+            PlayerPrefs.SetString(Globals.PLAYER_WEAPON_SAVE, json);
         }
     }
 
@@ -181,19 +280,10 @@ public class Player : Character
             equipmentManager =weapon;
             weapon.DisableWeapon();
 
-            PlayerWeaponSaves weaponClass = new PlayerWeaponSaves();
-            weaponClass.WeaponObj = weapon.gameObject;
+            
 
-            // Save it
-            string json = JsonUtility.ToJson(weaponClass);
-            PlayerPrefs.SetString("PlayerWeapon", json);
-
-            string weaponClassy = PlayerPrefs.GetString("PlayerWeapon");
-            PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClassy);
-            if (s.WeaponObj != null)
-                return true;
-
-                return true;
+            WeaponSave(weapon.gameObject);
+            return true;
         }
 
         return false;

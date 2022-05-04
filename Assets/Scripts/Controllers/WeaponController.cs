@@ -38,6 +38,41 @@ public class WeaponController : ProjectileController
         gameObject.layer = LayerMask.NameToLayer("Projectile");
     }
 
+    //Getters for weppers
+    public float getWeaponCooldown()
+    {
+        return MAX_WEAPON_COOLDOWN;
+    }
+
+    public float getWeaponCost()
+    {
+        return WEAPON_THROW_COST;
+    }
+
+    public float getWeaponReward()
+    {
+        return WEAPON_PICKUP_REWARD;
+    }
+    //else Setters
+    public void setWeaponCooldown(float input)
+    {
+        MAX_WEAPON_COOLDOWN = input;
+    }
+
+    public void SetWeaponCost(float input)
+    {
+        WEAPON_THROW_COST = input;
+    }
+
+    public void SetWeaponReward(float input)
+    {
+        WEAPON_PICKUP_REWARD = input;
+    }
+    //end
+
+
+
+
     private void Update()
     {
         BindVariables();

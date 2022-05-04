@@ -14,6 +14,8 @@ public class MovementComponent : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+  
+
     protected void Start()
     {
         Create();

@@ -4,6 +4,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public int entityID { get; protected set; } = -1;
+    public int templateID { get; protected set; } = -1;
     protected Vector3 AccelerationEvent;
     protected EntityManager entityManager;
     protected bool isInvincible = false;
@@ -71,9 +72,10 @@ public class Entity : MonoBehaviour
 
     }
 
-    public void Create(int id)
+    public void Create(int id, int templateIndex = -1)
     {
         entityID = id;
+        templateID = templateIndex;
         movementComponent = GetComponent<MovementComponent>();
 
         renderer = GetComponent<SpriteRenderer>();

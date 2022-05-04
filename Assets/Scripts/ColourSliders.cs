@@ -16,7 +16,7 @@ public class ColourSliders : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string c = PlayerPrefs.GetString("PlayerColours");
+        string c = PlayerPrefs.GetString(Globals.PLAYER_COLOUR_SAVE);
         PlayerColourSave s = JsonUtility.FromJson<PlayerColourSave>(c);
 
    
@@ -68,6 +68,6 @@ public class ColourSliders : MonoBehaviour
 
         // Save it
         string json = JsonUtility.ToJson(c);
-        PlayerPrefs.SetString("PlayerColours",json);
+        PlayerPrefs.SetString(Globals.PLAYER_COLOUR_SAVE, json);
     }
 }
