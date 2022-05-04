@@ -97,7 +97,7 @@ public class FollowingCamera : MonoBehaviour
         if (crosshair == null)
         {
             Setup();
-                return;
+            return;
         }
         // Update the crosshair
         // Get the mouse position
@@ -130,7 +130,7 @@ public class FollowingCamera : MonoBehaviour
             }
 
             moveTo.z = cameraHeight;
-           
+
         }
 
 
@@ -145,8 +145,8 @@ public class FollowingCamera : MonoBehaviour
     public void CameraUpdate()
     {
         // Convert the position from screen space to world space
-        if(camera != null && crosshair != null)
-        crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
+        if (camera != null && crosshair != null)
+            crosshair.SetPosition((camera.ScreenToWorldPoint(mousePos)));
     }
 
 
@@ -237,7 +237,7 @@ public class FollowingCamera : MonoBehaviour
     {
         colorGrading.contrast.value = contrast;
     }
-    
+
     public void SetAdditionalVignette(float amount)
     {
         vignette.intensity.value = defaultVignette + amount;
