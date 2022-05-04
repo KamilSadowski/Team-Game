@@ -55,10 +55,13 @@ public class Portal : MonoBehaviour
             _spriteRenderer.color = Color.clear;
             _player.gameObject.SetActive(false);
             Instantiate(animation);
+
             if (_swapSprite) _swapSprite.Swap();
             Invoke(nameof(Teleport), animDuration);
+            
+
         }
-  }
+    }
 
     private void Teleport()
     {

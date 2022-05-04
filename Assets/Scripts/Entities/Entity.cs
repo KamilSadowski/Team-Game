@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
 
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
+    protected ParticleSystem onHitParticles;
 
     public MaterialPropertyBlock material;
     protected SpriteRenderer renderer;
@@ -86,7 +87,7 @@ public class Entity : MonoBehaviour
         ChangeColours(colours[0], colours[1], colours[2]);
 
         transform.position = new Vector3(transform.position.x, transform.position.y, Globals.SPRITE_Z);
-
+        onHitParticles = GetComponentInChildren<ParticleSystem>();
     }
 
     public void ChangeColours(Color colour1, Color colour2, Color colour3)
@@ -149,6 +150,7 @@ public class Entity : MonoBehaviour
     {       
         // Flashing of the entity indicates the invincibility frame after getting hit
         if (isFlashing) return;
+        onHitParticles.Play();
         isFlashing = true;
         flashIndex = 0;
         flashTimer.Reset(damageFlashInterval);
