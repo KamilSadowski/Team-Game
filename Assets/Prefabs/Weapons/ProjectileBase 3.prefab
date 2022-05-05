@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1566698571448612218}
-  - component: {fileID: 6776974953821021587}
   - component: {fileID: 1599125999971380912}
+  - component: {fileID: 6776974953821021587}
   m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
@@ -34,6 +34,22 @@ Transform:
   m_Father: {fileID: 5733697913478852487}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1599125999971380912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4314176420661828498}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb1e12184f5f4745a2030796ba12919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colours:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.5849056, g: 0.57577646, b: 0.31176573, a: 0}
+  - {r: 0.7169812, g: 0.34869298, b: 0.26717696, a: 0}
 --- !u!212 &6776974953821021587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,22 +102,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1599125999971380912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4314176420661828498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bb1e12184f5f4745a2030796ba12919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colours:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0.5849056, g: 0.57577646, b: 0.31176573, a: 0}
-  - {r: 0.7169812, g: 0.34869298, b: 0.26717696, a: 0}
 --- !u!1 &5733697913478852489
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +195,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 1
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &7126638304656815046
 Rigidbody2D:
@@ -259,6 +258,7 @@ MonoBehaviour:
   MAX_WEAPON_COOLDOWN: 5
   WEAPON_THROW_COST: 2.5
   WEAPON_PICKUP_REWARD: 1
+  STAT_RANDOM_RANGE: 0.25
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -325,6 +325,7 @@ MonoBehaviour:
   - Prop
   - Enemy
   bounceStrength: 0.9
+  RandomRange: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &-1836921320877145558
 AudioSource:

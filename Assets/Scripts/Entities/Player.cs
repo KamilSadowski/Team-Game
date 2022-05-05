@@ -119,9 +119,9 @@ public class Player : Character
         var weapon = obj.GetComponent<Weapon>();
         var weapCont = obj.GetComponent<WeaponController>();
         var mobileComp = obj.GetComponent<MobileComponent>();
-        var colour = obj.GetComponentInChildren<ChangeColours>();
 
-        if (weapon && weapCont && mobileComp && colour)
+
+        if (weapon && weapCont && mobileComp)
         {
             string weaponClassy = PlayerPrefs.GetString(Globals.PLAYER_WEAPON_SAVE);
             PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClassy);
@@ -152,10 +152,8 @@ public class Player : Character
                 output[0] = s.PrimaryColoursRGB;
                 output[1] = s.SecondaryColoursRGB;
                 output[2] = s.TetiaryColoursRGB;
-  
-
-              
-                colour.UpdateColour(output);
+ 
+                weapon.UpdateColour(output);
 
             }
         }
@@ -167,9 +165,9 @@ public class Player : Character
         var weapon = obj.GetComponent<Weapon>();
         var weapCont = obj.GetComponent<WeaponController>();
         var mobileComp = obj.GetComponent<MobileComponent>();
-        var colour = obj.GetComponentInChildren<ChangeColours>();
 
-        if (weapon && weapCont && mobileComp && colour)
+
+        if (weapon && weapCont && mobileComp)
         {
             PlayerWeaponSaves weaponClass = new PlayerWeaponSaves();
 
@@ -193,13 +191,18 @@ public class Player : Character
             //Can assume all 3 will be null or not null. (Primary/Secondary/Tetiary)
             if (weaponClass.PrimaryColoursRGB != null)
             {
-                Color[] colors = weapon.GetColours();
-                colors[0].a = 1.0f;
-                colors[1].a = 1.0f;
-                colors[2].a = 1.0f;
+                 Color[] colors = weapon.GetColours();
+
                 weaponClass.PrimaryColoursRGB   = colors[0];
                 weaponClass.SecondaryColoursRGB = colors[1];
                 weaponClass.TetiaryColoursRGB   = colors[2];
+
+                //Alpha is automatically set to 0 without interference.
+                colors[0].a = 1.0f;
+                colors[1].a = 1.0f;
+                colors[2].a = 1.0f;
+
+                weapon.UpdateColour(colors);
             }
    
 
@@ -282,10 +285,11 @@ public class Player : Character
             if (equipmentManager)
                 equipmentManager.GetComponent<Entity>().DestroyEntity();
             equipmentManager = weapon;
+
+            //Disable weapon to remove lifespan and use as reference gameobject for future weapons.
             weapon.DisableWeapon();
 
-            
-
+            //Save weapon in file.
             WeaponSave(weapon.gameObject);
             return true;
         }

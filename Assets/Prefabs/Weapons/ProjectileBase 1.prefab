@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1422126834862376472}
   - component: {fileID: 5193901972892088489}
-  - component: {fileID: 1501569893947790793}
   m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
@@ -86,22 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1501569893947790793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176591314593575664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bb1e12184f5f4745a2030796ba12919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colours:
-  - {r: 0.764151, g: 0.378471, b: 0.378471, a: 0}
-  - {r: 0.6698113, g: 0.37597898, b: 0.37597898, a: 0}
-  - {r: 0.36912602, g: 0.73544854, b: 0.990566, a: 0}
 --- !u!1 &5733697913478852489
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +178,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 0
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &7126638304656815046
 Rigidbody2D:
@@ -259,6 +241,7 @@ MonoBehaviour:
   MAX_WEAPON_COOLDOWN: 6
   WEAPON_THROW_COST: 6
   WEAPON_PICKUP_REWARD: 3
+  STAT_RANDOM_RANGE: 0.25
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -325,6 +308,7 @@ MonoBehaviour:
   - Prop
   - Enemy
   bounceStrength: 0.4
+  RandomRange: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &-5193248559119916598
 AudioSource:

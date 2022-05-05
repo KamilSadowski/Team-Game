@@ -93,7 +93,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 1
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &7126638304656815046
 Rigidbody2D:
@@ -157,6 +156,7 @@ MonoBehaviour:
   MAX_WEAPON_COOLDOWN: 10
   WEAPON_THROW_COST: 5
   WEAPON_PICKUP_REWARD: 5
+  STAT_RANDOM_RANGE: 0.25
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -223,6 +223,7 @@ MonoBehaviour:
   - Prop
   - Enemy
   bounceStrength: 0.9
+  RandomRange: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &8170442677759431628
 AudioSource:
@@ -330,7 +331,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5474689667750312676}
   - component: {fileID: 6425547132092106912}
-  - component: {fileID: 396457048001583825}
   m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
@@ -406,22 +406,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &396457048001583825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7835934838485563104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bb1e12184f5f4745a2030796ba12919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colours:
-  - {r: 0.06666668, g: 0.83137256, b: 0.82388467, a: 1}
-  - {r: 0.6476059, g: 0.7225982, b: 0.7264151, a: 0}
-  - {r: 0.096605785, g: 0.030838378, b: 0.5943396, a: 0}
 --- !u!1001 &7944970863688089875
 PrefabInstance:
   m_ObjectHideFlags: 0
