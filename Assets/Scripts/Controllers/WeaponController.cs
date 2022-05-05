@@ -8,7 +8,7 @@ public class WeaponController : ProjectileController
     [SerializeField] float MAX_WEAPON_COOLDOWN = 2.5f;
     [SerializeField] float WEAPON_THROW_COST = 1.0f;
     [SerializeField] float WEAPON_PICKUP_REWARD = 1.0f;
-
+    [SerializeField] float STAT_RANDOM_RANGE = 0.25f;
     protected float PlayerThrowCostMod = 1.0f;
     protected float PlayerCooldownMod = 1.0f;
 
@@ -36,6 +36,8 @@ public class WeaponController : ProjectileController
         crosshair = PriorityChar_Manager.instance.getCrosshair();
         boundPlayerWeapon = this.GetComponent<Weapon>();
         gameObject.layer = LayerMask.NameToLayer("Projectile");
+
+
     }
 
     //Getters for weppers

@@ -38,6 +38,8 @@ public class Entity : MonoBehaviour
 
     protected virtual void UpdateEntity()
     {
+
+
         if (entityManager)
         {
             if (entityID == -1)
@@ -71,6 +73,7 @@ public class Entity : MonoBehaviour
             }
         }
 
+
     }
 
     public void Create(int id, int templateIndex = -1)
@@ -88,6 +91,16 @@ public class Entity : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, transform.position.y, Globals.SPRITE_Z);
         onHitParticles = GetComponentInChildren<ParticleSystem>();
+    }
+
+    public Color[] GetColours()
+    {
+        //Originally used the variable 'colours' but it was always 0.
+         Color[] output =  new Color[3];
+        output[0] = material.GetColor("_PrimaryColor");;
+        output[1] = material.GetColor("_SecondaryColor");
+        output[2] = material.GetColor("_TertiaryColor");
+        return output;
     }
 
     public void ChangeColours(Color colour1, Color colour2, Color colour3)

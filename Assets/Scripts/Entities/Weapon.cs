@@ -18,6 +18,7 @@ public class Weapon : Entity
     [SerializeField] float weapon_damage = 10;
     [SerializeField] string[] bounceLayers;
     [SerializeField] float bounceStrength = 0.4f;
+    [SerializeField] float RandomRange = 0.25f;
     [SerializeField] AudioClip hitSound;
     AudioSource audioSource;
     ParticleSystem particleSystem;
@@ -61,6 +62,7 @@ public class Weapon : Entity
 
         CollisionSetup();
 
+        ChangeColours(colours[0], colours[1],colours[2]);
     }
 
     // Update is called once per frame
@@ -153,6 +155,7 @@ public class Weapon : Entity
 
     public void SetDropped()
     {
+
         currentState = States.Dropped;
     }
 
@@ -212,7 +215,30 @@ public class Weapon : Entity
 
     protected void DroppedStateUpdate()
     {
+        //A 'fake' do once.
+        if (currentLifespawn >= MAX_LIFESPAN * 0.9999f)
+        {
+            if (Weapon_Parent_ID < 0)
+            {
+                
+                for (int i = 0; i < 3; i++)
+                {
+                    colours[i].r = Random.Range(.0f, 1.0f);
+                    colours[i].g = Random.Range(.0f, 1.0f);
+                    colours[i].b = Random.Range(.0f, 1.0f);
+                }
+
+                ChangeColours(colours[0], colours[1], colours[2]);
+                
+                transform.localScale = transform.localScale * Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+                weapon_sharpness *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+                weapon_damage *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+                bounceStrength *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+            }
+        }
         currentLifespawn -= Time.deltaTime;
+
+
 
         if (playerCollision.bounds.Intersects(weaponCollision.bounds))
         {
