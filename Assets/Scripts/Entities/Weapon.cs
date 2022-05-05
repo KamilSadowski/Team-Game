@@ -62,7 +62,7 @@ public class Weapon : Entity
 
         CollisionSetup();
 
-        ChangeColours(colours[0], colours[1],colours[2]);
+        ChangeColours(colours[0], colours[1], colours[2]);
     }
 
     // Update is called once per frame
@@ -136,13 +136,13 @@ public class Weapon : Entity
 
     public void SetThrowing(float inputForce, Vector3 direction)
     {
-
+        ChangeColours();
         nDirection = (direction - transform.position).normalized;
         nDirection *= inputForce;
 
         oldPos = this.transform.position;
         currentState = States.Thrown;
-
+     
     }
     public void SetParentID(int ID)
     {

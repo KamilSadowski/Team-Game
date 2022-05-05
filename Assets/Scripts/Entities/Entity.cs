@@ -95,6 +95,7 @@ public class Entity : MonoBehaviour
 
     public Color[] GetColours()
     {
+
         //Originally used the variable 'colours' but it was always 0.
          Color[] output =  new Color[3];
         output[0] = material.GetColor("_PrimaryColor");;
@@ -113,8 +114,15 @@ public class Entity : MonoBehaviour
         renderer.SetPropertyBlock(material);
         colourChecked = false;
     }
+    public void ChangeColours()
+    {
+        ChangeColours(
+             material.GetColor("_PrimaryColor"), 
+             material.GetColor("_SecondaryColor"),
+             material.GetColor("_TertiaryColor"));
+    }
 
-    public MovementComponent GetMovementComponent()
+public MovementComponent GetMovementComponent()
     {
         return movementComponent;
     }

@@ -147,13 +147,15 @@ public class Player : Character
             //Can assume all 3 will be null or not null. (Primary/Secondary/Tetiary)
             if (s.PrimaryColoursRGB != null)
             {
+                Color[] output = new Color[3];
 
- 
-                colours[0] = s.PrimaryColoursRGB;
-                colours[1] = s.SecondaryColoursRGB;
-                colours[2] = s.TetiaryColoursRGB;
+                output[0] = s.PrimaryColoursRGB;
+                output[1] = s.SecondaryColoursRGB;
+                output[2] = s.TetiaryColoursRGB;
+  
 
-                colour.ChangeColour(colours);
+              
+                colour.UpdateColour(output);
 
             }
         }
@@ -192,6 +194,9 @@ public class Player : Character
             if (weaponClass.PrimaryColoursRGB != null)
             {
                 Color[] colors = weapon.GetColours();
+                colors[0].a = 1.0f;
+                colors[1].a = 1.0f;
+                colors[2].a = 1.0f;
                 weaponClass.PrimaryColoursRGB   = colors[0];
                 weaponClass.SecondaryColoursRGB = colors[1];
                 weaponClass.TetiaryColoursRGB   = colors[2];

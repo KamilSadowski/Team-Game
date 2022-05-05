@@ -24,7 +24,7 @@ public class ChangeColours : MonoBehaviour
 
     private void Start()
     {
-        ChangeColour(colours); 
+        ChangeColour(colours);
     }
 
     // Update is called once per frame
@@ -38,14 +38,20 @@ public class ChangeColours : MonoBehaviour
         return colours;
     }
 
+    public void UpdateColour(Color[] newColours)
+    {
+        colours = newColours;
+        ChangeColour(newColours);
+    }
+
     public void ChangeColour(Color[] newColours)
     {
-            colours = newColours;
-            renderer.GetPropertyBlock(material);
-            material.SetColor("_PrimaryColor", colours[0]);
-            material.SetColor("_SecondaryColor", colours[1]);
-            material.SetColor("_TertiaryColor", colours[2]);
-            renderer.SetPropertyBlock(material);
-        
+
+        renderer.GetPropertyBlock(material);
+        material.SetColor("_PrimaryColor", colours[0]);
+        material.SetColor("_SecondaryColor", colours[1]);
+        material.SetColor("_TertiaryColor", colours[2]);
+        renderer.SetPropertyBlock(material);
+
     }
 }
