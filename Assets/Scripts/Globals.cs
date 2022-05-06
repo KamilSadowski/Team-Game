@@ -43,9 +43,9 @@ public static class Globals
 
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
-    public static string[] SceneNames = new string[3] { "MainMenu", "HubWorld", "Dungeon" };
+    public static string[] SceneNames = new string[5] { "MainMenu", "HubWorld", "Dungeon 1", "Dungeon 2", "Dungeon 3" };
+    public const int DUNGEON_NUMBER = 3;
     public static float DifficultyModifier = 1.01f;
-
 
     const bool IS_WEAPON_LOG_OUTPUT = true;
 }

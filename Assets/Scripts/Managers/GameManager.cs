@@ -133,8 +133,16 @@ public class GameManager : MonoBehaviour
             player = null;
         }
 
+        int sceneIndex = (int)scene;
+
+        // If the scene is a dungeon, the map will be randomised
+        if (scene == Globals.Scenes.Dungeon)
+        {
+            sceneIndex += Random.Range(0, Globals.DUNGEON_NUMBER);
+        }
+
         // Load the new scene
-        SceneManager.LoadScene(Globals.SceneNames[(int)scene]);
+        SceneManager.LoadScene(Globals.SceneNames[sceneIndex]);
     }
 
 

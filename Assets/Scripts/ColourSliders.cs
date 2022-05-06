@@ -19,7 +19,6 @@ public class ColourSliders : MonoBehaviour
         string c = PlayerPrefs.GetString(Globals.PLAYER_COLOUR_SAVE);
         PlayerColourSave s = JsonUtility.FromJson<PlayerColourSave>(c);
 
-   
         {
             colour[0].r = s.Colours[0].r;
             colour[0].g = s.Colours[1].g;
@@ -33,7 +32,7 @@ public class ColourSliders : MonoBehaviour
         if (colour[currentColour].r != redSlider.value)
         {
             colour[currentColour].r = redSlider.value;
-            changeColours.ChangeColour(colour);
+            changeColours.UpdateColour(colour);
         }
 
     }
@@ -43,7 +42,7 @@ public class ColourSliders : MonoBehaviour
         if (colour[currentColour].g != greenSlider.value)
         {
             colour[currentColour].g = greenSlider.value;
-            changeColours.ChangeColour(colour);
+            changeColours.UpdateColour(colour);
         }
     }
 
@@ -52,7 +51,7 @@ public class ColourSliders : MonoBehaviour
         if (colour[currentColour].b != blueSlider.value)
         {
             colour[currentColour].b = blueSlider.value;
-            changeColours.ChangeColour(colour);
+            changeColours.UpdateColour(colour);
         }
     }
 

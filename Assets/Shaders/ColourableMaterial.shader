@@ -1,4 +1,4 @@
-Shader "Custom/SpriteShadow" {
+Shader "Custom/ColourableMaterial" {
     Properties
     {
         [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
