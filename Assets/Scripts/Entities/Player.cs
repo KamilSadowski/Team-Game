@@ -1,5 +1,4 @@
 
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Player : Character
@@ -29,7 +28,6 @@ public class Player : Character
     //Direct reference to the progress bars held within the UI
     UI_ChargingBar weaponCharge_UI;
     private Animator animator;
-    private Animator topAnimator;
 
     public bool isDead { get; private set; } = false;
     const float deathDuration = 3.0f;
@@ -41,7 +39,6 @@ public class Player : Character
     void Start()
     {
         animator = GetComponent<Animator>();
-        topAnimator = transform.Find("Top").GetComponent<Animator>();
         crosshair = PriorityChar_Manager.instance.getCrosshair();
         entitySpawner = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();
         curStrength = BASE_STRENGTH;
@@ -98,19 +95,10 @@ public class Player : Character
             if (!crosshair)
                 crosshair = PriorityChar_Manager.instance.getCrosshair();
             //Weapon controller please.
-            if (!animator || !topAnimator)
+            if (!animator)
             {
                 animator = GetComponent<Animator>();
-                topAnimator = transform.Find("Top").GetComponent<Animator>();
             }
-
-            {
-                transform.Find("Top").GetComponent<SpriteRenderer>().flipX = renderer.flipX;
-            }
-
-
-
-
             if (equipmentManager)
             {
                 equipmentManager.PlayerUpdate();
@@ -228,7 +216,6 @@ public class Player : Character
     //Weapon controller please.
     public void ReleaseWeapon()
     {
-
         //Animations are organized here. Easier to force a level of charge to be present.
         ChargeWeapon();
 
@@ -238,12 +225,10 @@ public class Player : Character
             equipmentManager.ThrowWeapon(curStrength, crosshair.GetPosition());
             curStrength = BASE_STRENGTH;
 
-            if (animator && topAnimator)
+            if (animator)
             {
                 animator.SetTrigger("Throw");
                 animator.SetBool("Attack", false);
-                topAnimator.SetTrigger("Throw");
-                topAnimator.SetBool("Attack", false);
             }
 
         }
@@ -251,39 +236,24 @@ public class Player : Character
 
     public void ChargeWeapon()
     {
-        if (animator && topAnimator)
+        if (animator)
         {
-
-            if (animator == topAnimator)
-            {
-                Debug.Log("Are the same");
-            }
-
             // Avoid multiple calculations of the same thing
             curStrength += Time.deltaTime * CHARGE_STRENGTH_MOD;
 
             animator.SetFloat("AttackAnimationSpeed", Time.deltaTime * CHARGE_STRENGTH_MOD);
-            topAnimator.SetFloat("AttackAnimationSpeed", Time.deltaTime * CHARGE_STRENGTH_MOD);
 
             var isPlaying = animator.GetBool("Attack");
 
             // Play the animation attacking if it is not playing - Not sure if it really works
-            if (!isPlaying)
-            {
-                animator.SetBool("Attack", true);
-                topAnimator.SetBool("Attack", true);
-            }
-
-            Debug.Log(curStrength);
+            if (!isPlaying) animator.SetBool("Attack", true);
 
             // If either of the weapons are fully charged 
             if (curStrength > BASE_STRENGTH * MAX_STRENGTH_MOD)
             {
-
                 curStrength = BASE_STRENGTH * MAX_STRENGTH_MOD;
                 // Stop the throwing animation
                 animator.SetFloat("AttackAnimationSpeed", 0f);
-                topAnimator.SetFloat("AttackAnimationSpeed", 0f);
             }
 
         }
