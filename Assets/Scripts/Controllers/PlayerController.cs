@@ -162,6 +162,7 @@ public class PlayerController : Controller
                 }
             }
 
+
             if (Input.GetMouseButtonUp(0))
             {
                 // Restore prev speed
@@ -177,7 +178,7 @@ public class PlayerController : Controller
             {
                 // Save current speed
                 if(prevSpeed == 0) prevSpeed = player.GetComponent<MobileComponent>().getMovementSpeed();
-
+                
 
                 player.GetComponent<MobileComponent>().setMovementSpeed(.25F);
 
