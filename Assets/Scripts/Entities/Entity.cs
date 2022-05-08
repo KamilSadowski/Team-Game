@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour
     protected ParticleSystem onHitParticles;
 
     public MaterialPropertyBlock material;
-    protected SpriteRenderer renderer;
+    public SpriteRenderer renderer;
     
     public bool colourChecked = false; // Was the colour checked by the reflection
 
