@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 89e3d28cf836ad3419285a0aae976b5e
+guid: 445e1e9ceda10ff4992a49933b9254af
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 6, y: 0, z: 5, w: 7}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -116,7 +116,49 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerIdle_0
+      name: PlayerAttackBottom_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cec24e964bea6d24784e8aa893e24bd0
+      internalID: -1358417702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerAttackBottom_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6227549c271eb748a800e217cd0bbaa
+      internalID: 1565649567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerAttackBottom_2
       rect:
         serializedVersion: 2
         x: 0
@@ -124,20 +166,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b50d6aabb6106f640a570d28fa191825
-      internalID: 1313757915
+      spriteID: 82e8b430506d826419a5410b7abc57b6
+      internalID: -30676225
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_1
+      name: PlayerAttackBottom_3
       rect:
         serializedVersion: 2
         x: 32
@@ -145,20 +187,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5d1f1103a0fda746b43743ba9b7301c
-      internalID: 538897806
+      spriteID: 96239b66da442634892167084f867de2
+      internalID: -1147535756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_2
+      name: PlayerAttackBottom_4
       rect:
         serializedVersion: 2
         x: 0
@@ -166,20 +208,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41ae028d4910b3b40b9f2af397c5cbfc
-      internalID: 425334041
+      spriteID: c63202653e1f31f4da3158d93017e5e3
+      internalID: -282213595
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_3
+      name: PlayerAttackBottom_5
       rect:
         serializedVersion: 2
         x: 32
@@ -187,14 +229,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b172b4847b3761a419df2f61df896b50
-      internalID: -1038183048
+      spriteID: be244f6bc107d2a43b4ea89f85e47912
+      internalID: -437441588
       vertices: []
       indices: 
       edges: []
@@ -202,18 +244,20 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0522cf059d9a1ca46b0a8da9d43b4d2e
-    internalID: 0
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerIdle_0: 1313757915
-      PlayerIdle_2: 425334041
-      PlayerIdle_3: -1038183048
-      PlayerIdle_1: 538897806
+      PlayerAttackBottom_0: -1358417702
+      PlayerAttackBottom_2: -30676225
+      PlayerAttackBottom_1: 1565649567
+      PlayerAttackBottom_4: -282213595
+      PlayerAttackBottom_5: -437441588
+      PlayerAttackBottom_3: -1147535756
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
