@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 89e3d28cf836ad3419285a0aae976b5e
+guid: 218424828b105884c90dc7a72f528699
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 6, y: 0, z: 5, w: 7}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -116,7 +116,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerIdle_0
+      name: PlayerWalkingTop_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62d0cb80b7a008241874dc7cbf0a2cec
+      internalID: -1283539285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa4df6142737e27438e859a71d0e222a
+      internalID: -980312937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 380640c16a50dbe41841b5712641cff8
+      internalID: -31993986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 739aa81664bdf5e4092f51bb538a980b
+      internalID: -1024782896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb191bc70027ed34d8230fdadc30971e
+      internalID: 1560674250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b7b7a3ba67c2e74e938f9d7d4d025b2
+      internalID: 1097809413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_6
       rect:
         serializedVersion: 2
         x: 0
@@ -124,20 +250,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b50d6aabb6106f640a570d28fa191825
-      internalID: 1313757915
+      spriteID: 34a5874c394b3cd4881c8ef1fca52ce4
+      internalID: 2005220019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_1
+      name: PlayerWalkingTop_7
       rect:
         serializedVersion: 2
         x: 32
@@ -145,20 +271,41 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5d1f1103a0fda746b43743ba9b7301c
-      internalID: 538897806
+      spriteID: e5b613bda292b1e46b2678fd507f616d
+      internalID: 642065863
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerIdle_2
+      name: PlayerWalkingTop_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7430a58ace9e32b469954417884f51e6
+      internalID: 988883441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkingTop_9
       rect:
         serializedVersion: 2
         x: 0
@@ -166,35 +313,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41ae028d4910b3b40b9f2af397c5cbfc
-      internalID: 425334041
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerIdle_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b172b4847b3761a419df2f61df896b50
-      internalID: -1038183048
+      spriteID: ca4bd134c0dc15d479e39d867247dcb7
+      internalID: -1516945252
       vertices: []
       indices: 
       edges: []
@@ -202,18 +328,24 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0522cf059d9a1ca46b0a8da9d43b4d2e
-    internalID: 0
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerIdle_0: 1313757915
-      PlayerIdle_2: 425334041
-      PlayerIdle_3: -1038183048
-      PlayerIdle_1: 538897806
+      PlayerWalkingTop_8: 988883441
+      PlayerWalkingTop_1: -980312937
+      PlayerWalkingTop_7: 642065863
+      PlayerWalkingTop_6: 2005220019
+      PlayerWalkingTop_4: 1560674250
+      PlayerWalkingTop_9: -1516945252
+      PlayerWalkingTop_2: -31993986
+      PlayerWalkingTop_5: 1097809413
+      PlayerWalkingTop_0: -1283539285
+      PlayerWalkingTop_3: -1024782896
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

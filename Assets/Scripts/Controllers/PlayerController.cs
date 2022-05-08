@@ -60,7 +60,7 @@ public class PlayerController : Controller
             if (!isUsingInterface)
             {
                 if(FollowingCamera.instance)
-                FollowingCamera.instance.CameraUpdate();
+                    FollowingCamera.instance.CameraUpdate();
 
                 //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
                 if (entityMoveComp != null)
@@ -76,7 +76,10 @@ public class PlayerController : Controller
 
                         entityMoveComp.Move(temp, isDashing);
 
+                        // Todo: This code is ugly and inefficient 
+
                         player.GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
+                        player.transform.Find("Top").GetComponent<Animator>().SetBool("IsWalking", Mathf.Abs(temp.magnitude) > .1f);
                     }
 
                 }
