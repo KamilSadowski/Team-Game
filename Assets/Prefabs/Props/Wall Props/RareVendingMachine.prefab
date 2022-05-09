@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5257c5b67f8fcdc4685294cfc2126091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0.83137256, g: 0.6355599, b: 0.42745098, a: 0}
@@ -159,9 +160,10 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   positionOffset: {x: 0, y: 0.3, z: 0}
   DroppableItems:
-  - {fileID: 5733697913478852489, guid: 38b0209ad3994fc44a2735f8bf22e2d0, type: 3}
-  - {fileID: 5733697913478852489, guid: dde8370c58e27d84793673eeb160ec87, type: 3}
   - {fileID: 5733697913478852489, guid: fc431dc1e56441e4fab262ca12f16a64, type: 3}
+  - {fileID: 5733697913478852489, guid: c85ca854a1a4e8841b63918f3753c116, type: 3}
+  - {fileID: 5733697913478852489, guid: 5d1da965001f4824bb9bf790038a39c3, type: 3}
+  - {fileID: 5733697913478852489, guid: 0e6c6cb2335210a498283868a1c565c9, type: 3}
   cost: 20
   vendingMachineHole: {fileID: 6322085060307511080}
   sound: {fileID: 8300000, guid: 55a3b751c495e0641a523dc4c7bf4048, type: 3}
