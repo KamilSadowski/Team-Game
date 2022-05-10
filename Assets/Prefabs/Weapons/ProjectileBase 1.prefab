@@ -237,9 +237,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce8b9405aa54954197a490f2d82f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_WEAPON_COOLDOWN: 6
-  WEAPON_THROW_COST: 6
-  WEAPON_PICKUP_REWARD: 3
+  MAX_WEAPON_COOLDOWN: 4
+  WEAPON_THROW_COST: 2
+  WEAPON_PICKUP_REWARD: 1.75
   STAT_RANDOM_RANGE: 0.25
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
@@ -301,8 +301,8 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   VisualRef: {fileID: 176591314593575664}
-  weapon_sharpness: 3
-  weapon_damage: 50
+  weapon_sharpness: 0.1
+  weapon_damage: 250
   bounceLayers:
   - Map
   - Prop

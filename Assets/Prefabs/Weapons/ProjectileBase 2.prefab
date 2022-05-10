@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 1.4
+  movementSpeed: 1.6
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -128,7 +128,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00060510635, y: 0.00027527846}
+  m_Offset: {x: 0.03041713, y: 0.015069213}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -139,7 +139,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3256781, y: 0.084922686}
+  m_Size: {x: 0.26605406, y: 0.11451056}
   m_EdgeRadius: 0
 --- !u!114 &2566258519793261882
 MonoBehaviour:
@@ -170,7 +170,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0020059347, y: 0.0012800656}
+  m_Offset: {x: 0.027835757, y: 0.013730228}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -181,7 +181,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38578898, y: 0.14504442}
+  m_Size: {x: 0.33412933, y: 0.16994473}
   m_EdgeRadius: 0
 --- !u!114 &6698053271892808964
 MonoBehaviour:
@@ -217,13 +217,13 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   VisualRef: {fileID: 7835934838485563104}
-  weapon_sharpness: 0.6
-  weapon_damage: 30
+  weapon_sharpness: 2
+  weapon_damage: 8
   bounceLayers:
   - Map
   - Prop
   - Enemy
-  bounceStrength: 0.9
+  bounceStrength: 0.3
   RandomRange: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &8170442677759431628

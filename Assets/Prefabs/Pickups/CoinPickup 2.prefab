@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887b1a81978de5b40816f1840f4fb3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 1, g: 0.9619093, b: 0, a: 1}
@@ -190,7 +191,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   pickUpSound: {fileID: 8300000, guid: 0f579092c76764d8e8df04853e9a2c13, type: 3}
-  value: 1
+  value: 3
 --- !u!82 &-2702940080186755218
 AudioSource:
   m_ObjectHideFlags: 0

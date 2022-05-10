@@ -27,13 +27,14 @@ public class Player : Character
 
     //Direct reference to the progress bars held within the UI
     UI_ChargingBar weaponCharge_UI;
-    private Animator animator;
+    protected Animator animator;
 
     public bool isDead { get; private set; } = false;
     const float deathDuration = 3.0f;
     Timer killTimer = new Timer(deathDuration);
 
     FollowingCamera camera;
+
 
     // Start is called before the first frame update
     void Start()

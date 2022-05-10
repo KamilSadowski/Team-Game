@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6078d44ff51bb64ca7f5d8dab6f20fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0.40000004, g: 0.2627451, b: 0.19215688, a: 1}
@@ -240,9 +241,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0df46cdd9f1e01549abc5e77654c9586, type: 3}
   splashColour: {r: 1, g: 0, b: 0, a: 1}
   equipmentManager: {fileID: 0}
-  CHARGE_STRENGTH_MOD: 10
-  MAX_STRENGTH_MOD: 2
-  BASE_STRENGTH: 3.5
+  CHARGE_STRENGTH_MOD: 15
+  MAX_STRENGTH_MOD: 5
+  BASE_STRENGTH: 1.75
 --- !u!114 &1589646956122958797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +276,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 1
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &216694388319099011
 Rigidbody2D:
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823b8a7afd24f744e8e34b173023fc1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 75
 --- !u!114 &5478057334083721723
 MonoBehaviour:
   m_ObjectHideFlags: 0

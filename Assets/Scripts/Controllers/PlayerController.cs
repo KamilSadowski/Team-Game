@@ -14,7 +14,7 @@ public class PlayerController : Controller
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip InventoryNoise;
     [SerializeField] float InventoryVolume;
-
+    [SerializeField] float SlowedMovement = 0.25f;
 
     protected Player player;
     protected FollowingCamera camera;
@@ -22,11 +22,12 @@ public class PlayerController : Controller
     protected UI_ChargingBar healthBarRef;
     protected UI inventoryRef;
 
+    protected bool isMouseButtonDown = false;
     protected bool isUsingInterface = false;
 
+    protected MobileComponent mobility;
+    protected float MovementSpeedRef;
     protected bool isDashing = false;
-
-    private float prevSpeed; 
 
     // protected bool[] isCharging = { false, false }; //Potentially use this if "Update" is not fast enough and stutters.
 
@@ -167,22 +168,26 @@ public class PlayerController : Controller
             {
                 // Restore prev speed
 
-                player.GetComponent<MobileComponent>().setMovementSpeed(prevSpeed);
-                prevSpeed = 0;
-
+                mobility.setMovementSpeed(MovementSpeedRef);
+                isMouseButtonDown = false;
                 // Release weapon
                 player.ReleaseWeapon();
             }
 
             if (Input.GetMouseButtonDown(0))
             {
+                mobility.setMovementSpeed(SlowedMovement);
+                isMouseButtonDown = true;
                 // Save current speed
-                if(prevSpeed == 0) prevSpeed = player.GetComponent<MobileComponent>().getMovementSpeed();
-                
+            }
 
-                player.GetComponent<MobileComponent>().setMovementSpeed(.25F);
-
-                // Change weapon
+            if (mobility == null)
+            {
+                mobility = player.GetComponent<MobileComponent>();
+                MovementSpeedRef = mobility.getMovementSpeed();
+            }else
+            if (isMouseButtonDown)
+            {//This needs to happen every tick. "MouseButtonDown" is only a single activation.
                 player.ChargeWeapon();
             }
 

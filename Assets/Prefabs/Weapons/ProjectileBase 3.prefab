@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 5733697913478852489}
   m_LocalRotation: {x: 0, y: 0, z: -0.92097473, w: 0.38962227}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1566698571448612218}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 1.75
+  movementSpeed: 1
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -318,13 +318,13 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
   VisualRef: {fileID: 4314176420661828498}
-  weapon_sharpness: 0.75
-  weapon_damage: 15
+  weapon_sharpness: 0.1
+  weapon_damage: 20
   bounceLayers:
   - Map
   - Prop
   - Enemy
-  bounceStrength: 0.9
+  bounceStrength: 0.975
   RandomRange: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &-1836921320877145558

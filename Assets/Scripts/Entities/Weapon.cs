@@ -349,8 +349,8 @@ public class Weapon : Entity
         {
 
             CheckBounce(collision);
-
-            float output = weapon_damage * Vector3.Dot(nDirection, nDirection);
+            
+            float output = weapon_damage * nDirection.magnitude;
 
             output *= weapon_sharpness * transform.localScale.magnitude;
 

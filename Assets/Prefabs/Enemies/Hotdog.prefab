@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7702cfb40e9ed449f6c50264e2299c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0, g: 0, b: 0, a: 0}
@@ -161,7 +162,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7b512a762ff06bd498276838cd237e65, type: 3}
   - {fileID: 21300000, guid: 0df46cdd9f1e01549abc5e77654c9586, type: 3}
   splashColour: {r: 0.8177913, g: 0.8207547, b: 0.32907617, a: 1}
-  HealthDropChance: 100
+  HealthDropChance: 69
 --- !u!114 &4702917648238824055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +207,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 1
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &4619791482859612889
 Rigidbody2D:
