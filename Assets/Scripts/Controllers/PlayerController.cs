@@ -26,6 +26,8 @@ public class PlayerController : Controller
 
     protected bool isDashing = false;
 
+    private float prevSpeed; 
+
     // protected bool[] isCharging = { false, false }; //Potentially use this if "Update" is not fast enough and stutters.
 
     // Start is called before the first frame update
@@ -59,8 +61,8 @@ public class PlayerController : Controller
 
             if (!isUsingInterface)
             {
-                if(FollowingCamera.instance)
-                FollowingCamera.instance.CameraUpdate();
+                if (FollowingCamera.instance)
+                    FollowingCamera.instance.CameraUpdate();
 
                 //Generic Unity-provided WASD/Arrow-key based input used as an input for movement. 
                 if (entityMoveComp != null)
@@ -87,9 +89,9 @@ public class PlayerController : Controller
                 }
 
 
-           
 
-//                player.ChargeWeapon();
+
+                //                player.ChargeWeapon();
 
             }
         }
@@ -160,10 +162,29 @@ public class PlayerController : Controller
                 }
             }
 
+
             if (Input.GetMouseButtonUp(0))
+            {
+                // Restore prev speed
+
+                player.GetComponent<MobileComponent>().setMovementSpeed(prevSpeed);
+                prevSpeed = 0;
+
+                // Release weapon
                 player.ReleaseWeapon();
+            }
+
             if (Input.GetMouseButtonDown(0))
+            {
+                // Save current speed
+                if(prevSpeed == 0) prevSpeed = player.GetComponent<MobileComponent>().getMovementSpeed();
+                
+
+                player.GetComponent<MobileComponent>().setMovementSpeed(.25F);
+
+                // Change weapon
                 player.ChargeWeapon();
+            }
 
             if (Input.GetMouseButtonDown(1))
             {

@@ -8,16 +8,21 @@ public class Reflection : MonoBehaviour
     SpriteRenderer rendererToReflect;
     SpriteRenderer renderer;
     Entity parent;
-    Prop prop;
+    [SerializeField] float reflectionRotation = 180.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         rendererToReflect = transform.parent.gameObject.GetComponent<SpriteRenderer>();
+        // Things like weapons might have a sprite that is a child and not a part of the base object
+        if (!rendererToReflect)
+        {
+            rendererToReflect = transform.parent.gameObject.GetComponentInChildren<SpriteRenderer>();
+        }
         transform.parent.gameObject.TryGetComponent<Entity>(out parent);
         renderer = GetComponent<SpriteRenderer>();
         renderer.material = rendererToReflect.material;
-        transform.parent.gameObject.TryGetComponent(out prop);
+
     }
 
     // Update is called once per frame
@@ -30,7 +35,8 @@ public class Reflection : MonoBehaviour
 
 
         transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y / rendererToReflect.gameObject.transform.localScale.y), 0);
-
+        Vector3 rotation = rendererToReflect.transform.rotation.eulerAngles;
+        transform.rotation.SetEulerRotation(rotation.x, rotation.y, rotation.z + reflectionRotation);
 
         if (parent && !parent.colourChecked)
         {

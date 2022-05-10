@@ -3,8 +3,7 @@ using System.Collections;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup menu;
-    [SerializeField] private CanvasGroup MapMenu;
+    [SerializeField] protected CanvasGroup menu;
     private bool isViewing = false;
     private static readonly float animationTime = 0.5f;
 
@@ -54,7 +53,7 @@ public class UI : MonoBehaviour
 
             while (t < animationTime)
             {
-                t = Mathf.Clamp(t + Time.deltaTime, 0.0f, animationTime);
+                t = Mathf.Clamp(t + Time.unscaledDeltaTime, 0.0f, animationTime);
                 group.alpha = Mathf.SmoothStep(startAlpha, target, t / animationTime);
                 yield return null;
             }
