@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 1.4
+  movementSpeed: 1.1
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -218,13 +218,14 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   VisualRef: {fileID: 7835934838485563104}
   weapon_sharpness: 2
-  weapon_damage: 8
+  weapon_damage: 15
   bounceLayers:
   - Map
   - Prop
   - Enemy
-  bounceStrength: 0.65
+  bounceStrength: 0.75
   RandomRange: 0.25
+  BounceDelay: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &8170442677759431628
 AudioSource:
