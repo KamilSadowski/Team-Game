@@ -261,7 +261,18 @@ public class Dungeon : MonoBehaviour
         gameManager   = FindObjectOfType<GameManager>();
         entityManager = FindObjectOfType<EntityManager>();
         mapLight      = Instantiate(lightPrefab);
-        CreateDungeon();
+
+        // In a rare event that the map creation crashes
+        // Reload the map scene and generate it again
+        // Crashes are so rare that this should fix the problem at a small cost of generating the map twice
+        try
+        {
+            CreateDungeon();
+        }
+        catch
+        {
+            Portal.TeleportTo(Globals.Scenes.Dungeon);
+        }
     }
 
     public Tilemap GetGroundTileMap()
