@@ -70,6 +70,10 @@ public class Player : Character
 
         if (isDead)
         {
+                // Update death animation
+
+            if(animator) if(!animator.GetBool("Dying")) animator.SetBool("Dying",true);
+
             if (killTimer.Update(Time.deltaTime))
             {
                 // If player is killed, he is taken to the hubworld
@@ -87,6 +91,7 @@ public class Player : Character
                     killTimer.Reset(deathDuration);
                     gameManager.EnterScene(Globals.Scenes.HubWorld);
                 }
+
             }
         }
         else
