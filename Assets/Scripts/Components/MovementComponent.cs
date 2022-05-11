@@ -14,7 +14,31 @@ public class MovementComponent : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-  
+    //Start Getters & Setters
+    public virtual float getDrag()
+    {
+        return 0.0f;
+    }
+
+    public virtual void setDrag(float input)
+    {
+    }
+
+    public virtual float getMovementSpeed()
+    {
+        return 0.0f;
+    }
+
+    public virtual void setMovementSpeed(float input)
+    {
+    }
+
+    public virtual List<RaycastHit2D> getHits()
+    {
+        return new List<RaycastHit2D>();
+    }
+    //End Getters & Setters
+
 
     protected void Start()
     {

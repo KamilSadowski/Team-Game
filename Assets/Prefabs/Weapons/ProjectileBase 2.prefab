@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 1.6
+  movementSpeed: 1.4
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -223,7 +223,7 @@ MonoBehaviour:
   - Map
   - Prop
   - Enemy
-  bounceStrength: 0.3
+  bounceStrength: 0.65
   RandomRange: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &8170442677759431628

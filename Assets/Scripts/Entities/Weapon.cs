@@ -9,7 +9,7 @@ public class Weapon : Entity
     protected int Weapon_Parent_ID = -1;
     protected CapsuleCollider2D playerCollision;
     protected BoxCollider2D weaponCollision;
-
+    protected Timer delayTimer;
     //Visual representation of weapon. Allows for custom movements to be applied.
     [SerializeField] GameObject VisualRef;
 
@@ -19,6 +19,7 @@ public class Weapon : Entity
     [SerializeField] string[] bounceLayers;
     [SerializeField] float bounceStrength = 0.4f;
     [SerializeField] float RandomRange = 0.25f;
+    [SerializeField] float BounceDelay = 0.25f;
     [SerializeField] AudioClip hitSound;
     AudioSource audioSource;
     ParticleSystem particleSystem;
@@ -51,6 +52,8 @@ public class Weapon : Entity
         inactive
     }
 
+    protected List<RaycastHit2D> hitsRef;
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +62,7 @@ public class Weapon : Entity
         controller = GetComponent<WeaponController>();
         audioSource = GetComponent<AudioSource>();
         particleSystem = GetComponentInChildren<ParticleSystem>();
-
+        delayTimer = new Timer(BounceDelay);
         CollisionSetup();
 
         //ChangeColours(colours[0], colours[1], colours[2]);
@@ -246,7 +249,7 @@ public class Weapon : Entity
         }
     }
 
-    protected void CheckBounce(Collision2D collision)
+    protected void CheckBounce(Collider2D collision)
     {
         //Checks for wall collisions using the raycast as it's the safest method of doing so.
         if (!hasBounced)
@@ -271,6 +274,7 @@ public class Weapon : Entity
         {
             hasBounced = true;
             nDirection = -nDirection * bounceStrength;
+                return;
         }
 #endif
     }
@@ -284,7 +288,13 @@ public class Weapon : Entity
                 VisualRef.transform.Rotate(Vector3.forward * currentProjectileLifespawn);
                 currentProjectileLifespawn += Time.deltaTime * (nDirection.magnitude * 4.0f);
             }
-
+            if (delayTimer.Update(Time.deltaTime) && movementComponent.IsMoveCollision(nDirection))
+            {
+                hitsRef = movementComponent.getHits();
+                foreach (RaycastHit2D obj in hitsRef)
+                    collisionEvent(obj.collider);
+                delayTimer.Reset(BounceDelay);
+            }
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
 
             if (hasBounced && playerCollision.bounds.Intersects(weaponCollision.bounds))// || weaponCollision.Distance(playerCollision).distance < 1.0f)
@@ -343,21 +353,25 @@ public class Weapon : Entity
         weaponCollision = GetComponent<BoxCollider2D>();
         Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
-    void OnCollisionEnter2D(Collision2D collision)
+
+    protected void collisionEvent(Collider2D collision)
     {
         if (currentState == States.Thrown)
         {
 
             CheckBounce(collision);
-            
-            float output = weapon_damage * nDirection.magnitude;
 
-            output *= weapon_sharpness * transform.localScale.magnitude;
+
 
             Entity tempRef = collision.gameObject.GetComponent<Entity>();
 
             if (tempRef != null)
+            {
+                float output = weapon_damage * nDirection.magnitude;
+                output *= weapon_sharpness * transform.localScale.magnitude;
+
                 tempRef.TakeDamage(output, transform.position, Vector3.zero);
+            }
             else
             {
                 audioSource.PlayOneShot(hitSound);
@@ -365,5 +379,10 @@ public class Weapon : Entity
             }
 
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        collisionEvent(collision.collider);
     }
 }

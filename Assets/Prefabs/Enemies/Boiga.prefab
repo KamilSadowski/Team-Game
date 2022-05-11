@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7702cfb40e9ed449f6c50264e2299c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0, g: 0, b: 0, a: 0}
@@ -206,7 +207,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 0
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &4619791482859612889
 Rigidbody2D:
@@ -533,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 0.85
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -553,7 +553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _lifetime
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
@@ -708,7 +708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 0.85
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -728,7 +728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _lifetime
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
@@ -879,7 +879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 0.85
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -899,7 +899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _lifetime
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
@@ -1050,7 +1050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 0.85
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -1070,7 +1070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _lifetime
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
@@ -1283,7 +1283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 0.85
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -1296,15 +1296,19 @@ PrefabInstance:
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _texture
       value: 
-      objectReference: {fileID: 1379201073, guid: 7ad2677dadbbfb64f8e2b2553368039d, type: 3}
+      objectReference: {fileID: 1379201073, guid: 36e3f598e75dec74195f1cb8027fb74c, type: 3}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _fireRate
       value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _lifetime
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
+      propertyPath: _material
+      value: 
+      objectReference: {fileID: 2100000, guid: 1b7616d8840824045aace9e64ce08a23, type: 2}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _attackRadius
       value: 11.25

@@ -53,26 +53,30 @@ public class MobileComponent : MovementComponent
     }
 
     //Start Getters & Setters
-    public float getDrag()
+    public override float getDrag()
     {
         return drag;
     }
 
-    public void setDrag(float input)
+    public override void setDrag(float input)
     {
         drag = input;
     }
 
-    public float getMovementSpeed()
+    public override float getMovementSpeed()
     {
         return movementSpeed;
     }
 
-    public void setMovementSpeed(float input)
+    public override void setMovementSpeed(float input)
     {
         movementSpeed = input;
     }
 
+    public override List<RaycastHit2D> getHits()
+    {
+        return hits;
+    }
     //End Getters & Setters
 
     public override void Teleport(Vector3 teleportTo)
@@ -196,50 +200,26 @@ public class MobileComponent : MovementComponent
     {
         if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null) 
             return false;
+        hits.Clear();
 
         rb.Cast
             (
             new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime), 
             MovementContactData, 
             hits, 
-            movementSpeed * Time.deltaTime
+            movementSpeed * Time.deltaTime * 1.1f
             );
 
         
         if (hits.Count > 0)
-        {
-            hits.Clear();
+        {     
             return true;
         }
 
         return false;
     }
 
-    public override Vector3 ReflectCollisionDirection(Vector3 input)
-    {
-        if (isDashing || Mathf.Abs(input.magnitude) <= minVelocity || hits == null)
-            return input;
 
-        rb.Cast
-            (
-            new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime),
-            MovementContactData,
-            hits,
-            movementSpeed * Time.deltaTime
-            );
-
-
-        if (hits.Count > 0)
-        {
-
-            var output = new Vector3((input.x + hits[0].point.x ), (input.y + hits[0].point.y ), input.z) ;
-            output.x *= -.6f; output.y *= -.6f;
-            hits.Clear();
-            return output;
-        }
-
-        return input;
-    }
 
     public override void Move(Vector3 input, bool isDash = false)
     {

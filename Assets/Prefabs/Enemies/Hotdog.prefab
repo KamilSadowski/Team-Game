@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 0
-  movementSpeed: 2.25
+  movementSpeed: 2.1
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -330,7 +330,7 @@ MonoBehaviour:
   - {r: 0.8490566, g: 0.8280285, b: 0.54067284, a: 0.5882353}
   - {r: 0.8196521, g: 0.8509804, b: 0.5411765, a: 0.5882353}
   - {r: 0.8509804, g: 0.7508172, b: 0.5411765, a: 0.5882353}
-  - {r: 0.8125048, g: 0.8490566, b: 0.43654326, a: 0.5882353}
+  - {r: 0.8125048, g: 0.8490566, b: 0.43654326, a: 0.7372549}
   - {r: 0.9811321, g: 0.9533642, b: 0.61552155, a: 0.5882353}
   Min_Alpha: 1
   Max_Alpha: 1
@@ -533,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -778,7 +778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -957,7 +957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -1136,7 +1136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
@@ -1315,7 +1315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _speed
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2556188827064181044, guid: 84ff3f3755f4a96459d8c2fb0c3317a8, type: 3}
       propertyPath: _damage
