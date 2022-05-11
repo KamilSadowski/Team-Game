@@ -1,39 +1,65 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : UI
 {
-    private CanvasGroup canvas;
+    [SerializeField] CanvasGroup main;
+    [SerializeField] CanvasGroup controls;
+    [SerializeField] private GameObject exitButton;
     private float t = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GetComponent<CanvasGroup>();
-        menu = canvas;
+        if (main != null)
+        {
+            main.alpha = 0.0f;
+            main.interactable = false;
+            main.blocksRaycasts = false;
+        }
+
+
+        if (controls != null)
+        {
+            controls.alpha = 0.0f;
+            controls.interactable = false;
+            controls.blocksRaycasts = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && t < 0)
+        // Avoid to interact when in main menu
+        if (SceneManager.GetActiveScene().buildIndex == 0) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            t = .5f;
-            
             TogglePause();
+            ToggleMenu(main);
+            if (controls && controls.alpha >= 1f) ToggleMenu(controls);
         }
 
-        if(t >= 0)
+
+
+        if (t >= 0)
             t -= Time.unscaledDeltaTime;
+        else
+        {
+            t = .5f;
+
+        }
+            // Update the exit button text and behaviour
+            UpdateExitButton();
     }
 
     public void TogglePause()
     {
         if (Time.timeScale < .5f) Resume();
         else Pause();
-            ToggleMenu();
     }
 
     public void Pause()
@@ -48,8 +74,37 @@ public class PauseMenu : UI
         Time.timeScale = 1f;
     }
 
-    public void MainMenu()
+    public int sceneIndex { get; set; }
+    
+
+    void UpdateExitButton()
     {
-        SceneManager.LoadScene(0);
+         sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        var text = exitButton.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (sceneIndex > 1)
+        {
+            text.SetText("Back to hub");
+        }
+        else
+        {
+            text.SetText("Exit");
+        }
     }
+
+    public void Kill()
+    {
+        if (sceneIndex == 1) return;
+
+            Start();
+            Resume();
+            FindObjectOfType<Player>().DestroyEntity();
+    }
+
+    public void Exit()
+    {
+        if(sceneIndex ==1 ) 
+         Application.Quit();
+    }
+
 }

@@ -4,23 +4,27 @@ using System.Collections;
 public class UI : MonoBehaviour
 {
     [SerializeField] protected CanvasGroup menu;
-    private bool isViewing = false;
-    private static readonly float animationTime = 0.5f;
+    private static readonly float kAnimationTime = 0.5f;
 
 
     public bool ToggleMenu()
     {
-        if (!isViewing)
-        {
-            StartCoroutine(ShowCanvas(menu, 1.0f, true));
-            return true;
-        }
-        else
-            StartCoroutine(ShowCanvas(menu, 0.0f, false));
-        return false;
+        ToggleMenu(menu);
+        return menu.interactable;
+    }
 
-        //Can assume it'll never be higher than 1.
-    
+    public void ToggleMenu(CanvasGroup c)
+    {
+        var target = Mathf.Abs(c.alpha - 1f);
+        StartCoroutine(ShowCanvas(c, target, kAnimationTime));
+    }
+
+    public void ToggleMenuInstant(CanvasGroup c)
+    {
+        StopAllCoroutines();
+        c.alpha = Mathf.Abs(c.alpha - 1f);
+        c.blocksRaycasts = !c.blocksRaycasts;
+        c.interactable = !c.interactable;
     }
 
     void LateUpdate()
@@ -28,7 +32,7 @@ public class UI : MonoBehaviour
        
     }
 
-    private void Awake()
+    void Start()
     {
         if (menu != null)
         {
@@ -38,23 +42,20 @@ public class UI : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowCanvas(CanvasGroup group, float target, bool isBlockRaycast)
+    private IEnumerator ShowCanvas(CanvasGroup group, float target, float animTime)
     {
         if (group != null)
         {
             float startAlpha = group.alpha;
             float t = 0.0f;
 
-            group.interactable = target >= 1.0f;
-            group.blocksRaycasts = isBlockRaycast;
-
-            //Alpha hasn't changed and it should only ever be 1 or 0 
-            isViewing = (target > .5f);
-
-            while (t < animationTime)
+            group.interactable = !group.interactable;
+            group.blocksRaycasts = !group.blocksRaycasts;
+            
+            while (t < animTime)
             {
-                t = Mathf.Clamp(t + Time.unscaledDeltaTime, 0.0f, animationTime);
-                group.alpha = Mathf.SmoothStep(startAlpha, target, t / animationTime);
+                t = Mathf.Clamp(t + Time.unscaledDeltaTime, 0.0f, animTime);
+                group.alpha = Mathf.SmoothStep(startAlpha, target, t / animTime);
                 yield return null;
             }
 
