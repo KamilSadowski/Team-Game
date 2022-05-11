@@ -66,9 +66,6 @@ public class Player : Character
             {
                 TakeDamage(10.0f, transform.position, Vector3.zero);
             }
-
-            if (Input.GetKey(KeyCode.D)) DestroyEntity();
-
         }
 
         if (isDead)
