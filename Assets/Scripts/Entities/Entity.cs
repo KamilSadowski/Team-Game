@@ -130,6 +130,9 @@ public MovementComponent GetMovementComponent()
 
         if (entityManager)
         {
+            
+            transform.rotation.Set(0,0,0,1);
+
             var dissolveEffect = gameObject.AddComponent<Dissolve>();
 
             Collider2D collider;

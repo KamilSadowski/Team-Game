@@ -7,7 +7,7 @@ public class Dissolve : MonoBehaviour
 
     private Material material;
 
-    [SerializeField] private float DissolveSpeed = 2;
+    [SerializeField] private float DissolveSpeed = 3;
     [SerializeField] private bool  Reversed;
 
     private                 float time;
@@ -28,7 +28,7 @@ public class Dissolve : MonoBehaviour
         renderRef.material = material;
         
 
-        time = Reversed ? 2f : 0f;
+        time = Reversed ? DissolveSpeed : 0f;
 
 
         if (material) material.SetFloat(Enabled, 1);
@@ -48,9 +48,9 @@ public class Dissolve : MonoBehaviour
         if (material) material.SetFloat(MyTime, time);
         else material = GetComponent<SpriteRenderer>().material;
 
-        if (time > 2.0f || time < 0.0f)
+        if (time > DissolveSpeed || time < 0.0f)
         {
-            time = Reversed ? 2f : 0f;
+            time = Reversed ? DissolveSpeed : 0f;
             // TODO: enable when finished testing if (material) material.SetFloat(Enabled, 0);
         }
     }
