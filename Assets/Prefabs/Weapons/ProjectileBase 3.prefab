@@ -319,13 +319,14 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   VisualRef: {fileID: 4314176420661828498}
   weapon_sharpness: 0.1
-  weapon_damage: 20
+  weapon_damage: 40
   bounceLayers:
   - Map
   - Prop
   - Enemy
   bounceStrength: 0.95
   RandomRange: 0.25
+  BounceDelay: 0.25
   hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
 --- !u!82 &-1836921320877145558
 AudioSource:
