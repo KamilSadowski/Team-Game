@@ -39,6 +39,12 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
+        // Update Difficulty
+        if (PlayerPrefs.HasKey("Difficulty"))
+        {
+            Globals.DifficultyModifier = PlayerPrefs.GetFloat("Difficulty");
+        }
+
         animator = GetComponent<Animator>();
         crosshair = PriorityChar_Manager.instance.getCrosshair();
         entitySpawner = GameObject.FindWithTag("GameController").GetComponent<EntityManager>();

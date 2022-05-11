@@ -26,6 +26,8 @@ public class BossRoom : Room
         base.EntityRemoved();
         if (wasCleared)
         {
+            Globals.DifficultyModifier += 0.1f;
+            PlayerPrefs.SetFloat("Difficulty", Globals.DifficultyModifier);
             returnPortal.Enable(true);
         }
     }

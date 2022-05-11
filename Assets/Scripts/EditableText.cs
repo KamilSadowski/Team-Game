@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class EditableText : MonoBehaviour
 {
-    TextMeshPro text;
+    TextMesh text;
     bool isVisible = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        text = GetComponent<TextMeshPro>();
+        text = GetComponent<TextMesh>();
     }
 
     public void TextVisible(bool visible)
     {
         if (!text)
         {
-            text = GetComponent<TextMeshPro>();
+            text = GetComponent<TextMesh>();
         }
         if (visible == isVisible) return;
         Color col = text.color;
@@ -30,7 +30,7 @@ public class EditableText : MonoBehaviour
     {
         if (!text)
         {
-            text = GetComponent<TextMeshPro>();
+            text = GetComponent<TextMesh>();
         }
         text.text = newText;
     }

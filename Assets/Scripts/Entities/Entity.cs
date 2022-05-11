@@ -132,6 +132,15 @@ public MovementComponent GetMovementComponent()
         {
             var dissolveEffect = gameObject.AddComponent<Dissolve>();
 
+            Collider2D collider;
+
+            TryGetComponent<Collider2D>(out collider);
+
+            if (collider)
+            {
+                collider.enabled = false;
+            }
+
             StartCoroutine(DestroyEntityCoroutine());
 
             return true;
