@@ -15,7 +15,7 @@ public class UI : MonoBehaviour
 
     public void ToggleMenu(CanvasGroup c)
     {
-        var target = Mathf.Abs(c.alpha - 1f);
+        var target = c.alpha > .5f ? 0f : 1f;
         StartCoroutine(ShowCanvas(c, target, kAnimationTime));
     }
 

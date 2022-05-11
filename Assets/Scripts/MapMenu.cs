@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GameObject;
 
-public class MapMenu : MonoBehaviour
+public class MapMenu : UI
 {
     [SerializeField] private CanvasGroup MapCanvas;
     [SerializeField] private Camera MinimapCamera;
@@ -41,23 +41,18 @@ public class MapMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Toggle()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            // Toggle map
+        // Toggle map
             if (MapCanvas)
             {
-                StartCoroutine(ShowCanvas(MapCanvas, MapCanvas.alpha < 0.5f ? 1.0f : 0f, true));
+                ToggleMenu(MapCanvas);
                 isVisible = !isVisible;
-
 
                 if (isVisible)
                 {
                     // Set pause
                     Time.timeScale = .0f;
-
                     Cursor.visible = true;
                 }
                 else
@@ -68,8 +63,11 @@ public class MapMenu : MonoBehaviour
                     ResetCamera();
                 }
             }
-        }
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
         if (isVisible && MinimapCamera)
         {
             var rect = MinimapCamera.rect;
@@ -105,24 +103,5 @@ public class MapMenu : MonoBehaviour
 
         PrevMousePos = new Vector2Int((int)Input.mousePosition.x, (int)Input.mousePosition.y);
     }
-
-
-    private IEnumerator ShowCanvas(CanvasGroup group, float target, bool isBlockRaycast)
-    {
-        if (group != null)
-        {
-            float startAlpha = group.alpha;
-            float t = 0.0f;
-
-            group.interactable = target >= 1.0f;
-            group.blocksRaycasts = isBlockRaycast;
-
-            while (t < animationTime)
-            {
-                t = Mathf.Clamp(t + Time.unscaledDeltaTime, 0.0f, animationTime);
-                group.alpha = Mathf.SmoothStep(startAlpha, target, t / animationTime);
-                yield return null;
-            }
-        }
-    }
+    
 }
