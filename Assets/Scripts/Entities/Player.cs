@@ -40,9 +40,9 @@ public class Player : Character
     void Start()
     {
         // Update Difficulty
-        if (PlayerPrefs.HasKey("Difficulty"))
+        if (PlayerPrefs.HasKey(Globals.PLAYER_DIFFICULTY_SAVE))
         {
-            Globals.DifficultyModifier = PlayerPrefs.GetFloat("Difficulty");
+            Globals.DifficultyModifier = PlayerPrefs.GetFloat(Globals.PLAYER_DIFFICULTY_SAVE);
         }
 
         animator = GetComponent<Animator>();
@@ -137,8 +137,14 @@ public class Player : Character
         {
             string weaponClassy = PlayerPrefs.GetString(Globals.PLAYER_WEAPON_SAVE);
             PlayerWeaponSaves s = JsonUtility.FromJson<PlayerWeaponSaves>(weaponClassy);
+
+            // If no stored weapon, randomise it
             if (s == null)
+            {
+                weapon.RandomiseStatsAndColour();
                 return obj;
+            }
+
 
             obj.transform.localScale = s.Scale;
             //Weapon class
@@ -159,12 +165,12 @@ public class Player : Character
             //Can assume all 3 will be null or not null. (Primary/Secondary/Tetiary)
             if (s.PrimaryColoursRGB != null)
             {
-                Color[] output = new Color[3];
+                Color[] output = new Color[Globals.COLOURS_PER_SHADER];
 
                 output[0] = s.PrimaryColoursRGB;
                 output[1] = s.SecondaryColoursRGB;
                 output[2] = s.TetiaryColoursRGB;
- 
+
                 weapon.UpdateColour(output);
 
             }

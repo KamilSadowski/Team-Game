@@ -21,8 +21,11 @@ public static class Globals
         }
     };
 
+    // If you ever add any more things to save, update the ResetProgress function in the menu manager
     public const string PLAYER_COLOUR_SAVE = "PlayerColours";
     public const string PLAYER_WEAPON_SAVE = "PlayerWeapon";
+    public const string PLAYER_CURRENCY_SAVE = "Currency";
+    public const string PLAYER_DIFFICULTY_SAVE = "Difficulty";
 
     public const int MAX_ROOM_NO = 15; // Max amount of rooms allowed, at least 3 required
     public const int MAP_GRID_SIZE = 10; // Size of the map grid that is used for map creation
@@ -43,7 +46,7 @@ public static class Globals
 
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
-    public static string[] SceneNames = new string[5] { "Kill", "HubWorld", "Dungeon 1", "Dungeon 2", "Dungeon 3" };
+    public static string[] SceneNames = new string[5] { "MainMenu", "HubWorld", "Dungeon 1", "Dungeon 2", "Dungeon 3" };
     public const int DUNGEON_NUMBER = 3;
     public static float DifficultyModifier = 1.01f;
 

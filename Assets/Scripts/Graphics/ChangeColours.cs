@@ -10,7 +10,8 @@ public class ChangeColours : MonoBehaviour
     protected SpriteRenderer renderer;
 
     protected Color multiplyColour;
-    [SerializeField] protected Color[] colours = new Color[3];
+    [SerializeField] public Color[] defaultColours = new Color[3];
+    protected Color[] colours = new Color[3];
 
     // Start is called before the first frame update
     void Awake()
@@ -20,6 +21,22 @@ public class ChangeColours : MonoBehaviour
         multiplyColour = renderer.color;
 
         material = new MaterialPropertyBlock();
+
+        // Check if to use default chef colours
+        string c = PlayerPrefs.GetString(Globals.PLAYER_COLOUR_SAVE);
+        if (c is { Length: > 0 })
+        {
+            PlayerColourSave s = JsonUtility.FromJson<PlayerColourSave>(c);
+            if (s != null)
+            {
+                colours = s.Colours;
+                UpdateColour(colours);
+            }
+        }
+        else
+        {
+            DefaultColours();
+        }
     }
 
     private void Start()
@@ -37,6 +54,12 @@ public class ChangeColours : MonoBehaviour
     {
         return colours;
     }
+
+    public void DefaultColours()
+    {
+        UpdateColour(defaultColours);
+    }
+
 
     public void UpdateColour(Color[] newColours)
     {

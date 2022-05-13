@@ -222,20 +222,7 @@ public class Weapon : Entity
         {
             if (Weapon_Parent_ID < 0)
             {
-                
-                for (int i = 0; i < 3; i++)
-                {
-                    colours[i].r = Random.Range(.0f, 1.0f);
-                    colours[i].g = Random.Range(.0f, 1.0f);
-                    colours[i].b = Random.Range(.0f, 1.0f);
-                }
-
-                ChangeColours(colours[0], colours[1], colours[2]);
-                
-                transform.localScale = transform.localScale * Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
-                weapon_sharpness *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
-                weapon_damage *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
-                bounceStrength *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+                RandomiseStatsAndColour();
             }
         }
         currentLifespawn -= Time.deltaTime;
@@ -379,6 +366,16 @@ public class Weapon : Entity
             }
 
         }
+    }
+
+    public void RandomiseStatsAndColour()
+    {
+        RandomiseColours();
+
+        transform.localScale = transform.localScale * Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+        weapon_sharpness *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+        weapon_damage *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
+        bounceStrength *= Random.Range(1.0f - RandomRange, 1.0f + RandomRange);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

@@ -27,7 +27,7 @@ public class BossRoom : Room
         if (wasCleared)
         {
             Globals.DifficultyModifier += 0.1f;
-            PlayerPrefs.SetFloat("Difficulty", Globals.DifficultyModifier);
+            PlayerPrefs.SetFloat(Globals.PLAYER_DIFFICULTY_SAVE, Globals.DifficultyModifier);
             returnPortal.Enable(true);
         }
     }

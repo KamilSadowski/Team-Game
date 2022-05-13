@@ -98,6 +98,20 @@ public class Entity : MonoBehaviour
         ChangeColours(colours[0], colours[1], colours[2]);
     }
 
+    public void RandomiseColours()
+    {
+        Color[] randomColours = new Color[Globals.COLOURS_PER_SHADER];
+
+        for (int i = 0; i < Globals.COLOURS_PER_SHADER; ++i)
+        {
+            randomColours[i].r = Random.RandomRange(0.0f, 1.0f);
+            randomColours[i].g = Random.RandomRange(0.0f, 1.0f);
+            randomColours[i].b = Random.RandomRange(0.0f, 1.0f);
+        }
+
+        UpdateColour(randomColours);
+    }
+
     public Color[] GetColours()
     {
         return colours;

@@ -18,12 +18,16 @@ public class ColourSliders : MonoBehaviour
     {
         string c = PlayerPrefs.GetString(Globals.PLAYER_COLOUR_SAVE);
         PlayerColourSave s = JsonUtility.FromJson<PlayerColourSave>(c);
-
+        if (c is { Length: > 0 })
         {
             colour[0].r = s.Colours[0].r;
             colour[0].g = s.Colours[1].g;
             colour[0].b = s.Colours[2].b;
             colour[0].a = 1.0f;
+        }
+        else
+        {
+            DefaultColour();
         }
     }
 
@@ -53,6 +57,17 @@ public class ColourSliders : MonoBehaviour
             colour[currentColour].b = blueSlider.value;
             changeColours.UpdateColour(colour);
         }
+    }
+
+    public void DefaultColour()
+    {
+        for (int i = 0; i < Globals.COLOURS_PER_SHADER; ++i)
+        {
+            colour[i] = FindObjectOfType<ChangeColours>().defaultColours[i];
+        }
+        redSlider.value = colour[currentColour].r;
+        greenSlider.value = colour[currentColour].g;
+        blueSlider.value = colour[currentColour].b;
     }
 
     public void SelectSlot(int index)
