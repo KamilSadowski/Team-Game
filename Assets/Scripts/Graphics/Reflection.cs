@@ -14,6 +14,7 @@ public class Reflection : MonoBehaviour
     void Start()
     {
         rendererToReflect = transform.parent.gameObject.GetComponent<SpriteRenderer>();
+  
         // Things like weapons might have a sprite that is a child and not a part of the base object
         if (!rendererToReflect)
         {
@@ -21,6 +22,7 @@ public class Reflection : MonoBehaviour
         }
         transform.parent.gameObject.TryGetComponent<Entity>(out parent);
         renderer = GetComponent<SpriteRenderer>();
+        renderer.color = rendererToReflect.color;
         renderer.material = rendererToReflect.material;
 
     }
@@ -32,7 +34,7 @@ public class Reflection : MonoBehaviour
         renderer.flipY = rendererToReflect.flipY;
         Sprite sprite = rendererToReflect.sprite;
         renderer.sprite = sprite;
-
+        renderer.color = rendererToReflect.color;
 
         transform.localPosition = new Vector3(0, -(rendererToReflect.bounds.size.y / rendererToReflect.gameObject.transform.localScale.y), 0);
         Vector3 rotation = rendererToReflect.transform.rotation.eulerAngles;

@@ -9,9 +9,9 @@ public static class Globals
 
     public struct WeaponData { public int prefabID; }; // Stores all of the data needed for weapons to persist between levels and save files
 
-    public struct Grid2D 
-    { 
-        public int x; 
+    public struct Grid2D
+    {
+        public int x;
         public int y;
 
         public Grid2D(int gridX, int gridY)
@@ -46,8 +46,8 @@ public static class Globals
 
     // Game manager globals
     public enum Scenes { MainMenu, HubWorld, Dungeon };
-    public static string[] SceneNames = new string[5] { "MainMenu", "HubWorld", "Dungeon 1", "Dungeon 2", "Dungeon 3" };
-    public const int DUNGEON_NUMBER = 3;
+    public static string[] SceneNames = new string[] { "MainMenu", "HubWorld", "Dungeon 1", "Dungeon 2", "Dungeon 3", "Dungeon 4" };
+    public static int DUNGEON_NUMBER = SceneNames.Length-2; //MainMenu and hubworld aren't dungeons.
     public static float DifficultyModifier = 1.01f;
 
     const bool IS_WEAPON_LOG_OUTPUT = true;

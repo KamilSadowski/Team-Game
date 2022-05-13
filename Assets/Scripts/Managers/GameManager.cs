@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Load the new scene
+      //  Debug.Log(sceneIndex);
         SceneManager.LoadScene(Globals.SceneNames[sceneIndex]);
     }
 
