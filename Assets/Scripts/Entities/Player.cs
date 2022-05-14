@@ -189,7 +189,7 @@ public class Player : Character
         {
             PlayerWeaponSaves weaponClass = new PlayerWeaponSaves();
 
-            weaponClass.WeaponTemplateID = weapon.templateID;
+            weaponClass.WeaponTemplateID = weapon.GetWeaponID();
             weaponClass.Scale = weapon.gameObject.transform.localScale;
             //Weapon class
             weaponClass.bounceStr = weapon.getBounceStr();
