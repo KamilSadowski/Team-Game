@@ -7,12 +7,15 @@ public class Dissolve : MonoBehaviour
 
     private Material material;
 
-    [SerializeField] private float DissolveSpeed = 3;
+    [SerializeField] private float DissolveSpeed = .25f;
     [SerializeField] private bool  Reversed;
 
     private                 float time;
     private static readonly int   MyTime = Shader.PropertyToID("_MyTime");
     private static readonly int   Enabled = Shader.PropertyToID("_Enabled");
+    private static readonly int DissolveAmount = Shader.PropertyToID("_DissolveAmount");
+    private static readonly int DissolveWidth = Shader.PropertyToID("_DissolveWidth");
+    private static readonly int DissolveColor = Shader.PropertyToID("_DissolveColor");
 
 
     void Start()
@@ -32,6 +35,7 @@ public class Dissolve : MonoBehaviour
 
 
         if (material) material.SetFloat(Enabled, 1);
+            material.SetColor(DissolveColor, Random.ColorHSV());
 
     }
 
@@ -45,10 +49,18 @@ public class Dissolve : MonoBehaviour
     {
         time += (Reversed ? -1f : 1f) * DissolveSpeed * Time.deltaTime;
 
-        if (material) material.SetFloat(MyTime, time);
-        else material = GetComponent<SpriteRenderer>().material;
+        if (material)
+        {
+            material.SetFloat(MyTime, time);
+            material.SetFloat(DissolveAmount, time );
+            material.SetFloat(DissolveWidth, 0.1f);
+        }
+        else
+        {
+            material = GetComponent<SpriteRenderer>().material;
+        }
 
-        if (time > DissolveSpeed || time < 0.0f)
+        if (time > DissolveSpeed * 2 || time < 0.0f)
         {
             time = Reversed ? DissolveSpeed : 0f;
             // TODO: enable when finished testing if (material) material.SetFloat(Enabled, 0);

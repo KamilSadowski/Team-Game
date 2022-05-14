@@ -168,7 +168,7 @@ public MovementComponent GetMovementComponent()
 
     IEnumerator DestroyEntityCoroutine()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
             entityManager.DeleteEntity(entityID);
     }

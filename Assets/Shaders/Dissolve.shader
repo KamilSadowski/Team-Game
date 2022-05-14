@@ -4,6 +4,8 @@ Shader "Custom/Dissolve"
 	{
 		_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		_NormalMap("Normal Map", 2D) = "bump" {}
+		_NormalStrenght("Normal Strength", Range(0, 1.5)) = 0.5
 		_Enabled("Enable the dissolve effect",Range(0,1)) = 0
 		[HDR]_EdgeColour("EdgeColour", Color) = (0, 0.1238661, 4, 0)
 		_MyTime("MyTime", Float) = 0
@@ -12,6 +14,11 @@ Shader "Custom/Dissolve"
 		[HideInInspector] _Flip("Flip", Vector) = (1,1,1,1)
 		[PerRendererData] _AlphaTex("External Alpha", 2D) = "white" {}
 		[PerRendererData] _EnableExternalAlpha("Enable External Alpha", Float) = 0
+		 _DissolveMap("Dissolve Map", 2D) = "white" {}
+		 _DissolveAmount("DissolveAmount", Range(0,1)) = 0
+		 _DissolveColor("DissolveColor", Color) = (1,1,1,1)
+		 _DissolveEmission("DissolveEmission", Range(0,1)) = 1
+		 _DissolveWidth("DissolveWidth", Range(0,0.1)) = 0.05
 		_Cutoff("Shadow alpha cutoff", Range(0,1)) = 0.5
 	}
 
@@ -30,20 +37,6 @@ Shader "Custom/Dissolve"
 		{
 			Out = OutMinMax.x + (In - InMinMax.x) * (OutMinMax.y - OutMinMax.x) / (InMinMax.y - InMinMax.x);
 		}
-
-	void Checkboard(float2 UV, float3 ColorA, float3 ColorB, float2 Frequency, out float3 result)
-	{
-				UV = (UV.xy + 0.5) * Frequency;
-				float4 derivatives = float4(ddx(UV), ddy(UV));
-				float2 duv_length = sqrt(float2(dot(derivatives.xz, derivatives.xz), dot(derivatives.yw, derivatives.yw)));
-				float  width = 1.0;
-				float2 distance3 = 4.0 * abs(frac(UV + 0.25) - 0.5) - width;
-				float2 scale = 0.35 / duv_length.xy;
-				float  freqLimiter = sqrt(clamp(1.1f - max(duv_length.x, duv_length.y), 0.0, 1.0));
-				float2 vector_alpha = clamp(distance3 * scale.xy, -1.0, 1.0);
-				float  alpha = saturate(0.5f + 0.5f * vector_alpha.x * vector_alpha.y * freqLimiter);
-				result = lerp(ColorA, ColorB, alpha.xxx);
-	}
 
 	float random(float2 uv)
 	{
@@ -74,9 +67,12 @@ Shader "Custom/Dissolve"
 		#pragma surface surf Lambert addshadow fullforwardshadows vertex:vert nofog nolightmap nodynlightmap keepalpha noinstancing
 		#pragma multi_compile_local _ PIXELSNAP_ON
 		#pragma multi_compile _ ETC1_EXTERNAL_ALPHA
+#pragma target 3.0
 		#include "UnitySprites.cginc"
 
 		uniform float4 _MainTex_TexelSize;
+		sampler2D _DissolveMap;
+		sampler2D _NormalMap;
 
 		fixed _Cutoff;
 
@@ -84,6 +80,8 @@ Shader "Custom/Dissolve"
 		struct Input
 		{
 			float2 uv_MainTex;
+			float2 uv_DissolveMap;
+			float2 uv_NormalMap;
 			fixed4 color;
 		};
 
@@ -97,6 +95,11 @@ Shader "Custom/Dissolve"
 		float _MyTime;
 		float _Enabled;
 		fixed4 _EdgeColor;
+		half _DissolveAmount;
+		half _NormalStrenght;
+		half _DissolveEmission;
+		half _DissolveWidth;
+		fixed4 _DissolveColor;
 
 		UNITY_INSTANCING_BUFFER_END(Props)
 
@@ -132,7 +135,6 @@ Shader "Custom/Dissolve"
 
 						v.vertex.y += t;
 					}
-
 				}
 
 			o.color = v.color * _Color * _RendererColor;
@@ -144,31 +146,19 @@ Shader "Custom/Dissolve"
 			fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
 			clip(c.a - _Cutoff);
 
-			// Dissolve code
-			if (_Enabled)
-			{
-				float2 UV        = IN.uv_MainTex;
-				float3 ColorA    = { 1,1,1 };
-				float3 ColorB    = { 0,0,0 };
-				float2 Frequency = 8;
+			fixed4 mask = tex2D(_DissolveMap,IN.uv_DissolveMap);
+			if (mask.r < _DissolveAmount)
+				discard;
 
-				float3 checkboardCol;
+			o.Albedo = c.rgb / 2;
 
-				Checkboard(UV, ColorA, ColorB, Frequency, checkboardCol);
-
-				float t = _MyTime;
-
-				Remap(t, float2(2,0 ), float2 (1, .5 ), t);
-
-				checkboardCol *= t;
-
-				c.a *= checkboardCol.r;
-
-				c = lerp(c, _EdgeColor, t);
+			if (mask.r < _DissolveAmount + _DissolveWidth) {
+				o.Albedo = _DissolveColor;
+				o.Emission = _DissolveColor * _DissolveEmission;
 			}
 
-			o.Albedo = float3(IN.uv_MainTex.y * 0.1f, 0,0);
-			o.Alpha  = 0.01f;
+			o.Alpha = c.a;
+			o.Normal = UnpackScaleNormal(tex2D(_NormalMap,IN.uv_NormalMap), _NormalStrenght);
 		}
 		ENDCG
 	}
