@@ -297,11 +297,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 94dbd4febab734210a43c84263f5e116, type: 3}
   - {fileID: 8300000, guid: 3ff9fcf8763db443d8c48710cdf9ab60, type: 3}
   - {fileID: 8300000, guid: a1382e4f297374edea614c369f31dcb2, type: 3}
+  movementClipVolume: 0.025
   onDamageClip:
   - {fileID: 8300000, guid: 0cd0367ce705e426e944079a1e47eb84, type: 3}
   - {fileID: 8300000, guid: b1e15b00e5c084b14b2fee5b2f708e7d, type: 3}
   - {fileID: 8300000, guid: c118d1cdc5f634c28bfb87ef52703522, type: 3}
-  movementClipVolume: 0.075
+  damageClipVolume: 0.28875002
   audioMixer: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
 --- !u!114 &3368981141061165260
 MonoBehaviour:

@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79216253c3acfa49b5b35990083c2d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChanceOfSpawn: 0.25
+  ChanceRandomization: 0.2
 --- !u!1 &5258664259809984757
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,9 +223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementClip: []
-  onDamageClip:
-  - {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
   movementClipVolume: 1
+  onDamageClip:
+  - {fileID: 8300000, guid: 4f13633ea56974e6dbf63eb99fa6c851, type: 3}
+  damageClipVolume: 0.28875002
   audioMixer: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
 --- !u!1001 &1607858580254968063
 PrefabInstance:
