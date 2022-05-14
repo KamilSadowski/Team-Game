@@ -167,8 +167,8 @@ Shader "Custom/Dissolve"
 				c = lerp(c, _EdgeColor, t);
 			}
 
-			o.Albedo = float3(IN.uv_MainTex.y * 0.1f, 0,0);
-			o.Alpha  = 0.01f;
+			o.Albedo = float3(0.0f, 0,0);
+			o.Alpha  = c.a;
 		}
 		ENDCG
 	}

@@ -19,6 +19,19 @@ public class Hud : MonoBehaviour
 
     public void HideHud()
     {
+        if (!canvasGroup)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
+        if (textMeshes == null)
+        {
+            textMeshes = GetComponentsInChildren<TextMesh>();
+        }
+        if (textMeshesPro == null)
+        {
+            textMeshesPro = GetComponentsInChildren<TextMeshPro>();
+        }
+
         canvasGroup.alpha = 0.0f;
         foreach (TextMesh textMesh in textMeshes)
         {
@@ -33,6 +46,19 @@ public class Hud : MonoBehaviour
 
     public void ShowHud()
     {
+        if (!canvasGroup)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
+        if (textMeshes.Length == 0)
+        {
+            textMeshes = GetComponentsInChildren<TextMesh>();
+        }
+        if (textMeshesPro.Length == 0)
+        {
+            textMeshesPro = GetComponentsInChildren<TextMeshPro>();
+        }
+
         canvasGroup.alpha = 1.0f;
         foreach (TextMesh textMesh in textMeshes)
         {
