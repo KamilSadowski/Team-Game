@@ -7,9 +7,9 @@ public class MenuManager : MonoBehaviour
     GameManager gameManager;
     AudioSettings audioSettings;
     Hud hud;
-    [SerializeField] GameObject mainMenu;
-    [SerializeField] GameObject editCharacterMenu;
-    [SerializeField] GameObject optionsMenu;
+    [SerializeField] CanvasGroup mainMenu;
+    [SerializeField] CanvasGroup editCharacterMenu;
+    [SerializeField] CanvasGroup optionsMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -45,24 +45,49 @@ public class MenuManager : MonoBehaviour
 
     public void Settings()
     {
-        mainMenu.SetActive(false);
-        editCharacterMenu.SetActive(false);
-        optionsMenu.SetActive(true);
+        mainMenu.alpha = 0.0f;
+        mainMenu.interactable = false;
+        mainMenu.blocksRaycasts = false;
+
+        editCharacterMenu.alpha = 0.0f;
+        editCharacterMenu.interactable = false;
+        editCharacterMenu.blocksRaycasts = false;
+
+        optionsMenu.alpha = 1.0f;
+        optionsMenu.interactable = true;
+        optionsMenu.blocksRaycasts = true;
+
         audioSettings.UpdateSettingsSliders();
     }
 
     public void MainMenu()
     {
-        mainMenu.SetActive(true);
-        editCharacterMenu.SetActive(false);
-        optionsMenu.SetActive(false);
+        mainMenu.alpha = 1.0f;
+        mainMenu.interactable = true;
+        mainMenu.blocksRaycasts = true;
+
+        editCharacterMenu.alpha = 0.0f;
+        editCharacterMenu.interactable = false;
+        editCharacterMenu.blocksRaycasts = false;
+
+        optionsMenu.alpha = 0.0f;
+        optionsMenu.interactable = false;
+        optionsMenu.blocksRaycasts = false;
     }
 
     public void EditCharacter()
     {
-        mainMenu.SetActive(false);
-        editCharacterMenu.SetActive(true);
-        optionsMenu.SetActive(false);
+        mainMenu.alpha = 0.0f;
+        mainMenu.interactable = false;
+        mainMenu.blocksRaycasts = false;
+
+        editCharacterMenu.alpha = 1.0f;
+        editCharacterMenu.interactable = true;
+        editCharacterMenu.blocksRaycasts = true;
+
+        optionsMenu.alpha = 0.0f;
+        optionsMenu.interactable = false;
+        optionsMenu.blocksRaycasts = false;
     }
 
     public void ResetProgress()
