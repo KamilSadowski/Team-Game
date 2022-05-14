@@ -37,6 +37,8 @@ public class WeaponController : ProjectileController
         boundPlayerWeapon = this.GetComponent<Weapon>();
         gameObject.layer = LayerMask.NameToLayer("Projectile");
 
+        currentWeaponCooldown = MAX_WEAPON_COOLDOWN / WEAPON_THROW_COST;
+
 
     }
 

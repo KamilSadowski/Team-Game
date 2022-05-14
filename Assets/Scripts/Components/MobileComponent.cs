@@ -34,6 +34,7 @@ public class MobileComponent : MovementComponent
    
     protected bool baseFacingDirection;
     protected List<RaycastHit2D> hits;
+    protected List<RaycastHit2D> Movinghits;
     protected bool isDashing = false;
 
     Crosshair crosshair;
@@ -75,7 +76,7 @@ public class MobileComponent : MovementComponent
 
     public override List<RaycastHit2D> getHits()
     {
-        return hits;
+        return Movinghits;
     }
     //End Getters & Setters
 
@@ -204,7 +205,7 @@ public class MobileComponent : MovementComponent
 
         rb.Cast
             (
-            new Vector2(input.x * movementSpeed * Time.deltaTime, input.y * movementSpeed * Time.deltaTime), 
+            new Vector2(input.x * movementSpeed, input.y * movementSpeed ), 
             MovementContactData, 
             hits, 
             movementSpeed * Time.deltaTime * 1.1f
@@ -212,7 +213,9 @@ public class MobileComponent : MovementComponent
 
         
         if (hits.Count > 0)
-        {     
+        {
+            Movinghits = hits;
+            hits.Clear();
             return true;
         }
 
