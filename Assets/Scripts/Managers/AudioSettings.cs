@@ -26,8 +26,8 @@ public class AudioSettings : MonoBehaviour
         }
 
         // Update variables based on player prefs data
-        musicMixer.SetFloat("masterVolume", Mathf.Log10(PlayerPrefs.GetFloat("Music") * 20));
-        effectsMixer.SetFloat("masterVolume", Mathf.Log10(PlayerPrefs.GetFloat("FX") * 20));
+        musicMixer.SetFloat("masterVolume", PlayerPrefs.GetFloat("Music"));
+        effectsMixer.SetFloat("masterVolume", PlayerPrefs.GetFloat("FX"));
     }
 
     // Update is called once per frame

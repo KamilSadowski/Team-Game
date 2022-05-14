@@ -1,23 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Hud : MonoBehaviour
 {
     CanvasGroup canvasGroup;
     TextMesh[] textMeshes;
+    TextMeshPro[] textMeshesPro;
 
     // Start is called before the first frame update
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         textMeshes = GetComponentsInChildren<TextMesh>();
+        textMeshesPro = GetComponentsInChildren<TextMeshPro>();
     }
 
     public void HideHud()
     {
         canvasGroup.alpha = 0.0f;
         foreach (TextMesh textMesh in textMeshes)
+        {
+            textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0.0f);
+        }
+        foreach (TextMeshPro textMesh in textMeshesPro)
         {
             textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0.0f);
         }
@@ -28,6 +35,10 @@ public class Hud : MonoBehaviour
     {
         canvasGroup.alpha = 1.0f;
         foreach (TextMesh textMesh in textMeshes)
+        {
+            textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 1.0f);
+        }
+        foreach (TextMeshPro textMesh in textMeshesPro)
         {
             textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 1.0f);
         }
