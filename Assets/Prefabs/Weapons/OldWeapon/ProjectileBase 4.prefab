@@ -126,11 +126,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2da73ffb6f5aa246aea3c2dac6ed802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DissolvePrefab: {fileID: 0}
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
@@ -178,7 +181,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   DashCooldown: 0.25
-  isFacingRight: 0
   velocity: {x: 0, y: 0, z: 0}
 --- !u!50 &7126638304656815046
 Rigidbody2D:
@@ -242,6 +244,7 @@ MonoBehaviour:
   MAX_WEAPON_COOLDOWN: 5
   WEAPON_THROW_COST: 2.5
   WEAPON_PICKUP_REWARD: 1
+  STAT_RANDOM_RANGE: 0.25
 --- !u!61 &-2866657720055413519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -280,11 +283,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95fd531c6c26e8643b337ca7329397e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DissolvePrefab: {fileID: 1919617597492424003, guid: 11d8259e721a8ed48b85d7bdddaf58b7, type: 3}
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
@@ -300,6 +306,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   damageFlashInterval: 0.01
+  VisualRef: {fileID: 0}
   weapon_sharpness: 0.75
   weapon_damage: 15
   bounceLayers:
@@ -307,6 +314,9 @@ MonoBehaviour:
   - Prop
   - Enemy
   bounceStrength: 0.9
+  RandomRange: 0.25
+  BounceDelay: 0.25
+  hitSound: {fileID: 0}
 --- !u!114 &-8071329820229820450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,10 +329,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb1e12184f5f4745a2030796ba12919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colours:
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 1, g: 0.08789868, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.075142145, a: 0}
+  defaultColours:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &7944970863688089875
 PrefabInstance:
   m_ObjectHideFlags: 0

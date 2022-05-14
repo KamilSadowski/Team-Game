@@ -9,6 +9,8 @@ public class Entity : MonoBehaviour
     protected EntityManager entityManager;
     protected bool isInvincible = false;
 
+    [SerializeField] Dissolve DissolvePrefab;
+
     protected MovementComponent movementComponent;
     protected BaseHealthComponent healthComponent;
     protected ParticleSystem onHitParticles;
@@ -158,15 +160,15 @@ public MovementComponent GetMovementComponent()
             
             transform.rotation.Set(0,0,0,1);
 
-            var dissolveEffect = gameObject.AddComponent<Dissolve>();
-
-            dissolveEffect.colour = colours;
+            if (DissolvePrefab)
+            {
+                var dissolveEffect = Instantiate(DissolvePrefab, transform);
+                dissolveEffect.colour = colours;
+            }
 
             Collider2D collider;
 
-            TryGetComponent<Collider2D>(out collider);
-
-            if (collider)
+            if (TryGetComponent<Collider2D>(out collider))
             {
                 collider.enabled = false;
             }

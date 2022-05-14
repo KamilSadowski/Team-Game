@@ -169,12 +169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887b1a81978de5b40816f1840f4fb3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DissolvePrefab: {fileID: 1919617597492424003, guid: 11d8259e721a8ed48b85d7bdddaf58b7, type: 3}
   renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 1, g: 0.51841265, b: 0, a: 1}
   - {r: 1, g: 0.5176471, b: 0, a: 1}
   - {r: 1, g: 0.5176471, b: 0, a: 1}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}

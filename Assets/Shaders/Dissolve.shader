@@ -137,7 +137,7 @@ Shader "Custom/Dissolve"
 					{
 
 						float t = _MyTime;
-						Remap(t, float2(-1, 1), float2(0, .2), t);
+						Remap(t, float2(-1, 1), float2(0, 0.2), t);
 
 						v.vertex.y += t;
 					}
