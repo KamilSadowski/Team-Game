@@ -15,6 +15,9 @@ public class AudioSettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        effectsSlider = GameObject.FindGameObjectWithTag("FXSlider").GetComponent<Slider>();
+        musicSlider = GameObject.FindGameObjectWithTag("MusicSlider").GetComponent<Slider>();
+
         // Check if player prefs were set, if not, give default values
         if (!PlayerPrefs.HasKey("Music"))
         {
