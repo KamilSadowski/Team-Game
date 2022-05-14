@@ -32,6 +32,10 @@ public class NotPlayer : Character
             if(Random.Range(0,100) < HealthDropChance)
             entityManager.TryCreateRandomListedPickup(transform.position);
 
+        //Colliders are removed on death. This is a 'cheese' on stopping them leaving the map or going through walls. 
+        if (movementComponent)
+            movementComponent.setMovementSpeed(0.01f);
+
         return base.DestroyEntity();
     }
 
