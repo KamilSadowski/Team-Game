@@ -182,8 +182,8 @@ Shader "Custom/Dissolve"
 			o.Albedo = c.rgb / 2;
 
 			if (mask.r < _DissolveAmount + _DissolveWidth) {
-				o.Albedo = _DissolveColor;
-				o.Emission = _DissolveColor * _DissolveEmission;
+				o.Albedo = _DissolveColor * c.a;
+				o.Emission = _DissolveColor * _DissolveEmission * c.a;
 			}
 
 			o.Alpha = c.a;

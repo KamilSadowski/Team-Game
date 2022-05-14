@@ -83,10 +83,18 @@ public class Weapon : Entity
             switch (currentState)
             {
                 case States.Dropped:
+
+                    if (!isFlashing)
+                    {
+                        isFlashing = true;
+                        flashIndex = 0;
+                        flashTimer.Reset(damageFlashInterval);
+                    }
+
                     if (currentLifespawn <= 0)
                     {
+                        SetInactive();
                         DestroyEntity();
-
                     }
                     nDirection = Vector3.zero;
                     DroppedStateUpdate();
