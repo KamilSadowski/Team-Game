@@ -134,12 +134,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7702cfb40e9ed449f6c50264e2299c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DissolvePrefab: {fileID: 0}
   renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
@@ -1178,7 +1180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362781022150293590, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7232956713734012134, guid: 93f9713a35841274a99620356620a40b, type: 3}
       propertyPath: m_RootOrder

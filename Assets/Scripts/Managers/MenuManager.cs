@@ -92,10 +92,11 @@ public class MenuManager : MonoBehaviour
 
     public void ResetProgress()
     {
-        PlayerPrefs.DeleteKey(Globals.PLAYER_COLOUR_SAVE);
-        PlayerPrefs.DeleteKey(Globals.PLAYER_WEAPON_SAVE);
-        PlayerPrefs.DeleteKey(Globals.PLAYER_CURRENCY_SAVE);
-        PlayerPrefs.DeleteKey(Globals.PLAYER_DIFFICULTY_SAVE);
+        //PlayerPrefs.DeleteKey(Globals.PLAYER_COLOUR_SAVE);
+        //PlayerPrefs.DeleteKey(Globals.PLAYER_WEAPON_SAVE);
+        //PlayerPrefs.DeleteKey(Globals.PLAYER_CURRENCY_SAVE);
+        //PlayerPrefs.DeleteKey(Globals.PLAYER_DIFFICULTY_SAVE);
+        PlayerPrefs.DeleteAll();
         ExitGame();
     }
 
