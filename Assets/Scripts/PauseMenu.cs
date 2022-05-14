@@ -47,7 +47,6 @@ public class PauseMenu : UI
         else
         {
             t = .5f;
-
         }
 
         // Update the exit button text and behaviour
@@ -101,6 +100,7 @@ public class PauseMenu : UI
 
         Start();
         Resume();
+
         FindObjectOfType<Player>().DestroyEntity();
     }
 

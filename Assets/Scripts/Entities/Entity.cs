@@ -160,6 +160,8 @@ public MovementComponent GetMovementComponent()
 
             var dissolveEffect = gameObject.AddComponent<Dissolve>();
 
+            dissolveEffect.colour = colours;
+
             Collider2D collider;
 
             TryGetComponent<Collider2D>(out collider);

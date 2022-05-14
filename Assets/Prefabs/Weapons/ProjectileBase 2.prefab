@@ -219,7 +219,7 @@ MonoBehaviour:
   bounceStrength: 0.75
   RandomRange: 0.25
   BounceDelay: 0.25
-  hitSound: {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
+  hitSound: {fileID: 8300000, guid: b4ed406e6e315450f85fa2c0f65bce01, type: 3}
 --- !u!82 &8170442677759431628
 AudioSource:
   m_ObjectHideFlags: 0
@@ -232,18 +232,18 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.198
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 3.58
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
+  Pan2D: -1
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -276,7 +276,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0

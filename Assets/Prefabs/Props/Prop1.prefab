@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79216253c3acfa49b5b35990083c2d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChanceOfSpawn: 0.25
+  ChanceRandomization: 0.2
 --- !u!1 &5258664259809984757
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +150,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00004671514, y: 0.0013536215}
+  m_Offset: {x: -0.00004671514, y: 0.14836696}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -159,7 +161,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.26293942, y: 0.3209839}
+  m_Size: {x: 0.26293942, y: 0.026957214}
   m_EdgeRadius: 0
 --- !u!114 &-8038274421022642137
 MonoBehaviour:
@@ -221,9 +223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementClip: []
-  onDamageClip:
-  - {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
   movementClipVolume: 1
+  onDamageClip:
+  - {fileID: 8300000, guid: 4f13633ea56974e6dbf63eb99fa6c851, type: 3}
+  damageClipVolume: 0.28875002
   audioMixer: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
 --- !u!1001 &1607858580254968063
 PrefabInstance:
@@ -279,6 +282,10 @@ PrefabInstance:
     - target: {fileID: 8800361047235683830, guid: 13de22747820a3d41b08213100a3c284, type: 3}
       propertyPath: m_Name
       value: Reflection
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800361047235683830, guid: 13de22747820a3d41b08213100a3c284, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13de22747820a3d41b08213100a3c284, type: 3}
@@ -341,6 +348,10 @@ PrefabInstance:
     - target: {fileID: 7782316644119727431, guid: f714d62440a28fa40b02a9ac3988968c, type: 3}
       propertyPath: m_Name
       value: SparksParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782316644119727431, guid: f714d62440a28fa40b02a9ac3988968c, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f714d62440a28fa40b02a9ac3988968c, type: 3}

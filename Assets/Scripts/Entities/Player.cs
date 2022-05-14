@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class Player : Character
@@ -34,6 +35,9 @@ public class Player : Character
     Timer killTimer = new Timer(deathDuration);
 
     FollowingCamera camera;
+    private static readonly int AttackAnimationSpeed = Animator.StringToHash("AttackAnimationSpeed");
+    private static readonly int Attack1 = Animator.StringToHash("Attack");
+    private static readonly int Throw = Animator.StringToHash("Throw");
 
 
     // Start is called before the first frame update
@@ -245,8 +249,8 @@ public class Player : Character
 
             if (animator)
             {
-                animator.SetTrigger("Throw");
-                animator.SetBool("Attack", false);
+                animator.SetTrigger(Throw);
+                animator.SetBool(Attack1, false);
             }
 
         }
@@ -259,19 +263,19 @@ public class Player : Character
             // Avoid multiple calculations of the same thing
             curStrength += Time.deltaTime * CHARGE_STRENGTH_MOD;
 
-            animator.SetFloat("AttackAnimationSpeed", Time.deltaTime * CHARGE_STRENGTH_MOD);
+            animator.SetFloat(AttackAnimationSpeed, Time.deltaTime * CHARGE_STRENGTH_MOD);
 
-            var isPlaying = animator.GetBool("Attack");
+            var isPlaying = animator.GetBool(Attack1);
 
             // Play the animation attacking if it is not playing - Not sure if it really works
-            if (!isPlaying) animator.SetBool("Attack", true);
+            if (!isPlaying) animator.SetBool(Attack1, true);
 
             // If either of the weapons are fully charged 
             if (curStrength > BASE_STRENGTH * MAX_STRENGTH_MOD)
             {
                 curStrength = BASE_STRENGTH * MAX_STRENGTH_MOD;
                 // Stop the throwing animation
-                animator.SetFloat("AttackAnimationSpeed", 0f);
+                animator.SetFloat(AttackAnimationSpeed, 0f);
             }
 
         }
@@ -373,12 +377,29 @@ public class Player : Character
     {
         isDead = true;
         CheckCamera();
-        camera.SetAdditionalVignette(0.7f);
-        camera.SetSaturation(-100.0f);
+
+        StartCoroutine(DeathEnumerable());
+
         camera.ShowDeathScreen();
         return true;
     }
 
+    IEnumerator DeathEnumerable()
+    {
+        float t = 0f;
+
+        while (t < 2)
+        {
+            t = Mathf.Clamp(t + Time.deltaTime, 0.0f, 2);
+            float a = Mathf.SmoothStep(0, .7f, t / 2);
+            float s = Mathf.SmoothStep(0, -100f, t / 2);
+            camera.SetSaturation(s);
+            camera.SetAdditionalVignette(a);
+            yield return null;
+        }
+    }
+
+    
     void CheckCamera()
     {
         if (!camera)

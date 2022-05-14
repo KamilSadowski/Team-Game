@@ -6,8 +6,9 @@ public class SoundManager : MonoBehaviour
 {
 
     [SerializeField] AudioClip[] movementClip;
-    [SerializeField] AudioClip[] onDamageClip;
     [SerializeField] float movementClipVolume = 1.0f;
+    [SerializeField] AudioClip[] onDamageClip;
+    [SerializeField] float damageClipVolume = 0.875f * 0.33f;
     [SerializeField] AudioMixerGroup audioMixer;
     private List<AudioSource> activeAudioSources;
 
@@ -25,7 +26,7 @@ public class SoundManager : MonoBehaviour
         if (index <= 0)
             activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(movementClip[Random.Range(0, movementClip.Length)], movementClipVolume);
         else if (index <= 1)
-            activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(onDamageClip[Random.Range(0, onDamageClip.Length)], 0.875f*0.33f);
+            activeAudioSources[activeAudioSources.Count - 1].PlayOneShot(onDamageClip[Random.Range(0, onDamageClip.Length)], damageClipVolume);
     }
     // Start is called before the first frame update
     private void Awake()
