@@ -50,11 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d1163e5a2a97d42a5e6de1b63e390e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DissolvePrefab: {fileID: 1919617597492424003, guid: 11d8259e721a8ed48b85d7bdddaf58b7, type: 3}
+  renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
@@ -175,9 +178,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementClip: []
+  movementClipVolume: 1
   onDamageClip:
   - {fileID: 8300000, guid: 357d5e2be91ee5c46af4270ebeea57e1, type: 3}
-  movementClipVolume: 1
+  damageClipVolume: 0.28875002
   audioMixer: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
 --- !u!1001 &6094844824486663043
 PrefabInstance:

@@ -9,8 +9,11 @@ public class Dissolve : MonoBehaviour
 
     [SerializeField] private float DissolveSpeed = .25f;
     [SerializeField] private bool  Reversed;
+    [SerializeField] private Texture2D DissolveMap;
+    [SerializeField] private Texture2D DissolveNormalMap;
 
-    private                 float time;
+
+    private float time;
     private static readonly int   MyTime = Shader.PropertyToID("_MyTime");
     private static readonly int   Enabled = Shader.PropertyToID("_Enabled");
     private static readonly int DissolveAmount = Shader.PropertyToID("_DissolveAmount");
@@ -21,6 +24,8 @@ public class Dissolve : MonoBehaviour
     private static readonly int TertiaryColor = Shader.PropertyToID("_TertiaryColor");
 
     public Color[] colour = new Color[3];
+    private static readonly int DissolveMap1 = Shader.PropertyToID("_DissolveMap");
+    private static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
 
     void Start()
     {
@@ -28,19 +33,27 @@ public class Dissolve : MonoBehaviour
         
         if (!shader) { Debug.Log("Shader not found", this); return; }
 
-        var renderRef = GetComponent<SpriteRenderer>();
-        if (!renderRef) renderRef = GetComponentInChildren<SpriteRenderer>();
+        var renderRef = GetComponentInParent<SpriteRenderer>();
+        if (!renderRef) renderRef = transform.parent.GetComponentInChildren<SpriteRenderer>();
 
-        material                                = new Material(shader);
+        material = new Material(shader);
         renderRef.material = material;
         
 
         time = Reversed ? DissolveSpeed : 0f;
 
 
-        if (material) material.SetFloat(Enabled, 1);
+        if (material)
+        {
+            material.SetFloat(Enabled, 1);
             material.SetColor(DissolveColor, Random.ColorHSV());
-
+            material.SetFloat(DissolveWidth, 0.1f);
+            material.SetColor(PrimaryColor, colour[0]);
+            material.SetColor(SecondaryColor, colour[1]);
+            material.SetColor(TertiaryColor, colour[2]);
+            material.SetTexture(DissolveMap1,DissolveMap);
+            material.SetTexture(NormalMap,DissolveNormalMap);
+        }
     }
 
     private void OnDestroy()
@@ -57,10 +70,6 @@ public class Dissolve : MonoBehaviour
         {
             material.SetFloat(MyTime, time);
             material.SetFloat(DissolveAmount, time );
-            material.SetFloat(DissolveWidth, 0.1f);
-            material.SetColor(PrimaryColor, colour[0]);
-            material.SetColor(SecondaryColor, colour[1]);
-            material.SetColor(TertiaryColor, colour[2]);
         }
         else
         {

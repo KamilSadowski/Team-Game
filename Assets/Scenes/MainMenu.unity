@@ -3030,6 +3030,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -6594313628986133922, guid: 3a8307eb1b15a1946b049fafc2145527, type: 2}
+    - target: {fileID: 4206094520269264506, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -6594313628986133922, guid: 3a8307eb1b15a1946b049fafc2145527, type: 2}
     - target: {fileID: 4286888117465516770, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -3145,6 +3149,18 @@ PrefabInstance:
     - target: {fileID: 4826526226662906165, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4927356276933995278, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3a8307eb1b15a1946b049fafc2145527, type: 2}
+    - target: {fileID: 4927356276933995278, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6594313628986133922, guid: 3a8307eb1b15a1946b049fafc2145527, type: 2}
+    - target: {fileID: 4927356276933995278, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5963782698584411542, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_Camera
