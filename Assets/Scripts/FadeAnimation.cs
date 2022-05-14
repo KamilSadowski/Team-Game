@@ -6,11 +6,11 @@ using UnityEngine;
 public class FadeAnimation : MonoBehaviour
 {
 
-    [SerializeField] float AnimationTime;
+    public float AnimationTime;
 
     private CanvasGroup group;
 
-    void Start()
+    void Start() 
     {
         group = GetComponent<CanvasGroup>();
         StartCoroutine(ShowCanvas(1f));
