@@ -16,7 +16,11 @@ public class Dissolve : MonoBehaviour
     private static readonly int DissolveAmount = Shader.PropertyToID("_DissolveAmount");
     private static readonly int DissolveWidth = Shader.PropertyToID("_DissolveWidth");
     private static readonly int DissolveColor = Shader.PropertyToID("_DissolveColor");
+    private static readonly int PrimaryColor = Shader.PropertyToID("_PrimaryColor");
+    private static readonly int SecondaryColor = Shader.PropertyToID("_SecondaryColor");
+    private static readonly int TertiaryColor = Shader.PropertyToID("_TertiaryColor");
 
+    public Color[] colour = new Color[3];
 
     void Start()
     {
@@ -54,6 +58,9 @@ public class Dissolve : MonoBehaviour
             material.SetFloat(MyTime, time);
             material.SetFloat(DissolveAmount, time );
             material.SetFloat(DissolveWidth, 0.1f);
+            material.SetColor(PrimaryColor, colour[0]);
+            material.SetColor(SecondaryColor, colour[1]);
+            material.SetColor(TertiaryColor, colour[2]);
         }
         else
         {

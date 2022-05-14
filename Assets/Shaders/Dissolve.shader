@@ -11,6 +11,9 @@ Shader "Custom/Dissolve"
 		_MyTime("MyTime", Float) = 0
 		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0
 		[HideInInspector] _RendererColor("RendererColor", Color) = (1,1,1,1)
+		[PerRendererData] _PrimaryColor("PrimaryColor", Color) = (1,1,1,1)
+		[PerRendererData] _SecondaryColor("SecondaryColor", Color) = (0.9490196,0.7803922,0.6745098,1)
+		[PerRendererData] _TertiaryColor("TertiaryColor", Color) = (1,1,1,1)
 		[HideInInspector] _Flip("Flip", Vector) = (1,1,1,1)
 		[PerRendererData] _AlphaTex("External Alpha", 2D) = "white" {}
 		[PerRendererData] _EnableExternalAlpha("Enable External Alpha", Float) = 0
@@ -99,6 +102,9 @@ Shader "Custom/Dissolve"
 		half _NormalStrenght;
 		half _DissolveEmission;
 		half _DissolveWidth;
+		float4 _PrimaryColor;
+		float4 _SecondaryColor;
+		float4 _TertiaryColor;
 		fixed4 _DissolveColor;
 
 		UNITY_INSTANCING_BUFFER_END(Props)
@@ -119,10 +125,10 @@ Shader "Custom/Dissolve"
 					// X manipulation
 					{
 						float t = _MyTime;
-						Remap(t, float2(-1.f, 1.f), float2(1.f, 2.f), t);
+						Remap(t, float2(-1.f, 1.f), float2(.5, 2.f), t);
 
 						float y = v.vertex.y;
-						Remap(y, float2(-1, 1), float2(1, 1.2), y);
+						Remap(y, float2(-1, 1), float2(.5, 1.2), y);
 
 						v.vertex.x *= y * t;
 					}
@@ -143,7 +149,30 @@ Shader "Custom/Dissolve"
 
 		void surf(Input IN, inout SurfaceOutput o)
 		{
+			const float MIN_THRESHOLD = 0.1f;
+			const float MAX_THRESHOLD = 0.3f;
+
 			fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
+			if (c.r < MAX_THRESHOLD && c.g > MIN_THRESHOLD && c.b < MAX_THRESHOLD)
+			{
+				c.r = c.g;
+				c.b = c.g;
+				c.rgb *= _PrimaryColor;
+			}
+			else if (c.r < MAX_THRESHOLD && c.g < MAX_THRESHOLD && c.b > MIN_THRESHOLD)
+			{
+				c.r = c.b;
+				c.g = c.b;
+				c.rgb *= _SecondaryColor;
+			}
+			else if (c.r > MIN_THRESHOLD && c.g < MAX_THRESHOLD && c.b < MAX_THRESHOLD)
+			{
+				c.g = c.r;
+				c.b = c.r;
+				c.rgb *= _TertiaryColor;
+
+			}
+
 			clip(c.a - _Cutoff);
 
 			fixed4 mask = tex2D(_DissolveMap,IN.uv_DissolveMap);

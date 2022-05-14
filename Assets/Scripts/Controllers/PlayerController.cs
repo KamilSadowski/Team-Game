@@ -167,6 +167,7 @@ public class PlayerController : Controller
             if (Input.GetMouseButtonUp(0))
             {
                 // Restore prev speed
+                
 
                 mobility.setMovementSpeed(MovementSpeedRef);
                 isMouseButtonDown = false;
