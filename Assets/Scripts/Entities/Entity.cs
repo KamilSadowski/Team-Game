@@ -25,15 +25,18 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Color[] colours = new Color[3];
 
 
-    const int DAMAGE_COLOURS = 3;
-    Timer flashTimer = new Timer(0.0f);
+    // Treat this as a constant and do not change it at run time
+    [SerializeField] protected int damageColours = 3;
+    
+    protected Timer flashTimer = new Timer(0.0f);
     protected bool isFlashing = false;
-    int flashIndex = 0;
+    protected int flashIndex = 0;
 
     [SerializeField] protected Color[] multiplyFlashColour = new Color[Globals.COLOURS_PER_SHADER];
-    [SerializeField] Color[] damagedColours = new Color[Globals.COLOURS_PER_SHADER * DAMAGE_COLOURS];
+    // Colours per shader times damage colours
+    [SerializeField] protected Color[] damagedColours = new Color[Globals.COLOURS_PER_SHADER * 3];
     // This multiplied by colours will give you the invincibility duration after being hit
-    [SerializeField] float damageFlashInterval = 0.01f;
+    [SerializeField] protected float damageFlashInterval = 0.01f;
 
 
     protected virtual void UpdateEntity()
@@ -57,17 +60,18 @@ public class Entity : MonoBehaviour
         {
             if (flashTimer.Update(Time.deltaTime))
             {
-                ChangeColours(damagedColours[0 * Globals.COLOURS_PER_SHADER + flashIndex],
-                              damagedColours[1 * Globals.COLOURS_PER_SHADER + flashIndex],
-                              damagedColours[2 * Globals.COLOURS_PER_SHADER + flashIndex]);
-                renderer.color = multiplyFlashColour[flashIndex];
-
-                flashIndex++;
-                if (flashIndex >= DAMAGE_COLOURS)
+                if (flashIndex >= damageColours)
                 {
-                    isFlashing = false;
-                    ChangeColours(colours[0], colours[1], colours[2]);
-                    renderer.color = multiplyColour;
+                    ResetFlashing();
+                }
+                else
+                {
+                    ChangeColours(damagedColours[0 * damageColours + flashIndex],
+                                  damagedColours[1 * damageColours + flashIndex],
+                                  damagedColours[2 * damageColours + flashIndex]);
+                    renderer.color = multiplyFlashColour[flashIndex];
+
+                    flashIndex++;
                 }
                 flashTimer.Reset(damageFlashInterval);
             }
@@ -134,9 +138,16 @@ public MovementComponent GetMovementComponent()
         return movementComponent;
     }
 
+    void ResetFlashing()
+    {
+        isFlashing = false;
+        ChangeColours(colours[0], colours[1], colours[2]);
+        renderer.color = multiplyColour;
+    }
 
     public virtual bool DestroyEntity()
     {
+        ResetFlashing();
         if (!entityManager)
         {
             entityManager = FindObjectOfType<EntityManager>();

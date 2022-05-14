@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb1e12184f5f4745a2030796ba12919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colours:
+  defaultColours:
   - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0.5849056, g: 0.57577646, b: 0.31176573, a: 0}
-  - {r: 0.7169812, g: 0.34869298, b: 0.26717696, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &6776974953821021587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -302,21 +302,14 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  damageColours: 1
   multiplyFlashColour:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0.15888166, a: 0.5019608}
   damagedColours:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  damageFlashInterval: 0.01
+  - {r: 1, g: 1, b: 1, a: 0.5019608}
+  - {r: 1, g: 1, b: 1, a: 0.5019608}
+  - {r: 1, g: 1, b: 1, a: 0.5019608}
+  damageFlashInterval: 0.2
   VisualRef: {fileID: 4314176420661828498}
   weapon_sharpness: 0.1
   weapon_damage: 40
