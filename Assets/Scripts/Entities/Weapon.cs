@@ -299,7 +299,7 @@ public class Weapon : Entity
             {
                 hitsRef = movementComponent.getHits();
                 foreach (RaycastHit2D obj in hitsRef)
-                    collisionEvent(obj.collider);
+                    CollisionEvent(obj.collider);
                 delayTimer.Reset(BounceDelay);
             }
             float minDistanceTravelled = MIN_DISTANCE_TRAVELLED * Time.deltaTime;
@@ -361,7 +361,7 @@ public class Weapon : Entity
         Physics2D.IgnoreCollision(playerCollision, weaponCollision);
     }
 
-    protected void collisionEvent(Collider2D collision)
+    protected virtual void CollisionEvent(Collider2D collision)
     {
         if (currentState == States.Thrown)
         {
@@ -400,6 +400,6 @@ public class Weapon : Entity
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        collisionEvent(collision.collider);
+        CollisionEvent(collision.collider);
     }
 }

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1694296011
   m_SortingLayer: 3
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: ef1a4b8e49894ae4994ff8b7213dc5b5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ed9de28fb3d26f4e80eeafe337faa54, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,10 +99,10 @@ GameObject:
   - component: {fileID: 7183137209490659154}
   - component: {fileID: 2566258519793261882}
   - component: {fileID: -2866657720055413519}
-  - component: {fileID: 5311610906226605514}
+  - component: {fileID: 6698053271892808964}
   - component: {fileID: -9196615800187247779}
   m_Layer: 3
-  m_Name: ProjectileBase
+  m_Name: ProjectileBase 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DodgingLayerID: 9
-  movementSpeed: 1
+  movementSpeed: 1.3
   drag: 0.5
   DashSpeed: 10
   DashDistance: 10
@@ -212,7 +212,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004814364, y: -0.050831623}
+  m_Offset: {x: 0.00060510635, y: 0.00027527846}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -223,7 +223,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.11078873, y: 0.21869461}
+  m_Size: {x: 0.3256781, y: 0.084922686}
   m_EdgeRadius: 0
 --- !u!114 &2566258519793261882
 MonoBehaviour:
@@ -254,7 +254,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0050904565, y: -0.04963249}
+  m_Offset: {x: 0.0020059347, y: 0.0012800656}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -265,9 +265,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.11260619, y: 0.21874386}
+  m_Size: {x: 0.38578898, y: 0.14504442}
   m_EdgeRadius: 0
---- !u!114 &5311610906226605514
+--- !u!114 &6698053271892808964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5733697913478852489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69fe584f318e32d4e98f5926681d9519, type: 3}
+  m_Script: {fileID: 11500000, guid: 95fd531c6c26e8643b337ca7329397e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 0}
@@ -287,20 +287,20 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   damageColours: 1
   multiplyFlashColour:
-  - {r: 0, g: 1, b: 0.16078432, a: 0.5019608}
+  - {r: 0, g: 1, b: 0.15888166, a: 0.5019608}
   damagedColours:
   - {r: 1, g: 1, b: 1, a: 0.5019608}
   - {r: 1, g: 1, b: 1, a: 0.5019608}
   - {r: 1, g: 1, b: 1, a: 0.5019608}
   damageFlashInterval: 0.2
   VisualRef: {fileID: 569615387889728729}
-  weapon_sharpness: 1.1
-  weapon_damage: 250
+  weapon_sharpness: 0.75
+  weapon_damage: 25
   bounceLayers:
   - Map
   - Prop
   - Enemy
-  bounceStrength: 0.05
+  bounceStrength: 0.9
   RandomRange: 0.25
   BounceDelay: 0.25
   hitSound: {fileID: 8300000, guid: b4ed406e6e315450f85fa2c0f65bce01, type: 3}

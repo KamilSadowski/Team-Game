@@ -143,6 +143,7 @@ MonoBehaviour:
   - {r: 0.83137256, g: 0.6355599, b: 0.42745098, a: 0}
   - {r: 0.9137255, g: 0.84828347, b: 0.75686276, a: 0}
   - {r: 0.32941177, g: 0.22125657, b: 0.05490195, a: 0}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
@@ -160,10 +161,12 @@ MonoBehaviour:
   damageFlashInterval: 0.01
   positionOffset: {x: 0, y: 0.3, z: 0}
   DroppableItems:
+  - {fileID: 5733697913478852489, guid: 5d1da965001f4824bb9bf790038a39c3, type: 3}
   - {fileID: 5733697913478852489, guid: fc431dc1e56441e4fab262ca12f16a64, type: 3}
   - {fileID: 5733697913478852489, guid: c85ca854a1a4e8841b63918f3753c116, type: 3}
-  - {fileID: 5733697913478852489, guid: 5d1da965001f4824bb9bf790038a39c3, type: 3}
   - {fileID: 5733697913478852489, guid: 0e6c6cb2335210a498283868a1c565c9, type: 3}
+  - {fileID: 5733697913478852489, guid: e7ee0ee170adee946b556e478918e87e, type: 3}
+  - {fileID: 5733697913478852489, guid: b4eeb2630ca65b54fb525f7aace5bc81, type: 3}
   cost: 20
   vendingMachineHole: {fileID: 6322085060307511080}
   sound: {fileID: 8300000, guid: 55a3b751c495e0641a523dc4c7bf4048, type: 3}
