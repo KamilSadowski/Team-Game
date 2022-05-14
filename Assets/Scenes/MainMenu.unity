@@ -2781,6 +2781,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 350555133, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 350555133, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00004196167
+      objectReference: {fileID: 0}
     - target: {fileID: 386755910364138864, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -2792,6 +2800,10 @@ PrefabInstance:
     - target: {fileID: 831993530810078852, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 831993530810078852, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 831993530810078852, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_MatchWidthOrHeight
@@ -2816,6 +2828,10 @@ PrefabInstance:
     - target: {fileID: 927434475522447586, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 927434475522447586, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 927434475522447586, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_MatchWidthOrHeight
@@ -2904,6 +2920,14 @@ PrefabInstance:
     - target: {fileID: 1470799445267168092, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_text
       value: Back to Hub
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590702534794337926, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -33.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590702534794337926, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 121.2
       objectReference: {fileID: 0}
     - target: {fileID: 1664865541145919900, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: canvas
@@ -3013,9 +3037,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4286888117475600526, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -37.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4286888118306489664, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286888118306489664, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4286888118306489664, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_MatchWidthOrHeight
@@ -3139,7 +3171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112913205661844665, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000015258789
+      value: -0.000091552734
       objectReference: {fileID: 0}
     - target: {fileID: 8142017900307515176, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3155,6 +3187,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518459989865521614, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
       propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030838807087681798, guid: da669556b0da6f74aad878ea96fc7724, type: 3}
+      propertyPath: allowFullscreen
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5238,10 +5274,10 @@ RectTransform:
   m_Father: {fileID: 1104139388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 600}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1131409630
 MonoBehaviour:

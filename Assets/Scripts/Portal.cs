@@ -6,8 +6,8 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     [SerializeField] Globals.Scenes destination;
-    [SerializeField] private FadeAnimation animation;
     [SerializeField] private float animDuration;
+    [SerializeField] private GameObject fadeAnim;
     SpriteRenderer renderer;
     Collider2D collider;
     private SwapSprite _swapSprite;
@@ -22,7 +22,6 @@ public class Portal : MonoBehaviour
         _swapSprite = GetComponent<SwapSprite>();
         renderer = GetComponent<SpriteRenderer>();
         collider = GetComponent<Collider2D>();
-        animation = FindObjectOfType<FollowingCamera>().fadeAnimation;
     }
 
     // Update is called once per frame
@@ -53,12 +52,13 @@ public class Portal : MonoBehaviour
         {
             _spriteRenderer.color = Color.clear;
             _player.gameObject.SetActive(false);
-            Instantiate(animation);
+
+           
+            var a =  Instantiate(fadeAnim).GetComponent<FadeAnimation>();
+            a.AnimationTime = animDuration;
 
             if (_swapSprite) _swapSprite.Swap();
             Invoke(nameof(Teleport), animDuration);
-            
-
         }
     }
 

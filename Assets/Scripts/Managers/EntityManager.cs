@@ -50,6 +50,26 @@ public class EntityManager : MonoBehaviour
         return -1;
     }
 
+    public int FindWeaponInList(SpriteRenderer image)
+    {
+        SpriteRenderer output;
+        int i = 0;
+        foreach (GameObject obj in WeaponList)
+        {
+            //Sprite renderer should always be stored ina  child to allow for rotations.
+            output = obj.GetComponentInChildren<SpriteRenderer>();
+            if (output)
+            {
+                if (output.sprite == image.sprite)
+                    return i;
+
+                output = null;
+            }
+            ++i;
+        }
+
+        return -1;
+    }
 
     public int TryCreateListedWeapon(int index, Vector3 Position)
     {

@@ -33,7 +33,6 @@ public class FollowingCamera : MonoBehaviour
 
     // Camera data
     public Entity targetToFollow { get; protected set; }
-    public FadeAnimation fadeAnimation { get; protected set; }
     Vector3 moveTo;
     Vector3 teleportTo;
     Transform originPoint; // Point you attach the camera through (separate to the camera object to allow shaking)
@@ -87,8 +86,6 @@ public class FollowingCamera : MonoBehaviour
         // Get lens distortion
         postProcessing.profile.TryGetSettings(out lansDistortion);
         defaultLansDistortion = lansDistortion.intensity.value;
-
-        fadeAnimation = GetComponentInChildren<FadeAnimation>();
     }
 
     // Update is called once per frame

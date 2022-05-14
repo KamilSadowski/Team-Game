@@ -65,6 +65,7 @@ public class Weapon : Entity
         delayTimer = new Timer(BounceDelay);
         CollisionSetup();
 
+
         //ChangeColours(colours[0], colours[1], colours[2]);
     }
 
@@ -105,6 +106,17 @@ public class Weapon : Entity
                     //Safety check
                     break;
             }
+    }
+
+    public int GetWeaponID()
+    {
+        if (templateID < 0)
+        {
+            templateID = entityManager.
+            FindWeaponInList(GetComponentInChildren<SpriteRenderer>());
+        }
+
+        return templateID;
     }
 
     //Getters
