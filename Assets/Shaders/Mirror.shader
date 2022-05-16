@@ -15,6 +15,7 @@ Shader "Custom/Mirror" {
         _ReflectionStrength("Reflection strength", Range(0,1)) = 0.5
         _ColourStrength("Colour strength", Range(0,1)) = 0.5
         _Alpha("Alpha", Range(0,1)) = 0.5
+        _Cutoff("Shadow alpha cutoff", Range(0,1)) = 0.5
     }
 
         SubShader
@@ -35,13 +36,15 @@ Shader "Custom/Mirror" {
 
             CGPROGRAM
             #pragma target 3.0
-            #pragma surface surf Lambert addshadow fullforwardshadows vertex:vert nofog nolightmap nodynlightmap alpha noinstancing
+            #pragma surface surf Lambert addshadow fullforwardshadows vertex:vert nofog nolightmap nodynlightmap keepalpha noinstancing
             #pragma multi_compile_local _ PIXELSNAP_ON
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
             #include "UnitySprites.cginc"
 
             fixed _ReflectionStrength;
             fixed _ColourStrength;
+
+            fixed _Cutoff;
 
             struct Input
             {
@@ -57,7 +60,6 @@ Shader "Custom/Mirror" {
                 #if defined(PIXELSNAP_ON)
                 v.vertex = UnityPixelSnap(v.vertex);
                 #endif
-                int i = 0;
                 UNITY_INITIALIZE_OUTPUT(Input, o);
                 o.color = v.color * _Color * _RendererColor;
             }
@@ -73,10 +75,11 @@ Shader "Custom/Mirror" {
                 float screenAspect = _ScreenParams.x / _ScreenParams.y;
                 fixed2 coords = IN.screenPos.xy / (IN.screenPos.w + 0.001f);
 
-                fixed4 r = tex2D(_ReflectionTexture, UNITY_PROJ_COORD(coords)) * c.a;
+                fixed4 r = tex2D(_ReflectionTexture, UNITY_PROJ_COORD(coords));
 
                 o.Albedo = c + r * _ReflectionStrength;
                 o.Alpha = c.a * _Alpha;
+                clip(o.Alpha - _Cutoff);
             }
             ENDCG
         }

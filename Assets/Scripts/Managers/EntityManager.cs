@@ -50,6 +50,8 @@ public class EntityManager : MonoBehaviour
         return -1;
     }
 
+    //This is primarily used as a reference for freshly spawned image. Sprites cannot be saved
+    //And so they need to have a method of recognizing their base image for being freshly loaded in.
     public int FindWeaponInList(SpriteRenderer image)
     {
         SpriteRenderer output;
