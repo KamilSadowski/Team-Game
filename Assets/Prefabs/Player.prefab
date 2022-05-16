@@ -297,12 +297,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6078d44ff51bb64ca7f5d8dab6f20fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DissolvePrefab: {fileID: 0}
   renderer: {fileID: 0}
   colourChecked: 0
   colours:
   - {r: 0.40000004, g: 0.2627451, b: 0.19215688, a: 1}
   - {r: 1, g: 1, b: 1, a: 0}
   - {r: 0.19406372, g: 0.22388211, b: 0.8396226, a: 0}
+  damageColours: 3
   multiplyFlashColour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
@@ -437,9 +439,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a476e34385a8f43f5a7cd7280badc54f, type: 3}
   movementClipVolume: 1
   onDamageClip:
-  - {fileID: 8300000, guid: 3ca121c001790493aac9f6aec90cfc06, type: 3}
-  - {fileID: 8300000, guid: ec4c9ed8ff0e9482e9bf57fe2474ae57, type: 3}
-  - {fileID: 8300000, guid: 8f53ad2d958c048e5a8e403a20d21df0, type: 3}
+  - {fileID: 8300000, guid: 33b6cd7837c7642958dac012307e9086, type: 3}
   damageClipVolume: 0.28875002
   audioMixer: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
 --- !u!1001 &585806454334078030

@@ -227,8 +227,10 @@ MonoBehaviour:
   movementClip: []
   movementClipVolume: 1
   onDamageClip:
-  - {fileID: 8300000, guid: 4f13633ea56974e6dbf63eb99fa6c851, type: 3}
-  damageClipVolume: 0.28875002
+  - {fileID: 8300000, guid: 85e890e800369403ea5af9b10adecb94, type: 3}
+  - {fileID: 8300000, guid: d4a7952ebb861462b92df5cdbb5177e0, type: 3}
+  - {fileID: 8300000, guid: 1689b1b8a5075405f9fcb328f0d532a0, type: 3}
+  damageClipVolume: 0.05775
   audioMixer: {fileID: 24300002, guid: 1f7125c3bd658c24ba9a04a456051b25, type: 2}
 --- !u!1001 &1607858580254968063
 PrefabInstance:

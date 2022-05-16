@@ -318,8 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4494fd80a162eea4eab4b6038257d0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTrailSpawnTimer: 0.025
-  maxTrailSpawnTimer: 0.2
+  minTrailSpawnTimer: 1
+  maxTrailSpawnTimer: 2
   Trail_Sprites:
   - {fileID: 21300000, guid: 747ca78b4a5f21c4b8fdb08f5dacdb0c, type: 3}
   - {fileID: 21300000, guid: aed7282061975dd40b1e1799dcb15daf, type: 3}
@@ -332,10 +332,10 @@ MonoBehaviour:
   - {r: 0.19256648, g: 0.09344962, b: 0.26415092, a: 1}
   - {r: 0.4056604, g: 0.21239765, b: 0.33820084, a: 1}
   - {r: 0.241167, g: 0.09420612, b: 0.2735849, a: 1}
-  Min_Alpha: 0.2
-  Max_Alpha: 1
-  Min_Trail_Scale: 0.75
-  Max_Trail_Scale: 1.5
+  Min_Alpha: 255
+  Max_Alpha: 255
+  Min_Trail_Scale: 0.84375
+  Max_Trail_Scale: 1.6875
 --- !u!1001 &1679605530646244591
 PrefabInstance:
   m_ObjectHideFlags: 0
